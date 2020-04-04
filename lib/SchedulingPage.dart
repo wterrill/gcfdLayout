@@ -3,7 +3,7 @@ import 'TopDrawer.dart';
 import 'colorDefs.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class Version2 extends StatelessWidget {
+class SchedulingPage extends StatelessWidget {
   final hours = [
     "6:00 am",
     "7:00 am",
@@ -206,14 +206,10 @@ class Version2 extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SliverGrid(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 8,
-                                ),
+                              SliverList(
                                 delegate: SliverChildBuilderDelegate(
-                                  _itemBuilder2,
-                                  childCount: 8 * hours.length,
+                                  _itemBuilder3,
+                                  childCount: hours.length,
                                 ),
                               ),
                             ],
@@ -233,38 +229,42 @@ class Version2 extends StatelessWidget {
     );
   }
 
+  // final version = 3; // one of: 1, 2, 3, imho 2 and 3 are better that 1
   double rowHeight =
       50; // <-- Change this to set rowHeight, works only for version 3 ;-(
 
-  Widget _itemBuilder2(context, index) {
-    Widget widget = (index % 8 == 0)
-        ? Container(
-            height: rowHeight,
-            decoration: BoxDecoration(
-              color: colorTimeBackground,
-              border: Border(
-                top: BorderSide(width: 1.0, color: colorCalendarHeader),
-              ),
-            ),
-            child: Center(
-              child: Text(hours[index ~/ 8], style: subtitle2),
-            ),
-          )
-        :
-        // } else {
-        Container(
-            height: rowHeight,
-            decoration: BoxDecoration(
-              color: (index ~/ 8).isEven
-                  ? colorAlternatingDark
-                  : colorDarkBackground,
-              border: Border(
-                left: BorderSide(width: 1.0, color: colorCalendarHeader),
-                // top: BorderSide(width: 1.0, color: colorCalendarHeader),
-              ),
-            ),
-          );
-    return widget;
-    // }
+  Widget _itemBuilder3(context, index) {
+    return Row(
+      children: List.generate(
+        8,
+        (i) => Expanded(
+          child: i == 0
+              ? Container(
+                  height: rowHeight,
+                  decoration: BoxDecoration(
+                    color: colorTimeBackground,
+                    border: Border(
+                      top: BorderSide(width: 1.0, color: colorCalendarHeader),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(hours[index], style: subtitle2),
+                  ),
+                )
+              : Container(
+                  height: rowHeight,
+                  decoration: BoxDecoration(
+                    color: index.isEven
+                        ? colorAlternatingDark
+                        : colorDarkBackground,
+                    border: Border(
+                      left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                      // top: BorderSide(width: 1.0, color: colorCalendarHeader),
+                    ),
+                  ),
+                ),
+        ),
+      ),
+    );
   }
 }
