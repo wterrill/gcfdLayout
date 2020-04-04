@@ -27,15 +27,15 @@ Color colorUserAccent = Colors.green; // Profile image and outline
 TextStyle textDayHeadings =
     TextStyle(color: Colors.cyan[300], fontSize: 10.0); //
 
-TextStyle textTimeList = TextStyle(color: Colors.pink, fontSize: 10.0); //
+// TextStyle textTimeList = TextStyle(color: Colors.pink, fontSize: 10.0); //
 
 TextStyle bodyText1 = TextStyle(color: Colors.black, fontSize: 20.0); //
 TextStyle bodyText2 = TextStyle(color: colorTopHeader, fontSize: 20.0);
-TextStyle headline5 = TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold);
-TextStyle headline6 = TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic);
+// TextStyle headline5 = TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold);
+// TextStyle headline6 = TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic);
 
 TextStyle subtitle2 = TextStyle(color: colorTopHeader, fontSize: 15.0);
-TextStyle caption =
-    TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.cyan[300]);
-TextStyle overline =
-    TextStyle(fontSize: 10.0, fontFamily: 'Hind', color: colorTopHeader);
+// TextStyle caption =
+//     TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.cyan[300]);
+// TextStyle overline =
+//     TextStyle(fontSize: 10.0, fontFamily: 'Hind', color: colorTopHeader);
