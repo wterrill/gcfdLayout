@@ -13,6 +13,12 @@ Color colorTimeBackground =
     Color(0xFF303030); // background of time column / date row
 Color colorUserAccent = Colors.green; // Profile image and outline
 
+Color colorAudit1 = Color(0xFFD84342);
+Color colorAudit2 = Color(0xFF4ED4DF);
+Color colorAudit3 = Color(0xFF26BF7D);
+Color colorAudit4 = Color(0xFFD8AD43);
+Color colorAudit5 = Color(0xFFFFFFFF);
+
 // Styles
 TextStyle textDayHeadings = TextStyle(color: Colors.cyan[300], fontSize: 10.0);
 TextStyle bodyText1 = TextStyle(color: Colors.black, fontSize: 20.0);

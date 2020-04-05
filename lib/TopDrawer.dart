@@ -16,10 +16,12 @@ class _TopDrawerState extends State<TopDrawer>
   @override
   void initState() {
     controller =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this)
+        AnimationController(duration: Duration(milliseconds: 400), vsync: this);
+    var curvedAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.easeInBack)
           ..addListener(() => setState(() {}));
 
-    animation = Tween(begin: 0.0, end: 150.0).animate(controller);
+    animation = Tween(begin: 0.0, end: 150.0).animate(curvedAnimation);
     _drawerState = false;
 
     super.initState();
@@ -36,7 +38,7 @@ class _TopDrawerState extends State<TopDrawer>
     return Stack(
       children: [
         Positioned(
-          top: 70,
+          top: 50,
           left: -175,
           child: Transform.translate(
             offset: Offset((animation.value * (175 / 150)), 0.0),
@@ -48,7 +50,7 @@ class _TopDrawerState extends State<TopDrawer>
           ),
         ),
         Positioned(
-          top: 70,
+          top: 62.5,
           child: Transform.translate(
             offset: Offset(animation.value, 0.0),
             child: GestureDetector(

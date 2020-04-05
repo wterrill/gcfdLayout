@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'LayoutData.dart';
 import 'TopDrawer.dart';
 import 'colorDefs.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class SchedulingPage extends StatelessWidget {
+class SchedulingPage2 extends StatelessWidget {
   final List<String> hours = [
     "6:00 am",
     "7:00 am",
@@ -40,6 +42,7 @@ class SchedulingPage extends StatelessWidget {
         Column(
           children: [
             Container(
+              // Top header (white)
               height: 50,
               color: colorTopHeader,
               child: Row(
@@ -91,14 +94,15 @@ class SchedulingPage extends StatelessWidget {
                   )
                 ],
               ),
-            ), // end of top white bar
+            ),
+            // end of top white bar
 
             Expanded(
               child: Container(
                 // Color for big grey background
                 color: colorDarkBackground,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+                  padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
                   child: Container(
                     // Container for calendar
                     child: Column(
@@ -159,65 +163,70 @@ class SchedulingPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ), // end of calendar header
-
-                        Expanded(
-                          child: CustomScrollView(
-                            slivers: <Widget>[
-                              SliverAppBar(
-                                backgroundColor: Colors.transparent,
-                                floating: true,
-                                flexibleSpace: Row(
-                                  children: <Widget>[
-                                    Expanded(child: Text(" ")),
-                                    ...days
-                                        .map(
-                                          (d) => Expanded(
-                                              child: Container(
-                                            decoration: BoxDecoration(
-                                              color: colorTimeBackground,
-                                              border: Border(
-                                                left: BorderSide(
-                                                    width: 1.0,
-                                                    color: colorCalendarHeader),
-                                              ),
+                        ),
+                        Container(
+                          // Day name and date headings (static)
+                          height: 50,
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(child: Text(" ")),
+                              ...days
+                                  .map(
+                                    (String d) => Expanded(
+                                        child: Container(
+                                      decoration: BoxDecoration(
+                                        color: colorTimeBackground,
+                                        border: Border(
+                                          left: BorderSide(
+                                              width: 1.0,
+                                              color: colorCalendarHeader),
+                                        ),
+                                      ),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            AutoSizeText(
+                                              d.split(" ")[0],
+                                              style: textDayHeadings,
+                                              minFontSize: 1.0,
+                                              maxLines: 1,
                                             ),
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  AutoSizeText(
-                                                    d.split(" ")[0],
-                                                    style: textDayHeadings,
-                                                    minFontSize: 1.0,
-                                                    maxLines: 1,
-                                                  ),
-                                                  AutoSizeText(
-                                                    d.split(" ")[1],
-                                                    style: TextStyle(
-                                                        fontSize: 10.0),
-                                                    minFontSize: 1.0,
-                                                    maxLines: 1,
-                                                  ),
-                                                ]),
-                                          )),
-                                        )
-                                        .toList(),
-                                  ],
-                                ),
-                              ),
-                              // SliverList(
-                              //   delegate: SliverChildBuilderDelegate(
-                              //     _itemBuilder3,
-                              //     childCount: hours.length,
-                              //   ),
-                              // ),
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    _itemBuilder4,
-                                    childCount: 1),
-                              ),
+                                            AutoSizeText(
+                                              d.split(" ")[1],
+                                              style: TextStyle(fontSize: 10.0),
+                                              minFontSize: 1.0,
+                                              maxLines: 1,
+                                            ),
+                                          ]),
+                                    )),
+                                  )
+                                  .toList(),
                             ],
+                          ),
+                        ), // end of calendar header
+                        Container(
+                          width: double.infinity,
+                          // height: 50.0 * hours.length - 76,
+                          height: MediaQuery.of(context).size.height -
+                              200 -
+                              Provider.of<LayoutData>(context).safeAreaDiff,
+                          child: SingleChildScrollView(
+                            physics: ClampingScrollPhysics(),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: _buildTimes(),
+                                ),
+                                _buildBoxes(),
+                                _buildBoxes(),
+                                _buildBoxes(),
+                                _buildBoxes(),
+                                _buildBoxes(),
+                                _buildBoxes(),
+                                _buildBoxes()
+                              ],
+                            ),
                           ),
                         ),
                         // ===============================================
@@ -238,49 +247,15 @@ class SchedulingPage extends StatelessWidget {
   double rowHeight =
       50; // <-- Change this to set rowHeight, works only for version 3 ;-(
 
-  Widget _itemBuilder3(BuildContext context, int index) {
-    return Row(
-      children: List.generate(
-        8,
-        (i) => Expanded(
-          child: i == 0
-              ? Container(
-                  height: rowHeight,
-                  decoration: BoxDecoration(
-                    color: colorTimeBackground,
-                    border: Border(
-                      top: BorderSide(width: 1.0, color: colorCalendarHeader),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(hours[index], style: subtitle2),
-                  ),
-                )
-              : Container(
-                  height: rowHeight,
-                  decoration: BoxDecoration(
-                    color: index.isEven
-                        ? colorAlternatingDark
-                        : colorDarkBackground,
-                    border: Border(
-                      left: BorderSide(width: 1.0, color: colorCalendarHeader),
-                      // top: BorderSide(width: 1.0, color: colorCalendarHeader),
-                    ),
-                  ),
-                ),
-        ),
-      ),
-    );
-  }
-
-  Widget _itemBuilder4(BuildContext context, int index) {
-    List<Widget> boxes = _buildBoxes();
+  Widget _buildTimes() {
+    // List<Widget> boxes = _buildBoxes();
     List<Widget> times = List.generate(
         hours.length,
         (i) =>
             // Expanded( child:
             Container(
               height: rowHeight,
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: colorTimeBackground,
                 border: Border(
@@ -292,25 +267,15 @@ class SchedulingPage extends StatelessWidget {
               ),
             ) //),
         );
-
-    Widget group = Row(children: [
-      Column(children: [...times]),
-      Column(children: [...boxes]),
-      Column(children: [...boxes]),
-      Column(children: [...boxes])
-    ]);
-
-    return group;
+    return Column(children: [...times]);
   }
 
-  List<Widget> _buildBoxes() {
-    List<Widget> list = [];
-    print(hours.length);
-    print(list);
+  Widget _buildBoxes() {
+    List<Widget> boxes = [];
     for (int hourindex = 0; hourindex < hours.length; hourindex++) {
-      list.add(Container(
+      boxes.add(Container(
         height: rowHeight,
-        width: 50,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: hourindex.isEven ? colorAlternatingDark : colorDarkBackground,
           border: Border(
@@ -319,6 +284,31 @@ class SchedulingPage extends StatelessWidget {
         ),
       ));
     }
-    return list;
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        child:
+            Stack(fit: StackFit.loose, alignment: Alignment.center, children: [
+          Column(children: [...boxes]),
+          Positioned(
+              left: 20,
+              right: 20,
+              top: 20,
+              child: Container(
+                  decoration: new BoxDecoration(
+                    color: colorAudit1,
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(15.0)),
+                  ),
+                  height: 51))
+        ]),
+      ),
+    );
+
+    // return Stack(
+    //   fit: StackFit.loose,
+    //   alignment: Alignment.center,
+    //   children: [TestDayData(day: widget.title), ...widget.appointments],
+    // );
   }
 }
