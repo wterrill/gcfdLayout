@@ -11,15 +11,24 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _obscureText = true;
+  final _formKey = GlobalKey<FormState>();
+  String _username, _password;
+  bool _dirtyUsername = false;
+  bool _dirtyPassword = false;
+  bool _enabledLoginButton = false;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 380,
-        width: 300,
-        decoration: new BoxDecoration(
-          color: ColorDefs.colorTopHeader,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
+    return Card(
+      color: ColorDefs.colorTopHeader,
+      // height: 380,
+      // width: 300,
+      // decoration: new BoxDecoration(
+      //   color: ColorDefs.colorTopHeader,
+      //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      // ),
+      child: Form(
+        key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(height: 10),
           Text("Sign in to GCFD", style: ColorDefs.textBodyBlack30),
@@ -27,6 +36,12 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
+              onChanged: (input) =>
+                  _onChangeField(input: input, from: "username"),
+              validator: (input) => !input.contains('@')
+                  ? "make sure your username has a '@'"
+                  : null,
+              onSaved: (input) => _username = input,
               style: ColorDefs.textBodyBlack20,
               decoration: InputDecoration(
                 filled: true,
@@ -40,6 +55,12 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
+              onChanged: (input) =>
+                  _onChangeField(input: input, from: "password"),
+              validator: (input) => input.length < 6
+                  ? "your password requires at least 6 characters"
+                  : null,
+              onSaved: (input) => _password = input,
               obscureText: _obscureText,
               style: ColorDefs.textBodyBlack20,
               decoration: InputDecoration(
@@ -80,59 +101,72 @@ class _LoginFormState extends State<LoginForm> {
             child: ListTile(
               title: DecoratedBox(
                 decoration: BoxDecoration(
-                    color: _obscureText
+                    color: _enabledLoginButton
                         ? ColorDefs.colorUserAccent
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(50.0),
                     border: Border.all(
                         width: 2.0,
-                        color:
-                            _obscureText ? Colors.transparent : Colors.grey)),
+                        color: _enabledLoginButton
+                            ? Colors.transparent
+                            : Colors.grey)),
                 child: FlatButton(
                   disabledTextColor: Colors.grey,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
-                  onPressed: _obscureText
-                      ? () {
-                          Navigator.push(
-                              context,
-                              PageRouteBuilder<void>(
-                                  transitionDuration: Duration(seconds: 2),
-                                  pageBuilder: (_, __, ___) =>
-                                      SchedulingPage()));
-                        }
-                      : null,
+                  onPressed: _enabledLoginButton ? _submit : null,
                   child: Text('Log in',
-                      style: _obscureText
+                      style: _enabledLoginButton
                           ? ColorDefs.textBodyBlack20
                           : ColorDefs.textBodyGrey20),
                 ),
               ),
             ),
-            // child: ListTile(
-            //   title: OutlineButton(
-
-            //       borderSide: BorderSide(
-            //           width: _obscureText? 0.0 : 8.0,
-            //           color: ColorDefs.colorTopDrawerBackground),
-            //       shape: RoundedRectangleBorder(
-            //           borderRadius:
-            //               new BorderRadius.circular(50.0)),
-            //       child: Text("Log in",
-            //           style: ColorDefs.textBodyBlack10),
-            // onPressed: _obscureText
-            //     ? null
-            //     : () {
-            //         Navigator.push(
-            //             context,
-            //             PageRouteBuilder<void>(
-            //                 transitionDuration:
-            //                     Duration(seconds: 2),
-            //                 pageBuilder: (_, __, ___) =>
-            //                     SchedulingPage5()));
-            //       }),
-            // ),
           )
-        ]));
+        ]),
+      ),
+    );
+  }
+
+  void _submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      print(_username);
+      print(_password);
+      Navigator.push(
+          context,
+          PageRouteBuilder<void>(
+              transitionDuration: Duration(seconds: 2),
+              pageBuilder: (_, __, ___) => SchedulingPage()));
+    }
+  }
+
+  void _onChangeField({@required String input, @required String from}) {
+    if (from == "username") if (input.length > 3) {
+      _dirtyUsername = true;
+    } else {
+      _dirtyUsername = false;
+    }
+
+    if (from == "password") if (input.length > 3) {
+      _dirtyPassword = true;
+    } else {
+      _dirtyPassword = false;
+    }
+
+    bool bothDirtyAndNotEnabled =
+        _dirtyUsername && _dirtyPassword && !_enabledLoginButton;
+    bool enabledButOnlyOneIsDirty =
+        _enabledLoginButton && (!_dirtyUsername || !_dirtyPassword);
+    if (bothDirtyAndNotEnabled) {
+      setState(() {
+        _enabledLoginButton = true;
+      });
+    }
+    if (enabledButOnlyOneIsDirty) {
+      setState(() {
+        _enabledLoginButton = false;
+      });
+    }
   }
 }
