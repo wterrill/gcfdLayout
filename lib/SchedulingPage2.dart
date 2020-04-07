@@ -46,7 +46,7 @@ class SchedulingPage2 extends StatelessWidget {
             Expanded(
               child: Container(
                 // Color for big grey background
-                color: colorDarkBackground,
+                color: ColorDefs.colorDarkBackground,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
                   child: Container(
@@ -56,7 +56,7 @@ class SchedulingPage2 extends StatelessWidget {
                         Container(
                           // header of calendar
                           decoration: BoxDecoration(
-                              color: colorCalendarHeader,
+                              color: ColorDefs.colorCalendarHeader,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10.0),
                                   topRight: Radius.circular(10.0))),
@@ -72,11 +72,11 @@ class SchedulingPage2 extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(40.0)),
-                                    color: colorButton1Background,
+                                    color: ColorDefs.colorButton1Background,
                                   ),
                                   child: Icon(
                                     Icons.keyboard_arrow_left,
-                                    color: colorTopHeader,
+                                    color: ColorDefs.colorTopHeader,
                                     size: 30.0,
                                   ),
                                 ),
@@ -86,10 +86,10 @@ class SchedulingPage2 extends StatelessWidget {
                                 children: [
                                   Text(
                                     "This Week's Audits",
-                                    style: bodyText2,
+                                    style: ColorDefs.bodyText2,
                                   ),
                                   Text("Mar 09, 2020 - Mar 15, 2020",
-                                      style: textDayHeadings),
+                                      style: ColorDefs.textDayHeadings),
                                 ],
                               ),
                               Padding(
@@ -98,11 +98,11 @@ class SchedulingPage2 extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(40.0)),
-                                    color: colorButton1Background,
+                                    color: ColorDefs.colorButton1Background,
                                   ),
                                   child: Icon(
                                     Icons.keyboard_arrow_right,
-                                    color: colorTopHeader,
+                                    color: ColorDefs.colorTopHeader,
                                     size: 30.0,
                                   ),
                                 ),
@@ -121,11 +121,12 @@ class SchedulingPage2 extends StatelessWidget {
                                     (Map<String, String> d) => Expanded(
                                         child: Container(
                                       decoration: BoxDecoration(
-                                        color: colorTimeBackground,
+                                        color: ColorDefs.colorTimeBackground,
                                         border: Border(
                                           left: BorderSide(
                                               width: 1.0,
-                                              color: colorCalendarHeader),
+                                              color: ColorDefs
+                                                  .colorCalendarHeader),
                                         ),
                                       ),
                                       child: Column(
@@ -135,7 +136,7 @@ class SchedulingPage2 extends StatelessWidget {
                                             AutoSizeText(
                                               d['date'].split(" ")[0],
                                               // d['date'].split(" ")[0],
-                                              style: textDayHeadings,
+                                              style: ColorDefs.textDayHeadings,
                                               minFontSize: 1.0,
                                               maxLines: 1,
                                             ),
@@ -204,13 +205,14 @@ class SchedulingPage2 extends StatelessWidget {
               height: rowHeight,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: colorTimeBackground,
+                color: ColorDefs.colorTimeBackground,
                 border: Border(
-                  top: BorderSide(width: 1.0, color: colorCalendarHeader),
+                  top: BorderSide(
+                      width: 1.0, color: ColorDefs.colorCalendarHeader),
                 ),
               ),
               child: Center(
-                child: Text(hours[i], style: subtitle2),
+                child: Text(hours[i], style: ColorDefs.subtitle2),
               ),
             ) //),
         );
@@ -224,9 +226,11 @@ class SchedulingPage2 extends StatelessWidget {
         height: rowHeight,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: hourindex.isEven ? colorAlternatingDark : colorDarkBackground,
+          color: hourindex.isEven
+              ? ColorDefs.colorAlternatingDark
+              : ColorDefs.colorDarkBackground,
           border: Border(
-            left: BorderSide(width: 1.0, color: colorCalendarHeader),
+            left: BorderSide(width: 1.0, color: ColorDefs.colorCalendarHeader),
           ),
         ),
       ));
@@ -243,7 +247,7 @@ class SchedulingPage2 extends StatelessWidget {
               top: 20,
               child: Container(
                   decoration: new BoxDecoration(
-                    color: colorAudit1,
+                    color: ColorDefs.colorAudit1,
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(15.0)),
                   ),

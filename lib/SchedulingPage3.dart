@@ -69,7 +69,7 @@ class SchedulingPage3 extends StatelessWidget {
             _whiteBar(), // white bar
             Expanded(
               child: Container(
-                color: colorDarkBackground,
+                color: ColorDefs.colorDarkBackground,
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
@@ -112,7 +112,7 @@ class SchedulingPage3 extends StatelessWidget {
   Widget _whiteBar() {
     return Container(
       height: 50,
-      color: colorTopHeader,
+      color: ColorDefs.colorTopHeader,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -124,7 +124,8 @@ class SchedulingPage3 extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: colorUserAccent, width: 1.0),
+                border:
+                    Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
               ),
               child: Row(
@@ -135,13 +136,13 @@ class SchedulingPage3 extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                     child: Container(
                       decoration: BoxDecoration(
-                        border:
-                            Border.all(color: colorDarkBackground, width: 3.0),
+                        border: Border.all(
+                            color: ColorDefs.colorDarkBackground, width: 3.0),
                         borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
                       child: Icon(
                         Icons.person,
-                        color: colorDarkBackground,
+                        color: ColorDefs.colorDarkBackground,
                         size: 30.0,
                       ),
                     ),
@@ -150,7 +151,7 @@ class SchedulingPage3 extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Sarah Kitty",
-                      style: bodyText1,
+                      style: ColorDefs.bodyText1,
                     ),
                   )
                 ],
@@ -165,7 +166,7 @@ class SchedulingPage3 extends StatelessWidget {
   Widget _staticHeader() {
     return Container(
       decoration: BoxDecoration(
-          color: colorCalendarHeader,
+          color: ColorDefs.colorCalendarHeader,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
       width: double.infinity,
@@ -179,11 +180,11 @@ class SchedulingPage3 extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: colorButton1Background,
+                color: ColorDefs.colorButton1Background,
               ),
               child: Icon(
                 Icons.keyboard_arrow_left,
-                color: colorTopHeader,
+                color: ColorDefs.colorTopHeader,
                 size: 30.0,
               ),
             ),
@@ -193,9 +194,10 @@ class SchedulingPage3 extends StatelessWidget {
             children: [
               Text(
                 "This Week's Schedule",
-                style: bodyText2,
+                style: ColorDefs.bodyText2,
               ),
-              Text("Mar 09, 2020 - Mar 15, 2020", style: textDayHeadings),
+              Text("Mar 09, 2020 - Mar 15, 2020",
+                  style: ColorDefs.textDayHeadings),
             ],
           ),
           Padding(
@@ -203,11 +205,11 @@ class SchedulingPage3 extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: colorButton1Background,
+                color: ColorDefs.colorButton1Background,
               ),
               child: Icon(
                 Icons.keyboard_arrow_right,
-                color: colorTopHeader,
+                color: ColorDefs.colorTopHeader,
                 size: 30.0,
               ),
             ),
@@ -227,7 +229,8 @@ class SchedulingPage3 extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.black26,
                 border: Border(
-                  left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                  left: BorderSide(
+                      width: 1.0, color: ColorDefs.colorCalendarHeader),
                 ),
               ),
               child: Column(
@@ -235,7 +238,7 @@ class SchedulingPage3 extends StatelessWidget {
                 children: [
                   Text(
                     d.split(" ")[0],
-                    style: textDayHeadings,
+                    style: ColorDefs.textDayHeadings,
                     maxLines: 1,
                   ),
                   Text(
@@ -262,13 +265,14 @@ class SchedulingPage3 extends StatelessWidget {
               (row) => Container(
                 height: rowHeight,
                 decoration: BoxDecoration(
-                  color: colorTimeBackground,
+                  color: ColorDefs.colorTimeBackground,
                   border: Border(
-                    top: BorderSide(width: 1.0, color: colorCalendarHeader),
+                    top: BorderSide(
+                        width: 1.0, color: ColorDefs.colorCalendarHeader),
                   ),
                 ),
                 child: Center(
-                  child: Text(hours[row], style: subtitle2),
+                  child: Text(hours[row], style: ColorDefs.subtitle2),
                 ),
               ),
             ),
@@ -291,10 +295,12 @@ class SchedulingPage3 extends StatelessWidget {
                 (row) => Container(
                   height: rowHeight,
                   decoration: BoxDecoration(
-                    color:
-                        row.isEven ? colorAlternatingDark : colorDarkBackground,
+                    color: row.isEven
+                        ? ColorDefs.colorAlternatingDark
+                        : ColorDefs.colorDarkBackground,
                     border: Border(
-                      left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                      left: BorderSide(
+                          width: 1.0, color: ColorDefs.colorCalendarHeader),
                     ),
                   ),
                 ),
@@ -323,7 +329,8 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
               decoration: BoxDecoration(
                 color: Colors.black26,
                 border: Border(
-                  left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                  left: BorderSide(
+                      width: 1.0, color: ColorDefs.colorCalendarHeader),
                 ),
               ),
               child: Column(
@@ -342,7 +349,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
                     heightFactor: 1 - (shrinkOffset / maxExtent),
                     child: Text(
                       d.split(" ")[0],
-                      style: textDayHeadings,
+                      style: ColorDefs.textDayHeadings,
                       maxLines: 1,
                     ),
                   ),

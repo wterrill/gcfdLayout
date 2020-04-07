@@ -83,7 +83,7 @@ class SchedulingPage5 extends StatelessWidget {
             TopWhiteHeader(), // white bar
             Expanded(
               child: Container(
-                color: colorDarkBackground,
+                color: ColorDefs.colorDarkBackground,
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
@@ -126,7 +126,7 @@ class SchedulingPage5 extends StatelessWidget {
   Widget _staticHeader() {
     return Container(
       decoration: BoxDecoration(
-          color: colorCalendarHeader,
+          color: ColorDefs.colorCalendarHeader,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
       width: double.infinity,
@@ -140,11 +140,11 @@ class SchedulingPage5 extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: colorButton1Background,
+                color: ColorDefs.colorButton1Background,
               ),
               child: Icon(
                 Icons.keyboard_arrow_left,
-                color: colorTopHeader,
+                color: ColorDefs.colorTopHeader,
                 size: 30.0,
               ),
             ),
@@ -166,9 +166,10 @@ class SchedulingPage5 extends StatelessWidget {
               children: [
                 Text(
                   "This Week's Audits",
-                  style: bodyText2,
+                  style: ColorDefs.bodyText2,
                 ),
-                Text("Mar 09, 2020 - Mar 15, 2020", style: textDayHeadings),
+                Text("Mar 09, 2020 - Mar 15, 2020",
+                    style: ColorDefs.textDayHeadings),
               ],
             ),
           ),
@@ -177,11 +178,11 @@ class SchedulingPage5 extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: colorButton1Background,
+                color: ColorDefs.colorButton1Background,
               ),
               child: Icon(
                 Icons.keyboard_arrow_right,
-                color: colorTopHeader,
+                color: ColorDefs.colorTopHeader,
                 size: 30.0,
               ),
             ),
@@ -201,7 +202,8 @@ class SchedulingPage5 extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.black26,
                 border: Border(
-                  left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                  left: BorderSide(
+                      width: 1.0, color: ColorDefs.colorCalendarHeader),
                 ),
               ),
               child: Column(
@@ -209,7 +211,7 @@ class SchedulingPage5 extends StatelessWidget {
                 children: [
                   Text(
                     d.split(" ")[0],
-                    style: textDayHeadings,
+                    style: ColorDefs.textDayHeadings,
                     maxLines: 1,
                   ),
                   Text(
@@ -249,14 +251,15 @@ class SchedulingPage5 extends StatelessWidget {
                       (row) => Container(
                         height: rowHeight,
                         decoration: BoxDecoration(
-                          color: colorTimeBackground,
+                          color: ColorDefs.colorTimeBackground,
                           border: Border(
                             top: BorderSide(
-                                width: 1.0, color: colorCalendarHeader),
+                                width: 1.0,
+                                color: ColorDefs.colorCalendarHeader),
                           ),
                         ),
                         child: Center(
-                          child: Text(hours[row], style: subtitle2),
+                          child: Text(hours[row], style: ColorDefs.subtitle2),
                         ),
                       ),
                     ),
@@ -299,23 +302,23 @@ class SchedulingPage5 extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
-                      color: colorTransparentOffDayBackground,
+                      color: ColorDefs.colorTransparentOffDayBackground,
                       child: Center(
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                             Transform.rotate(
                                 angle: 3.14 / 2,
-                                child:
-                                    Text("OFF", style: textTransparentOffDay)),
+                                child: Text("OFF",
+                                    style: ColorDefs.textTransparentOffDay)),
                             Transform.rotate(
                                 angle: 3.14 / 2,
-                                child:
-                                    Text("OFF", style: textTransparentOffDay)),
+                                child: Text("OFF",
+                                    style: ColorDefs.textTransparentOffDay)),
                             Transform.rotate(
                                 angle: 3.14 / 2,
-                                child:
-                                    Text("OFF", style: textTransparentOffDay))
+                                child: Text("OFF",
+                                    style: ColorDefs.textTransparentOffDay))
                           ]))));
 
               var todayOverlay = Positioned(
@@ -336,11 +339,12 @@ class SchedulingPage5 extends StatelessWidget {
                           height: rowHeight,
                           decoration: BoxDecoration(
                             color: row.isEven
-                                ? colorAlternatingDark
-                                : colorDarkBackground,
+                                ? ColorDefs.colorAlternatingDark
+                                : ColorDefs.colorDarkBackground,
                             border: Border(
                               left: BorderSide(
-                                  width: 1.0, color: colorCalendarHeader),
+                                  width: 1.0,
+                                  color: ColorDefs.colorCalendarHeader),
                             ),
                           ),
                         ),
@@ -372,7 +376,8 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
               decoration: BoxDecoration(
                 color: Colors.black26,
                 border: Border(
-                  left: BorderSide(width: 1.0, color: colorCalendarHeader),
+                  left: BorderSide(
+                      width: 1.0, color: ColorDefs.colorCalendarHeader),
                 ),
               ),
               child: Column(
@@ -391,7 +396,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
                     heightFactor: 1 - (shrinkOffset / maxExtent),
                     child: Text(
                       d.split(" ")[0],
-                      style: textDayHeadings,
+                      style: ColorDefs.textDayHeadings,
                       maxLines: 1,
                     ),
                   ),

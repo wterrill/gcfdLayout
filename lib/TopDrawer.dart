@@ -48,39 +48,44 @@ class _TopDrawerState extends State<TopDrawer>
                 // top drawer container
                 height: 325,
                 width: 175,
-                color: colorTopDrawerBackground,
+                color: ColorDefs.colorTopDrawerBackground,
                 child: Column(children: [
                   Container(
                       height: 40,
                       width: double.infinity,
-                      color: colorTopDrawerBackground),
+                      color: ColorDefs.colorTopDrawerBackground),
                   Container(
                       height: 35.4,
                       width: double.infinity,
-                      color: colorTopDrawerAlternating,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Center(
+                          child: Text("Schedule Audit",
+                              style: ColorDefs.textDayHeadings))),
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
                       child: Center(
                           child:
-                              Text("Schedule Audit", style: textDayHeadings))),
+                              Text("Forms", style: ColorDefs.textDayHeadings))),
                   Container(
                       height: 35.4,
                       width: double.infinity,
-                      child:
-                          Center(child: Text("Forms", style: textDayHeadings))),
-                  Container(
-                      height: 35.4,
-                      width: double.infinity,
-                      color: colorTopDrawerAlternating,
+                      color: ColorDefs.colorTopDrawerAlternating,
                       child: Center(
-                          child: Text("Contacts", style: textDayHeadings))),
+                          child: Text("Contacts",
+                              style: ColorDefs.textDayHeadings))),
                   Container(
                       height: 35.4,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Icon(Icons.sync, color: colorAudit2),
-                          Center(child: Text("Sync", style: textDayHeadings)),
-                          Icon(Icons.sync, color: colorTopDrawerBackground),
+                          Icon(Icons.sync, color: ColorDefs.colorAudit2),
+                          Center(
+                              child: Text("Sync",
+                                  style: ColorDefs.textDayHeadings)),
+                          Icon(Icons.sync,
+                              color: ColorDefs.colorTopDrawerBackground),
                         ],
                       )),
                 ])),
@@ -104,7 +109,7 @@ class _TopDrawerState extends State<TopDrawer>
                 height: 25,
                 width: 25,
                 decoration: new BoxDecoration(
-                  color: colorTopDrawerBackground,
+                  color: ColorDefs.colorTopDrawerBackground,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black,

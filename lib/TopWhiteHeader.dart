@@ -10,7 +10,7 @@ class TopWhiteHeader extends StatelessWidget {
     return Container(
       // Top header (white)
       height: 50,
-      color: colorTopHeader,
+      color: ColorDefs.colorTopHeader,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -24,7 +24,8 @@ class TopWhiteHeader extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: colorUserAccent, width: 1.0),
+                border:
+                    Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
               ),
               child: Row(
@@ -35,13 +36,13 @@ class TopWhiteHeader extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                     child: Container(
                       decoration: BoxDecoration(
-                        border:
-                            Border.all(color: colorDarkBackground, width: 3.0),
+                        border: Border.all(
+                            color: ColorDefs.colorDarkBackground, width: 3.0),
                         borderRadius: BorderRadius.all(Radius.circular(40.0)),
                       ),
                       child: Icon(
                         Icons.person,
-                        color: colorDarkBackground,
+                        color: ColorDefs.colorDarkBackground,
                         size: 30.0,
                       ),
                     ),
@@ -50,7 +51,7 @@ class TopWhiteHeader extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Sarah Connor",
-                      style: bodyText1,
+                      style: ColorDefs.bodyText1,
                     ),
                   )
                 ],
