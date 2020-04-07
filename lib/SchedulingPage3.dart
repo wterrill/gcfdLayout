@@ -151,7 +151,7 @@ class SchedulingPage3 extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Sarah Kitty",
-                      style: ColorDefs.textBodyText1,
+                      style: ColorDefs.textBodyWhite20,
                     ),
                   )
                 ],
@@ -194,7 +194,7 @@ class SchedulingPage3 extends StatelessWidget {
             children: [
               Text(
                 "This Week's Schedule",
-                style: ColorDefs.textBodyText1,
+                style: ColorDefs.textBodyWhite20,
               ),
               Text("Mar 09, 2020 - Mar 15, 2020",
                   style: ColorDefs.textDayHeadings),

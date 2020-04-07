@@ -33,10 +33,17 @@ class ColorDefs {
 // Styles
   static TextStyle textDayHeadings =
       TextStyle(color: colorAudit2, fontSize: 10.0);
-  static TextStyle textBodyText1Small =
+  static TextStyle textBodyBlack10 =
       TextStyle(color: Colors.black, fontSize: 10.0);
-  static TextStyle textBodyText1 =
+  static TextStyle textBodyBlack20 =
       TextStyle(color: Colors.black, fontSize: 20.0);
+  static TextStyle textBodyBlack30 =
+      TextStyle(color: Colors.black, fontSize: 30.0);
+
+  static TextStyle textBodyGrey20 =
+      TextStyle(color: Colors.grey, fontSize: 20.0);
+  static TextStyle textBodyWhite20 =
+      TextStyle(color: Colors.white, fontSize: 20.0);
   static TextStyle textBodyText2 =
       TextStyle(color: colorTopHeader, fontSize: 20.0);
   static TextStyle textSubtitle2 =

@@ -86,7 +86,7 @@ class SchedulingPage2 extends StatelessWidget {
                                 children: [
                                   Text(
                                     "This Week's Audits",
-                                    style: ColorDefs.textBodyText1,
+                                    style: ColorDefs.textBodyWhite20,
                                   ),
                                   Text("Mar 09, 2020 - Mar 15, 2020",
                                       style: ColorDefs.textDayHeadings),

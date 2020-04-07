@@ -54,7 +54,7 @@ class TopWhiteHeader extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Sarah Connor",
-                      style: ColorDefs.textBodyText1,
+                      style: ColorDefs.textBodyBlack20,
                     ),
                   )
                 ],
