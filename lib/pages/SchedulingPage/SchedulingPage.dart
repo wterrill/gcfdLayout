@@ -3,10 +3,9 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/Providers/LayoutData.dart';
 import 'package:provider/provider.dart';
-
-import 'colorDefs.dart';
-import 'LayoutData.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -71,7 +70,7 @@ class Event {
   String toString() => message;
 }
 
-class SchedulingPage5 extends StatelessWidget {
+class SchedulingPage extends StatelessWidget {
   final controller = StreamController<String>();
 
   @override

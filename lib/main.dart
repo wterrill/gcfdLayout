@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/thisWeeksKitties.dart';
+import 'package:gcfdlayout/pages/LoginScreen/LoginScreen.dart';
+import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
-import 'CalendarData.dart';
-import 'LayoutData.dart';
-import 'LoginScreen.dart';
-import 'SchedulingPage.dart';
-import 'SchedulingPage2.dart';
+import 'Providers/CalendarData.dart';
+import 'Providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 
-import 'SchedulingPage3.dart';
-import 'SchedulingPage4.dart';
-import 'SchedulingPage5.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 // void main() => runApp(MyApp());
@@ -39,7 +34,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/login': (context) => LoginScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => SchedulingPage5(),
+        '/second': (context) => SchedulingPage(),
       },
       theme: ThemeData(
         // Define the default brightness and colors.
