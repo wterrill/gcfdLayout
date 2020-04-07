@@ -48,7 +48,7 @@ List<List<Event>> dayEvents = [
     Event(4.25, 4.75, Colors.orange, 'orange'),
     Event(4.85, 6.0, Colors.blue, 'blue')
   ], // "Wednesday 03-11-2002",
-  [Event(3.2, 3.4, Colors.indigo, 'short indigo')], // "Thursday 03-12-2002",
+  [Event(3.2, 3.7, Colors.indigo, 'short indigo')], // "Thursday 03-12-2002",
   [], // "Friday 03-13-2002",
   [], // "Saturday 03-14-2002",
   [], // "Sunday 03-15-2002",
@@ -76,50 +76,52 @@ class SchedulingPage5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            TopWhiteHeader(), // white bar
-            Expanded(
-              child: Container(
-                color: ColorDefs.colorDarkBackground,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
-                  child: Column(
-                    children: [
-                      _staticHeader(), // static header
-                      Expanded(
-                        child: CustomScrollView(
-                          slivers: <Widget>[
-                            // floating header
-                            // SliverAppBar(
-                            //   backgroundColor: Colors.transparent,
-                            //   floating: true,
-                            //   flexibleSpace: _floatingHeader(),
-                            // ),
-                            SliverPersistentHeader(
-                              floating: true,
-                              pinned: true,
-                              delegate: HeaderDelegate(),
-                            ),
-                            // main grid
-                            SliverToBoxAdapter(
-                              child: _grid(),
-                            ),
-                          ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              TopWhiteHeader(), // white bar
+              Expanded(
+                child: Container(
+                  color: ColorDefs.colorDarkBackground,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+                    child: Column(
+                      children: [
+                        _staticHeader(), // static header
+                        Expanded(
+                          child: CustomScrollView(
+                            slivers: <Widget>[
+                              // floating header
+                              // SliverAppBar(
+                              //   backgroundColor: Colors.transparent,
+                              //   floating: true,
+                              //   flexibleSpace: _floatingHeader(),
+                              // ),
+                              SliverPersistentHeader(
+                                floating: true,
+                                pinned: true,
+                                delegate: HeaderDelegate(),
+                              ),
+                              // main grid
+                              SliverToBoxAdapter(
+                                child: _grid(),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        RepaintBoundary(child: TopDrawer())
-      ],
+            ],
+          ),
+          RepaintBoundary(child: TopDrawer())
+        ],
+      ),
     );
   }
 
@@ -159,14 +161,14 @@ class SchedulingPage5 extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "This Week's Audits",
-                  style: ColorDefs.bodyText2,
+                  style: ColorDefs.textBodyText1,
                 ),
                 Text("Mar 09, 2020 - Mar 15, 2020",
                     style: ColorDefs.textDayHeadings),
@@ -259,7 +261,8 @@ class SchedulingPage5 extends StatelessWidget {
                           ),
                         ),
                         child: Center(
-                          child: Text(hours[row], style: ColorDefs.subtitle2),
+                          child:
+                              Text(hours[row], style: ColorDefs.textSubtitle2),
                         ),
                       ),
                     ),

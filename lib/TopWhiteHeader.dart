@@ -16,8 +16,11 @@ class TopWhiteHeader extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
-            child: Image(
-              image: AssetImage('images/GCFD_Logo.jpg'),
+            child: Hero(
+              tag: "GCFD_Logo",
+              child: Image(
+                image: AssetImage('images/GCFD_Logo.jpg'),
+              ),
             ),
           ),
           Padding(
@@ -51,7 +54,7 @@ class TopWhiteHeader extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Sarah Connor",
-                      style: ColorDefs.bodyText1,
+                      style: ColorDefs.textBodyText1,
                     ),
                   )
                 ],

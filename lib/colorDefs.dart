@@ -28,12 +28,19 @@ class ColorDefs {
   static Color colorAudit4 = Color(0xFFD8AD43);
   static Color colorAudit5 = Color(0xFFFFFFFF);
 
+  static Color colorLoginBackground = Color(0xFFE7EFFE);
+
 // Styles
   static TextStyle textDayHeadings =
       TextStyle(color: colorAudit2, fontSize: 10.0);
-  static TextStyle bodyText1 = TextStyle(color: Colors.black, fontSize: 20.0);
-  static TextStyle bodyText2 = TextStyle(color: colorTopHeader, fontSize: 20.0);
-  static TextStyle subtitle2 = TextStyle(color: colorTopHeader, fontSize: 15.0);
+  static TextStyle textBodyText1Small =
+      TextStyle(color: Colors.black, fontSize: 10.0);
+  static TextStyle textBodyText1 =
+      TextStyle(color: Colors.black, fontSize: 20.0);
+  static TextStyle textBodyText2 =
+      TextStyle(color: colorTopHeader, fontSize: 20.0);
+  static TextStyle textSubtitle2 =
+      TextStyle(color: colorTopHeader, fontSize: 15.0);
 
   static TextStyle textTransparentOffDay =
       TextStyle(color: colorTransparentOffDayText, fontSize: 42.0);

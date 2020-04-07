@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'SchedulingPage3.dart';
 import 'SchedulingPage4.dart';
 import 'SchedulingPage5.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
 // void main() => runApp(MyApp());
 
@@ -29,7 +30,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // timeDilation = 14.0;
     return MaterialApp(
+      // Start the app with the "/" named route. In this case, the app starts
+      // on the FirstScreen widget.
+      // initialRoute: '/login',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/login': (context) => LoginScreen(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/second': (context) => SchedulingPage5(),
+      },
       theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.dark,
@@ -38,6 +49,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Georgia',
         textTheme: TextTheme(),
       ),
+      // home: Scaffold(body: LoginScreen())
       home: SafeArea(
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {

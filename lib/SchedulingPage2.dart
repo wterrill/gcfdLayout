@@ -86,7 +86,7 @@ class SchedulingPage2 extends StatelessWidget {
                                 children: [
                                   Text(
                                     "This Week's Audits",
-                                    style: ColorDefs.bodyText2,
+                                    style: ColorDefs.textBodyText1,
                                   ),
                                   Text("Mar 09, 2020 - Mar 15, 2020",
                                       style: ColorDefs.textDayHeadings),
@@ -212,7 +212,7 @@ class SchedulingPage2 extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Text(hours[i], style: ColorDefs.subtitle2),
+                child: Text(hours[i], style: ColorDefs.textSubtitle2),
               ),
             ) //),
         );
