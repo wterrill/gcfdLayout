@@ -7,6 +7,10 @@ import 'SchedulingPage.dart';
 import 'SchedulingPage2.dart';
 import 'package:provider/provider.dart';
 
+import 'SchedulingPage3.dart';
+import 'SchedulingPage4.dart';
+import 'SchedulingPage5.dart';
+
 // void main() => runApp(MyApp());
 
 void main() {
@@ -36,16 +40,15 @@ class MyApp extends StatelessWidget {
       home: SafeArea(
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-          print("constraints");
-          double safeAreaSize =
-              MediaQuery.of(context).size.height - constraints.maxHeight;
-
+          print("constraints: $constraints");
+          Size mediaSize = MediaQuery.of(context).size;
+          double safeAreaSize = mediaSize.height - constraints.maxHeight;
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
+          Provider.of<LayoutData>(context).safeArea = constraints;
+          Provider.of<LayoutData>(context).mediaArea = mediaSize;
 
-          print(constraints);
-          print(MediaQuery.of(context).size);
           // constraints.hei
-          return Scaffold(body: SchedulingPage2());
+          return Scaffold(body: SchedulingPage5());
         }),
       ),
     );

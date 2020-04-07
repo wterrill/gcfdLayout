@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'LayoutData.dart';
 import 'TopDrawer.dart';
+import 'TopWhiteHeader.dart';
 import 'colorDefs.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -25,14 +26,14 @@ class SchedulingPage2 extends StatelessWidget {
     "9:00 pm",
     "10:00 pm",
   ];
-  final List<String> days = [
-    "Monday 03-09-2002",
-    "Tuesday 03-10-2002",
-    "Wednesday 03-11-2002",
-    "Thursday 03-12-2002",
-    "Friday 03-13-2002",
-    "Saturday 03-14-2002",
-    "Sunday 03-15-2002",
+  final List<Map<String, String>> days = [
+    {'date': 'Monday 03-09-2002'},
+    {'date': 'Tuesday 03-10-2002'},
+    {'date': 'Wednesday 03-11-2002'},
+    {'date': 'Thursday 03-12-2002'},
+    {'date': 'Friday 03-13-2002'},
+    {'date': 'Saturday 03-14-2002'},
+    {'date': 'Sunday 03-15-2002'},
   ];
 
   @override
@@ -41,62 +42,7 @@ class SchedulingPage2 extends StatelessWidget {
       children: [
         Column(
           children: [
-            Container(
-              // Top header (white)
-              height: 50,
-              color: colorTopHeader,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
-                    child: Image(
-                      image: AssetImage('images/GCFD_Logo.jpg'),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: colorUserAccent, width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorDarkBackground, width: 3.0),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40.0)),
-                              ),
-                              child: Icon(
-                                Icons.person,
-                                color: colorDarkBackground,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              "Sarah Connor",
-                              style: bodyText1,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            // end of top white bar
-
+            TopWhiteHeader(),
             Expanded(
               child: Container(
                 // Color for big grey background
@@ -172,7 +118,7 @@ class SchedulingPage2 extends StatelessWidget {
                               Expanded(child: Text(" ")),
                               ...days
                                   .map(
-                                    (String d) => Expanded(
+                                    (Map<String, String> d) => Expanded(
                                         child: Container(
                                       decoration: BoxDecoration(
                                         color: colorTimeBackground,
@@ -187,13 +133,14 @@ class SchedulingPage2 extends StatelessWidget {
                                               MainAxisAlignment.center,
                                           children: [
                                             AutoSizeText(
-                                              d.split(" ")[0],
+                                              d['date'].split(" ")[0],
+                                              // d['date'].split(" ")[0],
                                               style: textDayHeadings,
                                               minFontSize: 1.0,
                                               maxLines: 1,
                                             ),
                                             AutoSizeText(
-                                              d.split(" ")[1],
+                                              d['date'].split(" ")[1],
                                               style: TextStyle(fontSize: 10.0),
                                               minFontSize: 1.0,
                                               maxLines: 1,
@@ -218,13 +165,13 @@ class SchedulingPage2 extends StatelessWidget {
                                 Expanded(
                                   child: _buildTimes(),
                                 ),
-                                _buildBoxes(),
-                                _buildBoxes(),
-                                _buildBoxes(),
-                                _buildBoxes(),
-                                _buildBoxes(),
-                                _buildBoxes(),
-                                _buildBoxes()
+                                _buildBoxes(context),
+                                _buildBoxes(context),
+                                _buildBoxes(context),
+                                _buildBoxes(context),
+                                _buildBoxes(context),
+                                _buildBoxes(context),
+                                _buildBoxes(context)
                               ],
                             ),
                           ),
@@ -270,7 +217,7 @@ class SchedulingPage2 extends StatelessWidget {
     return Column(children: [...times]);
   }
 
-  Widget _buildBoxes() {
+  Widget _buildBoxes(BuildContext context) {
     List<Widget> boxes = [];
     for (int hourindex = 0; hourindex < hours.length; hourindex++) {
       boxes.add(Container(
@@ -291,8 +238,8 @@ class SchedulingPage2 extends StatelessWidget {
             Stack(fit: StackFit.loose, alignment: Alignment.center, children: [
           Column(children: [...boxes]),
           Positioned(
-              left: 20,
-              right: 20,
+              left: Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
+              right: Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
               top: 20,
               child: Container(
                   decoration: new BoxDecoration(
@@ -304,11 +251,5 @@ class SchedulingPage2 extends StatelessWidget {
         ]),
       ),
     );
-
-    // return Stack(
-    //   fit: StackFit.loose,
-    //   alignment: Alignment.center,
-    //   children: [TestDayData(day: widget.title), ...widget.appointments],
-    // );
   }
 }
