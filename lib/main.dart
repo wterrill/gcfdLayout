@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gcfdlayout/pages/LoginScreen/LoginScreen.dart';
 import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
-import 'Providers/CalendarData.dart';
-import 'Providers/LayoutData.dart';
+import 'providers/CalendarData.dart';
+import 'providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/scheduler.dart' show timeDilation;

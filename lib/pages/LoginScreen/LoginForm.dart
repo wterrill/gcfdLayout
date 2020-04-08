@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/communications/Authentication.dart';
+import 'package:gcfdlayout/definitions/Dialogs.dart';
 import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:gcfdlayout/providers/LayoutData.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -20,6 +24,11 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: EdgeInsets.symmetric(
+          horizontal: .2 * Provider.of<LayoutData>(context).mediaArea.width),
       color: ColorDefs.colorTopHeader,
       // height: 380,
       // width: 300,
@@ -128,11 +137,15 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       print(_username);
       print(_password);
+      Dialogs.showAlertDialog(context);
+      bool result = await Authentication.getAuthentication();
+      print("result = $result");
+
       Navigator.push(
           context,
           PageRouteBuilder<void>(

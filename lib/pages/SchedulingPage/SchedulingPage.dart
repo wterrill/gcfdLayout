@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout/Definitions/colorDefs.dart';
-import 'package:gcfdlayout/Providers/LayoutData.dart';
+import 'package:gcfdlayout/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
@@ -298,6 +298,14 @@ class SchedulingPage extends StatelessWidget {
                 ),
               ); // <== end of .map
 
+              var dayOFFmarker = Transform.rotate(
+                  angle: 3.14 / 2,
+                  child: AutoSizeText("OFF",
+                      minFontSize: 12,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: ColorDefs.textTransparentOffDay));
+
               var offOverlay = Positioned(
                   top: 0,
                   bottom: 0,
@@ -309,18 +317,9 @@ class SchedulingPage extends StatelessWidget {
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                            Transform.rotate(
-                                angle: 3.14 / 2,
-                                child: Text("OFF",
-                                    style: ColorDefs.textTransparentOffDay)),
-                            Transform.rotate(
-                                angle: 3.14 / 2,
-                                child: Text("OFF",
-                                    style: ColorDefs.textTransparentOffDay)),
-                            Transform.rotate(
-                                angle: 3.14 / 2,
-                                child: Text("OFF",
-                                    style: ColorDefs.textTransparentOffDay))
+                            dayOFFmarker,
+                            dayOFFmarker,
+                            dayOFFmarker
                           ]))));
 
               var todayOverlay = Positioned(
