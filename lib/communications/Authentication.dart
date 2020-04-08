@@ -2,6 +2,6 @@
 
 class Authentication {
   static Future<bool> getAuthentication() async {
-    return Future.delayed(Duration(milliseconds: 5000), () => true);
+    return Future.delayed(Duration(milliseconds: 1000), () => true);
   }
 }

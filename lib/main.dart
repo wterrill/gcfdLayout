@@ -6,7 +6,7 @@ import 'providers/CalendarData.dart';
 import 'providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter/scheduler.dart' show timeDilation;
+// import 'package:flutter/scheduler.dart' show timeDilation;
 
 // void main() => runApp(MyApp());
 
@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
 
-          // constraints.hei
-          return Scaffold(body: LoginScreen());
+          // return Scaffold(body: LoginScreen());
+          return Scaffold(body: SchedulingPage());
         }),
       ),
     );

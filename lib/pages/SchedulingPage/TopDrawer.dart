@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/definitions/colorDefs.dart';
 
 class TopDrawer extends StatefulWidget {
   TopDrawer({Key key}) : super(key: key);

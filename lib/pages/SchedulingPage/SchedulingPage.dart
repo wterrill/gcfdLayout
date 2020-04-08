@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/definitions/colorDefs.dart';
 import 'package:gcfdlayout/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
+import 'CalenderHeader.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -89,7 +90,7 @@ class SchedulingPage extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
                     child: Column(
                       children: [
-                        _staticHeader(), // static header
+                        CalendarHeader(controller: controller), // static header
                         Expanded(
                           child: CustomScrollView(
                             slivers: <Widget>[
@@ -124,110 +125,41 @@ class SchedulingPage extends StatelessWidget {
     );
   }
 
-  Widget _staticHeader() {
-    return Container(
-      decoration: BoxDecoration(
-          color: ColorDefs.colorCalendarHeader,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
-      width: double.infinity,
-      height: 50.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: ColorDefs.colorButton1Background,
-              ),
-              child: Icon(
-                Icons.keyboard_arrow_left,
-                color: ColorDefs.colorTopHeader,
-                size: 30.0,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'enter filter query - type "ora" for example',
-              ),
-              onChanged: controller.add,
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "This Week's Audits",
-                  style: ColorDefs.textBodyWhite20,
-                ),
-                Text("Mar 09, 2020 - Mar 15, 2020",
-                    style: ColorDefs.textDayHeadings),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                color: ColorDefs.colorButton1Background,
-              ),
-              child: Icon(
-                Icons.keyboard_arrow_right,
-                color: ColorDefs.colorTopHeader,
-                size: 30.0,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _floatingHeader() {
-    return Row(
-      children: <Widget>[
-        Spacer(),
-        ...days.map(
-          (d) => Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black26,
-                border: Border(
-                  left: BorderSide(
-                      width: 1.0, color: ColorDefs.colorCalendarHeader),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    d.split(" ")[0],
-                    style: ColorDefs.textDayHeadings,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    d.split(" ")[1],
-                    style: TextStyle(fontSize: 10.0),
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _floatingHeader() {
+  //   return Row(
+  //     children: <Widget>[
+  //       Spacer(),
+  //       ...days.map(
+  //         (d) => Expanded(
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //               color: Colors.black26,
+  //               border: Border(
+  //                 left: BorderSide(
+  //                     width: 1.0, color: ColorDefs.colorCalendarHeader),
+  //               ),
+  //             ),
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 Text(
+  //                   d.split(" ")[0],
+  //                   style: ColorDefs.textDayHeadings,
+  //                   maxLines: 1,
+  //                 ),
+  //                 Text(
+  //                   d.split(" ")[1],
+  //                   style: TextStyle(fontSize: 10.0),
+  //                   maxLines: 1,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   List<List<Event>> _filter(String query) {
     print('query: |$query|');
@@ -238,6 +170,7 @@ class SchedulingPage extends StatelessWidget {
   }
 
   Widget _grid() {
+    var timeAutoGroup = AutoSizeGroup();
     return StreamBuilder<List<List<Event>>>(
         stream: controller.stream.map(_filter),
         initialData: dayEvents,
@@ -260,8 +193,11 @@ class SchedulingPage extends StatelessWidget {
                           ),
                         ),
                         child: Center(
-                          child:
-                              Text(hours[row], style: ColorDefs.textSubtitle2),
+                          child: AutoSizeText(hours[row],
+                              maxLines: 1,
+                              group: timeAutoGroup,
+                              minFontSize: 5,
+                              style: ColorDefs.textSubtitle2),
                         ),
                       ),
                     ),

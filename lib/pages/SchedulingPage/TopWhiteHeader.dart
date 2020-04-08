@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/definitions/colorDefs.dart';
 
 class TopWhiteHeader extends StatelessWidget {
   const TopWhiteHeader({Key key}) : super(key: key);

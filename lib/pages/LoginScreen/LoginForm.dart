@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/Definitions/colorDefs.dart';
+import 'package:gcfdlayout/definitions/colorDefs.dart';
 import 'package:gcfdlayout/communications/Authentication.dart';
 import 'package:gcfdlayout/definitions/Dialogs.dart';
 import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';

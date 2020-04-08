@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  static Widget showAlertDialog(BuildContext context) {
+  static void showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
