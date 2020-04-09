@@ -101,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
           Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
                 child: Text("I forgot my password",
                     style: ColorDefs.textBodyBlack10),
               )),
@@ -155,6 +155,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onChangeField({@required String input, @required String from}) {
+    if (from == "username" && input == "mxotech") {
+      _showDialog();
+      return;
+    }
+
     if (from == "username") if (input.length > 3) {
       _dirtyUsername = true;
     } else {
@@ -181,5 +186,9 @@ class _LoginFormState extends State<LoginForm> {
         _enabledLoginButton = false;
       });
     }
+  }
+
+  void _showDialog() {
+    Dialogs.showVersionDialog(context);
   }
 }

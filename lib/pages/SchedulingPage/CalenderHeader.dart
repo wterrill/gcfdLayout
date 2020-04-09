@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout/definitions/colorDefs.dart';
 
@@ -59,8 +60,10 @@ class _CalendarHeaderState extends State<CalendarHeader> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                AutoSizeText(
                   "This Week's Audits",
+                  maxLines: 1,
+                  minFontSize: 10,
                   style: ColorDefs.textBodyWhite20,
                 ),
                 Text("Mar 09, 2020 - Mar 15, 2020",

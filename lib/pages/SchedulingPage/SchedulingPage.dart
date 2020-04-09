@@ -11,71 +11,13 @@ import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-final days = [
-  "Monday 03-09-2002",
-  "Tuesday 03-10-2002",
-  "Wednesday 03-11-2002",
-  "Thursday 03-12-2002",
-  "Friday 03-13-2002",
-  "Saturday 03-14-2002",
-  "Sunday 03-15-2002",
-];
-
-final hours = [
-  "6:00 am",
-  "7:00 am",
-  "8:00 am",
-  "9:00 am",
-  "10:00 am",
-  "11:00 am",
-  "12:00 pm",
-  "1:00 pm",
-  "2:00 pm",
-  "3:00 pm",
-  "4:00 pm",
-  "5:00 pm",
-  "6:00 pm",
-  "7:00 pm",
-  "8:00 pm",
-  "9:00 pm",
-  "10:00 pm",
-];
-
-List<List<Event>> dayEvents = [
-  [], // "Monday 03-09-2002",
-  [Event(2.5, 4.5, Colors.green, 'long green')], // "Tuesday 03-10-2002",
-  [
-    Event(4.25, 4.75, Colors.orange, 'orange'),
-    Event(4.85, 6.0, Colors.blue, 'blue')
-  ], // "Wednesday 03-11-2002",
-  [Event(3.2, 3.7, Colors.indigo, 'short indigo')], // "Thursday 03-12-2002",
-  [], // "Friday 03-13-2002",
-  [], // "Saturday 03-14-2002",
-  [], // "Sunday 03-15-2002",
-];
-
-var rowHeight = 50.0;
-
-class Event {
-  final Color color;
-  final double top;
-  final double height;
-  final String message;
-  bool visible = true;
-
-  Event(double start, double end, this.color, this.message)
-      : top = start * rowHeight,
-        height = (end - start) * rowHeight;
-
-  @override
-  String toString() => message;
-}
-
 class SchedulingPage extends StatelessWidget {
   final controller = StreamController<String>();
 
   @override
   Widget build(BuildContext context) {
+    var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
+    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     return Scaffold(
       body: Stack(
         children: [
@@ -86,8 +28,11 @@ class SchedulingPage extends StatelessWidget {
                 child: Container(
                   color: ColorDefs.colorDarkBackground,
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+                    padding: EdgeInsets.fromLTRB(
+                        0.01 * mediaWidth,
+                        50.0,
+                        0.01 * mediaWidth,
+                        0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
                     child: Column(
                       children: [
                         CalendarHeader(controller: controller), // static header
@@ -228,7 +173,12 @@ class SchedulingPage extends StatelessWidget {
                         //     : Colors.white, /* this looks good too */
                       ),
                       alignment: Alignment.center,
-                      child: Text(e.message),
+                      child: AutoSizeText(
+                        e.message,
+                        minFontSize: 5,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ),
@@ -237,7 +187,7 @@ class SchedulingPage extends StatelessWidget {
               var dayOFFmarker = Transform.rotate(
                   angle: 3.14 / 2,
                   child: AutoSizeText("OFF",
-                      minFontSize: 12,
+                      minFontSize: 5,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: ColorDefs.textTransparentOffDay));
