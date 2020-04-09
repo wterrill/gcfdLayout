@@ -3,7 +3,9 @@ import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gcfdlayout/definitions/Event.dart';
 import 'package:gcfdlayout/definitions/colorDefs.dart';
+import 'package:gcfdlayout/providers/CalendarData.dart';
 import 'package:gcfdlayout/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 import 'CalenderHeader.dart';
@@ -16,6 +18,7 @@ class SchedulingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final daysEvents = Provider.of<CalendarData>(context).dayEvents;
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     return Scaffold(
@@ -52,7 +55,7 @@ class SchedulingPage extends StatelessWidget {
                               ),
                               // main grid
                               SliverToBoxAdapter(
-                                child: _grid(),
+                                child: _grid(context),
                               ),
                             ],
                           ),
@@ -114,7 +117,7 @@ class SchedulingPage extends StatelessWidget {
     return dayEvents;
   }
 
-  Widget _grid() {
+  Widget _grid(BuildContext context, List<List<Event>> daysEvents) {
     var timeAutoGroup = AutoSizeGroup();
     return StreamBuilder<List<List<Event>>>(
         stream: controller.stream.map(_filter),

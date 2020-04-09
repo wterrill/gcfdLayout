@@ -7,12 +7,12 @@ class Event {
   final double top;
   final double height;
   final String message;
-  final BuildContext context;
+  final double rowHeight;
   bool visible = true;
 
-  Event(double start, double end, this.color, this.message, this.context)
-      : top = start * Provider.of<CalendarData>(context).rowHeight,
-        height = (end - start) * Provider.of<CalendarData>(context).rowHeight;
+  Event(double start, double end, this.color, this.message, this.rowHeight)
+      : top = start * rowHeight,
+        height = (end - start) * rowHeight;
 
   @override
   String toString() => message;
