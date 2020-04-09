@@ -10,7 +10,7 @@ class CalendarData with ChangeNotifier {
 //////////////////////////////////////////////////////////////////////////
   ///
 
-  double rowHeight = 50.0;
+  static final double rowHeight = 50.0;
 
   final List<String> days = [
     "Monday 03-09-2002",
@@ -45,14 +45,20 @@ class CalendarData with ChangeNotifier {
   List<List<Event>> dayEvents = [
     [], // "Monday 03-09-2002",
     [
-      Event(2.5, 4.5, Colors.green, 'long green', rowHeight)
+      Event(
+        2.5,
+        4.5,
+        rowHeight,
+        Colors.green,
+        'long green',
+      )
     ], // "Tuesday 03-10-2002",
     [
-      Event(4.25, 4.75, Colors.orange, 'orange', rowHeight),
-      Event(4.85, 6.0, Colors.blue, 'blue', rowHeight)
+      Event(4.25, 4.75, rowHeight, Colors.orange, 'orange'),
+      Event(4.85, 6.0, rowHeight, Colors.blue, 'blue')
     ], // "Wednesday 03-11-2002",
     [
-      Event(3.2, 3.7, Colors.indigo, 'short indigo', rowHeight)
+      Event(3.2, 3.7, rowHeight, Colors.indigo, 'short indigo')
     ], // "Thursday 03-12-2002",
     [], // "Friday 03-13-2002",
     [], // "Saturday 03-14-2002",
@@ -137,7 +143,7 @@ class CalendarData with ChangeNotifier {
   ];
 
   CalendarData() {
-    initializeApp();
+    // initializeApp();
   }
 
   void initializeApp() {

@@ -155,7 +155,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onChangeField({@required String input, @required String from}) {
-    if (from == "username" && input == "mxotech") {
+    if (input == "version") {
       _showDialog();
       return;
     }

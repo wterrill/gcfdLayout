@@ -8,7 +8,7 @@ import 'package:gcfdlayout/definitions/colorDefs.dart';
 import 'package:gcfdlayout/providers/CalendarData.dart';
 import 'package:gcfdlayout/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
-import 'CalenderHeader.dart';
+import 'CalendarHeader.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -18,7 +18,7 @@ class SchedulingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final daysEvents = Provider.of<CalendarData>(context).dayEvents;
+    // final dayEvents = Provider.of<CalendarData>(context).dayEvents;
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     return Scaffold(
@@ -51,11 +51,11 @@ class SchedulingPage extends StatelessWidget {
                               SliverPersistentHeader(
                                 floating: true,
                                 pinned: true,
-                                delegate: HeaderDelegate(),
+                                delegate: HeaderDelegate(context),
                               ),
                               // main grid
                               SliverToBoxAdapter(
-                                child: _grid(context),
+                                child: filterGridWidget(controller: controller),
                               ),
                             ],
                           ),
@@ -72,55 +72,70 @@ class SchedulingPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  // Widget _floatingHeader() {
-  //   return Row(
-  //     children: <Widget>[
-  //       Spacer(),
-  //       ...days.map(
-  //         (d) => Expanded(
-  //           child: Container(
-  //             decoration: BoxDecoration(
-  //               color: Colors.black26,
-  //               border: Border(
-  //                 left: BorderSide(
-  //                     width: 1.0, color: ColorDefs.colorCalendarHeader),
-  //               ),
-  //             ),
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 Text(
-  //                   d.split(" ")[0],
-  //                   style: ColorDefs.textDayHeadings,
-  //                   maxLines: 1,
-  //                 ),
-  //                 Text(
-  //                   d.split(" ")[1],
-  //                   style: TextStyle(fontSize: 10.0),
-  //                   maxLines: 1,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+// Widget _floatingHeader() {
+//   return Row(
+//     children: <Widget>[
+//       Spacer(),
+//       ...days.map(
+//         (d) => Expanded(
+//           child: Container(
+//             decoration: BoxDecoration(
+//               color: Colors.black26,
+//               border: Border(
+//                 left: BorderSide(
+//                     width: 1.0, color: ColorDefs.colorCalendarHeader),
+//               ),
+//             ),
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Text(
+//                   d.split(" ")[0],
+//                   style: ColorDefs.textDayHeadings,
+//                   maxLines: 1,
+//                 ),
+//                 Text(
+//                   d.split(" ")[1],
+//                   style: TextStyle(fontSize: 10.0),
+//                   maxLines: 1,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+// }
 
-  List<List<Event>> _filter(String query) {
-    print('query: |$query|');
-    var q = query.toLowerCase();
-    dayEvents.forEach((day) =>
-        day.forEach((e) => e.visible = e.message.toLowerCase().contains(q)));
-    return dayEvents;
-  }
+class filterGridWidget extends StatefulWidget {
+  filterGridWidget({Key key, this.controller}) : super(key: key);
+  final StreamController<String> controller;
 
-  Widget _grid(BuildContext context, List<List<Event>> daysEvents) {
+  @override
+  _filterGridWidgetState createState() => _filterGridWidgetState();
+}
+
+class _filterGridWidgetState extends State<filterGridWidget> {
+  @override
+  Widget build(BuildContext context) {
+    List<List<Event>> _filter(String query) {
+      print('query: |$query|');
+      var q = query.toLowerCase();
+      List<List<Event>> dayEvents =
+          Provider.of<CalendarData>(context, listen: false).dayEvents;
+      dayEvents.forEach((day) =>
+          day.forEach((e) => e.visible = e.message.toLowerCase().contains(q)));
+      return dayEvents;
+    }
+
     var timeAutoGroup = AutoSizeGroup();
+    List<String> hours = Provider.of<CalendarData>(context).hours;
+    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     return StreamBuilder<List<List<Event>>>(
-        stream: controller.stream.map(_filter),
+        stream: widget.controller.stream.map(_filter),
         initialData: dayEvents,
         builder: (context, snapshot) {
           return Row(
@@ -131,7 +146,7 @@ class SchedulingPage extends StatelessWidget {
                     children: List.generate(
                       hours.length,
                       (row) => Container(
-                        height: rowHeight,
+                        height: CalendarData.rowHeight,
                         decoration: BoxDecoration(
                           color: ColorDefs.colorTimeBackground,
                           border: Border(
@@ -226,7 +241,7 @@ class SchedulingPage extends StatelessWidget {
                       children: List.generate(
                         hours.length,
                         (row) => Container(
-                          height: rowHeight,
+                          height: CalendarData.rowHeight,
                           decoration: BoxDecoration(
                             color: row.isEven
                                 ? ColorDefs.colorAlternatingDark
@@ -256,7 +271,12 @@ class SchedulingPage extends StatelessWidget {
 }
 
 class HeaderDelegate extends SliverPersistentHeaderDelegate {
+  final BuildContext context;
+
+  HeaderDelegate(this.context);
+
   Widget _floatingHeader(double shrinkOffset) {
+    var days = Provider.of<CalendarData>(context).days;
     return Row(
       children: <Widget>[
         Spacer(),
