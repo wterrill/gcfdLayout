@@ -8,6 +8,10 @@ class CalendarData with ChangeNotifier {
   List<Map> appointmentsList = [];
 
 //////////////////////////////////////////////////////////////////////////
+  ///
+
+  double rowHeight = 50.0;
+
   final List<String> days = [
     "Monday 03-09-2002",
     "Tuesday 03-10-2002",
@@ -40,18 +44,21 @@ class CalendarData with ChangeNotifier {
 
   List<List<Event>> dayEvents = [
     [], // "Monday 03-09-2002",
-    [Event(2.5, 4.5, Colors.green, 'long green')], // "Tuesday 03-10-2002",
     [
-      Event(4.25, 4.75, Colors.orange, 'orange'),
-      Event(4.85, 6.0, Colors.blue, 'blue')
+      Event(2.5, 4.5, Colors.green, 'long green', rowHeight)
+    ], // "Tuesday 03-10-2002",
+    [
+      Event(4.25, 4.75, Colors.orange, 'orange', rowHeight),
+      Event(4.85, 6.0, Colors.blue, 'blue', rowHeight)
     ], // "Wednesday 03-11-2002",
-    [Event(3.2, 3.7, Colors.indigo, 'short indigo')], // "Thursday 03-12-2002",
+    [
+      Event(3.2, 3.7, Colors.indigo, 'short indigo', rowHeight)
+    ], // "Thursday 03-12-2002",
     [], // "Friday 03-13-2002",
     [], // "Saturday 03-14-2002",
     [], // "Sunday 03-15-2002",
   ];
 
-  double rowHeight = 50.0;
 ///////////////////////////////////////////////////////////////////
 
   List<Map<String, Object>> testArray = [
