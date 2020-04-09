@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/pages/LoginScreen/LoginScreen.dart';
-import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:gcfdlayout2/pages/LoginScreen/LoginScreen.dart';
+import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
 import 'providers/CalendarData.dart';
 import 'providers/LayoutData.dart';
@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
 
-          return Scaffold(body: LoginScreen());
-          // return Scaffold(body: SchedulingPage());
+          // return Scaffold(body: LoginScreen());
+          return Scaffold(body: SchedulingPage());
         }),
       ),
     );

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/definitions/colorDefs.dart';
+import 'package:gcfdlayout2/definitions/colorDefs.dart';
 
 class CalendarHeader extends StatefulWidget {
   CalendarHeader({Key key, this.controller}) : super(key: key);

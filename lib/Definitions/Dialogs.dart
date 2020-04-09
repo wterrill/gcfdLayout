@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/buildTime/flutterVersion.dart';
-import 'package:gcfdlayout/buildTime/flutterDate.dart';
+import 'package:gcfdlayout2/buildTime/flutterVersion.dart';
+import 'package:gcfdlayout2/buildTime/flutterDate.dart';
 
 class Dialogs {
   static void showAlertDialog(BuildContext context) {

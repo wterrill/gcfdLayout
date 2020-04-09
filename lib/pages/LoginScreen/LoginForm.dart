@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/definitions/colorDefs.dart';
-import 'package:gcfdlayout/communications/Authentication.dart';
-import 'package:gcfdlayout/definitions/Dialogs.dart';
-import 'package:gcfdlayout/pages/SchedulingPage/SchedulingPage.dart';
-import 'package:gcfdlayout/providers/LayoutData.dart';
+import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:gcfdlayout2/communications/Authentication.dart';
+import 'package:gcfdlayout2/definitions/Dialogs.dart';
+import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {

@@ -3,10 +3,10 @@ import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/definitions/Event.dart';
-import 'package:gcfdlayout/definitions/colorDefs.dart';
-import 'package:gcfdlayout/providers/CalendarData.dart';
-import 'package:gcfdlayout/providers/LayoutData.dart';
+import 'package:gcfdlayout2/definitions/Event.dart';
+import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:gcfdlayout2/providers/CalendarData.dart';
+import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 import 'CalendarHeader.dart';
 import 'TopDrawer.dart';

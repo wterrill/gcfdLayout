@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout/definitions/Event.dart';
+import 'package:gcfdlayout2/definitions/Event.dart';
 import 'package:intl/intl.dart';
 // import 'dart:async';
 
