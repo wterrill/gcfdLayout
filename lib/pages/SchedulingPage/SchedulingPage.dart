@@ -3,9 +3,9 @@ import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/Event.dart';
+import 'package:gcfdlayout2/Providers/CalendarData.dart';
+import 'package:gcfdlayout2/definitions/EventOld.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
-import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 import 'CalendarHeader.dart';
@@ -14,13 +14,18 @@ import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class SchedulingPage extends StatelessWidget {
+  SchedulingPage({Key key}) : super(key: key);
   final controller = StreamController<String>();
 
   @override
   Widget build(BuildContext context) {
     // final dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
+    var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    List<String> hours = Provider.of<CalendarData>(context).hours;
+    List<List<EventOld>> dayEvents =
+        Provider.of<CalendarData>(context).dayEventsOld;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -55,7 +60,10 @@ class SchedulingPage extends StatelessWidget {
                               ),
                               // main grid
                               SliverToBoxAdapter(
-                                child: filterGridWidget(controller: controller),
+                                child: filterGridWidget(
+                                    controller: controller,
+                                    dayEvents: dayEvents,
+                                    hours: hours),
                               ),
                             ],
                           ),
@@ -111,8 +119,23 @@ class SchedulingPage extends StatelessWidget {
 // }
 
 class filterGridWidget extends StatefulWidget {
-  filterGridWidget({Key key, this.controller}) : super(key: key);
+  filterGridWidget({
+    Key key,
+    this.controller,
+    this.dayEvents,
+    this.hours,
+  }) : super(key: key);
   final StreamController<String> controller;
+  final List<List<EventOld>> dayEvents;
+  final List<String> hours;
+
+//       List<List<EventOld>> dayEvents =
+//           Provider.of<CalendarData>(context).dayEventsOld;
+
+//  List<String> hours = Provider.of<CalendarData>(context).hours;
+
+//  List<List<EventOld>> dayEvents =
+//         Provider.of<CalendarData>(context).dayEventsOld;
 
   @override
   _filterGridWidgetState createState() => _filterGridWidgetState();
@@ -121,20 +144,23 @@ class filterGridWidget extends StatefulWidget {
 class _filterGridWidgetState extends State<filterGridWidget> {
   @override
   Widget build(BuildContext context) {
-    List<List<Event>> _filter(String query) {
+    final List<List<EventOld>> dayEvents = widget.dayEvents;
+    final List<String> hours = widget.hours;
+    List<List<EventOld>> _filter(String query) {
       print('query: |$query|');
       var q = query.toLowerCase();
-      List<List<Event>> dayEvents =
-          Provider.of<CalendarData>(context, listen: false).dayEvents;
+      // List<List<EventOld>> dayEvents =
+      //     Provider.of<CalendarData>(context).dayEventsOld;
       dayEvents.forEach((day) =>
           day.forEach((e) => e.visible = e.message.toLowerCase().contains(q)));
       return dayEvents;
     }
 
     var timeAutoGroup = AutoSizeGroup();
-    List<String> hours = Provider.of<CalendarData>(context).hours;
-    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    return StreamBuilder<List<List<Event>>>(
+    // List<String> hours = Provider.of<CalendarData>(context).hours;
+    // List<List<EventOld>> dayEvents =
+    //     Provider.of<CalendarData>(context).dayEventsOld;
+    return StreamBuilder<List<List<EventOld>>>(
         stream: widget.controller.stream.map(_filter),
         initialData: dayEvents,
         builder: (context, snapshot) {
@@ -146,7 +172,10 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                     children: List.generate(
                       hours.length,
                       (row) => Container(
-                        height: CalendarData.rowHeight,
+                        height: 50,
+                        // Provider.of<CalendarData>(context)
+                        //     .rowHeight,
+                        // height: CalendarData.rowHeight,
                         decoration: BoxDecoration(
                           color: ColorDefs.colorTimeBackground,
                           border: Border(
@@ -170,8 +199,8 @@ class _filterGridWidgetState extends State<filterGridWidget> {
 
               var events = snapshot.data[col - 1].map(
                 (e) => Positioned(
-                  top: e.top,
-                  height: e.height,
+                  top: e.yTop,
+                  height: e.yHeight,
                   left:
                       Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
                   right:
@@ -241,7 +270,9 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                       children: List.generate(
                         hours.length,
                         (row) => Container(
-                          height: CalendarData.rowHeight,
+                          height: 50,
+                          // Provider.of<CalendarData>(context)
+                          //     .rowHeight,
                           decoration: BoxDecoration(
                             color: row.isEven
                                 ? ColorDefs.colorAlternatingDark

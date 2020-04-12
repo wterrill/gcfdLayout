@@ -8,6 +8,48 @@ class TopDrawer extends StatefulWidget {
   _TopDrawerState createState() => _TopDrawerState();
 }
 
+class TopDrawerMenu {
+  final String text;
+  final double height;
+  final bool haveIcon;
+  final Color color;
+  final TextStyle style;
+  final IconData icon;
+  TopDrawerMenu(
+      {@required this.text,
+      @required this.haveIcon,
+      @required this.color,
+      this.icon,
+      @required this.height,
+      @required this.style});
+
+  Widget makeDrawer() {
+    Widget finalWidget;
+    if (haveIcon) {
+      finalWidget = Container(
+          height: height,
+          width: double.infinity,
+          color: color,
+          child: Center(child: Text(text, style: style)));
+    } else {
+      finalWidget = Container(
+        height: height,
+        width: double.infinity,
+        color: color,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Icon(icon, color: ColorDefs.colorAudit2),
+            Center(child: Text(text, style: style)),
+            // Icon(Icons.sync, color: ColorDefs.colorTopDrawerBackground),
+          ],
+        ),
+      );
+    }
+    return finalWidget;
+  }
+}
+
 class _TopDrawerState extends State<TopDrawer>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
@@ -36,6 +78,58 @@ class _TopDrawerState extends State<TopDrawer>
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> topDrawerMenu() {
+      List<Map<String, dynamic>> defineMenu = [
+        <String, dynamic>{'text': "", 'height': 40, 'haveIcon': false},
+        <String, dynamic>{
+          'text': "Schedule Audit",
+          'height': 40,
+          'haveIcon': false,
+          'style': ColorDefs.textDayHeadings,
+        },
+        <String, dynamic>{
+          'text': "Forms",
+          'height': 40,
+          'haveIcon': false,
+          'style': ColorDefs.textDayHeadings
+        },
+        <String, dynamic>{
+          'text': "Contacts",
+          'height': 40,
+          'haveIcon': false,
+          'style': ColorDefs.textDayHeadings
+        },
+        <String, dynamic>{
+          'text': "View",
+          'height': 40,
+          'haveIcon': false,
+          'style': ColorDefs.textDayHeadings
+        },
+        <String, dynamic>{
+          'text': "Sync",
+          'height': 40,
+          'haveIcon': true,
+          'style': ColorDefs.textDayHeadings,
+          'icon': Icons.sync
+        },
+      ];
+      List<Widget> finalList = [];
+      for (int i = 0; i < defineMenu.length; i++) {
+        print(i.isOdd);
+        finalList.add(TopDrawerMenu(
+                text: defineMenu[i]['text'] as String,
+                height: defineMenu[i]['height'] as double,
+                haveIcon: defineMenu[i]['haveIcon'] as bool,
+                style: defineMenu[i]['style'] as TextStyle,
+                color: i.isOdd
+                    ? ColorDefs.colorTopDrawerAlternating
+                    : ColorDefs.colorTopDrawerBackground,
+                icon: defineMenu[i]['icon'] as IconData)
+            .makeDrawer());
+      }
+      return finalList;
+    }
+
     return Stack(
       children: [
         Positioned(
@@ -48,46 +142,7 @@ class _TopDrawerState extends State<TopDrawer>
                 height: 325,
                 width: 175,
                 color: ColorDefs.colorTopDrawerBackground,
-                child: Column(children: [
-                  Container(
-                      height: 40,
-                      width: double.infinity,
-                      color: ColorDefs.colorTopDrawerBackground),
-                  Container(
-                      height: 35.4,
-                      width: double.infinity,
-                      color: ColorDefs.colorTopDrawerAlternating,
-                      child: Center(
-                          child: Text("Schedule Audit",
-                              style: ColorDefs.textDayHeadings))),
-                  Container(
-                      height: 35.4,
-                      width: double.infinity,
-                      child: Center(
-                          child:
-                              Text("Forms", style: ColorDefs.textDayHeadings))),
-                  Container(
-                      height: 35.4,
-                      width: double.infinity,
-                      color: ColorDefs.colorTopDrawerAlternating,
-                      child: Center(
-                          child: Text("Contacts",
-                              style: ColorDefs.textDayHeadings))),
-                  Container(
-                      height: 35.4,
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Icon(Icons.sync, color: ColorDefs.colorAudit2),
-                          Center(
-                              child: Text("Sync",
-                                  style: ColorDefs.textDayHeadings)),
-                          Icon(Icons.sync,
-                              color: ColorDefs.colorTopDrawerBackground),
-                        ],
-                      )),
-                ])),
+                child: Column(children: [...topDrawerMenu()])),
           ),
         ),
         Positioned(
