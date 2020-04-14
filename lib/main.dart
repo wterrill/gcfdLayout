@@ -3,19 +3,17 @@ import 'package:gcfdlayout2/pages/LoginScreen/LoginScreen.dart';
 import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
 import 'package:provider/provider.dart';
-import 'package:gcfdlayout2/providers/NewCalendarData.dart';
+import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
-
-// void main() => runApp(MyApp());
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (context) => NewCalendarData(), lazy: false),
+            create: (context) => CalendarData(), lazy: false),
         ChangeNotifierProvider(create: (context) => LayoutData()),
       ],
       child: MyApp(),
@@ -28,9 +26,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // timeDilation = 14.0;
     return MaterialApp(
-      // Start the app with the "/" named route. In this case, the app starts
-      // on the FirstScreen widget.
-      // initialRoute: '/login',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/login': (context) => LoginScreen(),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:gcfdlayout2/Providers/CalendarData.dart';
 // import 'package:provider/provider.dart';
 
-class NewEvent {
+class Event {
   // passed
   final TimeOfDay earliestTime;
   final DateTime startTime;
@@ -23,7 +23,7 @@ class NewEvent {
   String phone;
   bool visible = true;
 
-  NewEvent({
+  Event({
     @required this.earliestTime,
     @required this.startTime,
     @required this.duration,

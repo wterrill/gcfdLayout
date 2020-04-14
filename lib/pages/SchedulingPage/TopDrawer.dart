@@ -80,34 +80,34 @@ class _TopDrawerState extends State<TopDrawer>
   Widget build(BuildContext context) {
     List<Widget> topDrawerMenu() {
       List<Map<String, dynamic>> defineMenu = [
-        <String, dynamic>{'text': "", 'height': 40, 'haveIcon': false},
+        <String, dynamic>{'text': "", 'height': 40.0, 'haveIcon': false},
         <String, dynamic>{
           'text': "Schedule Audit",
-          'height': 40,
+          'height': 40.0,
           'haveIcon': false,
           'style': ColorDefs.textDayHeadings,
         },
         <String, dynamic>{
           'text': "Forms",
-          'height': 40,
+          'height': 40.0,
           'haveIcon': false,
           'style': ColorDefs.textDayHeadings
         },
         <String, dynamic>{
           'text': "Contacts",
-          'height': 40,
+          'height': 40.0,
           'haveIcon': false,
           'style': ColorDefs.textDayHeadings
         },
         <String, dynamic>{
           'text': "View",
-          'height': 40,
+          'height': 40.0,
           'haveIcon': false,
           'style': ColorDefs.textDayHeadings
         },
         <String, dynamic>{
           'text': "Sync",
-          'height': 40,
+          'height': 40.0,
           'haveIcon': true,
           'style': ColorDefs.textDayHeadings,
           'icon': Icons.sync
@@ -139,7 +139,7 @@ class _TopDrawerState extends State<TopDrawer>
             offset: Offset((animation.value * (175 / 150)), 0.0),
             child: Container(
                 // top drawer container
-                height: 325,
+                height: 325.0,
                 width: 175,
                 color: ColorDefs.colorTopDrawerBackground,
                 child: Column(children: [...topDrawerMenu()])),

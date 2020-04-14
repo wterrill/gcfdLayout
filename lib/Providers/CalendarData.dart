@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/NewEvent.dart';
+import 'package:gcfdlayout2/definitions/Event.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
 import 'package:gcfdlayout2/utilities/HourStringInt.dart';
 // import 'package:intl/intl.dart';
 
-class NewCalendarData with ChangeNotifier {
+class CalendarData with ChangeNotifier {
   List<String> days = [];
   List<String> hours = [];
-  List<List<NewEvent>> dayNewEvents = [];
+  List<List<Event>> dayEvents = [];
   double rowHeight;
   bool initialized = false;
 
-  NewCalendarData() {
+  CalendarData() {
     initializeApp();
     initializeNewCalendar();
   }
@@ -49,27 +49,27 @@ class NewCalendarData with ChangeNotifier {
       "Sunday 03-15-2002",
     ];
 
-    dayNewEvents = [
+    dayEvents = [
       [
-        NewEvent(
+        Event(
             earliestTime: TimeOfDay(
                 hour: HourStringInt(hours[0]).hour,
                 minute: HourStringInt(hours[0]).minute),
             startTime: DateTime.parse('2020-04-11 08:00:00.000'),
             duration: Duration(hours: 1, minutes: 30),
-            message: "I'm alive",
+            message: "Manna",
             siteName: "Manna",
             color: ColorDefs.colorAudit1,
             auditType: "Audit 1",
             rowHeight: rowHeight),
-        NewEvent(
+        Event(
             earliestTime: TimeOfDay(
                 hour: HourStringInt(hours[0]).hour,
                 minute: HourStringInt(hours[0]).minute),
             startTime: DateTime.parse('2020-04-11 12:00:00.000'),
             duration: Duration(hours: 1, minutes: 45),
-            message: "I'm alive",
-            siteName: "Manna",
+            message: "Marillac House",
+            siteName: "Marillac House",
             color: ColorDefs.colorAudit2,
             auditType: "Audit 2",
             rowHeight: rowHeight)
@@ -77,25 +77,25 @@ class NewCalendarData with ChangeNotifier {
       [],
       [],
       [
-        NewEvent(
+        Event(
             earliestTime: TimeOfDay(
                 hour: HourStringInt(hours[0]).hour,
                 minute: HourStringInt(hours[0]).minute),
             startTime: DateTime.parse('2020-04-14 08:00:00.000'),
             duration: Duration(hours: 1, minutes: 30),
-            message: "I'm alive",
-            siteName: "Manna",
+            message: "Irving Park",
+            siteName: "Irving Park",
             color: ColorDefs.colorAudit3,
             auditType: "Audit 3",
             rowHeight: rowHeight),
-        NewEvent(
+        Event(
             earliestTime: TimeOfDay(
                 hour: HourStringInt(hours[0]).hour,
                 minute: HourStringInt(hours[0]).minute),
             startTime: DateTime.parse('2020-04-14 12:00:00.000'),
             duration: Duration(hours: 1, minutes: 45),
-            message: "I'm alive",
-            siteName: "Manna",
+            message: "Ravenswood",
+            siteName: "Ravenswood",
             auditType: "Audit 4",
             color: ColorDefs.colorAudit4,
             rowHeight: rowHeight)
@@ -106,12 +106,12 @@ class NewCalendarData with ChangeNotifier {
     ];
 
     initialized = true;
-    print(dayNewEvents);
+    print(dayEvents);
     print("new notifying listeners");
     notifyListeners();
   }
 
   void initializeApp() {
-    print("initialized NewCalendarData Provider... using NewEvent");
+    print("initialized CalendarData Provider... using Event");
   }
 }
