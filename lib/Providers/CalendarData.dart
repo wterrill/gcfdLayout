@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/definitions/Event.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
 import 'package:gcfdlayout2/utilities/HourStringInt.dart';
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
 class CalendarData with ChangeNotifier {
   List<String> days = [];
@@ -39,15 +39,7 @@ class CalendarData with ChangeNotifier {
       "10:00 pm",
     ];
 
-    days = [
-      "Monday 03-09-2002",
-      "Tuesday 03-10-2002",
-      "Wednesday 03-11-2002",
-      "Thursday 03-12-2002",
-      "Friday 03-13-2002",
-      "Saturday 03-14-2002",
-      "Sunday 03-15-2002",
-    ];
+    days = generateInitialWeek();
 
     dayEvents = [
       [
@@ -113,5 +105,37 @@ class CalendarData with ChangeNotifier {
 
   void initializeApp() {
     print("initialized CalendarData Provider... using Event");
+  }
+
+  List<String> generateInitialWeek() {
+    //     days = [
+    //   "Monday 03-09-2002",
+    //   "Tuesday 03-10-2002",
+    //   "Wednesday 03-11-2002",
+    //   "Thursday 03-12-2002",
+    //   "Friday 03-13-2002",
+    //   "Saturday 03-14-2002",
+    //   "Sunday 03-15-2002",
+    // ];
+    DateTime today = DateTime.now();
+    String dayOfWeek = DateFormat('EEEE').format(today).toString();
+    List<String> daysOfWeek = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ];
+    int daysToSubtract = daysOfWeek.indexOf(dayOfWeek);
+    DateTime beginningDate = today.subtract(Duration(days: daysToSubtract));
+    List<String> initializedDays = [];
+    for (var i = 0; i < 7; i++) {
+      initializedDays.add(DateFormat('EEEE MM-dd-yyyy')
+          .format(beginningDate.add(Duration(days: i)))
+          .toString());
+    }
+    return initializedDays;
   }
 }
