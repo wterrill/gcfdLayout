@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/pages/LoginScreen/LoginScreen.dart';
 import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
-import 'package:gcfdlayout2/Providers/CalendarData.dart';
-import 'package:gcfdlayout2/Providers/LayoutData.dart';
 import 'package:provider/provider.dart';
+import 'package:gcfdlayout2/providers/NewCalendarData.dart';
+import 'package:gcfdlayout2/providers/LayoutData.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 
@@ -14,7 +14,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CalendarData()),
+        ChangeNotifierProvider(
+            create: (context) => NewCalendarData(), lazy: false),
         ChangeNotifierProvider(create: (context) => LayoutData()),
       ],
       child: MyApp(),
@@ -54,11 +55,9 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
-          Provider.of<CalendarData>(context).working = "beer";
-          print(Provider.of<CalendarData>(context).working);
 
-          // return Scaffold(body: LoginScreen());
-          return Scaffold(body: SchedulingPage());
+          return Scaffold(body: LoginScreen());
+          // return Scaffold(body: SchedulingPage());
         }),
       ),
     );

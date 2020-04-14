@@ -3,29 +3,31 @@ import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/Providers/CalendarData.dart';
-import 'package:gcfdlayout2/definitions/EventOld.dart';
+import 'package:gcfdlayout2/definitions/NewEvent.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
-import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 import 'CalendarHeader.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:gcfdlayout2/providers/NewCalendarData.dart';
+import 'package:gcfdlayout2/providers/LayoutData.dart';
 
 class SchedulingPage extends StatelessWidget {
-  SchedulingPage({Key key}) : super(key: key);
   final controller = StreamController<String>();
 
   @override
   Widget build(BuildContext context) {
-    // final dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
-    List<String> hours = Provider.of<CalendarData>(context).hours;
-    List<List<EventOld>> dayEvents =
-        Provider.of<CalendarData>(context).dayEventsOld;
+    print("got to build");
+    var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
+    print(mediaWidth);
+    print("printed mediaWidth");
+    var beer = Provider.of<NewCalendarData>(context).dayNewEvents;
 
+    print(beer);
+    print("did I get here?");
+
+    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     return Scaffold(
       body: Stack(
         children: [
@@ -41,35 +43,36 @@ class SchedulingPage extends StatelessWidget {
                         50.0,
                         0.01 * mediaWidth,
                         0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
-                    child: Column(
-                      children: [
-                        CalendarHeader(controller: controller), // static header
-                        Expanded(
-                          child: CustomScrollView(
-                            slivers: <Widget>[
-                              // floating header
-                              // SliverAppBar(
-                              //   backgroundColor: Colors.transparent,
-                              //   floating: true,
-                              //   flexibleSpace: _floatingHeader(),
-                              // ),
-                              SliverPersistentHeader(
-                                floating: true,
-                                pinned: true,
-                                delegate: HeaderDelegate(context),
-                              ),
-                              // main grid
-                              SliverToBoxAdapter(
-                                child: filterGridWidget(
-                                    controller: controller,
-                                    dayEvents: dayEvents,
-                                    hours: hours),
+                    child: Provider.of<NewCalendarData>(context).initialized
+                        ? Column(
+                            children: [
+                              CalendarHeader(
+                                  controller: controller), // static header
+                              Expanded(
+                                child: CustomScrollView(
+                                  slivers: <Widget>[
+                                    // floating header
+                                    // SliverAppBar(
+                                    //   backgroundColor: Colors.transparent,
+                                    //   floating: true,
+                                    //   flexibleSpace: _floatingHeader(),
+                                    // ),
+                                    SliverPersistentHeader(
+                                      floating: true,
+                                      pinned: true,
+                                      delegate: HeaderDelegate(context),
+                                    ),
+                                    // main grid
+                                    SliverToBoxAdapter(
+                                      child: filterGridWidget(
+                                          controller: controller),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
+                          )
+                        : Text("not initialized"),
                   ),
                 ),
               ),
@@ -119,23 +122,8 @@ class SchedulingPage extends StatelessWidget {
 // }
 
 class filterGridWidget extends StatefulWidget {
-  filterGridWidget({
-    Key key,
-    this.controller,
-    this.dayEvents,
-    this.hours,
-  }) : super(key: key);
+  filterGridWidget({Key key, this.controller}) : super(key: key);
   final StreamController<String> controller;
-  final List<List<EventOld>> dayEvents;
-  final List<String> hours;
-
-//       List<List<EventOld>> dayEvents =
-//           Provider.of<CalendarData>(context).dayEventsOld;
-
-//  List<String> hours = Provider.of<CalendarData>(context).hours;
-
-//  List<List<EventOld>> dayEvents =
-//         Provider.of<CalendarData>(context).dayEventsOld;
 
   @override
   _filterGridWidgetState createState() => _filterGridWidgetState();
@@ -144,25 +132,23 @@ class filterGridWidget extends StatefulWidget {
 class _filterGridWidgetState extends State<filterGridWidget> {
   @override
   Widget build(BuildContext context) {
-    final List<List<EventOld>> dayEvents = widget.dayEvents;
-    final List<String> hours = widget.hours;
-    List<List<EventOld>> _filter(String query) {
+    List<List<NewEvent>> _filter(String query) {
       print('query: |$query|');
       var q = query.toLowerCase();
-      // List<List<EventOld>> dayEvents =
-      //     Provider.of<CalendarData>(context).dayEventsOld;
-      dayEvents.forEach((day) =>
+      List<List<NewEvent>> dayNewEvents =
+          Provider.of<NewCalendarData>(context, listen: false).dayNewEvents;
+      dayNewEvents.forEach((day) =>
           day.forEach((e) => e.visible = e.message.toLowerCase().contains(q)));
-      return dayEvents;
+      return dayNewEvents;
     }
 
     var timeAutoGroup = AutoSizeGroup();
-    // List<String> hours = Provider.of<CalendarData>(context).hours;
-    // List<List<EventOld>> dayEvents =
-    //     Provider.of<CalendarData>(context).dayEventsOld;
-    return StreamBuilder<List<List<EventOld>>>(
+    List<String> hours = Provider.of<NewCalendarData>(context).hours;
+    List<List<NewEvent>> dayNewEvents =
+        Provider.of<NewCalendarData>(context).dayNewEvents;
+    return StreamBuilder<List<List<NewEvent>>>(
         stream: widget.controller.stream.map(_filter),
-        initialData: dayEvents,
+        initialData: dayNewEvents,
         builder: (context, snapshot) {
           return Row(
             children: List.generate(8, (col) {
@@ -172,10 +158,7 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                     children: List.generate(
                       hours.length,
                       (row) => Container(
-                        height: 50,
-                        // Provider.of<CalendarData>(context)
-                        //     .rowHeight,
-                        // height: CalendarData.rowHeight,
+                        height: Provider.of<NewCalendarData>(context).rowHeight,
                         decoration: BoxDecoration(
                           color: ColorDefs.colorTimeBackground,
                           border: Border(
@@ -198,7 +181,7 @@ class _filterGridWidgetState extends State<filterGridWidget> {
               }
 
               var events = snapshot.data[col - 1].map(
-                (e) => Positioned(
+                (NewEvent e) => Positioned(
                   top: e.yTop,
                   height: e.yHeight,
                   left:
@@ -270,9 +253,8 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                       children: List.generate(
                         hours.length,
                         (row) => Container(
-                          height: 50,
-                          // Provider.of<CalendarData>(context)
-                          //     .rowHeight,
+                          height:
+                              Provider.of<NewCalendarData>(context).rowHeight,
                           decoration: BoxDecoration(
                             color: row.isEven
                                 ? ColorDefs.colorAlternatingDark
@@ -307,7 +289,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   HeaderDelegate(this.context);
 
   Widget _floatingHeader(double shrinkOffset) {
-    var days = Provider.of<CalendarData>(context).days;
+    var days = Provider.of<NewCalendarData>(context).days;
     return Row(
       children: <Widget>[
         Spacer(),

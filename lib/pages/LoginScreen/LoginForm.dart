@@ -3,8 +3,8 @@ import 'package:gcfdlayout2/definitions/colorDefs.dart';
 import 'package:gcfdlayout2/communications/Authentication.dart';
 import 'package:gcfdlayout2/definitions/Dialogs.dart';
 import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
-import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
+import 'package:gcfdlayout2/providers/LayoutData.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -75,7 +75,6 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 suffixIcon: GestureDetector(
                   onTap: () {
-                    ;
                     setState(() {
                       _obscureText = !_obscureText;
                     });

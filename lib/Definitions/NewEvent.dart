@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:gcfdlayout2/Providers/CalendarData.dart';
 // import 'package:provider/provider.dart';
 
-class EventNew {
+class NewEvent {
   // passed
   final TimeOfDay earliestTime;
   final DateTime startTime;
@@ -10,12 +10,12 @@ class EventNew {
   final String siteName;
   final String auditType;
   final String message;
+  final Color color;
 
   // Calculated/Obtained
   double rowHeight;
   String formattedDate;
   DateTime endTime;
-  Color color;
   double yTop;
   double yHeight;
   String addressStreet;
@@ -23,13 +23,14 @@ class EventNew {
   String phone;
   bool visible = true;
 
-  EventNew({
+  NewEvent({
     @required this.earliestTime,
     @required this.startTime,
     @required this.duration,
     @required this.siteName,
     @required this.auditType,
     @required this.rowHeight,
+    @required this.color,
     this.addressStreet,
     this.cityStateZip,
     this.phone,
@@ -37,13 +38,8 @@ class EventNew {
   }) {
     double start = startTime.hour - earliestTime.hour + startTime.minute / 60;
     yTop = start * rowHeight;
-    yHeight =
-        (startTime.add(duration).hour + startTime.add(duration).minute / 60) *
-            rowHeight;
+    yHeight = (duration.inHours * rowHeight + (duration.inMinutes % 60));
   }
-
-  // : yTop = start * rowHeight,
-  //   yHeight = (end - start) * rowHeight;
 
   @override
   String toString() => message;

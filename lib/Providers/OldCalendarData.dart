@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gcfdlayout2/definitions/OldEvent.dart';
 import 'package:intl/intl.dart';
 // import 'dart:async';
 
-class CalendarDataOld with ChangeNotifier {
+class OldCalendarData with ChangeNotifier {
   String testing = "Data Provider works";
   List<Map> appointmentsList = [];
 
@@ -41,66 +42,28 @@ class CalendarDataOld with ChangeNotifier {
     "10:00 pm",
   ];
 
-  //       final TimeOfDay earliestTime;
-  // final DateTime startTime;
-  // final Duration duration;
-  // final String siteName;
-  // final String auditType;
-
-  // final String message;
-  // final double rowHeight;
-  // // Calculated/Obtained
-  // String formattedDate;
-  // DateTime endTime;
-  // Color color;
-  // double yTop;
-  // double yHeight;
-  // String addressStreet;
-  // String cityStateZip;
-  // String phone;
-  // bool visible = true;
-
-  // @required this.earliestTime,
-  //     @required this.startTime,
-  //     @required this.duration,
-  //     @required this.siteName,
-  //     @required this.auditType,
-  //     @required this.rowHeight,
-  //     this.addressStreet,
-  //     this.cityStateZip,
-  //     this.phone,
-  //     this.message
-
-  // "Monday 03-09-2002",
-  //   [], // "Tuesday 03-10-2002",
-  //   [], // "Wednesday 03-11-2002",
-  //   [], // "Thursday 03-12-2002",
-  //   [], // "Friday 03-13-2002",
-  //   [], // "Saturday 03-14-2002",
-  //   [], // "Sunday 03-15-2002",
-
-  // List<List<EventOld>> dayEvents = [
-  //   [], // "Monday 03-09-2002",
-  //   [
-  //     EventOld(
-  //       2.5,
-  //       4.5,
-  //       rowHeight,
-  //       Colors.green,
-  //       'long green',
-  //     )
-  //   ], // "Tuesday 03-10-2002",
-  //   [
-  //     EventOld(4.25, 4.75, rowHeight, Colors.orange, 'orange'),
-  //     EventOld(4.85, 6.0, rowHeight, Colors.blue, 'blue')
-  //   ], // "Wednesday 03-11-2002",
-  //   [
-  //     EventOld(3.2, 3.7, rowHeight, Colors.indigo, 'short indigo')
-  //   ], // "Thursday 03-12-2002",
-  //   [], // "Friday 03-13-2002",
-  //   [], // "Saturday 03-14-2002",
-  //   [], // "Sunday 03-15-2002",
-  // ];
+  List<List<OldEvent>> dayOldEvents = [
+    [], // "Monday 03-09-2002",
+    [
+      OldEvent(
+        2.5,
+        4.5,
+        rowHeight,
+        Colors.green,
+        'long green',
+      )
+    ], // "Tuesday 03-10-2002",
+    [
+      OldEvent(4.25, 4.75, rowHeight, Colors.orange, 'orange'),
+      OldEvent(4.85, 6.0, rowHeight, Colors.blue, 'blue')
+    ], // "Wednesday 03-11-2002",
+    [
+      OldEvent(3.2, 3.7, rowHeight, Colors.indigo, 'short indigo')
+    ], // "Thursday 03-12-2002",
+    [], // "Friday 03-13-2002",
+    [], // "Saturday 03-14-2002",
+    [], // "Sunday 03-15-2002",
+  ];
 
 ///////////////////////////////////////////////////////////////////
 
@@ -179,7 +142,7 @@ class CalendarDataOld with ChangeNotifier {
     },
   ];
 
-  CalendarDataOld() {
+  OldCalendarData() {
     // initializeApp();
   }
 
