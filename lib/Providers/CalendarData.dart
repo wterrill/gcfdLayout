@@ -4,6 +4,46 @@ import 'package:gcfdlayout2/definitions/colorDefs.dart';
 import 'package:gcfdlayout2/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
 
+// This is meant to be the data that is coming in from CERES
+List<List<Map<String, String>>> masterDayEvents = [
+  [
+    {
+      'date': '04-11-2020',
+      'startTime': '2020-04-11 08:00:00.000',
+      'endTime': '2020-04-11 09:30:00.000',
+      'message': "Manna",
+      'siteName': "Manna",
+      'auditType': "Audit 1",
+    },
+    {
+      'date': '04-11-2020',
+      'startTime': '2020-04-11 12:00:00.000',
+      'endTime': '2020-04-11 14:45:00.000',
+      'message': "Marillac House",
+      'siteName': "Marillac House",
+      'auditType': "Audit 2",
+    }
+  ],
+  [
+    {
+      'date': '04-14-2020',
+      'startTime': '2020-04-14 08:00:00.000',
+      'endTime': '2020-04-14 09:30:00.000',
+      'message': "Manna",
+      'siteName': "Manna",
+      'auditType': "Audit 1",
+    },
+    {
+      'date': '04-14-2020',
+      'startTime': '2020-04-14 12:00:00.000',
+      'endTime': '2020-04-14 14:45:00.000',
+      'message': "Irving Park",
+      'siteName': "Irving Park",
+      'auditType': "Audit 3",
+    }
+  ]
+];
+
 class CalendarData with ChangeNotifier {
   List<String> days = [];
   List<String> hours = [];
@@ -39,9 +79,77 @@ class CalendarData with ChangeNotifier {
       "10:00 pm",
     ];
 
+    dayEvents = updateAppointments();
+
     days = generateInitialWeek();
 
-    dayEvents = [
+    initialized = true;
+    print(dayEvents);
+    print("new notifying listeners");
+    notifyListeners();
+  }
+
+  void initializeApp() {
+    print("initialized CalendarData Provider... using Event");
+  }
+
+  List<String> generateInitialWeek() {
+    DateTime today = DateTime.now();
+    List<String> initializedWeek = createWeekFromDate(today);
+    return initializedWeek;
+  }
+
+  List<String> createWeekFromDate(DateTime startingDate) {
+    //take the date, find the previous Monday, and create the array from that date.
+// The format for date is:  "Monday 03-09-2002",
+    String dayOfWeek = DateFormat('EEEE').format(startingDate).toString();
+    List<String> daysOfWeek = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ];
+    int daysToSubtract = daysOfWeek.indexOf(dayOfWeek);
+    DateTime beginningDate =
+        startingDate.subtract(Duration(days: daysToSubtract));
+    List<String> daysArray = [];
+    for (var i = 0; i < 7; i++) {
+      daysArray.add(DateFormat('EEEE MM-dd-yyyy')
+          .format(beginningDate.add(Duration(days: i)))
+          .toString());
+    }
+    return daysArray;
+  }
+
+  void changeWeek(String direction) {
+    DateTime mondayDateTime = convertStringDateToDateTime(days[0]);
+    DateTime differentMonday;
+    if (direction == "forward")
+      differentMonday = mondayDateTime.add(Duration(days: 7));
+    if (direction == "backward")
+      differentMonday = mondayDateTime.subtract(Duration(days: 7));
+    List<String> newDaysArray = createWeekFromDate(differentMonday);
+    print(newDaysArray);
+    days = newDaysArray;
+    updateAppointments();
+    notifyListeners();
+  }
+
+  DateTime convertStringDateToDateTime(String dayDateString) {
+    // Get the string in the correct format for conversion, then convert:
+    String dateString = dayDateString.split(" ")[1];
+    List<String> dateArray = dateString.split("-");
+    String correctFormat = '${dateArray[2]}-${dateArray[0]}-${dateArray[1]}';
+    print(correctFormat);
+    DateTime result = DateTime.parse(correctFormat);
+    return result;
+  }
+
+  List<List<Event>> updateAppointments() {
+    var beer = [
       [
         Event(
             earliestTime: TimeOfDay(
@@ -66,8 +174,8 @@ class CalendarData with ChangeNotifier {
             auditType: "Audit 2",
             rowHeight: rowHeight)
       ],
-      [],
-      [],
+     <Event>[],
+      <Event>[],
       [
         Event(
             earliestTime: TimeOfDay(
@@ -92,50 +200,11 @@ class CalendarData with ChangeNotifier {
             color: ColorDefs.colorAudit4,
             rowHeight: rowHeight)
       ],
-      [],
-      [],
-      [],
+      <Event>[],
+      <Event>[],
+      <Event>[],
     ];
 
-    initialized = true;
-    print(dayEvents);
-    print("new notifying listeners");
-    notifyListeners();
-  }
-
-  void initializeApp() {
-    print("initialized CalendarData Provider... using Event");
-  }
-
-  List<String> generateInitialWeek() {
-    //     days = [
-    //   "Monday 03-09-2002",
-    //   "Tuesday 03-10-2002",
-    //   "Wednesday 03-11-2002",
-    //   "Thursday 03-12-2002",
-    //   "Friday 03-13-2002",
-    //   "Saturday 03-14-2002",
-    //   "Sunday 03-15-2002",
-    // ];
-    DateTime today = DateTime.now();
-    String dayOfWeek = DateFormat('EEEE').format(today).toString();
-    List<String> daysOfWeek = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ];
-    int daysToSubtract = daysOfWeek.indexOf(dayOfWeek);
-    DateTime beginningDate = today.subtract(Duration(days: daysToSubtract));
-    List<String> initializedDays = [];
-    for (var i = 0; i < 7; i++) {
-      initializedDays.add(DateFormat('EEEE MM-dd-yyyy')
-          .format(beginningDate.add(Duration(days: i)))
-          .toString());
-    }
-    return initializedDays;
+    return beer;
   }
 }

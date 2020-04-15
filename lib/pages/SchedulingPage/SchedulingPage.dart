@@ -12,9 +12,12 @@ import 'TopWhiteHeader.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SchedulingPage extends StatelessWidget {
-  final controller = StreamController<String>();
+  // final controller = StreamController<String>();
+
+  final controller = BehaviorSubject<String>();
 
   @override
   Widget build(BuildContext context) {

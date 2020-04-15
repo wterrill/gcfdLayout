@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:gcfdlayout2/providers/CalendarData.dart';
+import 'package:provider/provider.dart';
 
 class CalendarHeader extends StatefulWidget {
   CalendarHeader({Key key, this.controller}) : super(key: key);
@@ -35,7 +37,8 @@ class _CalendarHeaderState extends State<CalendarHeader> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  print("spoof");
+                  Provider.of<CalendarData>(context, listen: false)
+                      .changeWeek("backward");
                 },
                 child: Icon(
                   Icons.keyboard_arrow_left,
@@ -80,7 +83,8 @@ class _CalendarHeaderState extends State<CalendarHeader> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  print("spoof2");
+                  Provider.of<CalendarData>(context, listen: false)
+                      .changeWeek("forward");
                 },
                 child: Icon(
                   Icons.keyboard_arrow_right,
