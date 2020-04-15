@@ -13,15 +13,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:rxdart/rxdart.dart';
+import 'dart:developer';
 
 class SchedulingPage extends StatelessWidget {
   // final controller = StreamController<String>();
 
   final controller = BehaviorSubject<String>();
+  // final controller2 = BehaviorSubject<List<List<Event>>();
 
   @override
   Widget build(BuildContext context) {
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
+    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     return Scaffold(
       body: Stack(
@@ -140,10 +143,18 @@ class _filterGridWidgetState extends State<filterGridWidget> {
     var timeAutoGroup = AutoSizeGroup();
     List<String> hours = Provider.of<CalendarData>(context).hours;
     List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
+    // widget.controller.add(dayEvents);
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(dayEvents);
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
     return StreamBuilder<List<List<Event>>>(
         stream: widget.controller.stream.map(_filter),
-        initialData: dayEvents,
+//        initialData: Provider.of<CalendarData>(context).dayEvents,
         builder: (context, snapshot) {
+          print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+          print(snapshot);
+          print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
           return Row(
             children: List.generate(8, (col) {
               if (col == 0) {
@@ -173,8 +184,9 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                   ),
                 );
               }
-
-              var events = snapshot.data[col - 1].map(
+              var beer = Provider.of<CalendarData>(context).dayEvents;
+//              var events = snapshot.data[col - 1].map(
+              var events = beer[col - 1].map(
                 (Event e) => Positioned(
                   top: e.yTop,
                   height: e.yHeight,
@@ -263,7 +275,9 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                     ),
                     // add day's events
                     (col == 7) ? offOverlay : Container(),
-                    (col == 3) ? todayOverlay : Container(),
+                    (col == Provider.of<CalendarData>(context).todayOverlaySpot)
+                        ? todayOverlay
+                        : Container(),
                     ...events,
 
                     // ...todayOverlay

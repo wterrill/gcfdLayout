@@ -17,6 +17,7 @@ class CalendarHeader extends StatefulWidget {
 class _CalendarHeaderState extends State<CalendarHeader> {
   @override
   Widget build(BuildContext context) {
+    var days = Provider.of<CalendarData>(context).days;
     return Container(
       decoration: BoxDecoration(
           color: ColorDefs.colorCalendarHeader,
@@ -48,15 +49,15 @@ class _CalendarHeaderState extends State<CalendarHeader> {
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'enter filter query - type "ora" for example',
-              ),
-              onChanged: widget.controller.add,
-            ),
-          ),
+          // Expanded(
+          //   flex: 1,
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       hintText: 'enter filter query - type "ora" for example',
+          //     ),
+          //     onChanged: widget.controller.add,
+          //   ),
+          // ),
           Expanded(
             flex: 2,
             child: Column(
@@ -69,7 +70,7 @@ class _CalendarHeaderState extends State<CalendarHeader> {
                   minFontSize: 10,
                   style: ColorDefs.textBodyWhite20,
                 ),
-                Text("Mar 09, 2020 - Mar 15, 2020",
+                Text("${days[0]} - ${days[days.length - 1]}",
                     style: ColorDefs.textDayHeadings),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/definitions/Event.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
+// import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:gcfdlayout2/definitions/siteColorLookup.dart';
 import 'package:gcfdlayout2/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
 
@@ -45,6 +46,7 @@ List<List<Map<String, String>>> masterDayEvents = [
 ];
 
 class CalendarData with ChangeNotifier {
+  int todayOverlaySpot;
   List<String> days = [];
   List<String> hours = [];
   List<List<Event>> dayEvents = [];
@@ -79,9 +81,13 @@ class CalendarData with ChangeNotifier {
       "10:00 pm",
     ];
 
-    dayEvents = updateAppointments();
-
     days = generateInitialWeek();
+    print("days:$days");
+
+    dayEvents = updateAppointments();
+    print("dayEvents:$dayEvents");
+
+    updateTodayOverlay();
 
     initialized = true;
     print(dayEvents);
@@ -134,7 +140,9 @@ class CalendarData with ChangeNotifier {
     List<String> newDaysArray = createWeekFromDate(differentMonday);
     print(newDaysArray);
     days = newDaysArray;
-    updateAppointments();
+    dayEvents = updateAppointments();
+    print('changeWeek dayEvents:$dayEvents');
+    updateTodayOverlay();
     notifyListeners();
   }
 
@@ -148,63 +156,119 @@ class CalendarData with ChangeNotifier {
     return result;
   }
 
-  List<List<Event>> updateAppointments() {
-    var beer = [
-      [
-        Event(
-            earliestTime: TimeOfDay(
-                hour: HourStringInt(hours[0]).hour,
-                minute: HourStringInt(hours[0]).minute),
-            startTime: DateTime.parse('2020-04-11 08:00:00.000'),
-            duration: Duration(hours: 1, minutes: 30),
-            message: "Manna",
-            siteName: "Manna",
-            color: ColorDefs.colorAudit1,
-            auditType: "Audit 1",
-            rowHeight: rowHeight),
-        Event(
-            earliestTime: TimeOfDay(
-                hour: HourStringInt(hours[0]).hour,
-                minute: HourStringInt(hours[0]).minute),
-            startTime: DateTime.parse('2020-04-11 12:00:00.000'),
-            duration: Duration(hours: 1, minutes: 45),
-            message: "Marillac House",
-            siteName: "Marillac House",
-            color: ColorDefs.colorAudit2,
-            auditType: "Audit 2",
-            rowHeight: rowHeight)
-      ],
-     <Event>[],
-      <Event>[],
-      [
-        Event(
-            earliestTime: TimeOfDay(
-                hour: HourStringInt(hours[0]).hour,
-                minute: HourStringInt(hours[0]).minute),
-            startTime: DateTime.parse('2020-04-14 08:00:00.000'),
-            duration: Duration(hours: 1, minutes: 30),
-            message: "Irving Park",
-            siteName: "Irving Park",
-            color: ColorDefs.colorAudit3,
-            auditType: "Audit 3",
-            rowHeight: rowHeight),
-        Event(
-            earliestTime: TimeOfDay(
-                hour: HourStringInt(hours[0]).hour,
-                minute: HourStringInt(hours[0]).minute),
-            startTime: DateTime.parse('2020-04-14 12:00:00.000'),
-            duration: Duration(hours: 1, minutes: 45),
-            message: "Ravenswood",
-            siteName: "Ravenswood",
-            auditType: "Audit 4",
-            color: ColorDefs.colorAudit4,
-            rowHeight: rowHeight)
-      ],
-      <Event>[],
-      <Event>[],
-      <Event>[],
-    ];
+  void updateTodayOverlay() {
+    // This places the white rectangle on the correct day column
+    todayOverlaySpot = -1;
+    String todayFormatted =
+        DateFormat('EEEE MM-dd-yyyy').format(DateTime.now());
+    print('todayFormatted: $todayFormatted');
+    for (var i = 0; i < days.length; i++) {
+      if (days[i] == todayFormatted) todayOverlaySpot = i + 1;
+    }
+    print('todayOverlaySpot: $todayOverlaySpot');
+  }
 
-    return beer;
+  List<List<Event>> updateAppointments() {
+    List<List<Event>> thisWeeksEvents = [];
+
+    for (String dayDate in days) {
+      print('dayDate:$dayDate');
+
+      String day = dayDate.split(" ")[1];
+      print('day:$day');
+
+      List<Map<String, String>> daysRawMatch = masterDayEvents
+          .firstWhere((element) => element[0]['date'] == day, orElse: () => []);
+      print('daysRawMatch:$daysRawMatch');
+
+      List<Event> daysEventMatch = convertRawToEvents(daysRawMatch);
+      print('daysEventMatch:$daysEventMatch');
+
+      if (daysEventMatch.isNotEmpty)
+        thisWeeksEvents.add(daysEventMatch);
+      else
+        thisWeeksEvents.add([]);
+    }
+    return thisWeeksEvents;
+  }
+
+  // var beer = [
+  //   [
+  //     Event(
+  //         earliestTime: TimeOfDay(
+  //             hour: HourStringInt(hours[0]).hour,
+  //             minute: HourStringInt(hours[0]).minute),
+  //         startTime: DateTime.parse('2020-04-11 08:00:00.000'),
+  //         duration: Duration(hours: 1, minutes: 30),
+  //         message: "Manna",
+  //         siteName: "Manna",
+  //         color: ColorDefs.colorAudit1,
+  //         auditType: "Audit 1",
+  //         rowHeight: rowHeight),
+  //     Event(
+  //         earliestTime: TimeOfDay(
+  //             hour: HourStringInt(hours[0]).hour,
+  //             minute: HourStringInt(hours[0]).minute),
+  //         startTime: DateTime.parse('2020-04-11 12:00:00.000'),
+  //         duration: Duration(hours: 1, minutes: 45),
+  //         message: "Marillac House",
+  //         siteName: "Marillac House",
+  //         color: ColorDefs.colorAudit2,
+  //         auditType: "Audit 2",
+  //         rowHeight: rowHeight)
+  //   ],
+  //   <Event>[],
+  //   <Event>[],
+  //   [
+  //     Event(
+  //         earliestTime: TimeOfDay(
+  //             hour: HourStringInt(hours[0]).hour,
+  //             minute: HourStringInt(hours[0]).minute),
+  //         startTime: DateTime.parse('2020-04-14 08:00:00.000'),
+  //         duration: Duration(hours: 1, minutes: 30),
+  //         message: "Irving Park",
+  //         siteName: "Irving Park",
+  //         color: ColorDefs.colorAudit3,
+  //         auditType: "Audit 3",
+  //         rowHeight: rowHeight),
+  //     Event(
+  //         earliestTime: TimeOfDay(
+  //             hour: HourStringInt(hours[0]).hour,
+  //             minute: HourStringInt(hours[0]).minute),
+  //         startTime: DateTime.parse('2020-04-14 12:00:00.000'),
+  //         duration: Duration(hours: 1, minutes: 45),
+  //         message: "Ravenswood",
+  //         siteName: "Ravenswood",
+  //         auditType: "Audit 4",
+  //         color: ColorDefs.colorAudit4,
+  //         rowHeight: rowHeight)
+  //   ],
+  //   <Event>[],
+  //   <Event>[],
+  //   <Event>[],
+  // ];
+
+  List<Event> convertRawToEvents(List<Map<String, String>> daysRawMatch) {
+    List<Event> daysEvents = [];
+    for (Map<String, String> appointment in daysRawMatch) {
+      print('appointment:$appointment');
+      Event event = Event(
+        earliestTime: TimeOfDay(
+            hour: HourStringInt(hours[0]).hour,
+            minute: HourStringInt(hours[0]).minute),
+        startTime: DateTime.parse(appointment['startTime']),
+        duration: DateTime.parse(appointment['endTime'])
+            .difference(DateTime.parse(appointment['startTime'])),
+        message: appointment['message'],
+        siteName: appointment['siteName'],
+        auditType: appointment['auditType'],
+        color: siteColorLookup(appointment['auditType']),
+        rowHeight: rowHeight,
+      );
+      print('event:$event');
+      daysEvents.add(event);
+    }
+    print('daysEvents:$daysEvents');
+    return daysEvents;
   }
 }

@@ -9,6 +9,7 @@ import 'package:gcfdlayout2/providers/LayoutData.dart';
 // import 'package:flutter/scheduler.dart' show timeDilation;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
