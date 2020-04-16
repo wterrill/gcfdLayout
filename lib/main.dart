@@ -5,11 +5,12 @@ import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:statsfl/statsfl.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+//  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
@@ -42,19 +43,21 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(),
       ),
       // home: Scaffold(body: LoginScreen())
-      home: SafeArea(
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          print("constraints: $constraints");
-          Size mediaSize = MediaQuery.of(context).size;
-          double safeAreaSize = mediaSize.height - constraints.maxHeight;
-          Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
-          Provider.of<LayoutData>(context).safeArea = constraints;
-          Provider.of<LayoutData>(context).mediaArea = mediaSize;
+      home: StatsFl(
+        child: SafeArea(
+          child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+            print("constraints: $constraints");
+            Size mediaSize = MediaQuery.of(context).size;
+            double safeAreaSize = mediaSize.height - constraints.maxHeight;
+            Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
+            Provider.of<LayoutData>(context).safeArea = constraints;
+            Provider.of<LayoutData>(context).mediaArea = mediaSize;
 
-          return Scaffold(body: LoginScreen());
-          // return Scaffold(body: SchedulingPage());
-        }),
+            return Scaffold(body: LoginScreen());
+            // return Scaffold(body: SchedulingPage());
+          }),
+        ),
       ),
     );
   }

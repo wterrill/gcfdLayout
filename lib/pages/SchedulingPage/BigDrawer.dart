@@ -56,54 +56,131 @@ class _BigDrawerState extends State<BigDrawer>
                   width: 350,
                   color: ColorDefs.colorTopDrawerBackground,
                   child: Column(children: [
-                    Container(
-                      height: 40,
-                      width: double.infinity,
-                      color: event.color,
-                      child: Center(
-                          child: Text(event.message, style: event.textStyle)),
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: event.color,
+                        child: Center(
+                            child: Text(event.message, style: event.textStyle)),
+                      ),
                     ),
-                    Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: Colors.black,
                         child: Center(
-                            child: Text("Schedule Audit",
-                                style: ColorDefs.textDayHeadings))),
-                    Container(
-                        height: 35.4,
-                        width: double.infinity,
+                            child: Text("policy and hours block",
+                                style: event.textStyle)),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: Colors.grey,
                         child: Center(
-                            child: Text("Forms",
-                                style: ColorDefs.textDayHeadings))),
-                    Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
+                            child: Text("Address and map block",
+                                style: event.textStyle)),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: Colors.black,
                         child: Center(
-                            child: Text("Contacts",
-                                style: ColorDefs.textDayHeadings))),
-                    Container(
-                        height: 35.4,
-                        width: double.infinity,
+                          child: ListTile(
+                            title: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: ColorDefs.colorUserAccent,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0, color: Colors.grey)),
+                              child: FlatButton(
+                                disabledTextColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                onPressed: () {
+                                  print("pressed navigate button");
+                                },
+                                child: Text('Navigate Me',
+                                    style: ColorDefs.textBodyBlack20),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: Colors.black,
                         child: Center(
-                            child: Text("View",
-                                style: ColorDefs.textDayHeadings))),
-                    Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Icon(Icons.sync, color: ColorDefs.colorAudit2),
-                            Center(
-                                child: Text("Sync",
-                                    style: ColorDefs.textDayHeadings)),
-                            Icon(Icons.sync,
-                                color: ColorDefs.colorTopDrawerBackground),
-                          ],
-                        )),
+                          child: ListTile(
+                            title: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: ColorDefs.colorUserAccent,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0, color: Colors.transparent)),
+                              child: FlatButton(
+                                disabledTextColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                onPressed: () {
+                                  print("pressed begin audit button");
+                                },
+                                child: Text('Begin Audit',
+                                    style: ColorDefs.textBodyBlack20),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      // height: 40,
+                      // width: double.infinity,
+
+                      child: Container(
+                        color: Colors.black,
+                        child: Center(
+                          child: ListTile(
+                            title: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: ColorDefs.colorUserAccent,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0, color: Colors.transparent)),
+                              child: FlatButton(
+                                disabledTextColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                onPressed: () {
+                                  print("pressed reschedule Audit button");
+                                },
+                                child: Text('Reschedule Audit',
+                                    style: ColorDefs.textBodyBlack20),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ])),
             ),
           ),

@@ -29,6 +29,7 @@ dependencies:
   provider: ^4.0.4
   intl: ^0.16.1
   rxdart: ^0.24.0
+  statsfl: ^0.1.0
 
 dev_dependencies:
   flutter_test:

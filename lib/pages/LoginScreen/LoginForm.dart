@@ -5,6 +5,7 @@ import 'package:gcfdlayout2/definitions/Dialogs.dart';
 import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:statsfl/statsfl.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -149,7 +150,16 @@ class _LoginFormState extends State<LoginForm> {
           context,
           PageRouteBuilder<void>(
               transitionDuration: Duration(seconds: 2),
-              pageBuilder: (_, __, ___) => SchedulingPage()));
+              pageBuilder: (_, __, ___) => StatsFl(
+                  // isEnabled: true, //Toggle on/off
+                  // width: 600, //Set size
+                  // height: 20, //
+                  // showText: true, // Hide text label
+                  // sampleTime:
+                  //     .5, //Interval between fps calculations, in seconds.
+                  // totalTime: 15, //Total length of timeline, in seconds.
+                  // align: Alignment.topLeft, //Alignment of statsbox
+                  child: SchedulingPage())));
     }
   }
 
