@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/definitions/Event.dart';
 // import 'package:gcfdlayout2/definitions/colorDefs.dart';
-import 'package:gcfdlayout2/definitions/siteColorLookup.dart';
+import 'package:gcfdlayout2/definitions/siteColorTextColorLookup.dart';
 import 'package:gcfdlayout2/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
 
@@ -262,7 +262,10 @@ class CalendarData with ChangeNotifier {
         message: appointment['message'],
         siteName: appointment['siteName'],
         auditType: appointment['auditType'],
-        color: siteColorLookup(appointment['auditType']),
+        color: siteColorTextColorLookup(appointment['auditType'])['color']
+            as Color,
+        textStyle: siteColorTextColorLookup(appointment['auditType'])['text']
+            as TextStyle,
         rowHeight: rowHeight,
       );
       print('event:$event');

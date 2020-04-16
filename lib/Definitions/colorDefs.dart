@@ -30,6 +30,8 @@ class ColorDefs {
 
   static Color colorLoginBackground = Color(0xFFE7EFFE);
 
+  static Color colorDisabledBackground = Color(0xAA555555);
+
 // Styles
   static TextStyle textDayHeadings =
       TextStyle(color: colorAudit2, fontSize: 10.0);

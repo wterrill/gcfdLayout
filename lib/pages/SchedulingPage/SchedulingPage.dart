@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gcfdlayout2/definitions/Event.dart';
 import 'package:gcfdlayout2/definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
+import 'BigDrawer.dart';
 import 'CalendarHeader.dart';
 import 'TopDrawer.dart';
 import 'TopWhiteHeader.dart';
@@ -13,73 +14,99 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:gcfdlayout2/providers/CalendarData.dart';
 import 'package:gcfdlayout2/providers/LayoutData.dart';
 import 'package:rxdart/rxdart.dart';
-import 'dart:developer';
+// import 'dart:developer';
 
-class SchedulingPage extends StatelessWidget {
+class SchedulingPage extends StatefulWidget {
   // final controller = StreamController<String>();
 
+  @override
+  _SchedulingPageState createState() => _SchedulingPageState();
+}
+
+class _SchedulingPageState extends State<SchedulingPage> {
   final controller = BehaviorSubject<String>();
-  // final controller2 = BehaviorSubject<List<List<Event>>();
+  bool backgroundDisable = false;
 
   @override
   Widget build(BuildContext context) {
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
+    // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Column(
+    backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
+    return GestureDetector(
+        onTap: () {
+          if (backgroundDisable) {
+            Provider.of<LayoutData>(context, listen: false).toggleBigDrawer();
+          }
+        },
+        child: Scaffold(
+          body: Stack(
             children: [
-              TopWhiteHeader(), // white bar
-              Expanded(
-                child: Container(
-                  color: ColorDefs.colorDarkBackground,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        0.01 * mediaWidth,
-                        50.0,
-                        0.01 * mediaWidth,
-                        0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
-                    child: Provider.of<CalendarData>(context).initialized
-                        ? Column(
-                            children: [
-                              CalendarHeader(
-                                  controller: controller), // static header
-                              Expanded(
-                                child: CustomScrollView(
-                                  slivers: <Widget>[
-                                    // floating header
-                                    // SliverAppBar(
-                                    //   backgroundColor: Colors.transparent,
-                                    //   floating: true,
-                                    //   flexibleSpace: _floatingHeader(),
-                                    // ),
-                                    SliverPersistentHeader(
-                                      floating: true,
-                                      pinned: true,
-                                      delegate: HeaderDelegate(context),
+//              ColorFiltered(
+//                colorFilter: ColorFilter.mode(
+//                  Colors.grey,
+//                  BlendMode.saturation,
+//                ),
+////                    : ColorFilter.mode(
+////                        Colors.transparent,
+////                        BlendMode.multiply,
+////                      ),
+//                child:
+              Column(
+                children: [
+                  TopWhiteHeader(), // white bar
+                  Expanded(
+                    child: Container(
+                      color: ColorDefs.colorDarkBackground,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            0.01 * mediaWidth,
+                            50.0,
+                            0.01 * mediaWidth,
+                            0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
+                        child: Provider.of<CalendarData>(context).initialized
+                            ? Column(
+                                children: [
+                                  CalendarHeader(
+                                      controller: controller), // static header
+                                  Expanded(
+                                    child: CustomScrollView(
+                                      slivers: <Widget>[
+                                        // floating header
+                                        // SliverAppBar(
+                                        //   backgroundColor: Colors.transparent,
+                                        //   floating: true,
+                                        //   flexibleSpace: _floatingHeader(),
+                                        // ),
+                                        SliverPersistentHeader(
+                                          floating: true,
+                                          pinned: true,
+                                          delegate: HeaderDelegate(context),
+                                        ),
+                                        // main grid
+                                        SliverToBoxAdapter(
+                                          child: filterGridWidget(
+                                              controller: controller),
+                                        ),
+                                      ],
                                     ),
-                                    // main grid
-                                    SliverToBoxAdapter(
-                                      child: filterGridWidget(
-                                          controller: controller),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        : Text("not initialized"),
+                                  ),
+                                ],
+                              )
+                            : Text("not initialized"),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
+              // ),
+              if (backgroundDisable)
+                Container(color: ColorDefs.colorDisabledBackground),
+              RepaintBoundary(child: BigDrawer()),
+              RepaintBoundary(child: TopDrawer()),
             ],
           ),
-          RepaintBoundary(child: TopDrawer())
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -144,17 +171,11 @@ class _filterGridWidgetState extends State<filterGridWidget> {
     List<String> hours = Provider.of<CalendarData>(context).hours;
     List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     // widget.controller.add(dayEvents);
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    print(dayEvents);
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
     return StreamBuilder<List<List<Event>>>(
         stream: widget.controller.stream.map(_filter),
-//        initialData: Provider.of<CalendarData>(context).dayEvents,
+        initialData: Provider.of<CalendarData>(context).dayEvents,
         builder: (context, snapshot) {
-          print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-          print(snapshot);
-          print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
           return Row(
             children: List.generate(8, (col) {
               if (col == 0) {
@@ -194,29 +215,47 @@ class _filterGridWidgetState extends State<filterGridWidget> {
                       Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
                   right:
                       Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
-                  child: AnimatedOpacity(
-                    curve: Curves.ease,
-                    opacity: e.visible
-                        ? 1
-                        : 0.2, // you can use 0 instead of 0.1 to hide it completely
-                    duration: Duration(milliseconds: 250),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: e.color,
-                        // color: e.visible
-                        //     ? e.color
-                        //     : Colors.white, /* this looks good too */
-                      ),
-                      alignment: Alignment.center,
-                      child: AutoSizeText(
-                        e.message,
-                        minFontSize: 5,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  child:
+                      // AnimatedOpacity(
+                      //   curve: Curves.ease,
+                      //   opacity: e.visible
+                      //       ? 1
+                      //       : 0.2, // you can use 0 instead of 0.1 to hide it completely
+                      //   duration: Duration(milliseconds: 250),
+                      // child:
+                      GestureDetector(
+                    onTap: () {
+                      Provider.of<LayoutData>(context, listen: false)
+                          .toggleBigDrawer(event: e);
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: e.color,
+                              // color: e.visible
+                              //     ? e.color
+                              //     : Colors.white, /* this looks good too */
+                            ),
+                            alignment: Alignment.center,
+                            child: AutoSizeText(
+                              e.message,
+                              textAlign: TextAlign.center,
+                              wrapWords: false,
+                              minFontSize: 5,
+                              maxLines: 2,
+                              style: e.textStyle,
+                              // overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  // ),
                 ),
               ); // <== end of .map
 

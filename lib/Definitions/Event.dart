@@ -11,6 +11,7 @@ class Event {
   final String auditType;
   final String message;
   final Color color;
+  final TextStyle textStyle;
 
   // Calculated/Obtained
   double rowHeight;
@@ -31,6 +32,7 @@ class Event {
     @required this.auditType,
     @required this.rowHeight,
     @required this.color,
+    @required this.textStyle,
     this.addressStreet,
     this.cityStateZip,
     this.phone,
