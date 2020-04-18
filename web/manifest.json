@@ -1,6 +1,6 @@
 {
-    "name": "gcfdlayout2",
-    "short_name": "gcfdlayout2",
+    "name": "auditor",
+    "short_name": "auditor",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",

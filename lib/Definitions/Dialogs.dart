@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/buildTime/flutterVersion.dart';
-import 'package:gcfdlayout2/buildTime/flutterDate.dart';
+import 'package:auditor/buildTime/flutterVersion.dart';
+import 'package:auditor/buildTime/flutterDate.dart';
 
 class Dialogs {
   static void showAlertDialog(BuildContext context) {
@@ -32,6 +32,26 @@ class Dialogs {
           Text('Built and uploaded on: $buildDate'),
           Text("Flutter framework: ${version['frameworkVersion']}"),
           Text("Dart version: ${version['dartSdkVersion']}"),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void showNotImplemented(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('This functionality is not yet available'),
         ],
       ),
     );

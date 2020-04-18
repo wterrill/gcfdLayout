@@ -2,18 +2,21 @@ import 'dart:async';
 import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/Event.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
+// import 'package:auditor/definitions/Event.dart';
+import 'package:auditor/definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
-import 'BigDrawer.dart';
-import 'CalendarHeader.dart';
-import 'TopDrawer.dart';
-import 'TopWhiteHeader.dart';
+import 'BigDrawerWidget.dart';
+import 'CalendarHeaderWidget.dart';
+import 'TopDrawerWidget.dart';
+import 'TopWhiteHeaderWidget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:gcfdlayout2/providers/CalendarData.dart';
-import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:auditor/providers/CalendarData.dart';
+import 'package:auditor/providers/LayoutData.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'filterGridWidget.dart';
 // import 'dart:developer';
 
 class SchedulingPage extends StatefulWidget {
@@ -29,32 +32,25 @@ class _SchedulingPageState extends State<SchedulingPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool startAudit = Provider.of<AuditData>(context).auditStarted;
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
     return GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: () {
           if (backgroundDisable) {
-            Provider.of<LayoutData>(context, listen: false).toggleBigDrawer();
+            Provider.of<LayoutData>(context, listen: false)
+                .toggleBigDrawerWidget();
           }
         },
         child: Scaffold(
           body: Stack(
             children: [
-//              ColorFiltered(
-//                colorFilter: ColorFilter.mode(
-//                  Colors.grey,
-//                  BlendMode.saturation,
-//                ),
-////                    : ColorFilter.mode(
-////                        Colors.transparent,
-////                        BlendMode.multiply,
-////                      ),
-//                child:
               Column(
                 children: [
-                  TopWhiteHeader(), // white bar
+                  TopWhiteHeaderWidget(), // white bar
                   Expanded(
                     child: Container(
                       color: ColorDefs.colorDarkBackground,
@@ -67,7 +63,7 @@ class _SchedulingPageState extends State<SchedulingPage> {
                         child: Provider.of<CalendarData>(context).initialized
                             ? Column(
                                 children: [
-                                  CalendarHeader(
+                                  CalendarHeaderWidget(
                                       controller: controller), // static header
                                   Expanded(
                                     child: CustomScrollView(
@@ -85,7 +81,7 @@ class _SchedulingPageState extends State<SchedulingPage> {
                                         ),
                                         // main grid
                                         SliverToBoxAdapter(
-                                          child: filterGridWidget(
+                                          child: FilterGridWidget(
                                               controller: controller),
                                         ),
                                       ],
@@ -102,8 +98,26 @@ class _SchedulingPageState extends State<SchedulingPage> {
               // ),
               if (backgroundDisable)
                 Container(color: ColorDefs.colorDisabledBackground),
-              RepaintBoundary(child: BigDrawer()),
-              RepaintBoundary(child: TopDrawer()),
+              RepaintBoundary(child: BigDrawerWidget()),
+              RepaintBoundary(child: TopDrawerWidget()),
+//              if (startAudit)
+              IgnorePointer(
+                ignoring: !startAudit,
+                child: AnimatedOpacity(
+                  curve: Curves.ease,
+                  opacity: startAudit ? 1 : 0,
+                  duration: Duration(milliseconds: 500),
+                  child: Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: ColorDefs.colorTopHeader,
+                            borderRadius: BorderRadius.circular(20.0),
+                            border: Border.all(width: 2.0, color: Colors.grey)),
+                        height: mediaHeight * 0.95,
+                        width: mediaWidth * 0.9),
+                  ),
+                ),
+              ),
             ],
           ),
         ));
@@ -129,7 +143,7 @@ class _SchedulingPageState extends State<SchedulingPage> {
 //               children: [
 //                 Text(
 //                   d.split(" ")[0],
-//                   style: ColorDefs.textDayHeadings,
+//                   style: ColorDefs.textBodyBlue20,
 //                   maxLines: 1,
 //                 ),
 //                 Text(
@@ -145,190 +159,6 @@ class _SchedulingPageState extends State<SchedulingPage> {
 //     ],
 //   );
 // }
-
-class filterGridWidget extends StatefulWidget {
-  filterGridWidget({Key key, this.controller}) : super(key: key);
-  final StreamController<String> controller;
-
-  @override
-  _filterGridWidgetState createState() => _filterGridWidgetState();
-}
-
-class _filterGridWidgetState extends State<filterGridWidget> {
-  @override
-  Widget build(BuildContext context) {
-    List<List<Event>> _filter(String query) {
-      print('query: |$query|');
-      var q = query.toLowerCase();
-      List<List<Event>> dayEvents =
-          Provider.of<CalendarData>(context, listen: false).dayEvents;
-      dayEvents.forEach((day) =>
-          day.forEach((e) => e.visible = e.message.toLowerCase().contains(q)));
-      return dayEvents;
-    }
-
-    var timeAutoGroup = AutoSizeGroup();
-    List<String> hours = Provider.of<CalendarData>(context).hours;
-    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    // widget.controller.add(dayEvents);
-
-    return StreamBuilder<List<List<Event>>>(
-        stream: widget.controller.stream.map(_filter),
-        initialData: Provider.of<CalendarData>(context).dayEvents,
-        builder: (context, snapshot) {
-          return Row(
-            children: List.generate(8, (col) {
-              if (col == 0) {
-                return Expanded(
-                  child: Column(
-                    children: List.generate(
-                      hours.length,
-                      (row) => Container(
-                        height: Provider.of<CalendarData>(context).rowHeight,
-                        decoration: BoxDecoration(
-                          color: ColorDefs.colorTimeBackground,
-                          border: Border(
-                            top: BorderSide(
-                                width: 1.0,
-                                color: ColorDefs.colorCalendarHeader),
-                          ),
-                        ),
-                        child: Center(
-                          child: AutoSizeText(hours[row],
-                              maxLines: 1,
-                              group: timeAutoGroup,
-                              minFontSize: 5,
-                              style: ColorDefs.textSubtitle2),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }
-              var beer = Provider.of<CalendarData>(context).dayEvents;
-//              var events = snapshot.data[col - 1].map(
-              var events = beer[col - 1].map(
-                (Event e) => Positioned(
-                  top: e.yTop,
-                  height: e.yHeight,
-                  left:
-                      Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
-                  right:
-                      Provider.of<LayoutData>(context).safeArea.minWidth * 0.01,
-                  child:
-                      // AnimatedOpacity(
-                      //   curve: Curves.ease,
-                      //   opacity: e.visible
-                      //       ? 1
-                      //       : 0.2, // you can use 0 instead of 0.1 to hide it completely
-                      //   duration: Duration(milliseconds: 250),
-                      // child:
-                      GestureDetector(
-                    onTap: () {
-                      Provider.of<LayoutData>(context, listen: false)
-                          .toggleBigDrawer(event: e);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: e.color,
-                              // color: e.visible
-                              //     ? e.color
-                              //     : Colors.white, /* this looks good too */
-                            ),
-                            alignment: Alignment.center,
-                            child: AutoSizeText(
-                              e.message,
-                              textAlign: TextAlign.center,
-                              wrapWords: false,
-                              minFontSize: 5,
-                              maxLines: 2,
-                              style: e.textStyle,
-                              // overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // ),
-                ),
-              ); // <== end of .map
-
-              var dayOFFmarker = Transform.rotate(
-                  angle: 3.14 / 2,
-                  child: AutoSizeText("OFF",
-                      minFontSize: 5,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: ColorDefs.textTransparentOffDay));
-
-              var offOverlay = Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                      color: ColorDefs.colorTransparentOffDayBackground,
-                      child: Center(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                            dayOFFmarker,
-                            dayOFFmarker,
-                            dayOFFmarker
-                          ]))));
-
-              var todayOverlay = Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Opacity(
-                      opacity: 0.05, child: Container(color: Colors.white)));
-
-              return Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    Column(
-                      children: List.generate(
-                        hours.length,
-                        (row) => Container(
-                          height: Provider.of<CalendarData>(context).rowHeight,
-                          decoration: BoxDecoration(
-                            color: row.isEven
-                                ? ColorDefs.colorAlternatingDark
-                                : ColorDefs.colorDarkBackground,
-                            border: Border(
-                              left: BorderSide(
-                                  width: 1.0,
-                                  color: ColorDefs.colorCalendarHeader),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // add day's events
-                    (col == 7) ? offOverlay : Container(),
-                    (col == Provider.of<CalendarData>(context).todayOverlaySpot)
-                        ? todayOverlay
-                        : Container(),
-                    ...events,
-
-                    // ...todayOverlay
-                  ],
-                ),
-              );
-            }),
-          );
-        });
-  }
-}
-
 class HeaderDelegate extends SliverPersistentHeaderDelegate {
   final BuildContext context;
 
@@ -365,7 +195,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
                     heightFactor: 1 - (shrinkOffset / maxExtent),
                     child: Text(
                       d.split(" ")[0],
-                      style: ColorDefs.textDayHeadings,
+                      style: ColorDefs.textBodyBlue10,
                       maxLines: 1,
                     ),
                   ),

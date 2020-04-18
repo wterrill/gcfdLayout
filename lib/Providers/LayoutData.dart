@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/Event.dart';
+import 'package:auditor/definitions/Event.dart';
 
 class LayoutData with ChangeNotifier {
   double safeAreaDiff = 0.0;
@@ -19,7 +19,7 @@ class LayoutData with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleBigDrawer({Event event}) {
+  void toggleBigDrawerWidget({Event event}) {
     backgroundDisable = !backgroundDisable;
     if (event != null) selectedEvent = event;
     notifyListeners();

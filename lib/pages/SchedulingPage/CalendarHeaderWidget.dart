@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
-import 'package:gcfdlayout2/providers/CalendarData.dart';
+import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/providers/CalendarData.dart';
 import 'package:provider/provider.dart';
 
-class CalendarHeader extends StatefulWidget {
-  CalendarHeader({Key key, this.controller}) : super(key: key);
+class CalendarHeaderWidget extends StatefulWidget {
+  CalendarHeaderWidget({Key key, this.controller}) : super(key: key);
   final StreamController<String> controller;
 
   @override
-  _CalendarHeaderState createState() => _CalendarHeaderState();
+  _CalendarHeaderWidgetState createState() => _CalendarHeaderWidgetState();
 }
 
-class _CalendarHeaderState extends State<CalendarHeader> {
+class _CalendarHeaderWidgetState extends State<CalendarHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     var days = Provider.of<CalendarData>(context).days;
@@ -37,6 +37,7 @@ class _CalendarHeaderState extends State<CalendarHeader> {
                 color: ColorDefs.colorButton1Background,
               ),
               child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Provider.of<CalendarData>(context, listen: false)
                       .changeWeek("backward");
@@ -71,7 +72,7 @@ class _CalendarHeaderState extends State<CalendarHeader> {
                   style: ColorDefs.textBodyWhite20,
                 ),
                 Text("${days[0]} - ${days[days.length - 1]}",
-                    style: ColorDefs.textDayHeadings),
+                    style: ColorDefs.textBodyBlue10),
               ],
             ),
           ),
@@ -83,6 +84,7 @@ class _CalendarHeaderState extends State<CalendarHeader> {
                 color: ColorDefs.colorButton1Background,
               ),
               child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Provider.of<CalendarData>(context, listen: false)
                       .changeWeek("forward");

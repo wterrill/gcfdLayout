@@ -1,10 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
-import 'package:gcfdlayout2/communications/Authentication.dart';
-import 'package:gcfdlayout2/definitions/Dialogs.dart';
-import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/communications/Authentication.dart';
+import 'package:auditor/definitions/Dialogs.dart';
+import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
 import 'package:provider/provider.dart';
-import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
 
 class LoginForm extends StatefulWidget {
@@ -41,7 +42,12 @@ class _LoginFormState extends State<LoginForm> {
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(height: 10),
-          Text("Sign in to GCFD", style: ColorDefs.textBodyBlack30),
+          AutoSizeText(
+            "Sign in to GCFD",
+            style: ColorDefs.textBodyBlack20,
+            maxLines: 1,
+            minFontSize: 5,
+          ),
           Container(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -102,11 +108,16 @@ class _LoginFormState extends State<LoginForm> {
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-                child: Text("I forgot my password",
-                    style: ColorDefs.textBodyBlack10),
+                child: GestureDetector(
+                  onTap: () {
+                    Dialogs.showNotImplemented(context);
+                  },
+                  child: Text("I forgot my password",
+                      style: ColorDefs.textBodyBlack10),
+                ),
               )),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 60.0, 8.0, 10.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 10.0),
             child: ListTile(
               title: DecoratedBox(
                 decoration: BoxDecoration(

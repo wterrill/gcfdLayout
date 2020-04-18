@@ -1,10 +1,11 @@
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/pages/LoginScreen/LoginScreen.dart';
-import 'package:gcfdlayout2/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
+import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
 import 'package:provider/provider.dart';
-import 'package:gcfdlayout2/providers/CalendarData.dart';
-import 'package:gcfdlayout2/providers/LayoutData.dart';
+import 'package:auditor/providers/CalendarData.dart';
+import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
@@ -14,9 +15,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => CalendarData(), lazy: false),
+        ChangeNotifierProvider(create: (context) => CalendarData()),
         ChangeNotifierProvider(create: (context) => LayoutData()),
+        ChangeNotifierProvider(create: (context) => AuditData()),
       ],
       child: MyApp(),
     ),

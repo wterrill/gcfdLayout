@@ -21,6 +21,7 @@ class ColorDefs {
       Color(0x88919C9D); // For the OFF day overlay
   static Color colorTopDrawerBackground = Color(0xFF3C3C3C); //
   static Color colorTopDrawerAlternating = Color(0xFF474747);
+  static Color colorBigDrawerBronze = Color(0xFFA36422);
 
   static Color colorAudit1 = Color(0xFFD84342);
   static Color colorAudit2 = Color(0xFF4ED4DF);
@@ -33,8 +34,10 @@ class ColorDefs {
   static Color colorDisabledBackground = Color(0xAA555555);
 
 // Styles
-  static TextStyle textDayHeadings =
+  static TextStyle textBodyBlue10 =
       TextStyle(color: colorAudit2, fontSize: 10.0);
+  static TextStyle textBodyBlue20 =
+      TextStyle(color: colorAudit2, fontSize: 20.0);
   static TextStyle textBodyBlack10 =
       TextStyle(color: Colors.black, fontSize: 10.0);
   static TextStyle textBodyBlack20 =
@@ -46,6 +49,8 @@ class ColorDefs {
       TextStyle(color: Colors.grey, fontSize: 20.0);
   static TextStyle textBodyWhite20 =
       TextStyle(color: Colors.white, fontSize: 20.0);
+  static TextStyle textBodyWhite10 =
+      TextStyle(color: Colors.white, fontSize: 10.0);
   static TextStyle textBodyText2 =
       TextStyle(color: colorTopHeader, fontSize: 20.0);
   static TextStyle textSubtitle2 =
@@ -53,4 +58,7 @@ class ColorDefs {
 
   static TextStyle textTransparentOffDay =
       TextStyle(color: colorTransparentOffDayText, fontSize: 42.0);
+
+  static TextStyle textBodyBronze20 =
+      TextStyle(color: colorBigDrawerBronze, fontSize: 20.0);
 }

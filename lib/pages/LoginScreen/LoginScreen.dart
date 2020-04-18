@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:auditor/definitions/colorDefs.dart';
 import 'LoginForm.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,29 +8,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Expanded(
-          flex: 1,
-          child: Container(
-            color: ColorDefs.colorTopHeader,
-            child: Center(
-                child: Hero(
-              tag: "GCFD_Logo",
-              child: Image(
-                image: AssetImage('images/GCFD_Logo.jpg'),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: ColorDefs.colorTopHeader,
+                child: Center(
+                    child: Hero(
+                  tag: "GCFD_Logo",
+                  child: Image(
+                    fit: BoxFit.fitHeight,
+                    image: AssetImage('assets/images/GCFD_Logo.jpg'),
+                  ),
+                )),
               ),
-            )),
-          ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                  color: ColorDefs.colorDarkBackground,
+                  child: Center(
+                    child: LoginForm(),
+                  )),
+            ),
+          ]),
         ),
-        Expanded(
-          flex: 3,
-          child: Container(
-              color: ColorDefs.colorDarkBackground,
-              child: Center(
-                child: LoginForm(),
-              )),
-        ),
-      ]),
+      ),
     );
   }
 }

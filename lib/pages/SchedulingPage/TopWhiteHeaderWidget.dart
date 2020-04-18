@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gcfdlayout2/definitions/colorDefs.dart';
+import 'package:auditor/definitions/colorDefs.dart';
 
-class TopWhiteHeader extends StatelessWidget {
-  const TopWhiteHeader({Key key}) : super(key: key);
+class TopWhiteHeaderWidget extends StatelessWidget {
+  const TopWhiteHeaderWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class TopWhiteHeader extends StatelessWidget {
             child: Hero(
               tag: "GCFD_Logo",
               child: Image(
-                image: AssetImage('images/GCFD_Logo.jpg'),
+                image: AssetImage('assets/images/GCFD_Logo.jpg'),
               ),
             ),
           ),

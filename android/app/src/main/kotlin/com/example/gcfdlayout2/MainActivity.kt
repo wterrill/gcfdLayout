@@ -1,4 +1,4 @@
-package com.example.gcfdlayout2
+package com.terrilltech.auditor
 
 import io.flutter.embedding.android.FlutterActivity
 
