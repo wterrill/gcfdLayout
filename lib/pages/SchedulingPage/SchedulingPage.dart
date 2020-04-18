@@ -43,6 +43,8 @@ class _SchedulingPageState extends State<SchedulingPage> {
           if (backgroundDisable) {
             Provider.of<LayoutData>(context, listen: false)
                 .toggleBigDrawerWidget();
+          } else {
+            // Provider.of<AuditData>(context, listen: false).toggleStartAudit();
           }
         },
         child: Scaffold(
@@ -114,7 +116,20 @@ class _SchedulingPageState extends State<SchedulingPage> {
                             borderRadius: BorderRadius.circular(20.0),
                             border: Border.all(width: 2.0, color: Colors.grey)),
                         height: mediaHeight * 0.95,
-                        width: mediaWidth * 0.9),
+                        width: mediaWidth * 0.9,
+                        child: Center(
+                          child: FlatButton(
+                            color: Colors.blue,
+                            textColor: Colors.black,
+                            // color: ColorDefs.colorTopDrawerAlternating,
+                            child: Text("Cancel Audit",
+                                style: ColorDefs.textBodyBlack20),
+                            onPressed: () {
+                              Provider.of<AuditData>(context, listen: false)
+                                  .toggleStartAudit();
+                            },
+                          ),
+                        )),
                   ),
                 ),
               ),

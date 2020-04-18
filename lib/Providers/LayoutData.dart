@@ -5,6 +5,7 @@ class LayoutData with ChangeNotifier {
   double safeAreaDiff = 0.0;
   BoxConstraints safeArea;
   Size mediaArea;
+  int numberOfDaysShown = 7;
 
   //SchedulingPage
   bool backgroundDisable;
@@ -22,6 +23,11 @@ class LayoutData with ChangeNotifier {
   void toggleBigDrawerWidget({Event event}) {
     backgroundDisable = !backgroundDisable;
     if (event != null) selectedEvent = event;
+    notifyListeners();
+  }
+
+  void updateNumberOfDaysShown(int number) {
+    numberOfDaysShown = number;
     notifyListeners();
   }
 }

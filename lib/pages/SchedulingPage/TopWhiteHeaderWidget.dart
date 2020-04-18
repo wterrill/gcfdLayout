@@ -1,5 +1,7 @@
+import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/definitions/colorDefs.dart';
+import 'package:provider/provider.dart';
 
 class TopWhiteHeaderWidget extends StatelessWidget {
   const TopWhiteHeaderWidget({Key key}) : super(key: key);
@@ -22,8 +24,10 @@ class TopWhiteHeaderWidget extends StatelessWidget {
               ),
             ),
           ),
+          Text(Provider.of<LayoutData>(context).numberOfDaysShown.toString(),
+              style: ColorDefs.textBodyBlack20),
           Padding(
-            padding: EdgeInsets.fromLTRB(40.0, 5.0, 0.0, 5.0),
+            padding: EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 5.0),
             child: Container(
               decoration: BoxDecoration(
                 border:

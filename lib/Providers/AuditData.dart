@@ -11,8 +11,8 @@ class AuditData with ChangeNotifier {
     print("initialized AuditData");
   }
 
-  void startAudit() {
-    auditStarted = true;
+  void toggleStartAudit() {
+    auditStarted = !auditStarted;
     notifyListeners();
   }
 }

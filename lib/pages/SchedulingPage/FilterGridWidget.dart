@@ -84,6 +84,8 @@ class FilterGridWidgetState extends State<FilterGridWidget> {
                             newNumberOfDays != numberOfDays;
                         if (withinRangeAndDifferet) {
                           numberOfDays = newNumberOfDays;
+                          Provider.of<LayoutData>(context, listen: false)
+                              .updateNumberOfDaysShown(numberOfDays);
                           print('onUpdate numberOfDays change: $numberOfDays');
                         }
                       })

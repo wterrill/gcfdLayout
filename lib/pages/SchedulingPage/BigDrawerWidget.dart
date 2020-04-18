@@ -192,7 +192,7 @@ class _BigDrawerWidgetState extends State<BigDrawerWidget>
                                     borderRadius: BorderRadius.circular(50.0)),
                                 onPressed: () {
                                   Provider.of<AuditData>(context, listen: false)
-                                      .startAudit();
+                                      .toggleStartAudit();
                                   Provider.of<LayoutData>(context,
                                           listen: false)
                                       .toggleBigDrawerWidget();
