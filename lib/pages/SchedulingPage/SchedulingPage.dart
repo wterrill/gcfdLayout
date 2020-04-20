@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
+import 'package:auditor/pages/AuditPage/AuditPage.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 // import 'package:auditor/definitions/Event.dart';
@@ -37,105 +38,78 @@ class _SchedulingPageState extends State<SchedulingPage> {
     // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
-    return GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          if (backgroundDisable) {
-            Provider.of<LayoutData>(context, listen: false)
-                .toggleBigDrawerWidget();
-          } else {
-            // Provider.of<AuditData>(context, listen: false).toggleStartAudit();
-          }
-        },
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Column(
-                children: [
-                  TopWhiteHeaderWidget(), // white bar
-                  Expanded(
-                    child: Container(
-                      color: ColorDefs.colorDarkBackground,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.01 * mediaWidth,
-                            50.0,
-                            0.01 * mediaWidth,
-                            0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
-                        child: Provider.of<CalendarData>(context).initialized
-                            ? Column(
-                                children: [
-                                  CalendarHeaderWidget(
-                                      controller: controller), // static header
-                                  Expanded(
-                                    child: CustomScrollView(
-                                      slivers: <Widget>[
-                                        // floating header
-                                        // SliverAppBar(
-                                        //   backgroundColor: Colors.transparent,
-                                        //   floating: true,
-                                        //   flexibleSpace: _floatingHeader(),
-                                        // ),
-                                        SliverPersistentHeader(
-                                          floating: true,
-                                          pinned: true,
-                                          delegate: HeaderDelegate(context),
-                                        ),
-                                        // main grid
-                                        SliverToBoxAdapter(
-                                          child: FilterGridWidget(
-                                              controller: controller),
-                                        ),
-                                      ],
+    return SafeArea(
+      child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            if (backgroundDisable) {
+              Provider.of<LayoutData>(context, listen: false)
+                  .toggleBigDrawerWidget();
+            } else {
+              // Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+            }
+          },
+          child: Scaffold(
+            body: Stack(
+              children: [
+                Column(
+                  children: [
+                    TopWhiteHeaderWidget(), // white bar
+                    Expanded(
+                      child: Container(
+                        color: ColorDefs.colorDarkBackground,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              0.01 * mediaWidth,
+                              50.0,
+                              0.01 * mediaWidth,
+                              0.0), // symmetric(horizontal: 20.0, vertical: 50.0),
+                          child: Provider.of<CalendarData>(context).initialized
+                              ? Column(
+                                  children: [
+                                    CalendarHeaderWidget(
+                                        controller:
+                                            controller), // static header
+                                    Expanded(
+                                      child: CustomScrollView(
+                                        slivers: <Widget>[
+                                          // floating header
+                                          // SliverAppBar(
+                                          //   backgroundColor: Colors.transparent,
+                                          //   floating: true,
+                                          //   flexibleSpace: _floatingHeader(),
+                                          // ),
+                                          SliverPersistentHeader(
+                                            floating: true,
+                                            pinned: true,
+                                            delegate: HeaderDelegate(context),
+                                          ),
+                                          // main grid
+                                          SliverToBoxAdapter(
+                                            child: FilterGridWidget(
+                                                controller: controller),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            : Text("not initialized"),
+                                  ],
+                                )
+                              : Text("not initialized"),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              // ),
-              if (backgroundDisable)
-                Container(color: ColorDefs.colorDisabledBackground),
-              RepaintBoundary(child: BigDrawerWidget()),
-              RepaintBoundary(child: TopDrawerWidget()),
-//              if (startAudit)
-              IgnorePointer(
-                ignoring: !startAudit,
-                child: AnimatedOpacity(
-                  curve: Curves.ease,
-                  opacity: startAudit ? 1 : 0,
-                  duration: Duration(milliseconds: 500),
-                  child: Center(
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: ColorDefs.colorTopHeader,
-                            borderRadius: BorderRadius.circular(20.0),
-                            border: Border.all(width: 2.0, color: Colors.grey)),
-                        height: mediaHeight * 0.95,
-                        width: mediaWidth * 0.9,
-                        child: Center(
-                          child: FlatButton(
-                            color: Colors.blue,
-                            textColor: Colors.black,
-                            // color: ColorDefs.colorTopDrawerAlternating,
-                            child: Text("Cancel Audit",
-                                style: ColorDefs.textBodyBlack20),
-                            onPressed: () {
-                              Provider.of<AuditData>(context, listen: false)
-                                  .toggleStartAudit();
-                            },
-                          ),
-                        )),
-                  ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ));
+                // ),
+                if (backgroundDisable)
+                  Container(color: ColorDefs.colorDisabledBackground),
+                RepaintBoundary(child: BigDrawerWidget()),
+                RepaintBoundary(child: TopDrawerWidget()),
+                AuditPage()
+              ],
+            ),
+          )),
+    );
   }
 }
 

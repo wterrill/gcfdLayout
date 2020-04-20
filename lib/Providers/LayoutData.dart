@@ -5,7 +5,7 @@ class LayoutData with ChangeNotifier {
   double safeAreaDiff = 0.0;
   BoxConstraints safeArea;
   Size mediaArea;
-  int numberOfDaysShown = 7;
+  int numberOfDaysShown;
 
   //SchedulingPage
   bool backgroundDisable;
@@ -17,6 +17,7 @@ class LayoutData with ChangeNotifier {
 
   void initializeApp() {
     backgroundDisable = false;
+    numberOfDaysShown = 8;
     notifyListeners();
   }
 

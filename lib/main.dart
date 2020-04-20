@@ -17,7 +17,10 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => CalendarData()),
         ChangeNotifierProvider(create: (context) => LayoutData()),
-        ChangeNotifierProvider(create: (context) => AuditData()),
+        ChangeNotifierProvider(
+          create: (context) => AuditData(),
+          lazy: false,
+        ),
       ],
       child: MyApp(),
     ),

@@ -28,8 +28,15 @@ class FilterGridWidget extends StatefulWidget {
 }
 
 class FilterGridWidgetState extends State<FilterGridWidget> {
-  int previousNumOfDays = 7;
-  int numberOfDays = 7;
+  @override
+  void initState() {
+    super.initState();
+    previousNumOfDays = 7;
+    numberOfDays = 7;
+  }
+
+  int previousNumOfDays;
+  int numberOfDays;
   String dayInCenter;
   @override
   Widget build(BuildContext context) {
@@ -54,6 +61,8 @@ class FilterGridWidgetState extends State<FilterGridWidget> {
         stream: widget.controller.stream.map(_filter),
         initialData: Provider.of<CalendarData>(context).dayEvents,
         builder: (context, snapshot) {
+          int newNumberOfDays = 0;
+          bool withinRangeAndDifferent;
           return RawGestureDetector(
             gestures: {
               AllowMultipleGestureRecognizer:
@@ -62,33 +71,65 @@ class FilterGridWidgetState extends State<FilterGridWidget> {
                       () => AllowMultipleGestureRecognizer(),
                       (AllowMultipleGestureRecognizer instance) {
                 instance.onUpdate = (scaleDetails) => {
-                      setState(() {
+                      //print("beer"),
+                      if (scaleDetails.scale > 1.0)
+                        {
+                          newNumberOfDays = (previousNumOfDays -
+                              (scaleDetails.scale / 2).round()),
+                          print('positive newNumberOfDays: $newNumberOfDays'),
+                          print(
+                              'positive previousNumOfDays: $previousNumOfDays'),
+                          print(
+                              'positive scaleDetail.scale: ${scaleDetails.scale}'),
+                        }
+                      else if (scaleDetails.scale < 1.0)
+                        {
+                          newNumberOfDays = (previousNumOfDays +
+                              (((1 - scaleDetails.scale) * 100 / 25)).round()),
+                          print('negative newNumberOfDays: $newNumberOfDays'),
+                          print(
+                              'negative previousNumOfDays: $previousNumOfDays'),
+                          print(
+                              'negative scaleDetail.scale: ${scaleDetails.scale}'),
+                        },
+                      withinRangeAndDifferent = newNumberOfDays < 15 &&
+                          newNumberOfDays >= 1 &&
+                          newNumberOfDays != numberOfDays,
+                      if (withinRangeAndDifferent)
+                        {
+                          numberOfDays = newNumberOfDays,
+                          Provider.of<LayoutData>(context, listen: false)
+                              .updateNumberOfDaysShown(numberOfDays),
+                          print('onUpdate numberOfDays change: $numberOfDays')
+                        }
+
+                      // setState(() {
 //                        print('parent - scale: ${scaleDetails.scale}');
 //                        print(((scaleDetails.scale / 25)));
-                        int newNumberOfDays = 0;
+                      // int newNumberOfDays = 0;
 //                        print('onUpdate $scaleDetails');
 //                        print('prior -  prviousNumOfDays: $previousNumOfDays');
-                        if (scaleDetails.scale > 1) {
-                          newNumberOfDays = (previousNumOfDays -
-                              ((scaleDetails.scale / 12)).round());
-                        } else {
-                          newNumberOfDays = (previousNumOfDays +
-                              (((1 - scaleDetails.scale) * 100 / 25)).round());
-                        }
+                      // if (scaleDetails.scale > 1) {
+                      //   newNumberOfDays = (previousNumOfDays -
+                      //       ((scaleDetails.scale / 12)).round());
+                      // } else {
+                      //   newNumberOfDays = (previousNumOfDays +
+                      //       (((1 - scaleDetails.scale) * 100 / 25)).round());
+                      // }
 
 //                        print('previousNumOfDays:$previousNumOfDays');
 //                        print('numberOfDays:$numberOfDays');
 //                        print('newNumberOfDays:$newNumberOfDays');
-                        bool withinRangeAndDifferet = newNumberOfDays < 15 &&
-                            newNumberOfDays >= 1 &&
-                            newNumberOfDays != numberOfDays;
-                        if (withinRangeAndDifferet) {
-                          numberOfDays = newNumberOfDays;
-                          Provider.of<LayoutData>(context, listen: false)
-                              .updateNumberOfDaysShown(numberOfDays);
-                          print('onUpdate numberOfDays change: $numberOfDays');
-                        }
-                      })
+                      //   bool withinRangeAndDifferent = newNumberOfDays < 15 &&
+                      //       newNumberOfDays >= 1 &&
+                      //       newNumberOfDays != numberOfDays;
+                      //   if (withinRangeAndDifferent) {
+                      //     numberOfDays = newNumberOfDays;
+                      //     Provider.of<LayoutData>(context, listen: false)
+                      //         .updateNumberOfDaysShown(numberOfDays);
+                      //     print('onUpdate numberOfDays change: $numberOfDays');
+                      //   }
+                      // })
                     };
               })
             },
