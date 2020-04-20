@@ -1,6 +1,6 @@
 class Question {
   // info
-  String questionText;
+  String text;
   String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display
   List<String> dropdownMenu;
   String optionalComment;
@@ -12,7 +12,7 @@ class Question {
   Map<String, dynamic> questionMap;
 //  Question({Map<String, dynamic> questionMap}) {
   Question({this.questionMap}) {
-    questionText = questionMap['text'] as String;
+    text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;
     if (questionMap['type'] == "dropDown") {
       dropdownMenu = questionMap['menuItems'] as List<String>;

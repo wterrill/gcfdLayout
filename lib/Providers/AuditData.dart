@@ -8,6 +8,7 @@ import 'ExternalDataAudit.dart';
 class AuditData with ChangeNotifier {
   bool auditStarted = false;
   Audit activeAudit;
+  Section activeSection;
 
   AuditData() {
     initialize();
@@ -25,5 +26,11 @@ class AuditData with ChangeNotifier {
 
   Audit createAuditClass() {
     activeAudit = Audit(auditSectionsQuestions);
+    activeSection = activeAudit.sections[0];
+  }
+
+  void updateActiveSection(Section newSection) {
+    activeSection = newSection;
+    notifyListeners();
   }
 }
