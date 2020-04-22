@@ -30,6 +30,10 @@ dependencies:
   intl: ^0.16.1
   rxdart: ^0.24.0
   statsfl: ^0.1.0
+  pdf: ^1.6.1
+  path_provider: ^1.6.5
+  flutter_full_pdf_viewer: ^1.0.6
+  flutter_signature_pad: ^2.0.2
 
 dev_dependencies:
   flutter_test:

@@ -176,7 +176,12 @@ class _LoginFormState extends State<LoginForm> {
 
   void _onChangeField({@required String input, @required String from}) {
     if (input == "version") {
-      _showDialog();
+      Dialogs.showVersionDialog(context);
+      return;
+    }
+
+    if (input == "developer") {
+      Dialogs.showDeveloperMenu(context);
       return;
     }
 
@@ -206,9 +211,5 @@ class _LoginFormState extends State<LoginForm> {
         _enabledLoginButton = false;
       });
     }
-  }
-
-  void _showDialog() {
-    Dialogs.showVersionDialog(context);
   }
 }

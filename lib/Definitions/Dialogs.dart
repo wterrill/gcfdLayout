@@ -1,3 +1,4 @@
+import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
@@ -54,6 +55,37 @@ class Dialogs {
           Text('This functionality is not yet available'),
         ],
       ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void showDeveloperMenu(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Text('Open developer Menu?'),
+      content: const Text('Do you want to open the developer menu?'),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CANCEL'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: const Text('ACCEPT'),
+          onPressed: () {
+            Navigator.push<dynamic>(
+              context,
+              MaterialPageRoute<dynamic>(builder: (context) => DeveloperMenu()),
+            );
+          },
+        )
+      ],
     );
     showDialog<void>(
       barrierDismissible: true,

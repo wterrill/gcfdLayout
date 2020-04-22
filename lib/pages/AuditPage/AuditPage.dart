@@ -28,7 +28,7 @@ class _AuditPageState extends State<AuditPage> {
       child: AnimatedOpacity(
         curve: Curves.ease,
         opacity: startAudit ? 1 : 0,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 250),
         child: Center(
           child: Container(
               decoration: BoxDecoration(
