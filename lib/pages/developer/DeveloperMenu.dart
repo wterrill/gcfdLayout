@@ -3,6 +3,7 @@ import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
 import 'package:flutter/material.dart';
 
 import 'fingerSign/fingerSign.dart';
+import 'lookAhead/lookAhead.dart';
 
 class DeveloperMenu extends StatelessWidget {
   const DeveloperMenu({Key key}) : super(key: key);
@@ -26,7 +27,10 @@ class DeveloperMenu extends StatelessWidget {
                 color: Colors.red,
                 child: Text("pdf generation"),
                 onPressed: () {
-                  writePdfDocument();
+                  Navigator.push<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                          builder: (context) => PdfCreate()));
                 }),
           ),
           Container(
@@ -50,6 +54,18 @@ class DeveloperMenu extends StatelessWidget {
                   context,
                   MaterialPageRoute<dynamic>(
                       builder: (context) => FingerSign()),
+                );
+              },
+            ),
+          ),
+          Container(
+            child: FlatButton(
+              color: Colors.red,
+              child: Text("Look Ahead"),
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => LookAhead()),
                 );
               },
             ),

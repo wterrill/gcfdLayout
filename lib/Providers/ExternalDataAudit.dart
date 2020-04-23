@@ -12,6 +12,16 @@ List<String> audit1Sections = [
   'Verification'
 ];
 
+// Date of Visit: _____________________________		Start Time: 1pm___________   End Time: ____________
+// Type of Visit: ☐ Annual  ☐ Bi-Annual  ☐ Complaint  ☐ Grant  ☐ CEDA  ☐  Food Rescue  ☐ Follow Up
+// Agency Name: _________________________________________	Agency/Program Number: _______________________
+// Site Address: __________________________________________	GCFD Monitor: _____________________________________
+
+// Program Contact: ________________________________________________________________________________
+// Person interviewed: ______________________________________________________________________________
+// Program Operating Hours: _________________________________________________________________________
+// Service Area: ____________________________________________________________________________________
+
 List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Date of Visit:', 'type': 'display'},
   <String, dynamic>{'text': 'Start Time: ', 'type': 'display'},
@@ -452,3 +462,25 @@ List<Map<String, List<Map<String, dynamic>>>> auditSectionsQuestions = [
 // Reviewed by:
 // Findings found: Yes No
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Did the Food Depository establish the service area? ☐ Yes	☒ No
+// Does pantry serve outside this service area? ☐ Yes	☐ No (This could Yes or No)
+// If yes, how many and from where do guests travel? ___________________________________________________
+// How often can a guest receive food from the pantry? _________________________________________________
+// Does the pantry allow guests to receive food at least once every 30 days? ☒ Yes	☐ No
+// Are referrals from an outside agency required to receive food? ☐ Yes	☒ No
+// Are appointments required to receive food? ☐ Yes	☒ No
+// Does the pantry require any documentation? ☒ Yes	☐ No
+// Describe the types of documentation requested and the purpose (only allowed to verify residency and identity): ________________________________________________________________________________________________
+// Does this pantry operate under the rural exemption? ☐ Yes	☒ No
+// Does this food pantry also operate a soup kitchen? ☐ Yes	☐ No (This could be a Yes or No)
+// If yes, is the food properly separated and tracked for two programs? ☐ Yes	☐ No 	☐ N/A (This could be a Yes or N/A)
+// Is Program on Food Rescue/Agency Enabled? ☐ Yes	☐ No	(This could be a Yes or No)
+// Food Service Sanitation Manager Certificates: ________________________________________________________________________________________________________________________________________________________________________________________________________________________
+// Remove: ____________________________________________________________________________________________________
+// ________________________________________________________________________________________________ ___________
+// Last Order Date: ________________
+// What is the number of deliveries per month? ____________________
+// Has an order been placed from the menu in the past month?      ☒ Yes	☐ No
+// Has an online intake system been used in the past month? 	    ☒ Yes	☐ No
+// Is information on our Agency Locator accurate?		    ☒ Yes	☐ No	☒ Closed Program (If it’s a No, it’s an internal fix; the site does not get cited for this)

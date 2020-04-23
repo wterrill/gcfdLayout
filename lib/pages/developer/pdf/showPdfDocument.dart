@@ -47,3 +47,8 @@ class _PDFScreenState extends State<PDFScreen> {
     }
   }
 }
+
+// if(kIsWeb){
+//     print("in web section");
+//   Provider.of<WebData>(context).pdfFile = doc.save();
+//   } else {

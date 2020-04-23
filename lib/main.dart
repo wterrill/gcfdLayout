@@ -1,4 +1,6 @@
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/SiteData.dart';
+import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
 import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
@@ -19,6 +21,11 @@ void main() {
         ChangeNotifierProvider(create: (context) => LayoutData()),
         ChangeNotifierProvider(
           create: (context) => AuditData(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(create: (context) => WebData()),
+        ChangeNotifierProvider(
+          create: (context) => SiteData(),
           lazy: false,
         ),
       ],

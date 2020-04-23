@@ -2,32 +2,50 @@ PODS:
   - Flutter (1.0.0)
   - flutter_full_pdf_viewer (1.0.1):
     - Flutter
+  - flutter_keyboard_visibility (0.7.0):
+    - Flutter
+  - flutter_pdf_viewer (0.0.1):
+    - Flutter
   - path_provider (0.0.1):
     - Flutter
   - path_provider_macos (0.0.1):
+    - Flutter
+  - plugin_scaffold (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
+  - flutter_pdf_viewer (from `.symlinks/plugins/flutter_pdf_viewer/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
+  - plugin_scaffold (from `.symlinks/plugins/plugin_scaffold/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   flutter_full_pdf_viewer:
     :path: ".symlinks/plugins/flutter_full_pdf_viewer/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
+  flutter_pdf_viewer:
+    :path: ".symlinks/plugins/flutter_pdf_viewer/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   path_provider_macos:
     :path: ".symlinks/plugins/path_provider_macos/ios"
+  plugin_scaffold:
+    :path: ".symlinks/plugins/plugin_scaffold/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
+  flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545
+  flutter_pdf_viewer: c9a114aa98a9466325a3a27b3b360b3fd7bf581c
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
+  plugin_scaffold: e7c52bc1cfb6e672959f798dfc9dea8dff55daeb
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 
