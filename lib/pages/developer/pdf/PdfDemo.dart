@@ -1,45 +1,117 @@
-import 'dart:io';
-
-//import 'dart:async';
-//import 'dart:io';
-//
-//import 'package:flutter/foundation.dart';
-//import 'package:flutter/material.dart';
-//import 'package:path_provider/path_provider.dart';
-
 import 'package:auditor/providers/WebData.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:provider/provider.dart';
+import 'package:universal_html/html.dart' as html;
+import 'dart:typed_data';
+
+import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 
-class PdfCreate extends StatefulWidget {
-  PdfCreate({Key key}) : super(key: key);
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
+class PdfDemo extends StatefulWidget {
   @override
-  _PdfCreateState createState() => _PdfCreateState();
+  _PdfDemoState createState() => _PdfDemoState();
 }
 
-class _PdfCreateState extends State<PdfCreate> {
+class _PdfDemoState extends State<PdfDemo> {
+  String pathPDF = "";
+
+  void initState() {
+    initialize();
+  }
+
+  void initialize() async {
+    if (!kIsWeb) {
+      var documentDirectory = await getApplicationDocumentsDirectory();
+      var filePathAndName = documentDirectory.path + '/pdfs/example.pdf';
+
+      setState(() {
+        this.pathPDF = filePathAndName;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("build routine in PdfCreate");
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Generate Pdf"),
-      ),
-      body: Container(
-        color: Colors.blue,
-        child: FlatButton(
-          child: Text("Generate Pdf"),
-          onPressed: () {
-            writePdfDocument();
-          },
+    if (kIsWeb) {
+      Uint8List pdfFile = Provider.of<WebData>(context).pdfFile;
+      final pdf = pw.Document();
+      pdf.addPage(pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Text("Hello World"),
+            );
+          }));
+      final bytes = pdf.save();
+//    final blob = html.Blob([bytes], 'application/pdf');
+      final blob = html.Blob([pdfFile], 'application/pdf');
+
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: Colors.blue,
+                child: FlatButton(
+                  child: Text("Generate Pdf"),
+                  onPressed: () {
+                    writePdfDocument();
+                  },
+                ),
+              ),
+              RaisedButton(
+                child: Text("Open"),
+                onPressed: () {
+                  final url = html.Url.createObjectUrlFromBlob(blob);
+                  html.window.open(url, "_blank");
+                  html.Url.revokeObjectUrl(url);
+                },
+              ),
+              RaisedButton(
+                child: Text("Download"),
+                onPressed: () {
+                  final url = html.Url.createObjectUrlFromBlob(blob);
+                  final anchor =
+                      html.document.createElement('a') as html.AnchorElement
+                        ..href = url
+                        ..style.display = 'none'
+                        ..download = 'some_name.pdf';
+                  html.document.body.children.add(anchor);
+                  anchor.click();
+                  html.document.body.children.remove(anchor);
+                  html.Url.revokeObjectUrl(url);
+                },
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      if (pathPDF == "") {
+        // This is what we show while we're loading
+        return Container(color: Colors.purple);
+      } else {
+        return PDFViewerScaffold(
+            appBar: AppBar(
+              title: Text("Document"),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            path: pathPDF);
+      }
+    }
   }
 
   void writePdfDocument() async {

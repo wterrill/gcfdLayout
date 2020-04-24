@@ -2,6 +2,7 @@ import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
+import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
   LookAhead({Key key}) : super(key: key);
@@ -47,10 +48,15 @@ class _LookAheadState extends State<LookAhead> {
                 return subsubsites;
               },
               itemBuilder: (context, String suggestion) {
-                return ListTile(title: Text(suggestion));
+                return ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                  dense: true,
+                  title: Text(suggestion.titleCase),
+                );
               },
               onSuggestionSelected: (suggestion) {
-                this._typeAheadController.text = suggestion;
+                this._typeAheadController.text = suggestion.titleCase;
               })
         ],
       ),

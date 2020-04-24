@@ -1,3 +1,4 @@
+import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 import 'package:auditor/pages/developer/pdf/showPdfDocument.dart';
 import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
 import 'package:flutter/material.dart';
@@ -22,29 +23,30 @@ class DeveloperMenu extends StatelessWidget {
                   Navigator.of(context).pop();
                 }),
           ),
-          Container(
-            child: FlatButton(
-                color: Colors.red,
-                child: Text("pdf generation"),
-                onPressed: () {
-                  Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                          builder: (context) => PdfCreate()));
-                }),
-          ),
-          Container(
-            child: FlatButton(
-              color: Colors.red,
-              child: Text("pdf viewing"),
-              onPressed: () {
-                Navigator.push<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(builder: (context) => PDFScreen()),
-                );
-              },
-            ),
-          ),
+//          Container(
+//            child: FlatButton(
+//                color: Colors.red,
+//                child: Text("pdf generation"),
+//                onPressed: () {
+//                  Navigator.push<dynamic>(
+//                    context,
+//                    MaterialPageRoute<dynamic>(
+//                        builder: (context) => PdfCreate()),
+//                  );
+//                }),
+//          ),
+//          Container(
+//            child: FlatButton(
+//              color: Colors.red,
+//              child: Text("pdf viewing"),
+//              onPressed: () {
+//                Navigator.push<dynamic>(
+//                  context,
+//                  MaterialPageRoute<dynamic>(builder: (context) => PDFScreen()),
+//                );
+//              },
+//            ),
+//          ),
           Container(
             child: FlatButton(
               color: Colors.red,
@@ -66,6 +68,18 @@ class DeveloperMenu extends StatelessWidget {
                 Navigator.push<dynamic>(
                   context,
                   MaterialPageRoute<dynamic>(builder: (context) => LookAhead()),
+                );
+              },
+            ),
+          ),
+          Container(
+            child: FlatButton(
+              color: Colors.red,
+              child: Text("Pdf generation and display"),
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => PdfDemo()),
                 );
               },
             ),
