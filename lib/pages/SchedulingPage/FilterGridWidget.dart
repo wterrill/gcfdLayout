@@ -52,7 +52,7 @@ class FilterGridWidgetState extends State<FilterGridWidget> {
 
     var timeAutoGroup = AutoSizeGroup();
     List<String> hours = Provider.of<CalendarData>(context).hours;
-    List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
+    // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
     Size dimensions = MediaQuery.of(context).size;
 
     // widget.controller.add(dayEvents);

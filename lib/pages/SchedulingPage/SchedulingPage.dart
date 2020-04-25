@@ -1,9 +1,9 @@
-import 'dart:async';
+// import 'dart:async';
 import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:auditor/pages/AuditPage/AuditPage.dart';
-import 'package:auditor/providers/AuditData.dart';
+// import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 // import 'package:auditor/definitions/Event.dart';
 import 'package:auditor/definitions/colorDefs.dart';
@@ -12,7 +12,7 @@ import 'BigDrawerWidget.dart';
 import 'CalendarHeaderWidget.dart';
 import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:auditor/providers/CalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:rxdart/rxdart.dart';
@@ -33,10 +33,10 @@ class _SchedulingPageState extends State<SchedulingPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool startAudit = Provider.of<AuditData>(context).auditStarted;
+    // bool startAudit = Provider.of<AuditData>(context).auditStarted;
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
     return SafeArea(
       child: GestureDetector(

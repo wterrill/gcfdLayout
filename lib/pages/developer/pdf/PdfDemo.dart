@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:universal_html/html.dart' as html;
 import 'dart:typed_data';
 
-import 'dart:io';
+import 'dart:io' as io;
+import 'dart:html' as html;
 
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -22,7 +23,9 @@ class PdfDemo extends StatefulWidget {
 class _PdfDemoState extends State<PdfDemo> {
   String pathPDF = "";
 
+  @override
   void initState() {
+    super.initState();
     initialize();
   }
 
@@ -44,22 +47,10 @@ class _PdfDemoState extends State<PdfDemo> {
     ////                   Web View                      ////
     ////                                                 ////
     /////////////////////////////////////////////////////////
-    var pdfFile = Provider.of<WebData>(context).pdfFile;
+    Uint8List pdfFile = Provider.of<WebData>(context).pdfFile;
     if (kIsWeb) {
-      final pdf = pw.Document();
-      // pdf.addPage(pw.Page(
-      //     pageFormat: PdfPageFormat.a4,
-      //     build: (pw.Context context) {
-      //       return pw.Center(
-      //         child: pw.Text("Hello World"),
-      //       );
-      //     }));
-      // final bytes = pdf.save();
-//    final blob = html.Blob([bytes], 'application/pdf');
-      var blob;
-      // Uint8List pdfFile;
-
-      blob = html.Blob([pdfFile], 'application/pdf');
+      html.Blob blob = html.Blob(<dynamic>[pdfFile], 'application/pdf');
+      print("blob type: ${blob.runtimeType}");
 
       print("************************ built");
 
@@ -290,8 +281,8 @@ class _PdfDemoState extends State<PdfDemo> {
       var documentDirectory = await getApplicationDocumentsDirectory();
       var firstPath = documentDirectory.path + "/pdfs";
       var filePathAndName = documentDirectory.path + '/pdfs/example.pdf';
-      await Directory(firstPath).create(recursive: true);
-      File file = File(filePathAndName);
+      await io.Directory(firstPath).create(recursive: true);
+      io.File file = io.File(filePathAndName);
       file.writeAsBytesSync(doc.save());
     }
     print("got to end of pdf creation");

@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     final sign = _sign.currentState;
                     debugPrint('${sign.points.length} points in the signature');
                   },
-                  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
+                  backgroundPainter: _WatermarkPaint("beer", "beers"),
                   strokeWidth: strokeWidth,
                 ),
               ),
@@ -106,9 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.green,
                       onPressed: () async {
                         final sign = _sign.currentState;
+                        print(sign);
                         //retrieve image data, do whatever you want with it (send to server, save locally...)
                         final image = await sign.getData();
+                        print(image);
                         var data = await image.toByteData(
+                            //<-- This doesn't work on finger web
                             format: ui.ImageByteFormat.png);
                         sign.clear();
                         final encoded =

@@ -15,6 +15,7 @@ class _PDFScreenState extends State<PDFScreen> {
   String pathPDF = "";
 
   void initState() {
+    super.initState();
     initialize();
   }
 

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class AuditButtons extends StatefulWidget {
   AuditButtons({Key key, this.activeAudit}) : super(key: key);
-  Audit activeAudit;
+  final Audit activeAudit;
 
   @override
   _AuditButtonsState createState() => _AuditButtonsState();
@@ -18,40 +18,80 @@ class _AuditButtonsState extends State<AuditButtons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          children: [...makeButtons(widget.activeAudit.sections)]),
-    );
+        height: 50,
+
+//       ListView.separated(
+//   separatorBuilder: (context, index) => Divider(
+//         color: Colors.black,
+//       ),
+//   itemCount: 20,
+//   itemBuilder: (context, index) => Padding(
+//         padding: EdgeInsets.all(8.0),
+//         child: Center(child: Text("Index $index")),
+//       ),
+// )
+
+        child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            separatorBuilder: (context, index) => Spacer(),
+            itemCount: widget.activeAudit.sections.length,
+            itemBuilder: (context, index) {
+              return makeButton(widget.activeAudit.sections[index]);
+            }));
   }
 
-  List<Widget> makeButtons(List<Section> sections) {
-    List<Widget> buttons = [];
-    for (Section section in sections) {
-      buttons.add(
-        Container(
-          width: 80,
-          child: FlatButton(
-            color: Colors.blue,
-            onPressed: () {
-              print(section.name);
-              Provider.of<AuditData>(context, listen: false)
-                  .updateActiveSection(section);
-            },
-            child: AutoSizeText(
-              section.name,
-              maxLines: 2,
-              minFontSize: 5,
-              style: ColorDefs.textBodyBlack10,
-              wrapWords: false,
-              softWrap: true,
-              textAlign: TextAlign.center,
-            ),
-          ),
+  // List<Widget> makeButtons(List<Section> sections) {
+  //   List<Widget> buttons = [];
+  //   for (Section section in sections) {
+  //     buttons.add(
+
+  //       Container(
+  //         width: 80,
+  //         child: FlatButton(
+  //           color: Colors.blue,
+  //           onPressed: () {
+  //             print(section.name);
+  //             Provider.of<AuditData>(context, listen: false)
+  //                 .updateActiveSection(section);
+  //           },
+  //           child: AutoSizeText(
+  //             section.name,
+  //             maxLines: 2,
+  //             minFontSize: 5,
+  //             style: ColorDefs.textBodyBlack10,
+  //             wrapWords: false,
+  //             softWrap: true,
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  //   return buttons;
+  // }
+
+  Widget makeButton(Section section) {
+    Widget button = Container(
+      width: 80,
+      child: FlatButton(
+        color: Colors.blue,
+        onPressed: () {
+          print(section.name);
+          Provider.of<AuditData>(context, listen: false)
+              .updateActiveSection(section);
+        },
+        child: AutoSizeText(
+          section.name,
+          maxLines: 2,
+          minFontSize: 5,
+          style: ColorDefs.textBodyBlack10,
+          wrapWords: false,
+          softWrap: true,
+          textAlign: TextAlign.center,
         ),
-      );
-    }
-    return buttons;
+      ),
+    );
+    return button;
   }
 }

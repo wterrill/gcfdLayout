@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class AuditQuestions extends StatefulWidget {
   AuditQuestions({Key key, this.activeSection}) : super(key: key);
-  Section activeSection;
+  final Section activeSection;
 
   @override
   _AuditQuestionsState createState() => _AuditQuestionsState();
