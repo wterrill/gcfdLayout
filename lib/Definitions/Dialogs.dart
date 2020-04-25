@@ -65,6 +65,26 @@ class Dialogs {
     );
   }
 
+  static void showPdfCreated(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('The pdf has been created'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showDeveloperMenu(BuildContext context) {
     AlertDialog alert = AlertDialog(
       title: Text('Open developer Menu?'),

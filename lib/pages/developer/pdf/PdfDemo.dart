@@ -1,3 +1,4 @@
+import 'package:auditor/definitions/Dialogs.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
@@ -38,19 +39,29 @@ class _PdfDemoState extends State<PdfDemo> {
 
   @override
   Widget build(BuildContext context) {
+    /////////////////////////////////////////////////////////
+    ////                                                 ////
+    ////                   Web View                      ////
+    ////                                                 ////
+    /////////////////////////////////////////////////////////
+    var pdfFile = Provider.of<WebData>(context).pdfFile;
     if (kIsWeb) {
-      Uint8List pdfFile = Provider.of<WebData>(context).pdfFile;
       final pdf = pw.Document();
-      pdf.addPage(pw.Page(
-          pageFormat: PdfPageFormat.a4,
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text("Hello World"),
-            );
-          }));
-      final bytes = pdf.save();
+      // pdf.addPage(pw.Page(
+      //     pageFormat: PdfPageFormat.a4,
+      //     build: (pw.Context context) {
+      //       return pw.Center(
+      //         child: pw.Text("Hello World"),
+      //       );
+      //     }));
+      // final bytes = pdf.save();
 //    final blob = html.Blob([bytes], 'application/pdf');
-      final blob = html.Blob([pdfFile], 'application/pdf');
+      var blob;
+      // Uint8List pdfFile;
+
+      blob = html.Blob([pdfFile], 'application/pdf');
+
+      print("************************ built");
 
       return Scaffold(
         appBar: AppBar(),
@@ -68,11 +79,13 @@ class _PdfDemoState extends State<PdfDemo> {
               ),
               RaisedButton(
                 child: Text("Open"),
-                onPressed: () {
-                  final url = html.Url.createObjectUrlFromBlob(blob);
-                  html.window.open(url, "_blank");
-                  html.Url.revokeObjectUrl(url);
-                },
+                onPressed: (blob != null)
+                    ? () {
+                        final url = html.Url.createObjectUrlFromBlob(blob);
+                        html.window.open(url, "_blank");
+                        html.Url.revokeObjectUrl(url);
+                      }
+                    : null,
               ),
               RaisedButton(
                 child: Text("Download"),
@@ -82,7 +95,7 @@ class _PdfDemoState extends State<PdfDemo> {
                       html.document.createElement('a') as html.AnchorElement
                         ..href = url
                         ..style.display = 'none'
-                        ..download = 'some_name.pdf';
+                        ..download = 'gcfd_example.pdf';
                   html.document.body.children.add(anchor);
                   anchor.click();
                   html.document.body.children.remove(anchor);
@@ -95,6 +108,12 @@ class _PdfDemoState extends State<PdfDemo> {
         ),
       );
     } else {
+      /////////////////////////////////////////////////////////
+      ////                                                 ////
+      ////                   App View                      ////
+      ////                                                 ////
+      /////////////////////////////////////////////////////////
+
       if (pathPDF == "") {
         // This is what we show while we're loading
         return Container(color: Colors.purple);
@@ -265,6 +284,7 @@ class _PdfDemoState extends State<PdfDemo> {
     if (kIsWeb) {
       print("in web section");
       Provider.of<WebData>(context, listen: false).pdfFile = doc.save();
+      Dialogs.showPdfCreated(context);
     } else {
       print("in non-web section");
       var documentDirectory = await getApplicationDocumentsDirectory();
