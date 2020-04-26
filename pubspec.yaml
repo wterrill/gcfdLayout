@@ -39,6 +39,7 @@ dependencies:
   flutter_typeahead: ^1.8.0
   recase: ^3.0.0
   universal_html: ^1.2.1
+  image: ^2.1.12
 
 dev_dependencies:
   flutter_test:
