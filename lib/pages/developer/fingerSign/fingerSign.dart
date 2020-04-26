@@ -66,9 +66,7 @@ class _WatermarkPaint extends CustomPainter {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Uint8List finalImgUint8List = null;
-  // Image finalImage;
-  ByteData _img = ByteData(0);
+  Uint8List finalImage = null;
   var color = Colors.red;
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
@@ -89,20 +87,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     final sign = _sign.currentState;
                     debugPrint('${sign.points.length} points in the signature');
                   },
-                  backgroundPainter: _WatermarkPaint("beer", "beers"),
+                  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                   strokeWidth: strokeWidth,
                 ),
               ),
               color: Colors.black12,
             ),
           ),
-          // _img.buffer.lengthInBytes == 0
-          finalImgUint8List == null
+          finalImage == null
               ? Container()
               : LimitedBox(
                   maxHeight: 200.0,
-                  // child: Image.memory(_img.buffer.asUint8List())),
-                  child: Image.memory(finalImgUint8List.buffer.asUint8List())),
+                  child: Image.memory(finalImage.buffer.asUint8List())),
           Column(
             children: <Widget>[
               Row(
@@ -111,17 +107,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialButton(
                       color: Colors.green,
                       onPressed: () async {
-                        final sign = _sign.currentState;
-                        print(sign);
-
-//////////////////////////////////////////////////////////////////
-                        var lineColor = img.getColor(0, 0, 0);
-                        var backColor = img.getColor(255, 255, 255);
+                        SignatureState sign = _sign.currentState;
+                        int lineColor =
+                            img.getColor(color.red, color.green, color.blue);
+                        int backColor = img.getColor(255, 255, 255);
                         int imageWidth;
                         int imageHeight;
-                        var yup = _sign.currentContext;
-                        if (yup != null) {
-                          var box = yup.findRenderObject() as RenderBox;
+                        BuildContext currentContext = _sign.currentContext;
+                        if (currentContext != null) {
+                          var box =
+                              currentContext.findRenderObject() as RenderBox;
                           imageWidth = box.size.width.toInt();
                           imageHeight = box.size.height.toInt();
                         }
@@ -155,33 +150,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 lineColor);
                           }
                         }
-
-                        // encode the image to PNG
-                        Image pngImage = Image.memory(
-                            img.encodePng(signatureImage) as Uint8List);
-                        // return pngImage;
-
-                        //retrieve image data, do whatever you want with it (send to server, save locally...)
-                        final image = await sign.getData();
-                        print(image.toString());
-                        print(image.runtimeType);
-                        print("image data");
-                        //////////////////////////////////////////////////////////////////////////////////////////
-                        // var data = await image.toByteData(
-                        //     // <-- This doesn't work on  web
-                        //     format: ui.ImageByteFormat.png);
-                        //////////////////////////////////////////////////////////////////////////////////////////
                         sign.clear();
-                        // final encoded =
-                        //     base64.encode(data.buffer.asUint8List());
                         setState(() {
-                          // _img =
-                          //     Image.memory(img.encodePng(signatureImage).); //data;
-                          // finalImage = pngImage;
-                          finalImgUint8List =
+                          finalImage =
                               img.encodePng(signatureImage) as Uint8List;
                         });
-                        debugPrint("onPressed "); // + encoded);
+                        debugPrint("onPressed ");
                       },
                       child: Text("Save")),
                   MaterialButton(
@@ -190,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         final sign = _sign.currentState;
                         sign.clear();
                         setState(() {
-                          _img = ByteData(0);
+                          finalImage = null;
                         });
                         debugPrint("cleared");
                       },
