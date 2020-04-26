@@ -17,10 +17,50 @@ class _AuditQuestionsState extends State<AuditQuestions> {
     return Expanded(
       child: ListView(
         children: [
-          ...widget.activeSection.questions
-              .map((Question question) =>
-                  Text(question.text, style: ColorDefs.textBodyBlack10))
-              .toList()
+          ...widget.activeSection.questions.map((Question question) {
+            return Row(
+              children: [
+                Expanded(
+                    child:
+                        Text(question.text, style: ColorDefs.textBodyBlack10)),
+                if (question.typeOfQuestion == "yesNo")
+                  Row(
+                    children: [
+                      FlatButton(
+                        color: Colors.blue,
+                        child: Text("YES"),
+                        onPressed: () {},
+                      ),
+                      FlatButton(
+                        color: Colors.blue,
+                        child: Text("NO"),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                if (question.typeOfQuestion == "yesNoNa")
+                  Row(
+                    children: [
+                      FlatButton(
+                        color: Colors.blue,
+                        child: Text("YES"),
+                        onPressed: () {},
+                      ),
+                      FlatButton(
+                        color: Colors.blue,
+                        child: Text("NO"),
+                        onPressed: () {},
+                      ),
+                      FlatButton(
+                        color: Colors.blue,
+                        child: Text("N/A"),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+              ],
+            );
+          }).toList()
         ],
       ),
     );

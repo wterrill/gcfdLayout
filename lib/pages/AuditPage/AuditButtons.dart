@@ -34,7 +34,8 @@ class _AuditButtonsState extends State<AuditButtons> {
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            separatorBuilder: (context, index) => Spacer(),
+            separatorBuilder: (context, index) =>
+                Container(width: 5, color: Colors.transparent),
             itemCount: widget.activeAudit.sections.length,
             itemBuilder: (context, index) {
               return makeButton(widget.activeAudit.sections[index]);
@@ -73,7 +74,7 @@ class _AuditButtonsState extends State<AuditButtons> {
 
   Widget makeButton(Section section) {
     Widget button = Container(
-      width: 80,
+      width: 60,
       child: FlatButton(
         color: Colors.blue,
         onPressed: () {
