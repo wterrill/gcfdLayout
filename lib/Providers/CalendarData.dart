@@ -1,8 +1,8 @@
-import 'package:auditor/definitions/Site.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/Event.dart';
-// import 'package:auditor/definitions/colorDefs.dart';
-import 'package:auditor/definitions/siteColorTextColorLookup.dart';
+import 'package:auditor/Definitions/Event.dart';
+// import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/Definitions/siteColorTextColorLookup.dart';
 import 'package:auditor/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
 import 'ExternalDataCalendar.dart';

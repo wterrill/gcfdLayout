@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:auditor/definitions/Event.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/Event.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/CalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:auto_size_text/auto_size_text.dart';

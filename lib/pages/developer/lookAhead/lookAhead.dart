@@ -17,7 +17,7 @@ class _LookAheadState extends State<LookAhead> {
   @override
   Widget build(BuildContext context) {
     List<List<dynamic>> sites = Provider.of<SiteData>(context)
-        .rowsAsListOfValues as List<List<dynamic>>;
+        .rowsAsListOfValues; //as List<List<dynamic>>;
     print("sites type: ${sites.runtimeType}");
     return Scaffold(
       appBar: AppBar(

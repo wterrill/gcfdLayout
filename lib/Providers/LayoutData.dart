@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/Event.dart';
+import 'package:auditor/Definitions/Event.dart';
 
 class LayoutData with ChangeNotifier {
   double safeAreaDiff = 0.0;

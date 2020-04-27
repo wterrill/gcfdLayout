@@ -1,6 +1,6 @@
-import 'package:auditor/definitions/Dialogs.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 
 class TopDrawerWidget extends StatefulWidget {
   TopDrawerWidget({Key key}) : super(key: key);

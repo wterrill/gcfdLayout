@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'LoginForm.dart';
 
 class LoginScreen extends StatelessWidget {

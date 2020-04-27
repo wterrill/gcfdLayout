@@ -1,6 +1,6 @@
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
 
 class TopWhiteHeaderWidget extends StatelessWidget {

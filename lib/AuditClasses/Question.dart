@@ -5,7 +5,7 @@ class Question {
   dynamic userResponse; // what the user reponsed on the questionnaire
   dynamic happyPathResponse; // what the desired response is
   List<String> dropdownMenu;
-  String optionalComment;
+  String optionalComment = "";
   String mandatoryComment;
   bool completed = false;
   bool flagged = false;

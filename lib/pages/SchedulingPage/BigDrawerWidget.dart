@@ -1,9 +1,9 @@
-import 'package:auditor/definitions/Dialogs.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/Event.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/Event.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:provider/provider.dart';
 

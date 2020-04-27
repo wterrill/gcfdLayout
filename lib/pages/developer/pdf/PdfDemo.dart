@@ -1,4 +1,4 @@
-import 'package:auditor/definitions/Dialogs.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';

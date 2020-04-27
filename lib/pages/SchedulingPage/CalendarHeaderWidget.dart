@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/CalendarData.dart';
 import 'package:provider/provider.dart';
 

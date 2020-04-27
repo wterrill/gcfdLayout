@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/communications/Authentication.dart';
-import 'package:auditor/definitions/Dialogs.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
