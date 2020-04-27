@@ -32,6 +32,13 @@ class ColorDefs {
   static Color colorLoginBackground = Color(0xFFE7EFFE);
 
   static Color colorDisabledBackground = Color(0xAA555555);
+///////////////////////////////////////////////////////////////////////
+// Questionnaire
+  static Color colorAlternateDark = Color(0xFFd4d4d4);
+  static Color colorAlternateLight = Color(0xFFdcdcdc);
+  static Color colorButtonNeutral = Color(0xFFe7e7e7);
+  static Color colorButtonYes = Color(0xFF66c360);
+  static Color colorButtonNo = Color(0xFFbc484a);
 
 // Styles
   static TextStyle textBodyBlue10 =

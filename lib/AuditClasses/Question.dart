@@ -2,6 +2,8 @@ class Question {
   // info
   String text;
   String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display
+  dynamic userResponse; // what the user reponsed on the questionnaire
+  dynamic happyPathResponse; // what the desired response is
   List<String> dropdownMenu;
   String optionalComment;
   String mandatoryComment;
