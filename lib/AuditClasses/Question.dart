@@ -6,6 +6,7 @@ class Question {
   dynamic happyPathResponse; // what the desired response is
   List<String> dropdownMenu;
   String optionalComment = "";
+  bool textBoxRollOut = false;
   String mandatoryComment;
   bool completed = false;
   bool flagged = false;
