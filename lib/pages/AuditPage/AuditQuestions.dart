@@ -18,86 +18,88 @@ class _AuditQuestionsState extends State<AuditQuestions> {
   Widget build(BuildContext context) {
     var questionAutoGroup = AutoSizeGroup();
     return Expanded(
-      child: ListView.builder(
-          itemCount: widget.activeSection.questions.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              color: index.isEven
-                  ? ColorDefs.colorAlternateDark
-                  : ColorDefs.colorAlternateLight,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                            child: AutoSizeText(
-                                widget.activeSection.questions[index].text,
-                                maxLines: 3,
-                                group: questionAutoGroup,
-                                style: ColorDefs.textBodyBlack20)),
-                        if (widget.activeSection.questions[index]
-                                .typeOfQuestion ==
-                            "yesNo")
-                          makeYesNoQuestion(index),
-                        if (widget.activeSection.questions[index]
-                                .typeOfQuestion ==
-                            "yesNoNa")
-                          Row(
-                            children: [
-                              FlatButton(
-                                color: Colors.blue,
-                                child: Text("YES"),
-                                onPressed: () {},
-                              ),
-                              FlatButton(
-                                color: Colors.blue,
-                                child: Text("NO"),
-                                onPressed: () {},
-                              ),
-                              FlatButton(
-                                color: Colors.blue,
-                                child: Text("N/A"),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                    AnimatedContainer(
-                        height:
-                            widget.activeSection.questions[index].textBoxRollOut
-                                ? 100
-                                : 0,
-                        color: Colors.white,
-                        duration: Duration(milliseconds: 300),
-                        child: TextField(
-                          onChanged: (value) {
-                            widget.activeSection.questions[index]
-                                .optionalComment = value;
-                            if (value.length < 2) {
-                              setState(() {});
-                            }
-                          },
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          style: ColorDefs.textBodyBlack20,
-                          decoration: new InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              contentPadding: EdgeInsets.only(
-                                  left: 15, bottom: 11, top: 11, right: 15),
-                              hintText: "sLabel"),
-                        )),
-                  ],
+      child: Scrollbar(
+        child: ListView.builder(
+            itemCount: widget.activeSection.questions.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                color: index.isEven
+                    ? ColorDefs.colorAlternateDark
+                    : ColorDefs.colorAlternateLight,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: AutoSizeText(
+                                  widget.activeSection.questions[index].text,
+                                  maxLines: 3,
+                                  group: questionAutoGroup,
+                                  style: ColorDefs.textBodyBlack20)),
+                          if (widget.activeSection.questions[index]
+                                  .typeOfQuestion ==
+                              "yesNo")
+                            makeYesNoQuestion(index),
+                          if (widget.activeSection.questions[index]
+                                  .typeOfQuestion ==
+                              "yesNoNa")
+                            Row(
+                              children: [
+                                FlatButton(
+                                  color: Colors.blue,
+                                  child: Text("YES"),
+                                  onPressed: () {},
+                                ),
+                                FlatButton(
+                                  color: Colors.blue,
+                                  child: Text("NO"),
+                                  onPressed: () {},
+                                ),
+                                FlatButton(
+                                  color: Colors.blue,
+                                  child: Text("N/A"),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                      AnimatedContainer(
+                          height: widget
+                                  .activeSection.questions[index].textBoxRollOut
+                              ? 100
+                              : 0,
+                          color: Colors.white,
+                          duration: Duration(milliseconds: 300),
+                          child: TextField(
+                            onChanged: (value) {
+                              widget.activeSection.questions[index]
+                                  .optionalComment = value;
+                              if (value.length < 2) {
+                                setState(() {});
+                              }
+                            },
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            style: ColorDefs.textBodyBlack20,
+                            decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding: EdgeInsets.only(
+                                    left: 15, bottom: 11, top: 11, right: 15),
+                                hintText: "sLabel"),
+                          )),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 

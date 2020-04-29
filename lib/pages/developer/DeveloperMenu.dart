@@ -84,6 +84,47 @@ class DeveloperMenu extends StatelessWidget {
               },
             ),
           ),
+          Container(
+            child: FlatButton(
+              color: Colors.red,
+              child: Text("Date picker"),
+              onPressed: () async {
+                DateTime selectedDate;
+                selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2018),
+                  lastDate: DateTime(2030),
+                  builder: (BuildContext context, Widget child) {
+                    return Theme(
+                      data: ThemeData.dark(),
+                      child: child,
+                    );
+                  },
+                );
+                print(selectedDate);
+              },
+            ),
+          ),
+          Container(
+            child: FlatButton(
+              color: Colors.red,
+              child: Text("Time picker"),
+              onPressed: () async {
+                TimeOfDay selectedTimeRTL = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                  builder: (BuildContext context, Widget child) {
+                    return Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: child,
+                    );
+                  },
+                );
+                print(selectedTimeRTL);
+              },
+            ),
+          ),
         ],
       ),
     );
