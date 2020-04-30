@@ -18,6 +18,7 @@ class AuditPage extends StatefulWidget {
 class _AuditPageState extends State<AuditPage> {
   @override
   Widget build(BuildContext context) {
+    print("building AuditPage");
     Audit activeAudit = Provider.of<AuditData>(context).activeAudit;
     Section activeSection = Provider.of<AuditData>(context).activeSection;
     bool startAudit = Provider.of<AuditData>(context).auditStarted;

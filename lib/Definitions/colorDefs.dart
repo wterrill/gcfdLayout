@@ -41,12 +41,14 @@ class ColorDefs {
   static Color colorButtonNo = Color(0xFFbc484a);
   static Color colorChatNeutral = Color(0xFFc6c6c6);
   static Color colorChatSelected = Color(0xFF4eadb4);
+  static Color colorChatRequired = Colors.red;
 
 // Styles
   static TextStyle textBodyBlue10 =
       TextStyle(color: colorAudit2, fontSize: 10.0);
   static TextStyle textBodyBlue20 =
       TextStyle(color: colorAudit2, fontSize: 20.0);
+
   static TextStyle textBodyBlack10 =
       TextStyle(color: Colors.black, fontSize: 10.0);
   static TextStyle textBodyBlack20 =
@@ -56,10 +58,12 @@ class ColorDefs {
 
   static TextStyle textBodyGrey20 =
       TextStyle(color: Colors.grey, fontSize: 20.0);
+
   static TextStyle textBodyWhite20 =
       TextStyle(color: Colors.white, fontSize: 20.0);
   static TextStyle textBodyWhite10 =
       TextStyle(color: Colors.white, fontSize: 10.0);
+
   static TextStyle textBodyText2 =
       TextStyle(color: colorTopHeader, fontSize: 20.0);
   static TextStyle textSubtitle2 =
@@ -70,4 +74,7 @@ class ColorDefs {
 
   static TextStyle textBodyBronze20 =
       TextStyle(color: colorBigDrawerBronze, fontSize: 20.0);
+
+  static TextStyle textTransparent =
+      TextStyle(color: Colors.transparent, fontSize: 20.0);
 }

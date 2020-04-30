@@ -4,6 +4,7 @@ import 'package:auditor/AuditClasses/Sections.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:intl/intl.dart';
 
 class AuditQuestions extends StatefulWidget {
   AuditQuestions({Key key, this.activeSection}) : super(key: key);
@@ -16,6 +17,7 @@ class AuditQuestions extends StatefulWidget {
 class _AuditQuestionsState extends State<AuditQuestions> {
   @override
   Widget build(BuildContext context) {
+    print("building auditQuestions");
     var questionAutoGroup = AutoSizeGroup();
     return Expanded(
       child: Scrollbar(
@@ -44,6 +46,18 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                             makeYesNoQuestion(index),
                           if (widget.activeSection.questions[index]
                                   .typeOfQuestion ==
+                              "fillIn")
+                            makeFillInQuestion(index),
+                          if (widget.activeSection.questions[index]
+                                  .typeOfQuestion ==
+                              "dropDown")
+                            makeDropDownQuestion(index),
+                          if (widget.activeSection.questions[index]
+                                  .typeOfQuestion ==
+                              "date")
+                            makeDateQuestion(index),
+                          if (widget.activeSection.questions[index]
+                                  .typeOfQuestion ==
                               "yesNoNa")
                             Row(
                               children: [
@@ -66,34 +80,39 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                             ),
                         ],
                       ),
-                      AnimatedContainer(
-                          height: widget
-                                  .activeSection.questions[index].textBoxRollOut
-                              ? 100
-                              : 0,
-                          color: Colors.white,
-                          duration: Duration(milliseconds: 300),
-                          child: TextField(
-                            onChanged: (value) {
-                              widget.activeSection.questions[index]
-                                  .optionalComment = value;
-                              if (value.length < 2) {
-                                setState(() {});
-                              }
-                            },
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            style: ColorDefs.textBodyBlack20,
-                            decoration: new InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                contentPadding: EdgeInsets.only(
-                                    left: 15, bottom: 11, top: 11, right: 15),
-                                hintText: "sLabel"),
-                          )),
+                      RepaintBoundary(
+                        child: AnimatedContainer(
+                            height: widget.activeSection.questions[index]
+                                    .textBoxRollOut
+                                ? 100
+                                : 0,
+                            color: Colors.white,
+                            duration: Duration(milliseconds: 300),
+                            child: TextField(
+                              onChanged: (value) {
+                                widget.activeSection.questions[index]
+                                    .optionalComment = value;
+                                if (value.length < 2) {
+                                  setState(() {});
+                                }
+                              },
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              style: widget.activeSection.questions[index]
+                                      .textBoxRollOut
+                                  ? ColorDefs.textBodyBlack20
+                                  : ColorDefs.textTransparent,
+                              decoration: new InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(
+                                      left: 15, bottom: 11, top: 11, right: 15),
+                                  hintText: "Enter comments here"),
+                            )),
+                      ),
                     ],
                   ),
                 ),
@@ -144,6 +163,7 @@ class _AuditQuestionsState extends State<AuditQuestions> {
             setState(() {});
           },
           child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 4.0),
             decoration: BoxDecoration(
               color: buttonColorPicker(
                   widget.activeSection.questions[index], "Yes"),
@@ -161,6 +181,7 @@ class _AuditQuestionsState extends State<AuditQuestions> {
             setState(() {});
           },
           child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 4.0),
             decoration: BoxDecoration(
               color: buttonColorPicker(
                   widget.activeSection.questions[index], "No"),
@@ -172,6 +193,138 @@ class _AuditQuestionsState extends State<AuditQuestions> {
             child: Center(child: Text("No", style: ColorDefs.textBodyBlack20)),
           ),
         ),
+        GestureDetector(
+          onTap: () {
+            widget.activeSection.questions[index].textBoxRollOut =
+                !widget.activeSection.questions[index].textBoxRollOut;
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Icon(Icons.chat_bubble,
+                color:
+                    widget.activeSection.questions[index].optionalComment == ""
+                        ? ColorDefs.colorChatNeutral
+                        : ColorDefs.colorChatSelected),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget makeFillInQuestion(int index) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            widget.activeSection.questions[index].textBoxRollOut =
+                !widget.activeSection.questions[index].textBoxRollOut;
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Icon(Icons.chat_bubble,
+                color:
+                    widget.activeSection.questions[index].optionalComment == ""
+                        ? ColorDefs.colorChatRequired
+                        : ColorDefs.colorChatSelected),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget makeDropDownQuestion(int index) {
+    return Row(
+      children: [
+        DropdownButton<String>(
+          value: widget.activeSection.questions[index].userResponse as String ??
+              "Select",
+          icon: Icon(Icons.arrow_downward),
+          iconSize: 24,
+          elevation: 16,
+          style: ColorDefs.textBodyBlack20,
+          underline: Container(
+            height: 2,
+            color:
+                (widget.activeSection.questions[index].userResponse == "Select")
+                    ? Colors.red
+                    : Colors.green,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              widget.activeSection.questions[index].userResponse = newValue;
+              if (newValue == "Other") {
+                widget.activeSection.questions[index].textBoxRollOut = true;
+              }
+            });
+          },
+          items: widget.activeSection.questions[index].dropDownMenu
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+        GestureDetector(
+          onTap: () {
+            widget.activeSection.questions[index].textBoxRollOut =
+                !widget.activeSection.questions[index].textBoxRollOut;
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Icon(Icons.chat_bubble,
+                color:
+                    widget.activeSection.questions[index].optionalComment == ""
+                        ? ColorDefs.colorChatNeutral
+                        : ColorDefs.colorChatSelected),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget makeDateQuestion(int index) {
+    return Row(
+      children: [
+        (widget.activeSection.questions[index].userResponse != null)
+            ? Text(
+                DateFormat.yMMMMd('en_US')
+                    .format(widget.activeSection.questions[index].userResponse
+                        as DateTime)
+                    .toString(),
+              )
+            : Text(""),
+        FlatButton(
+            onPressed: () async {
+              DateTime selectedDate;
+              selectedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2018),
+                lastDate: DateTime(2030),
+                builder: (BuildContext context, Widget child) {
+                  return Theme(
+                    data: ThemeData.dark(),
+                    child: child,
+                  );
+                },
+              );
+              widget.activeSection.questions[index].userResponse = selectedDate;
+              setState(() {});
+
+              // print(selectedDate);
+            },
+            child: Icon(Icons.calendar_today,
+                color:
+                    (widget.activeSection.questions[index].userResponse == null)
+                        ? Colors.red
+                        : Colors.green)),
+
+        // DateFormat('EEEE').format(startingDate).toString();
+
         GestureDetector(
           onTap: () {
             widget.activeSection.questions[index].textBoxRollOut =

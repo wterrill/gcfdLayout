@@ -4,7 +4,7 @@ class Question {
   String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display
   dynamic userResponse; // what the user reponsed on the questionnaire
   dynamic happyPathResponse; // what the desired response is
-  List<String> dropdownMenu;
+  List<String> dropDownMenu;
   String optionalComment = "";
   bool textBoxRollOut = false;
   String mandatoryComment;
@@ -18,7 +18,7 @@ class Question {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;
     if (questionMap['type'] == "dropDown") {
-      dropdownMenu = questionMap['menuItems'] as List<String>;
+      dropDownMenu = questionMap['menuItems'] as List<String>;
     }
   }
 }

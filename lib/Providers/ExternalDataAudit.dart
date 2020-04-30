@@ -63,6 +63,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'text': 'How often can a guest receive food from the pantry?',
     'type': 'dropDown',
     'menuItems': [
+      'Select',
       'Daily',
       'Weekly',
       'Bi-Monthly',
@@ -260,7 +261,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text': "Distribution style: Cafeteria Restaurant Other",
     'type': 'dropDown',
-    'menuItems': ['Cafeteria', 'Restaurant', 'Other']
+    'menuItems': ['Select', 'Cafeteria', 'Restaurant', 'Other']
   }
 ];
 
@@ -370,7 +371,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ["Freezer", "Cooler"]
+    'menuItems': ['Select', 'Freezer', 'Cooler']
   },
   <String, dynamic>{'text': 'USDA Tag # ', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Serial # ', 'type': 'fillIn'},

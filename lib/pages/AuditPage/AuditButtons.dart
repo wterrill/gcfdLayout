@@ -18,6 +18,7 @@ class AuditButtons extends StatefulWidget {
 class _AuditButtonsState extends State<AuditButtons> {
   @override
   Widget build(BuildContext context) {
+    print("building auditButtons");
     AutoSizeGroup buttonAutoGroup = AutoSizeGroup();
     return Container(
         height: 50,
