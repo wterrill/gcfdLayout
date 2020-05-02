@@ -103,8 +103,10 @@ class _SchedulingPageState extends State<SchedulingPage> {
                 // ),
                 if (backgroundDisable)
                   Container(color: ColorDefs.colorDisabledBackground),
-                RepaintBoundary(child: BigDrawerWidget()),
-                RepaintBoundary(child: TopDrawerWidget()),
+                BigDrawerWidget(),
+                TopDrawerWidget(),
+                // RepaintBoundary(child: BigDrawerWidget()),
+                // RepaintBoundary(child: TopDrawerWidget()),
                 AuditPage()
               ],
             ),

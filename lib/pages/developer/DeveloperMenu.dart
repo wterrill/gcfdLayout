@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'fingerSign/fingerSign.dart';
 import 'lookAhead/lookAhead.dart';
+import 'videoGame/VideoGame.dart';
 
 class DeveloperMenu extends StatelessWidget {
   const DeveloperMenu({Key key}) : super(key: key);
@@ -122,6 +123,18 @@ class DeveloperMenu extends StatelessWidget {
                   },
                 );
                 print(selectedTimeRTL);
+              },
+            ),
+          ),
+          Container(
+            child: FlatButton(
+              color: Colors.red,
+              child: Text("videogame"),
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => VideoGame()),
+                );
               },
             ),
           ),
