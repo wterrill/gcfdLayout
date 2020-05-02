@@ -20,7 +20,7 @@ class Snake {
     return color;
   }
 
-  void snakeTick(int headChange) {
+  void snakeTick(int headChange, bool eating) {
     // update bodyValue based on direction and current location.
     if (headChange.abs() < gameDefs.crossAxisCount) {
       // left or right
@@ -51,6 +51,10 @@ class Snake {
         bodyValues.add(bodyValues.last + headChange);
       }
     }
-    bodyValues.removeAt(0);
+    if (!eating) bodyValues.removeAt(0);
+  }
+
+  int getHead() {
+    return bodyValues.last;
   }
 }

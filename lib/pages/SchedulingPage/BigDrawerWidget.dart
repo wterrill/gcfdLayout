@@ -139,10 +139,10 @@ class _BigDrawerWidgetState extends State<BigDrawerWidget>
                               )),
                             ],
                           ),
-                          // Image(
-                          //   fit: BoxFit.fitWidth,
-                          //   image: AssetImage('assets/images/location.jpg'),
-                          // ),
+                          Image(
+                            fit: BoxFit.fitWidth,
+                            image: AssetImage('assets/images/location.jpg'),
+                          ),
                         ],
                       ),
                     ),

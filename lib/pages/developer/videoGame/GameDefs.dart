@@ -1,4 +1,4 @@
 class GameDefs {
-  int itemCount = 600;
+  int itemCount = 300;
   int crossAxisCount = 30;
 }
