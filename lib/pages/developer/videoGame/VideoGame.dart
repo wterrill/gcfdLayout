@@ -51,6 +51,7 @@ class _VideoGameState extends State<VideoGame> {
       child: Scaffold(
         appBar: AppBar(),
         body: RawKeyboardListener(
+          autofocus: true,
           focusNode: focusNode,
           onKey: (RawKeyEvent event) {
             getKeystroke(event.data.logicalKey);

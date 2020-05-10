@@ -1,6 +1,6 @@
 const Map<String,String> version = 
 {
-  "frameworkVersion": "1.18.0-8.0.pre",
+  "frameworkVersion": "1.18.0-10.0.pre",
   "channel": "dev",
   "repositoryUrl": "https://github.com/flutter/flutter.git",
   "frameworkRevision": "e0c63cd35e15e407a80dc44281cc392535fcce25",

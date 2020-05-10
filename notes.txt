@@ -3,3 +3,23 @@ flutter pub cache repair
 
 flutter run --release
 
+flutter packages pub run build_runner build    //<-- for hive stuff. (contact.g.dart in example)
+
+
+
+keyboard shortcuts, and cool stuff:
+https://medium.com/flutter-community/flutter-visual-studio-code-shortcuts-for-fast-and-efficient-development-7235bc6c3b7d
+full list of shortcuts: cmd + K + S
+
+code assist (USEFUL!)  ctrl + space
+quick fix -> lightbulb menu -> cmd + .
+stanim
+F4 -> widget heirarchy
+triple click
+ctrl+g -> line number
+alt + uparrow  or downarrow -> move line up or down  (add shift to copy)
+shift + ctrl + rightarrow or left arrow -> select between brackets/parenthesis
+shift + ctrl + /  -> jump to other bracket / parenthesis
+ctrl + tab -> switch tabs
+alt + shift + o -> get rid of unused imports
+

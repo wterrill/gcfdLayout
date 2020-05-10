@@ -9,11 +9,22 @@ import 'package:provider/provider.dart';
 import 'package:auditor/providers/CalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'pages/developer/hiveTest/Contact.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 
-void main() {
-//  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  if (!kIsWeb) {
+    final dynamic appDocumentDirectory =
+        await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDirectory.path as String);
+  }
+  Hive.registerAdapter(ContactAdapter());
+
   runApp(
     MultiProvider(
       providers: [
