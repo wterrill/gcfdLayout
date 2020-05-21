@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/communications/Authentication.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
+import 'package:auditor/pages/SchedulingPage2/SchedulingPage2.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
@@ -104,18 +104,18 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(height: 3),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Dialogs.showNotImplemented(context);
-                  },
-                  child: Text("I forgot my password",
-                      style: ColorDefs.textBodyBlack10),
-                ),
-              )),
+          // Align(
+          //     alignment: Alignment.centerRight,
+          //     child: Padding(
+          //       padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           Dialogs.showNotImplemented(context);
+          //         },
+          //         child: Text("I forgot my password",
+          //             style: ColorDefs.textBodyBlack10),
+          //       ),
+          //     )),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 10.0),
             child: ListTile(
@@ -158,19 +158,23 @@ class _LoginFormState extends State<LoginForm> {
       print("result = $result");
 
       Navigator.push(
-          context,
-          PageRouteBuilder<void>(
-              transitionDuration: Duration(seconds: 2),
-              pageBuilder: (_, __, ___) => StatsFl(
-                  // isEnabled: true, //Toggle on/off
-                  // width: 600, //Set size
-                  // height: 20, //
-                  // showText: true, // Hide text label
-                  // sampleTime:
-                  //     .5, //Interval between fps calculations, in seconds.
-                  // totalTime: 15, //Total length of timeline, in seconds.
-                  // align: Alignment.topLeft, //Alignment of statsbox
-                  child: SchedulingPage())));
+        context,
+        PageRouteBuilder<void>(
+          transitionDuration: Duration(seconds: 2),
+          pageBuilder: (_, __, ___) => //StatsFl(
+              // isEnabled: true, //Toggle on/off
+              // width: 600, //Set size
+              // height: 20, //
+              // showText: true, // Hide text label
+              // sampleTime:
+              //     .5, //Interval between fps calculations, in seconds.
+              // totalTime: 15, //Total length of timeline, in seconds.
+              // align: Alignment.topLeft, //Alignment of statsbox
+              // child:
+              SchedulingPage2(),
+          // ),
+        ),
+      );
     }
   }
 
