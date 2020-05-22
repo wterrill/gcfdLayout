@@ -32,8 +32,15 @@ class SchedulingPage2 extends StatefulWidget {
 }
 
 class _SchedulingPage2State extends State<SchedulingPage2> {
-  final controller = BehaviorSubject<String>();
+  // final controller = BehaviorSubject<String>();
   bool backgroundDisable = false;
+  final filterTextController = TextEditingController();
+
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    filterTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +130,17 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                                                   ColorDefs.textBodyWhite20)),
                                       // SizedBox(width: 10),
                                       SizedBox(
+                                        height: 40,
                                         width: 300,
                                         child: TextField(
+                                          onChanged: (text) {
+                                            Provider.of<CalendarData>(context,
+                                                    listen: false)
+                                                .updateFilterValue(
+                                                    filterTextController.text);
+                                          },
+                                          controller: filterTextController,
+                                          style: ColorDefs.textBodyBlack20,
                                           decoration: InputDecoration(
                                               hintStyle: TextStyle(
                                                   fontSize: 15.0,

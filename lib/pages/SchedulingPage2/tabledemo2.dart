@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/CalendarData.dart';
 import 'package:auditor/providers/ExternalDataCalendar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import 'PaginatedDataTable2.dart';
 
@@ -101,7 +103,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 8.0, 8.0, 8.0),
+                padding: const EdgeInsets.fromLTRB(6.0, 4.0, 4.0, 4.0),
                 child: Center(
                     child: Text('${calendarResult.getDateFormatted()}',
                         style: ColorDefs.textBodyWhite15)),
@@ -113,7 +115,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.getStartTimeFormatted()}',
                         style: ColorDefs.textBodyWhite15)),
@@ -125,7 +127,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.agency}',
                         style: ColorDefs.textBodyWhite15)),
@@ -137,7 +139,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.programNum}',
                         style: ColorDefs.textBodyWhite15)),
@@ -149,7 +151,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.auditType}',
                         style: ColorDefs.textBodyWhite15)),
@@ -161,7 +163,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.programType}',
                         style: ColorDefs.textBodyWhite15)),
@@ -173,7 +175,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                     child: Text('${calendarResult.auditor}',
                         style: ColorDefs.textBodyWhite15)),
@@ -185,7 +187,7 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 50.0, 8.0),
+                padding: const EdgeInsets.fromLTRB(4.0, 4.0, 6.0, 4.0),
                 child: Center(
                     child: Text('${calendarResult.status}',
                         style: ColorDefs.textBodyWhite15)),
@@ -213,16 +215,22 @@ class CalendarResultsDataSource extends DataTableSource {
 class DataTableDemo2 extends StatefulWidget {
   CalendarResultsDataSource _calendarResultsDataSource =
       CalendarResultsDataSource([]);
-  bool isLoaded = false;
+  // bool isLoaded = false;
+
+  // final String filterText = "";
+  // String filterText;
+  // DataTableDemo2({this.filterText});
 
   @override
   _DataTableDemoState createState() => _DataTableDemoState();
 }
 
 class _DataTableDemoState extends State<DataTableDemo2> {
+  String filterText = "";
   CalendarResultsDataSource _calendarResultsDataSource =
       CalendarResultsDataSource([]);
   bool isLoaded = false;
+  String lastFilterText = "";
   int _rowsPerPage = PaginatedDataTable2.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
@@ -237,16 +245,40 @@ class _DataTableDemoState extends State<DataTableDemo2> {
   }
 
   void getData() {
+    print("entered getData");
     final mapCalendarResults = masterDayEvents;
 
+    List<Map<String, String>> filteredMapCalendarResults =
+        filter(mapCalendarResults);
+
     List<CalendarResult> calendarResults =
-        convertResultsToCalendar(mapCalendarResults);
-    if (!isLoaded) {
+        convertResultsToCalendar(filteredMapCalendarResults);
+
+    if (!isLoaded || (lastFilterText != filterText && filterText != "")) {
       setState(() {
         _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
         isLoaded = true;
+        Provider.of<CalendarData>(context, listen: false).lastFilterValue =
+            filterText;
       });
     }
+  }
+
+  List<Map<String, String>> filter(List<Map<String, String>> beer) {
+    List<Map<String, String>> filteredResults = [];
+    if (filterText != "") {
+      for (Map<String, String> result in beer) {
+        if (result['agency'].toLowerCase().contains(filterText.toLowerCase())) {
+          filteredResults.add(result);
+        } else if (result['programNum']
+            .toLowerCase()
+            .contains(filterText.toLowerCase())) {
+          filteredResults.add(result);
+        }
+      }
+      return filteredResults;
+    }
+    return beer;
   }
 
   List<CalendarResult> convertResultsToCalendar(
@@ -267,6 +299,10 @@ class _DataTableDemoState extends State<DataTableDemo2> {
 
   @override
   Widget build(BuildContext context) {
+    lastFilterText =
+        Provider.of<CalendarData>(context, listen: false).lastFilterValue;
+    filterText = Provider.of<CalendarData>(context).filterValue;
+    print("building paginated data table");
     getData();
     return Expanded(
       child: Container(
@@ -299,15 +335,16 @@ class _DataTableDemoState extends State<DataTableDemo2> {
                         columnIndex,
                         ascending)),
                 DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Start Time',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.startTime,
-                        columnIndex,
-                        ascending)),
+                  label: Expanded(
+                      child: Center(
+                          child:
+                              Text('Start', style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.startTime,
+                      columnIndex,
+                      ascending),
+                ),
                 DataColumn(
                     label: Expanded(
                         child: Center(
@@ -321,7 +358,7 @@ class _DataTableDemoState extends State<DataTableDemo2> {
                 DataColumn(
                     label: Expanded(
                         child: Center(
-                            child: Text('Program #',
+                            child: Text('Prog. #',
                                 style: ColorDefs.textBodyBlue20))),
                     numeric: false,
                     onSort: (int columnIndex, bool ascending) => _sort<String>(
@@ -341,7 +378,7 @@ class _DataTableDemoState extends State<DataTableDemo2> {
                 DataColumn(
                     label: Expanded(
                         child: Center(
-                            child: Text('Program Type',
+                            child: Text('Prog. Type',
                                 style: ColorDefs.textBodyBlue20))),
                     numeric: false,
                     onSort: (int columnIndex, bool ascending) => _sort<String>(

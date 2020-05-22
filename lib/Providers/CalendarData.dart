@@ -14,6 +14,13 @@ class CalendarData with ChangeNotifier {
   List<List<Event>> dayEvents = [];
   double rowHeight;
   bool initialized = false;
+  String filterValue = "";
+  String lastFilterValue = "";
+
+  void updateFilterValue(String value) {
+    filterValue = value;
+    notifyListeners();
+  }
 
   CalendarData() {
     initializeApp();
