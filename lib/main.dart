@@ -3,7 +3,7 @@ import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
-import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
+// import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
 import 'package:auditor/pages/SchedulingPage2/SchedulingPage2.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         // Define the default brightness and colors.
-        // brightness: Brightness.dark,
+        brightness: Brightness.dark,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
         fontFamily: 'Georgia',

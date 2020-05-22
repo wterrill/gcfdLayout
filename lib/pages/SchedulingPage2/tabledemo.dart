@@ -164,48 +164,52 @@ class _DataTableDemoState extends State<DataTableDemo> {
   @override
   Widget build(BuildContext context) {
     getData();
-    return PaginatedDataTable2(
-        // header: const Text(''),
-        headingRowHeight: 20,
-        rowsPerPage: _rowsPerPage,
-        onRowsPerPageChanged: (int value) {
-          setState(() {
-            _rowsPerPage = value;
-          });
-        },
-        sortColumnIndex: _sortColumnIndex,
-        sortAscending: _sortAscending,
-        onSelectAll: _resultsDataSource._selectAll,
-        columnSpacing: 0,
-        dataRowHeight: 30,
-        horizontalMargin: 0,
-        columns: <DataColumn>[
-          DataColumn(
-              label: Expanded(child: Center(child: Text('postId'))),
-              numeric: false,
-              onSort: (int columnIndex, bool ascending) =>
-                  _sort<num>((Result d) => d.postId, columnIndex, ascending)),
-          DataColumn(
-              label: Expanded(child: Center(child: Text('id'))),
-              numeric: false,
-              onSort: (int columnIndex, bool ascending) =>
-                  _sort<num>((Result d) => d.id, columnIndex, ascending)),
-          DataColumn(
-              label: Expanded(child: Center(child: Text('Name'))),
-              numeric: false,
-              onSort: (int columnIndex, bool ascending) =>
-                  _sort<String>((Result d) => d.name, columnIndex, ascending)),
-          DataColumn(
-              label: Expanded(child: Center(child: Text('Data'))),
-              numeric: false,
-              onSort: (int columnIndex, bool ascending) =>
-                  _sort<String>((Result d) => d.email, columnIndex, ascending)),
-          DataColumn(
-              label: Expanded(child: Center(child: Text('Body'))),
-              numeric: false,
-              onSort: (int columnIndex, bool ascending) =>
-                  _sort<String>((Result d) => d.body, columnIndex, ascending)),
-        ],
-        source: _resultsDataSource);
+    return Expanded(
+      child: SingleChildScrollView(
+        child: PaginatedDataTable2(
+            // header: const Text(''),
+            headingRowHeight: 20,
+            rowsPerPage: _rowsPerPage,
+            onRowsPerPageChanged: (int value) {
+              setState(() {
+                _rowsPerPage = value;
+              });
+            },
+            sortColumnIndex: _sortColumnIndex,
+            sortAscending: _sortAscending,
+            onSelectAll: _resultsDataSource._selectAll,
+            columnSpacing: 0,
+            dataRowHeight: 30,
+            horizontalMargin: 0,
+            columns: <DataColumn>[
+              DataColumn(
+                  label: Expanded(child: Center(child: Text('postId'))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<num>(
+                      (Result d) => d.postId, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(child: Center(child: Text('id'))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) =>
+                      _sort<num>((Result d) => d.id, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(child: Center(child: Text('Name'))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (Result d) => d.name, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(child: Center(child: Text('Data'))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (Result d) => d.email, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(child: Center(child: Text('Body'))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (Result d) => d.body, columnIndex, ascending)),
+            ],
+            source: _resultsDataSource),
+      ),
+    );
   }
 }

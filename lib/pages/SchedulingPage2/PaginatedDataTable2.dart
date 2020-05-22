@@ -4,6 +4,7 @@
 
 import 'dart:math' as math;
 
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
@@ -219,7 +220,7 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
-  int _selectedRowCount;
+  // int _selectedRowCount;
   final Map<int, DataRow> _rows = <int, DataRow>{};
 
   @override
@@ -252,7 +253,7 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
     setState(() {
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
-      _selectedRowCount = widget.source.selectedRowCount;
+      // _selectedRowCount = widget.source.selectedRowCount;
       _rows.clear();
     });
   }
@@ -373,14 +374,14 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
           .map<DropdownMenuItem<int>>((int value) {
         return DropdownMenuItem<int>(
           value: value,
-          child: Text('$value'),
+          child: Text('$value', style: ColorDefs.textBodyBlue10),
         );
       }).toList();
       footerWidgets.addAll(<Widget>[
         Container(
             width:
                 14.0), // to match trailing padding in case we overflow and end up scrolling
-        Text(localizations.rowsPerPageTitle),
+        Text(localizations.rowsPerPageTitle, style: ColorDefs.textBodyBlue10),
         ConstrainedBox(
           constraints: const BoxConstraints(
               minWidth: 64.0), // 40.0 for the text, 24.0 for the icon
@@ -402,13 +403,13 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
     footerWidgets.addAll(<Widget>[
       Container(width: 32.0),
       Text(
-        localizations.pageRowsInfoTitle(
-          _firstRowIndex + 1,
-          _firstRowIndex + widget.rowsPerPage,
-          _rowCount,
-          _rowCountApproximate,
-        ),
-      ),
+          localizations.pageRowsInfoTitle(
+            _firstRowIndex + 1,
+            _firstRowIndex + widget.rowsPerPage,
+            _rowCount,
+            _rowCountApproximate,
+          ),
+          style: ColorDefs.textBodyBlue20),
       Container(width: 32.0),
       IconButton(
         icon: const Icon(Icons.chevron_left),
@@ -434,8 +435,9 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
       builder: (BuildContext context, BoxConstraints constraints) {
         return Card(
           semanticContainer: false,
+          color: ColorDefs.colorDarkest,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // Semantics(
               //   container: true,
@@ -468,17 +470,20 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
                 dragStartBehavior: widget.dragStartBehavior,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minWidth: constraints.minWidth),
-                  child: DataTable(
-                    key: _tableKey,
-                    columns: widget.columns,
-                    sortColumnIndex: widget.sortColumnIndex,
-                    sortAscending: widget.sortAscending,
-                    onSelectAll: widget.onSelectAll,
-                    dataRowHeight: widget.dataRowHeight,
-                    headingRowHeight: widget.headingRowHeight,
-                    horizontalMargin: widget.horizontalMargin,
-                    columnSpacing: widget.columnSpacing,
-                    rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                  child: Container(
+                    color: ColorDefs.colorDarkest,
+                    child: DataTable(
+                      key: _tableKey,
+                      columns: widget.columns,
+                      sortColumnIndex: widget.sortColumnIndex,
+                      sortAscending: widget.sortAscending,
+                      onSelectAll: widget.onSelectAll,
+                      dataRowHeight: widget.dataRowHeight,
+                      headingRowHeight: widget.headingRowHeight,
+                      horizontalMargin: widget.horizontalMargin,
+                      columnSpacing: widget.columnSpacing,
+                      rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                    ),
                   ),
                 ),
               ),
@@ -487,14 +492,18 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
                 child: IconTheme.merge(
                   data: const IconThemeData(opacity: 0.54),
                   child: Container(
+                    color: Colors.blue,
                     // TODO(bkonyi): this won't handle text zoom correctly, https://github.com/flutter/flutter/issues/48522
                     height: 56.0,
                     child: SingleChildScrollView(
                       dragStartBehavior: widget.dragStartBehavior,
                       scrollDirection: Axis.horizontal,
                       reverse: true,
-                      child: Row(
-                        children: footerWidgets,
+                      child: Container(
+                        color: ColorDefs.colorDarkest,
+                        child: Row(
+                          children: footerWidgets,
+                        ),
                       ),
                     ),
                   ),

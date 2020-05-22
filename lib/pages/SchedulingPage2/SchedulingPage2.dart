@@ -4,6 +4,7 @@ import 'dart:ui';
 // import 'package:flutter/foundation.dart';
 import 'package:auditor/pages/AuditPage/AuditPage.dart';
 import 'package:auditor/pages/SchedulingPage2/tabledemo.dart';
+import 'package:auditor/pages/SchedulingPage2/tabledemo2.dart';
 // import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 // import 'package:auditor/Definitions/Event.dart';
@@ -82,6 +83,7 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                     color: ColorDefs.colorDarkBackground,
                     child: Provider.of<CalendarData>(context).initialized
                         ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -124,9 +126,16 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                                         width: 300,
                                         child: TextField(
                                           decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: Colors.grey),
                                               filled: true,
                                               fillColor: Colors.white,
-                                              border: InputBorder.none,
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.teal,
+                                                ),
+                                              ),
                                               hintText:
                                                   'Agency / Program Number Filter'),
                                         ),
@@ -136,15 +145,8 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
 
                               // DataTableAppt()
                               // PaginatedDataTableList()
-                              Expanded(
-                                child: SingleChildScrollView(
-                                    child:
-                                        // Container(color: Colors.blue))
-
-                                        // height: 900,
-                                        // width: 700,
-                                        DataTableDemo()),
-                              )
+                              // DataTableDemo()
+                              DataTableDemo2()
 
                               // TableSimple(
                               //   titleColumn: _makeTitleColumn(),

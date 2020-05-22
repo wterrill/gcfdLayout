@@ -46,7 +46,7 @@ class CalendarData with ChangeNotifier {
     days = generateInitialWeek();
     print("days:$days");
 
-    dayEvents = updateAppointments();
+    // dayEvents = updateAppointments();
     print("dayEvents:$dayEvents");
 
     updateTodayOverlay();
@@ -102,7 +102,7 @@ class CalendarData with ChangeNotifier {
     List<String> newDaysArray = createWeekFromDate(differentMonday);
     print(newDaysArray);
     days = newDaysArray;
-    dayEvents = updateAppointments();
+    // dayEvents = updateAppointments();
     print('changeWeek dayEvents:$dayEvents');
     updateTodayOverlay();
     notifyListeners();
@@ -130,29 +130,29 @@ class CalendarData with ChangeNotifier {
     print('todayOverlaySpot: $todayOverlaySpot');
   }
 
-  List<List<Event>> updateAppointments() {
-    List<List<Event>> thisWeeksEvents = [];
+  // List<List<Event>> updateAppointments() {
+  //   List<List<Event>> thisWeeksEvents = [];
 
-    for (String dayDate in days) {
-      print('dayDate:$dayDate');
+  //   for (String dayDate in days) {
+  //     print('dayDate:$dayDate');
 
-      String day = dayDate.split(" ")[1];
-      print('day:$day');
+  //     String day = dayDate.split(" ")[1];
+  //     print('day:$day');
 
-      List<Map<String, String>> daysRawMatch = masterDayEvents
-          .firstWhere((element) => element[0]['date'] == day, orElse: () => []);
-      print('daysRawMatch:$daysRawMatch');
+  //     List<Map<String, String>> daysRawMatch = masterDayEvents
+  //         .firstWhere((element) => element[0]['date'] == day, orElse: () => []);
+  //     print('daysRawMatch:$daysRawMatch');
 
-      List<Event> daysEventMatch = convertRawToEvents(daysRawMatch);
-      print('daysEventMatch:$daysEventMatch');
+  //     List<Event> daysEventMatch = convertRawToEvents(daysRawMatch);
+  //     print('daysEventMatch:$daysEventMatch');
 
-      if (daysEventMatch.isNotEmpty)
-        thisWeeksEvents.add(daysEventMatch);
-      else
-        thisWeeksEvents.add([]);
-    }
-    return thisWeeksEvents;
-  }
+  //     if (daysEventMatch.isNotEmpty)
+  //       thisWeeksEvents.add(daysEventMatch);
+  //     else
+  //       thisWeeksEvents.add([]);
+  //   }
+  //   return thisWeeksEvents;
+  // }
 
   // var beer = [
   //   [

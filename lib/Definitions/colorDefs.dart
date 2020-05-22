@@ -22,6 +22,7 @@ class ColorDefs {
   static Color colorTopDrawerBackground = Color(0xFF3C3C3C); //
   static Color colorTopDrawerAlternating = Color(0xFF474747);
   static Color colorBigDrawerBronze = Color(0xFFA36422);
+  static Color colorDarkest = Color(0xFF262626);
 
   static Color colorAudit1 = Color(0xFFD84342);
   static Color colorAudit2 = Color(0xFF4ED4DF);
@@ -61,6 +62,8 @@ class ColorDefs {
 
   static TextStyle textBodyWhite20 =
       TextStyle(color: Colors.white, fontSize: 20.0);
+  static TextStyle textBodyWhite15 =
+      TextStyle(color: Colors.white, fontSize: 15.0);
   static TextStyle textBodyWhite10 =
       TextStyle(color: Colors.white, fontSize: 10.0);
 
