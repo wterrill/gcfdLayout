@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'PaginatedDataTable2.dart';
+import 'ApptDataTable/CustomPaginatedDataTable.dart';
 
 Future<List<Result>> fetchResults(http.Client client) async {
   final response =
@@ -127,15 +127,15 @@ class ResultsDataSource extends DataTableSource {
   }
 }
 
-class DataTableDemo extends StatefulWidget {
+class JsonDataTableDemo extends StatefulWidget {
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
   bool isLoaded = false;
 
   @override
-  _DataTableDemoState createState() => _DataTableDemoState();
+  _JsonDataTableDemoState createState() => _JsonDataTableDemoState();
 }
 
-class _DataTableDemoState extends State<DataTableDemo> {
+class _JsonDataTableDemoState extends State<JsonDataTableDemo> {
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
   bool isLoaded = false;
   int _rowsPerPage = PaginatedDataTable3.defaultRowsPerPage;

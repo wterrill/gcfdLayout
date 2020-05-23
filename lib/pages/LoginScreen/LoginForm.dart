@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/communications/Authentication.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/pages/SchedulingPage2/SchedulingPage2.dart';
+import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
@@ -171,7 +171,7 @@ class _LoginFormState extends State<LoginForm> {
               // totalTime: 15, //Total length of timeline, in seconds.
               // align: Alignment.topLeft, //Alignment of statsbox
               // child:
-              SchedulingPage2(),
+              ListSchedulingPage(),
           // ),
         ),
       );

@@ -3,35 +3,30 @@ import 'dart:ui';
 
 // import 'package:flutter/foundation.dart';
 import 'package:auditor/pages/AuditPage/AuditPage.dart';
-import 'package:auditor/pages/SchedulingPage2/tabledemo.dart';
-import 'package:auditor/pages/SchedulingPage2/tabledemo2.dart';
+import 'package:auditor/pages/ListSchedulingPage/jsonDataTabledemo.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
 // import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 // import 'package:auditor/Definitions/Event.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
-import 'ApptList.dart';
-import 'CalendarHeaderWidget.dart';
-import 'DataTableAppt.dart';
-import 'PaginatedDataTableList.dart';
 import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
 // import 'package:auto_size_text/auto_size_text.dart';
-import 'package:auditor/providers/CalendarData.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'filterGridWidget.dart';
 // import 'dart:developer';
 
-class SchedulingPage2 extends StatefulWidget {
+class ListSchedulingPage extends StatefulWidget {
   // final controller = StreamController<String>();
 
   @override
-  _SchedulingPage2State createState() => _SchedulingPage2State();
+  _ListSchedulingPageState createState() => _ListSchedulingPageState();
 }
 
-class _SchedulingPage2State extends State<SchedulingPage2> {
+class _ListSchedulingPageState extends State<ListSchedulingPage> {
   // final controller = BehaviorSubject<String>();
   bool backgroundDisable = false;
   final filterTextController = TextEditingController();
@@ -44,39 +39,7 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
 
   @override
   Widget build(BuildContext context) {
-    final columns = [
-      "Date",
-      "Start",
-      "Agency",
-      "Program Number",
-      "Audit Type",
-      "Auditor",
-      "Status"
-    ];
-    final rows = 40;
-
-    List<List<String>> _makeData() {
-      final List<List<String>> output = [];
-      for (int i = 0; i < columns.length; i++) {
-        final List<String> row = [];
-        for (int j = 0; j < rows; j++) {
-          row.add('RRR$i : RRR$j');
-        }
-        output.add(row);
-      }
-      return output;
-    }
-
-    /// Simple generator for column title
-    List<String> _makeTitleColumn() => columns;
-
-    /// Simple generator for row title
-    List<String> _makeTitleRow() => List.generate(rows, (i) => 'Left $i');
-
-    // bool startAudit = Provider.of<AuditData>(context).auditStarted;
     var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    // List<List<Event>> dayEvents = Provider.of<CalendarData>(context).dayEvents;
-    // var mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
     backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
     return SafeArea(
       child: Scaffold(
@@ -88,7 +51,7 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                 Expanded(
                   child: Container(
                     color: ColorDefs.colorDarkBackground,
-                    child: Provider.of<CalendarData>(context).initialized
+                    child: Provider.of<ListCalendarData>(context).initialized
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -134,7 +97,8 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                                         width: 300,
                                         child: TextField(
                                           onChanged: (text) {
-                                            Provider.of<CalendarData>(context,
+                                            Provider.of<ListCalendarData>(
+                                                    context,
                                                     listen: false)
                                                 .updateFilterValue(
                                                     filterTextController.text);
@@ -158,17 +122,7 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
                                       )
                                     ]),
                               ),
-
-                              // DataTableAppt()
-                              // PaginatedDataTableList()
-                              // DataTableDemo()
-                              DataTableDemo2()
-
-                              // TableSimple(
-                              //   titleColumn: _makeTitleColumn(),
-                              //   titleRow: _makeTitleRow(),
-                              //   data: _makeData(),
-                              // ),
+                              ApptDataTable()
                             ],
                           )
                         : Text("not initialized"),
@@ -188,68 +142,3 @@ class _SchedulingPage2State extends State<SchedulingPage2> {
     );
   }
 }
-
-// class HeaderDelegate extends SliverPersistentHeaderDelegate {
-//   final BuildContext context;
-
-//   HeaderDelegate(this.context);
-
-//   Widget _floatingHeader(double shrinkOffset) {
-//     var days = Provider.of<CalendarData>(context).days;
-//     return Row(
-//       children: <Widget>[
-//         Spacer(),
-//         ...days.map(
-//           (d) => Expanded(
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.black26,
-//                 border: Border(
-//                   left: BorderSide(
-//                       width: 1.0, color: ColorDefs.colorCalendarHeader),
-//                 ),
-//               ),
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Opacity(
-//                     opacity: 1 - (shrinkOffset / maxExtent),
-//                     child: Text(
-//                       d.split(" ")[1],
-//                       style: TextStyle(fontSize: 10.0),
-//                       maxLines: 1,
-//                     ),
-//                   ),
-//                   Align(
-//                     alignment: Alignment.bottomCenter,
-//                     heightFactor: 1 - (shrinkOffset / maxExtent),
-//                     child: Text(
-//                       d.split(" ")[0],
-//                       style: ColorDefs.textBodyBlue10,
-//                       maxLines: 1,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-// @override
-// Widget build(
-//     BuildContext context, double shrinkOffset, bool overlapsContent) {
-//   return _floatingHeader(shrinkOffset);
-// }
-
-//   @override
-//   double get maxExtent => 50;
-
-//   @override
-//   double get minExtent => 25;
-
-//   @override
-//   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
-// }

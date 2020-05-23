@@ -3,11 +3,10 @@ import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
-// import 'package:auditor/pages/SchedulingPage/SchedulingPage.dart';
-import 'package:auditor/pages/SchedulingPage2/SchedulingPage2.dart';
+import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 // import 'package:responsive_framework/responsive_framework.dart';
 import 'package:provider/provider.dart';
-import 'package:auditor/providers/CalendarData.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:statsfl/statsfl.dart';
 import 'package:hive/hive.dart';
@@ -30,7 +29,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CalendarData()),
+        ChangeNotifierProvider(create: (context) => ListCalendarData()),
         ChangeNotifierProvider(create: (context) => LayoutData()),
         ChangeNotifierProvider(
           create: (context) => AuditData(),
@@ -57,7 +56,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/login': (context) => LoginScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => SchedulingPage2(),
+        '/second': (context) => ListSchedulingPage(),
       },
       theme: ThemeData(
         // Define the default brightness and colors.
@@ -82,7 +81,7 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
 
           // return Scaffold(body: LoginScreen());
-          return Scaffold(body: SchedulingPage2());
+          return Scaffold(body: ListSchedulingPage());
         }),
       ),
       //),
