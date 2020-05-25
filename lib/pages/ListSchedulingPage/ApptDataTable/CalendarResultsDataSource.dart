@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/main.dart';
 import 'package:flutter/material.dart';
 
 import 'CalendarResult.dart';
@@ -28,16 +29,47 @@ class CalendarResultsDataSource extends DataTableSource {
     assert(index >= 0);
     if (index >= _calendarResults.length) return null;
     final CalendarResult calendarResult = _calendarResults[index];
-    return DataRow.byIndex(index: index,
-        // selected: calendarResult.selected,
-        // onSelectChanged: (bool value) {
-        //   if (calendarResult.selected != value) {
-        //     _selectedCount += value ? 1 : -1;
-        //     assert(_selectedCount >= 0);
-        //     calendarResult.selected = value;
-        //     notifyListeners();
-        //   }
-        // },
+    return DataRow.byIndex(
+        index: index,
+        selected: calendarResult.selected,
+        onSelectChanged: (bool value) {
+          print(calendarResult.agency);
+
+          // showDialog<void>(
+          //   barrierDismissible: true,
+          //   context: navigatorKey.currentState.overlay.context,
+          //   builder: (BuildContext context) {
+          //     return Material(
+          //       child: Text(
+          //           "agency: ${calendarResult.agency}, ${calendarResult.auditType}, ${calendarResult.programType}, ${calendarResult.programNum}, ${calendarResult.auditor}"),
+          //     );
+          //   },
+          // );
+
+          showDialog<void>(
+            context: navigatorKey.currentState.overlay.context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                    return Material(
+                      child: Text(
+                          "agency: ${calendarResult.agency}, ${calendarResult.auditType}, ${calendarResult.programType}, ${calendarResult.programNum}, ${calendarResult.auditor}"),
+                    );
+                    // return MyDialog();
+                  },
+                ),
+              );
+            },
+          );
+
+          // if (calendarResult.selected != value) {
+          //   _selectedCount += value ? 1 : -1;
+          //   assert(_selectedCount >= 0);
+          //   calendarResult.selected = value;
+          //   notifyListeners();
+          // }
+        },
         cells: <DataCell>[
           DataCell(Container(
               height: double.infinity,

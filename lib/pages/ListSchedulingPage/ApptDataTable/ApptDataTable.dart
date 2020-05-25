@@ -112,6 +112,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
         color: ColorDefs.colorTimeBackground,
         child: SingleChildScrollView(
           child: PaginatedDataTable2(
+              showCheckboxColumn: false,
               // header: const Text(''),
               headingRowHeight: 70,
               rowsPerPage: _rowsPerPage,

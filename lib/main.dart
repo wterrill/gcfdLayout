@@ -16,6 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'pages/developer/hiveTest/Contact.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // timeDilation = 14.0;
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.

@@ -473,6 +473,7 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
                   child: Container(
                     color: ColorDefs.colorDarkest,
                     child: DataTable(
+                      showCheckboxColumn: widget.showCheckboxColumn,
                       key: _tableKey,
                       columns: widget.columns,
                       sortColumnIndex: widget.sortColumnIndex,
