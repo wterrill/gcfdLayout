@@ -71,21 +71,53 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                 color: ColorDefs
                                                     .colorAlternateDark)),
                                         onPressed: () {
-                                          showDialog<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                content: StatefulBuilder(
-                                                  builder: (BuildContext
-                                                          context,
-                                                      StateSetter setState) {
-                                                    return NewAuditDialog();
-                                                    // return MyDialog();
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          // showDialog<void>(
+                                          //   context: context,
+                                          //   builder: (BuildContext context) {
+                                          //     return AlertDialog(
+                                          //       content: StatefulBuilder(
+                                          //         builder: (BuildContext
+                                          //                 context,
+                                          //             StateSetter setState) {
+                                          //           return NewAuditDialog();
+                                          //           // return MyDialog();
+                                          //         },
+                                          //       ),
+                                          //     );
+                                          //   },
+                                          // );
+
+                                          showGeneralDialog<void>(
+                                              barrierColor:
+                                                  Colors.black.withOpacity(0.5),
+                                              transitionBuilder:
+                                                  (context, a1, a2, widget) {
+                                                return Transform.scale(
+                                                  scale: a1.value,
+                                                  child: Opacity(
+                                                    opacity: a1.value,
+                                                    child: AlertDialog(
+                                                      shape: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0)),
+                                                      title: Text(
+                                                          'Schedule a New Audit:'),
+                                                      content: NewAuditDialog(),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              transitionDuration:
+                                                  Duration(milliseconds: 500),
+                                              barrierDismissible: true,
+                                              barrierLabel: "Beer",
+                                              context: context,
+                                              pageBuilder: (context, animation1,
+                                                  animation2) {
+                                                return Text("Beer?");
+                                              });
                                         },
                                         child: Text("Schedule New Audit",
                                             style: ColorDefs.textBodyWhite20),
@@ -105,7 +137,6 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                         child: Text("Show This Week",
                                             style: ColorDefs.textBodyWhite20),
                                       ),
-                                      // SizedBox(width: 10),
                                       SizedBox(
                                         height: 40,
                                         width: 300,

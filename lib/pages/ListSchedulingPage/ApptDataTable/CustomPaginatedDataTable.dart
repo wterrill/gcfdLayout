@@ -71,7 +71,13 @@ class PaginatedDataTable2 extends StatefulWidget {
       defaultRowsPerPage,
       defaultRowsPerPage * 2,
       defaultRowsPerPage * 5,
-      defaultRowsPerPage * 10
+      defaultRowsPerPage * 10,
+      defaultRowsPerPage * 20,
+      defaultRowsPerPage * 50,
+      defaultRowsPerPage * 100,
+      defaultRowsPerPage * 200,
+      defaultRowsPerPage * 500,
+      defaultRowsPerPage * 1000,
     ],
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -184,7 +190,7 @@ class PaginatedDataTable2 extends StatefulWidget {
   ///
   /// Useful when initializing the field that will hold the current
   /// [rowsPerPage], when implemented [onRowsPerPageChanged].
-  static const int defaultRowsPerPage = 10;
+  static const int defaultRowsPerPage = 15;
 
   /// The options to offer for the rowsPerPage.
   ///

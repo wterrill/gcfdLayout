@@ -27,11 +27,13 @@ class _LookAheadState extends State<LookAhead> {
       children: <Widget>[
         TypeAheadField<String>(
           textFieldConfiguration: TextFieldConfiguration<String>(
-              autofocus: true,
+              autofocus: false,
               // style: DefaultTextStyle.of(context)
               //     .style
               //     .copyWith(fontStyle: FontStyle.italic),
               decoration: InputDecoration(
+                labelText:
+                    'Enter part of agency name or program number to search',
                 border: OutlineInputBorder(),
                 suffixIcon: IconButton(
                   onPressed: () => _typeAheadController.clear(),
