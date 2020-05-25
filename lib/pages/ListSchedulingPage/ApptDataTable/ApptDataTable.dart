@@ -44,7 +44,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
 
   void getData() {
     print("entered getData");
-    final mapCalendarResults = masterDayEvents;
+    final mapCalendarResults =
+        Provider.of<ListCalendarData>(context).masterEvents;
 
     List<Map<String, String>> filteredMapCalendarResults =
         filter(mapCalendarResults);
@@ -52,12 +53,16 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> calendarResults =
         convertResultsToCalendar(filteredMapCalendarResults);
 
-    if (!isLoaded || (lastFilterText != filterText && filterText != "")) {
+    if (!isLoaded ||
+        (lastFilterText != filterText && filterText != "") ||
+        Provider.of<ListCalendarData>(context, listen: false).newEventAdded) {
       setState(() {
         _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
         isLoaded = true;
         Provider.of<ListCalendarData>(context, listen: false).lastFilterValue =
             filterText;
+        Provider.of<ListCalendarData>(context, listen: false).newEventAdded =
+            false;
       });
     }
   }

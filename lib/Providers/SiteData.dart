@@ -8,7 +8,7 @@ class SiteData with ChangeNotifier {
   List<dynamic> headers;
 
   SiteData() {
-    rowsAsListOfValues = CsvToListConverter().convert(csvData);
+    rowsAsListOfValues = CsvToListConverter().convert(csvDataNew);
 //    print(rowsAsListOfValues);
     headers = rowsAsListOfValues[0];
     rowsAsListOfValues = rowsAsListOfValues.sublist(1);

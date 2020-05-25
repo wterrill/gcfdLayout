@@ -138,7 +138,7 @@ class JsonDataTableDemo extends StatefulWidget {
 class _JsonDataTableDemoState extends State<JsonDataTableDemo> {
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
   bool isLoaded = false;
-  int _rowsPerPage = PaginatedDataTable3.defaultRowsPerPage;
+  int _rowsPerPage = PaginatedDataTable2.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
 
