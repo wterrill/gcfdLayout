@@ -4,6 +4,7 @@ import 'dart:ui';
 // import 'package:flutter/foundation.dart';
 // import 'package:auditor/pages/AuditPage/AuditPage.dart';
 // import 'package:auditor/pages/ListSchedulingPage/jsonDataTabledemo.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
 // import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                 );
                                               },
                                               transitionDuration:
-                                                  Duration(milliseconds: 500),
+                                                  Duration(milliseconds: 200),
                                               barrierDismissible: true,
                                               barrierLabel: "Beer",
                                               context: context,
@@ -133,6 +134,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                     .colorAlternateDark)),
                                         onPressed: () {
                                           print("Show this week pressed");
+                                          Dialogs.showNotImplemented(context);
                                         },
                                         child: Text("Show This Week",
                                             style: ColorDefs.textBodyWhite20),

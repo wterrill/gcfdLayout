@@ -138,7 +138,7 @@ class JsonDataTableDemo extends StatefulWidget {
 class _JsonDataTableDemoState extends State<JsonDataTableDemo> {
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
   bool isLoaded = false;
-  int _rowsPerPage = PaginatedDataTable2.defaultRowsPerPage;
+  int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
 
@@ -166,7 +166,7 @@ class _JsonDataTableDemoState extends State<JsonDataTableDemo> {
     getData();
     return Expanded(
       child: SingleChildScrollView(
-        child: PaginatedDataTable2(
+        child: CustomPaginatedDataTable(
             // header: const Text(''),
             headingRowHeight: 20,
             rowsPerPage: _rowsPerPage,

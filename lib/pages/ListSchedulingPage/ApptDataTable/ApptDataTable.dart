@@ -29,7 +29,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
       CalendarResultsDataSource([]);
   bool isLoaded = false;
   String lastFilterText = "";
-  int _rowsPerPage = PaginatedDataTable2.defaultRowsPerPage;
+  int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
 
@@ -53,9 +53,12 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> calendarResults =
         convertResultsToCalendar(filteredMapCalendarResults);
 
-    if (!isLoaded ||
+    bool firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent = !isLoaded ||
         (lastFilterText != filterText && filterText != "") ||
-        Provider.of<ListCalendarData>(context, listen: false).newEventAdded) {
+        (lastFilterText.length == 1 && filterText == "") ||
+        Provider.of<ListCalendarData>(context, listen: false).newEventAdded;
+
+    if (firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent) {
       setState(() {
         _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
         isLoaded = true;
@@ -107,110 +110,120 @@ class _ApptDataTableState extends State<ApptDataTable> {
     filterText = Provider.of<ListCalendarData>(context).filterValue;
     print("building paginated data table");
     getData();
+    print("BUILD PAGINATEDDATATABLE2");
     return Expanded(
       child: Container(
         color: ColorDefs.colorTimeBackground,
         child: SingleChildScrollView(
-          child: PaginatedDataTable2(
-              showCheckboxColumn: false,
-              // header: const Text(''),
-              headingRowHeight: 70,
-              rowsPerPage: _rowsPerPage,
-              onRowsPerPageChanged: (int value) {
-                setState(() {
-                  _rowsPerPage = value;
-                });
-              },
-              sortColumnIndex: _sortColumnIndex,
-              sortAscending: _sortAscending,
-              onSelectAll: _calendarResultsDataSource.selectAll,
-              columnSpacing: 0,
-              dataRowHeight: 50,
-              horizontalMargin: 0,
-              columns: <DataColumn>[
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child:
-                                Text('Date', style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.getDateFormatted(),
-                        columnIndex,
-                        ascending)),
-                DataColumn(
+          child: CustomPaginatedDataTable(
+            onPageChanged: (value) {
+              // print("onPageChanged value: $value");
+              // print(
+              //     'onPageChanged _calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}');
+              // print('_rowsPerPage: $_rowsPerPage');
+              // if (value + _rowsPerPage > _calendarResultsDataSource.rowCount) {
+              //   print(
+              //       "adjust!!!! to: ${_calendarResultsDataSource.rowCount - value}");
+              //   _rowsPerPage = _calendarResultsDataSource.rowCount - value;
+              //   print(_rowsPerPage);
+              //   // setState(() {});
+              //   // _normalRowPerPage =
+              // }
+            },
+            source: _calendarResultsDataSource,
+            showCheckboxColumn: false,
+            headingRowHeight: 70,
+            rowsPerPage: _rowsPerPage,
+            onRowsPerPageChanged: (int value) {
+              setState(() {
+                print("value: $value");
+                print(
+                    "_calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}");
+                _rowsPerPage = value;
+                print(_rowsPerPage);
+              });
+            },
+            sortColumnIndex: _sortColumnIndex,
+            sortAscending: _sortAscending,
+            // onSelectAll: _calendarResultsDataSource.selectAll,
+            columnSpacing: 0,
+            dataRowHeight: 50,
+            horizontalMargin: 0,
+            columns: <DataColumn>[
+              DataColumn(
                   label: Expanded(
                       child: Center(
                           child:
-                              Text('Start', style: ColorDefs.textBodyBlue20))),
+                              Text('Date', style: ColorDefs.textBodyBlue20))),
                   numeric: false,
                   onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.startTime,
+                      (CalendarResult d) => d.getDateFormatted(),
                       columnIndex,
-                      ascending),
-                ),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Agency',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.agency,
-                        columnIndex,
-                        ascending)),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Prog. #',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.programNum,
-                        columnIndex,
-                        ascending)),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Audit Type',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.auditType,
-                        columnIndex,
-                        ascending)),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Prog. Type',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.programType,
-                        columnIndex,
-                        ascending)),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Auditor',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.auditor,
-                        columnIndex,
-                        ascending)),
-                DataColumn(
-                    label: Expanded(
-                        child: Center(
-                            child: Text('Status',
-                                style: ColorDefs.textBodyBlue20))),
-                    numeric: false,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                        (CalendarResult d) => d.status,
-                        columnIndex,
-                        ascending)),
-              ],
-              source: _calendarResultsDataSource),
+                      ascending)),
+              DataColumn(
+                label: Expanded(
+                    child: Center(
+                        child: Text('Start', style: ColorDefs.textBodyBlue20))),
+                numeric: false,
+                onSort: (int columnIndex, bool ascending) => _sort<String>(
+                    (CalendarResult d) => d.startTime, columnIndex, ascending),
+              ),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child:
+                              Text('Agency', style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.agency, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child: Text('Prog. #',
+                              style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.programNum,
+                      columnIndex,
+                      ascending)),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child: Text('Audit Type',
+                              style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.auditType,
+                      columnIndex,
+                      ascending)),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child: Text('Prog. Type',
+                              style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.programType,
+                      columnIndex,
+                      ascending)),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child: Text('Auditor',
+                              style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.auditor, columnIndex, ascending)),
+              DataColumn(
+                  label: Expanded(
+                      child: Center(
+                          child:
+                              Text('Status', style: ColorDefs.textBodyBlue20))),
+                  numeric: false,
+                  onSort: (int columnIndex, bool ascending) => _sort<String>(
+                      (CalendarResult d) => d.status, columnIndex, ascending)),
+            ],
+          ),
         ),
       ),
     );

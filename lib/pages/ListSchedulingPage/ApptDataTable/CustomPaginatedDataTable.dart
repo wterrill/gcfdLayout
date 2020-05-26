@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 ///
 ///  * [DataTable], which is not paginated.
 ///  * <https://material.io/go/design-data-tables#data-tables-tables-within-cards>
-class PaginatedDataTable2 extends StatefulWidget {
+class CustomPaginatedDataTable extends StatefulWidget {
   /// Creates a widget describing a paginated [DataTable] on a [Card].
   ///
   /// The [header] should give the card's header, typically a [Text] widget. It
@@ -44,14 +44,14 @@ class PaginatedDataTable2 extends StatefulWidget {
   ///
   /// The [source] must not be null. The [source] should be a long-lived
   /// [DataTableSource]. The same source should be provided each time a
-  /// particular [PaginatedDataTable2] widget is created; avoid creating a new
-  /// [DataTableSource] with each new instance of the [PaginatedDataTable2]
+  /// particular [CustomPaginatedDataTable] widget is created; avoid creating a new
+  /// [DataTableSource] with each new instance of the [CustomPaginatedDataTable]
   /// widget unless the data table really is to now show entirely different
   /// data from a new source.
   ///
   /// The [rowsPerPage] and [availableRowsPerPage] must not be null (they
   /// both have defaults, though, so don't have to be specified).
-  PaginatedDataTable2({
+  CustomPaginatedDataTable({
     Key key,
     this.header,
     this.actions,
@@ -208,21 +208,22 @@ class PaginatedDataTable2 extends StatefulWidget {
   /// The data source which provides data to show in each row. Must be non-null.
   ///
   /// This object should generally have a lifetime longer than the
-  /// [PaginatedDataTable2] widget itself; it should be reused each time the
-  /// [PaginatedDataTable2] constructor is called.
+  /// [CustomPaginatedDataTable] widget itself; it should be reused each time the
+  /// [CustomPaginatedDataTable] constructor is called.
   final DataTableSource source;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
 
   @override
-  PaginatedDataTableState createState() => PaginatedDataTableState();
+  CustomPaginatedDataTableState createState() =>
+      CustomPaginatedDataTableState();
 }
 
-/// Holds the state of a [PaginatedDataTable2].
+/// Holds the state of a [CustomPaginatedDataTable].
 ///
 /// The table can be programmatically paged using the [pageTo] method.
-class PaginatedDataTableState extends State<PaginatedDataTable2> {
+class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
@@ -240,7 +241,7 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
   }
 
   @override
-  void didUpdateWidget(PaginatedDataTable2 oldWidget) {
+  void didUpdateWidget(CustomPaginatedDataTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.source != widget.source) {
       oldWidget.source.removeListener(_handleDataSourceChanged);
@@ -309,16 +310,20 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
     bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
-      DataRow row;
-      if (index < _rowCount || _rowCountApproximate) {
-        row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
-        if (row == null && !haveProgressIndicator) {
-          row ??= _getProgressIndicatorRowFor(index);
-          haveProgressIndicator = true;
+      if (index < _rowCount) {
+        // <---
+        // This stops "overflow" rows from appearing on the last page.
+        DataRow row;
+        if (index < _rowCount || _rowCountApproximate) {
+          row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
+          if (row == null && !haveProgressIndicator) {
+            row ??= _getProgressIndicatorRowFor(index);
+            haveProgressIndicator = true;
+          }
         }
-      }
-      row ??= _getBlankRowFor(index);
-      result.add(row);
+        row ??= _getBlankRowFor(index);
+        result.add(row);
+      } // <---
     }
     return result;
   }
@@ -411,11 +416,13 @@ class PaginatedDataTableState extends State<PaginatedDataTable2> {
       Text(
           localizations.pageRowsInfoTitle(
             _firstRowIndex + 1,
-            _firstRowIndex + widget.rowsPerPage,
+            (_firstRowIndex + widget.rowsPerPage <= _rowCount)
+                ? _firstRowIndex + widget.rowsPerPage
+                : _rowCount,
             _rowCount,
             _rowCountApproximate,
           ),
-          style: ColorDefs.textBodyBlue20),
+          style: ColorDefs.textBodyBronze20),
       Container(width: 32.0),
       IconButton(
         icon: const Icon(Icons.chevron_left),

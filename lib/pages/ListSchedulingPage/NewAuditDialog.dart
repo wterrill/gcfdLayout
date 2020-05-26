@@ -21,7 +21,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   TimeOfDay selectedTime = TimeOfDay.now();
   String selectedSiteName;
   String selectedProgramNumber;
-  String auditor;
+  String selectedAuditor = "Select";
+  // String auditor;
 
   List<String> auditTypeDropDownMenu = [
     "Select",
@@ -32,6 +33,13 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
     "Complaint",
     "Follow Up",
     "Grant"
+  ];
+
+  List<String> auditorDropDownMenu = [
+    "Select",
+    "Sarah Connor",
+    "Kyle Reese",
+    "Charlie Chaplin",
   ];
 
   List<String> programTypeDropDownMenu = [
@@ -129,30 +137,37 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                   onTap: () async {
                     DateTime fromCalendar;
                     fromCalendar = await showDatePicker(
+                      helpText: "Select a Date",
+                      cancelText: "Cancel",
+                      confirmText: "Schedule New Audit",
+                      errorFormatText: "errorFormat",
+                      errorInvalidText: "errorInvalidText",
+                      fieldHintText: "fieldHintText",
+                      fieldLabelText: "fieldLabelText",
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030),
-                      builder: (BuildContext context, Widget child) {
-                        return Theme(
-                          data: ThemeData.dark().copyWith(
-                            primaryColor: Colors.yellow, //Color(0xFF8CE7F1),
-                            accentColor: Color(0xFF8CE7F1),
-                            colorScheme:
-                                ColorScheme.dark(primary: Color(0xFF8CE7F1)),
-                            buttonTheme: ButtonThemeData(
-                                textTheme: ButtonTextTheme.primary),
+                      // builder: (BuildContext context, Widget child) {
+                      //   return Theme(
+                      //     data: ThemeData.dark().copyWith(
+                      //       primaryColor: Colors.yellow, //Color(0xFF8CE7F1),
+                      //       accentColor: Color(0xFF8CE7F1),
+                      //       colorScheme:
+                      //           ColorScheme.dark(primary: Color(0xFF8CE7F1)),
+                      //       buttonTheme: ButtonThemeData(
+                      //           textTheme: ButtonTextTheme.primary),
 
-                            brightness: Brightness.dark,
-                            // primaryColor: Colors.lightBlue[800],
-                            // accentColor: Colors.cyan[600],
-                            // fontFamily: 'Georgia',
-                            textTheme:
-                                TextTheme(headline1: ColorDefs.textBodyWhite20),
-                          ),
-                          child: child,
-                        );
-                      },
+                      //       brightness: Brightness.dark,
+                      //       // primaryColor: Colors.lightBlue[800],
+                      //       // accentColor: Colors.cyan[600],
+                      //       // fontFamily: 'Georgia',
+                      //       textTheme:
+                      //           TextTheme(headline1: ColorDefs.textBodyWhite20),
+                      //     ),
+                      //     child: child,
+                      //   );
+                      // },
                     );
 
                     setState(() {
@@ -201,6 +216,36 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 selectedProgramNumber = val[1];
               },
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Auditor",
+                  style: ColorDefs.textBodyBlue20,
+                ),
+                Container(
+                  child: DropdownButton<String>(
+                    isExpanded: false,
+                    value: selectedAuditor ?? "Select",
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: ColorDefs.textBodyBlack20,
+                    underline: Container(
+                      height: 2,
+                      color:
+                          (selectedAuditType == "") ? Colors.red : Colors.green,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        selectedAuditor = newValue;
+                      });
+                    },
+                    items: dropdown(auditorDropDownMenu),
+                  ),
+                ),
+              ],
+            ),
 
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
@@ -234,7 +279,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       'auditType': selectedAuditType,
                       'programNum': selectedProgramNumber,
                       'programType': selectedProgType,
-                      'auditor': "jenny bear",
+                      'auditor': selectedAuditor,
                       'status': "scheduled"
                     });
 
@@ -244,7 +289,6 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 child: Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
               ),
             ),
-            // SizedBox(height: 40),
           ],
         ),
       ),

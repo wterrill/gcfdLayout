@@ -177,12 +177,12 @@ class CalendarResultsDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => _selectedCount;
+  int get selectedRowCount => 0; //_selectedCount;
 
-  void selectAll(bool checked) {
-    for (CalendarResult calendarResult in _calendarResults)
-      calendarResult.selected = checked;
-    _selectedCount = checked ? _calendarResults.length : 0;
-    notifyListeners();
-  }
+  // void selectAll(bool checked) {
+  //   for (CalendarResult calendarResult in _calendarResults)
+  //     calendarResult.selected = checked;
+  //   _selectedCount = checked ? _calendarResults.length : 0;
+  //   notifyListeners();
+  // }
 }
