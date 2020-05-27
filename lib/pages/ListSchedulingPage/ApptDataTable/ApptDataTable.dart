@@ -25,10 +25,12 @@ class ApptDataTable extends StatefulWidget {
 
 class _ApptDataTableState extends State<ApptDataTable> {
   String filterText = "";
+
   CalendarResultsDataSource _calendarResultsDataSource =
       CalendarResultsDataSource([]);
   bool isLoaded = false;
   String lastFilterText = "";
+  bool filterTimeToggle;
   int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
@@ -50,6 +52,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<Map<String, String>> filteredMapCalendarResults =
         filter(mapCalendarResults);
 
+    filteredMapCalendarResults = filterTimeApply(filteredMapCalendarResults);
+
     List<CalendarResult> calendarResults =
         convertResultsToCalendar(filteredMapCalendarResults);
 
@@ -70,10 +74,10 @@ class _ApptDataTableState extends State<ApptDataTable> {
     }
   }
 
-  List<Map<String, String>> filter(List<Map<String, String>> beer) {
+  List<Map<String, String>> filter(List<Map<String, String>> listToFilter) {
     List<Map<String, String>> filteredResults = [];
     if (filterText != "") {
-      for (Map<String, String> result in beer) {
+      for (Map<String, String> result in listToFilter) {
         if (result['agency'].toLowerCase().contains(filterText.toLowerCase())) {
           filteredResults.add(result);
         } else if (result['programNum']
@@ -84,7 +88,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
       }
       return filteredResults;
     }
-    return beer;
+    return listToFilter;
   }
 
   List<CalendarResult> convertResultsToCalendar(
@@ -103,8 +107,34 @@ class _ApptDataTableState extends State<ApptDataTable> {
     }).toList();
   }
 
+  List<DateTime> getTimeRange() {
+    DateTime now = DateTime.now();
+    DateTime future = now.add(Duration(days: 7));
+    DateTime past = now.subtract(Duration(days: 7));
+    return [past, future];
+  }
+
+  List<Map<String, String>> filterTimeApply(
+      List<Map<String, String>> listToFilter) {
+    List<Map<String, String>> filteredResults = [];
+    if (filterTimeToggle) {
+      for (Map<String, String> result in listToFilter) {
+        List<DateTime> range = getTimeRange();
+        var beer = result['startTime'];
+        DateTime resultTime = DateTime.parse(beer);
+        if (resultTime.isAfter(range[0]) && resultTime.isBefore(range[1])) {
+          filteredResults.add(result);
+        }
+      }
+      return filteredResults;
+    }
+    return listToFilter;
+  }
+
   @override
   Widget build(BuildContext context) {
+    filterTimeToggle = Provider.of<ListCalendarData>(context).filterTimeToggle;
+
     lastFilterText =
         Provider.of<ListCalendarData>(context, listen: false).lastFilterValue;
     filterText = Provider.of<ListCalendarData>(context).filterValue;

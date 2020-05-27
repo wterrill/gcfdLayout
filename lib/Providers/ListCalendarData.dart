@@ -14,9 +14,16 @@ class ListCalendarData with ChangeNotifier {
   String lastFilterValue = "";
   List<Map<String, String>> masterEvents;
   bool newEventAdded = false;
+  bool filterTimeToggle = false;
 
   void updateFilterValue(String value) {
     filterValue = value;
+    notifyListeners();
+  }
+
+  void toggleFilterTimeToggle() {
+    filterTimeToggle = !filterTimeToggle;
+    newEventAdded = true;
     notifyListeners();
   }
 

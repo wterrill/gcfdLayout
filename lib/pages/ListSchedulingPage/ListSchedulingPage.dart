@@ -6,6 +6,7 @@ import 'dart:ui';
 // import 'package:auditor/pages/ListSchedulingPage/jsonDataTabledemo.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
+import 'package:auditor/providers/CalendarData.dart';
 // import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 // import 'package:auditor/Definitions/Event.dart';
@@ -41,6 +42,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool filteredTime = Provider.of<ListCalendarData>(context).filterTimeToggle;
     // var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     // backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
     return SafeArea(
@@ -63,81 +65,105 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      FlatButton(
-                                        color: ColorDefs.colorAudit2,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            side: BorderSide(
-                                                color: ColorDefs
-                                                    .colorAlternateDark)),
-                                        onPressed: () {
-                                          // showDialog<void>(
-                                          //   context: context,
-                                          //   builder: (BuildContext context) {
-                                          //     return AlertDialog(
-                                          //       content: StatefulBuilder(
-                                          //         builder: (BuildContext
-                                          //                 context,
-                                          //             StateSetter setState) {
-                                          //           return NewAuditDialog();
-                                          //           // return MyDialog();
-                                          //         },
-                                          //       ),
-                                          //     );
-                                          //   },
-                                          // );
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            24.0, 0, 0, 0),
+                                        child: FlatButton(
+                                          color: ColorDefs.colorAudit2,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                              side: BorderSide(
+                                                  color: ColorDefs
+                                                      .colorDarkBackground)),
+                                          onPressed: () {
+                                            // showDialog<void>(
+                                            //   context: context,
+                                            //   builder: (BuildContext context) {
+                                            //     return AlertDialog(
+                                            //       content: StatefulBuilder(
+                                            //         builder: (BuildContext
+                                            //                 context,
+                                            //             StateSetter setState) {
+                                            //           return NewAuditDialog();
+                                            //           // return MyDialog();
+                                            //         },
+                                            //       ),
+                                            //     );
+                                            //   },
+                                            // );
 
-                                          showGeneralDialog<void>(
-                                              barrierColor:
-                                                  Colors.black.withOpacity(0.5),
-                                              transitionBuilder:
-                                                  (context, a1, a2, widget) {
-                                                return Transform.scale(
-                                                  scale: a1.value,
-                                                  child: Opacity(
-                                                    opacity: a1.value,
-                                                    child: AlertDialog(
-                                                      shape: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      16.0)),
-                                                      title: Text(
-                                                          'Schedule a New Audit:'),
-                                                      content: NewAuditDialog(),
+                                            showGeneralDialog<void>(
+                                                barrierColor: Colors.black
+                                                    .withOpacity(0.5),
+                                                transitionBuilder:
+                                                    (context, a1, a2, widget) {
+                                                  return Transform.scale(
+                                                    scale: a1.value,
+                                                    child: Opacity(
+                                                      opacity: a1.value,
+                                                      child: AlertDialog(
+                                                        shape: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16.0)),
+                                                        title: Text(
+                                                            'Schedule a New Audit:'),
+                                                        content:
+                                                            NewAuditDialog(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                              transitionDuration:
-                                                  Duration(milliseconds: 200),
-                                              barrierDismissible: true,
-                                              barrierLabel: "Beer",
-                                              context: context,
-                                              pageBuilder: (context, animation1,
-                                                  animation2) {
-                                                return Text("Beer?");
-                                              });
-                                        },
-                                        child: Text("Schedule New Audit",
-                                            style: ColorDefs.textBodyWhite20),
+                                                  );
+                                                },
+                                                transitionDuration:
+                                                    Duration(milliseconds: 200),
+                                                barrierDismissible: true,
+                                                barrierLabel: "Beer",
+                                                context: context,
+                                                pageBuilder: (context,
+                                                    animation1, animation2) {
+                                                  return Text("Beer?");
+                                                });
+                                          },
+                                          child: Text("Schedule New Audit",
+                                              style: ColorDefs.textBodyWhite20),
+                                        ),
                                       ),
                                       // SizedBox(width: 10),
-                                      FlatButton(
-                                        color: ColorDefs.colorAudit2,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            side: BorderSide(
-                                                color: ColorDefs
-                                                    .colorAlternateDark)),
-                                        onPressed: () {
-                                          print("Show this week pressed");
-                                          Dialogs.showNotImplemented(context);
-                                        },
-                                        child: Text("Show This Week",
-                                            style: ColorDefs.textBodyWhite20),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: FlatButton(
+                                            color: filteredTime
+                                                ? ColorDefs.colorDarkBackground
+                                                : ColorDefs.colorAudit2,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                  color: filteredTime
+                                                      ? ColorDefs.colorAudit2
+                                                      : ColorDefs
+                                                          .colorDarkBackground,
+                                                )),
+                                            onPressed: () {
+                                              print("Show this week pressed");
+                                              Provider.of<ListCalendarData>(
+                                                      context,
+                                                      listen: false)
+                                                  .toggleFilterTimeToggle();
+                                            },
+                                            child: filteredTime
+                                                ? Text("Show All",
+                                                    style: ColorDefs
+                                                        .textBodyBlue20)
+                                                : Text("Show This Week",
+                                                    style: ColorDefs
+                                                        .textBodyWhite20),
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 40,
