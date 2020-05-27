@@ -1,3 +1,4 @@
+import 'package:auditor/pages/AuditPage/AuditPage.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/second': (context) => ListSchedulingPage(),
+        '/audit': (context) => AuditPage(),
       },
       theme: ThemeData(
         // Define the default brightness and colors.

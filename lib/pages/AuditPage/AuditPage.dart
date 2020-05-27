@@ -24,13 +24,17 @@ class _AuditPageState extends State<AuditPage> {
     bool startAudit = Provider.of<AuditData>(context).auditStarted;
     double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     double mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
-    return IgnorePointer(
-      ignoring: !startAudit,
-      child: AnimatedOpacity(
-        curve: Curves.ease,
-        opacity: startAudit ? 1 : 0,
-        duration: Duration(milliseconds: 250),
-        child: Center(
+    return MaterialApp(
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: Colors.lightBlue[800],
+        accentColor: Colors.cyan[600],
+        fontFamily: 'Georgia',
+        textTheme: TextTheme(),
+      ),
+      home: Scaffold(
+        body: Center(
           child: Container(
               decoration: BoxDecoration(
                   color: ColorDefs.colorTopHeader,
@@ -54,6 +58,7 @@ class _AuditPageState extends State<AuditPage> {
                       onPressed: () {
                         Provider.of<AuditData>(context, listen: false)
                             .toggleStartAudit();
+                        Navigator.of(context).pop();
                       },
                     ),
                   ],
