@@ -2,10 +2,9 @@ import 'package:auditor/Definitions/Site.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/Event.dart';
 // import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/Definitions/siteColorTextColorLookup.dart';
+import 'package:auditor/Definitions/programTypeTextAndColorLookup.dart';
 import 'package:auditor/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
-import 'ExternalDataCalendar.dart';
 
 class CalendarData with ChangeNotifier {
   int todayOverlaySpot;
@@ -231,10 +230,12 @@ class CalendarData with ChangeNotifier {
           message: appointment['message'],
           siteName: appointment['siteName'],
           auditType: appointment['auditType'],
-          color: siteColorTextColorLookup(appointment['auditType'])['color']
-              as Color,
-          textStyle: siteColorTextColorLookup(appointment['auditType'])['text']
-              as TextStyle,
+          color:
+              programTypeTextAndColorLookup(appointment['auditType'])['color']
+                  as Color,
+          textStyle:
+              programTypeTextAndColorLookup(appointment['auditType'])['text']
+                  as TextStyle,
           rowHeight: rowHeight,
           siteInfo: Site(siteName: appointment['siteName']));
       print('event:$event');

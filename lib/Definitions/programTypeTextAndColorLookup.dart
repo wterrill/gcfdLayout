@@ -1,9 +1,37 @@
 // import 'package:flutter/material.dart';
 import 'colorDefs.dart';
+import 'ExternalDataCalendar.dart';
 
-Map<String, dynamic> siteColorTextColorLookup(String site) {
+Map<String, dynamic> programTypeTextAndColorLookup(String site) {
   Map<String, dynamic> endColorText;
   switch (site) {
+    case ("Pantry Audit"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit1,
+        'text': ColorDefs.textBodyWhite20
+      };
+      break;
+
+    case ("Senior Adults Program"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit2,
+        'text': ColorDefs.textBodyBlack20
+      };
+      break;
+
+    case ("Healthy Students Program"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit3,
+        'text': ColorDefs.textBodyWhite20
+      };
+      break;
+
+    case ("Congregate Audit"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit4,
+        'text': ColorDefs.textBodyWhite20
+      };
+      break;
     case ("Audit 1"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit1,
@@ -39,5 +67,6 @@ Map<String, dynamic> siteColorTextColorLookup(String site) {
       };
       break;
   }
+  print(site);
   return endColorText;
 }

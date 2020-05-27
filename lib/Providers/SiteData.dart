@@ -1,7 +1,6 @@
+import 'package:auditor/Definitions/ExternalSiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
-
-import 'ExternalSiteData.dart';
 
 class SiteData with ChangeNotifier {
   List<List<dynamic>> rowsAsListOfValues;

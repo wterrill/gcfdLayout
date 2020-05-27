@@ -1,3 +1,6 @@
+import 'package:auditor/Definitions/Site.dart';
+import 'package:auditor/Definitions/programTypeTextAndColorLookup.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CalendarResult {
@@ -9,6 +12,8 @@ class CalendarResult {
   final String auditor;
   final String status;
   final String message;
+  Color programTypeColor;
+  Site siteInfo = Site();
 
   DateTime startDateTime;
   // String date;
@@ -21,8 +26,12 @@ class CalendarResult {
       this.programType,
       this.auditor,
       this.status,
-      this.message}) {
+      this.message,
+      this.programTypeColor}) {
     startDateTime = DateTime.parse(startTime);
+    var lookup = programTypeTextAndColorLookup(programType);
+    programTypeColor = lookup["color"] as Color;
+    print(programTypeColor);
   }
 
   String getStartTimeFormatted() {

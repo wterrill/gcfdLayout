@@ -1,7 +1,14 @@
+import 'package:auditor/pages/AuditPage/AuditPage.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
+import 'package:provider/provider.dart';
+
+import 'colorDefs.dart';
 
 class Dialogs {
   static void showAlertDialog(BuildContext context) {
@@ -112,6 +119,23 @@ class Dialogs {
       context: context,
       builder: (BuildContext context) {
         return alert;
+      },
+    );
+  }
+
+  static void showAuditInfo(
+      BuildContext context, CalendarResult calendarResult) {
+    showDialog<void>(
+      context: context, //navigatorKey.currentState.overlay.context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Audit Info"),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AuditInfoDialog(calendarResult: calendarResult);
+            },
+          ),
+        );
       },
     );
   }

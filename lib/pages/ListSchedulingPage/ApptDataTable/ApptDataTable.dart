@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/ExternalDataCalendar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +11,6 @@ import 'package:provider/provider.dart';
 import 'CalendarResult.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
-
-import 'package:auditor/providers/ExternalDataCalendar.dart';
 
 class ApptDataTable extends StatefulWidget {
   CalendarResultsDataSource _calendarResultsDataSource =

@@ -1,12 +1,11 @@
+import 'package:auditor/Definitions/ExternalDataCalendar.dart';
 import 'package:auditor/Definitions/Site.dart';
-import 'package:auditor/providers/ExternalDataCalendar.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/Event.dart';
 // import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/Definitions/siteColorTextColorLookup.dart';
+// import 'package:auditor/Definitions/siteColorTextColorLookup.dart';
 import 'package:auditor/utilities/HourStringInt.dart';
 import 'package:intl/intl.dart';
-import 'ExternalDataCalendar.dart';
 
 class ListCalendarData with ChangeNotifier {
   bool initialized = false;

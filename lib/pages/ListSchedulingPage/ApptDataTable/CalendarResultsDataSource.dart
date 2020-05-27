@@ -38,66 +38,10 @@ class CalendarResultsDataSource extends DataTableSource {
         index: index,
         selected: calendarResult.selected,
         onSelectChanged: (bool value) {
+          print(value);
           print(calendarResult.agency);
-
-          // showDialog<void>(
-          //   barrierDismissible: true,
-          //   context: navigatorKey.currentState.overlay.context,
-          //   builder: (BuildContext context) {
-          //     return Material(
-          //       child: Text(
-          //           "agency: ${calendarResult.agency}, ${calendarResult.auditType}, ${calendarResult.programType}, ${calendarResult.programNum}, ${calendarResult.auditor}"),
-          //     );
-          //   },
-          // );
-
-          showDialog<void>(
-            context: navigatorKey.currentState.overlay.context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                    return Material(
-                      child: Column(
-                        children: [
-                          FlatButton(
-                            color: ColorDefs.colorAudit2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: ColorDefs.colorAlternateDark)),
-                            onPressed: () {
-                              print("Begin Audit pressed");
-                              Provider.of<AuditData>(context, listen: false)
-                                  .toggleStartAudit();
-
-                              Navigator.push<dynamic>(
-                                context,
-                                MaterialPageRoute<dynamic>(
-                                    builder: (context) => AuditPage()),
-                              );
-                            },
-                            child: Text("Begin Audit",
-                                style: ColorDefs.textBodyWhite20),
-                          ),
-                          Text(
-                              "agency: ${calendarResult.agency}, ${calendarResult.auditType}, ${calendarResult.programType}, ${calendarResult.programNum}, ${calendarResult.auditor}"),
-                        ],
-                      ),
-                    );
-                    // return MyDialog();
-                  },
-                ),
-              );
-            },
-          );
-
-          // if (calendarResult.selected != value) {
-          //   _selectedCount += value ? 1 : -1;
-          //   assert(_selectedCount >= 0);
-          //   calendarResult.selected = value;
-          //   notifyListeners();
-          // }
+          Dialogs.showAuditInfo(
+              navigatorKey.currentState.overlay.context, calendarResult);
         },
         cells: <DataCell>[
           DataCell(Container(
