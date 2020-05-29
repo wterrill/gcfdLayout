@@ -15,18 +15,18 @@ List<String> sites = [
 
 List<String> auditTypes = [
   "Annual",
-  "Bi-annual",
+  "Bi-Annual",
   "Complaint",
   "Grant",
   "CEDA",
   "Food Rescue",
-  "Follow up"
+  "Follow Up"
 ];
 
 List<String> programTypes = [
   "Pantry Audit",
   "Senior Adults Program",
-  "Healthy Students Program",
+  "Healthy Student Market",
   "Congregate Audit"
 ];
 

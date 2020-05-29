@@ -1,6 +1,7 @@
 import 'package:auditor/pages/AuditPage/AuditPage.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -138,5 +139,60 @@ class Dialogs {
         );
       },
     );
+  }
+
+  static void showScheduledAudit(
+    BuildContext context,
+  ) {
+    showGeneralDialog<void>(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: Text('Schedule a New Audit:'),
+                content: NewAuditDialog(),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: "Beer",
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return Text("Beer?");
+        });
+  }
+
+  static void showRescheduleAudit(
+      BuildContext context, CalendarResult calendarResult) {
+    showGeneralDialog<void>(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: Text('Reschedule this Audit:'),
+                content: NewAuditDialog(calendarResult: calendarResult),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: "Beer",
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return Text("Beer?");
+        });
   }
 }

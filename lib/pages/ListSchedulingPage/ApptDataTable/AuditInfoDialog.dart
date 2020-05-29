@@ -48,6 +48,30 @@ class AuditInfoDialog extends StatelessWidget {
                                 style: ColorDefs.textBodyWhite15)),
                       ),
                       Container(
+                        // Audit Type
+                        color: Colors.black,
+                        child: Center(
+                            child: AutoSizeText(
+                                'Program Number: ${calendarResult.programNum}',
+                                style: ColorDefs.textBodyWhite15)),
+                      ),
+                      Container(
+                        // Audit Type
+                        color: Colors.black,
+                        child: Center(
+                            child: AutoSizeText(
+                                'Auditor: ${calendarResult.programType}',
+                                style: ColorDefs.textBodyWhite15)),
+                      ),
+                      Container(
+                        // Audit Type
+                        color: Colors.black,
+                        child: Center(
+                            child: AutoSizeText(
+                                'Status: ${calendarResult.status}',
+                                style: ColorDefs.textBodyWhite15)),
+                      ),
+                      Container(
                         color: Colors.black,
                         child: Center(
                             // time
@@ -193,7 +217,8 @@ class AuditInfoDialog extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0)),
                               onPressed: () {
-                                Dialogs.showNotImplemented(context);
+                                Dialogs.showRescheduleAudit(
+                                    context, calendarResult);
                               },
                               child: AutoSizeText('Reschedule Audit',
                                   style: ColorDefs.textBodyBronze20),
@@ -205,8 +230,6 @@ class AuditInfoDialog extends StatelessWidget {
                   ),
                 ),
               ])),
-          Text(
-              "agency: ${calendarResult.agency}, ${calendarResult.auditType}, ${calendarResult.programType}, ${calendarResult.programNum}, ${calendarResult.auditor}"),
         ],
       ),
     );

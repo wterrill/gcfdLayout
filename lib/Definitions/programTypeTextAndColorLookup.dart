@@ -19,7 +19,7 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
       };
       break;
 
-    case ("Healthy Students Program"):
+    case ("Healthy Student Market"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit3,
         'text': ColorDefs.textBodyWhite20

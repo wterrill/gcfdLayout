@@ -77,54 +77,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                   color: ColorDefs
                                                       .colorDarkBackground)),
                                           onPressed: () {
-                                            // showDialog<void>(
-                                            //   context: context,
-                                            //   builder: (BuildContext context) {
-                                            //     return AlertDialog(
-                                            //       content: StatefulBuilder(
-                                            //         builder: (BuildContext
-                                            //                 context,
-                                            //             StateSetter setState) {
-                                            //           return NewAuditDialog();
-                                            //           // return MyDialog();
-                                            //         },
-                                            //       ),
-                                            //     );
-                                            //   },
-                                            // );
-
-                                            showGeneralDialog<void>(
-                                                barrierColor: Colors.black
-                                                    .withOpacity(0.5),
-                                                transitionBuilder:
-                                                    (context, a1, a2, widget) {
-                                                  return Transform.scale(
-                                                    scale: a1.value,
-                                                    child: Opacity(
-                                                      opacity: a1.value,
-                                                      child: AlertDialog(
-                                                        shape: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16.0)),
-                                                        title: Text(
-                                                            'Schedule a New Audit:'),
-                                                        content:
-                                                            NewAuditDialog(),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                transitionDuration:
-                                                    Duration(milliseconds: 200),
-                                                barrierDismissible: true,
-                                                barrierLabel: "Beer",
-                                                context: context,
-                                                pageBuilder: (context,
-                                                    animation1, animation2) {
-                                                  return Text("Beer?");
-                                                });
+                                            Dialogs.showScheduledAudit(context);
                                           },
                                           child: Text("Schedule New Audit",
                                               style: ColorDefs.textBodyWhite20),

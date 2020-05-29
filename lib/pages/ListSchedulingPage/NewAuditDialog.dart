@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'ApptDataTable/CalendarResult.dart';
 import 'LookAhead.dart';
 
 class NewAuditDialog extends StatefulWidget {
-  NewAuditDialog({Key key}) : super(key: key);
+  CalendarResult calendarResult;
+  NewAuditDialog({Key key, this.calendarResult}) : super(key: key);
 
   @override
   _NewAuditDialogState createState() => _NewAuditDialogState();
@@ -22,7 +24,24 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   String selectedSiteName;
   String selectedProgramNumber;
   String selectedAuditor = "Select";
+  bool alreadyExisted = false;
   // String auditor;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.calendarResult != null) {
+      this.selectedAuditType = widget.calendarResult.auditType;
+      this.selectedProgType = widget.calendarResult.programType;
+      this.selectedDate = widget.calendarResult.startDateTime;
+      this.selectedTime =
+          TimeOfDay.fromDateTime(widget.calendarResult.startDateTime);
+      this.selectedSiteName = widget.calendarResult.agency;
+      this.selectedProgramNumber = widget.calendarResult.programNum;
+      this.selectedAuditor = widget.calendarResult.auditor;
+      alreadyExisted = true;
+    }
+  }
 
   List<String> auditTypeDropDownMenu = [
     "Select",
@@ -75,6 +94,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            LookAhead(
+              lookAheadCallback: (List<String> val) {
+                selectedSiteName = val[1];
+                selectedProgramNumber = val[1];
+              },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -105,6 +130,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 ),
               ],
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -129,6 +155,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 ),
               ],
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -210,12 +237,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
             ),
 
             ////////////////////////
-            LookAhead(
-              lookAheadCallback: (List<String> val) {
-                selectedSiteName = val[1];
-                selectedProgramNumber = val[1];
-              },
-            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -259,6 +281,10 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     _formKey.currentState.save();
                     print(selectedDate);
                     print(selectedTime.format(context).toString());
+                    if (alreadyExisted) {
+                      Provider.of<ListCalendarData>(context, listen: false)
+                          .deleteCalendarResult(widget.calendarResult);
+                    }
 
                     // TimeOfDay t;
                     // final now = new DateTime.now();
@@ -284,11 +310,75 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     });
 
                     Navigator.of(context).pop();
+                    if (alreadyExisted) {
+                      Navigator.of(context).pop();
+                    }
                   }
                 },
-                child: Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
+                child: alreadyExisted
+                    ? Text("Re-Schedule Audit", style: ColorDefs.textBodyBlue20)
+                    : Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
               ),
             ),
+
+            if (alreadyExisted)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                child: FlatButton(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: ColorDefs.colorAudit5)),
+                    onPressed: () async {
+                      bool result = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Confirmation'),
+                            content: Text(
+                                'Do you want to delete this Scheduled Audit?'),
+                            actions: <Widget>[
+                              new FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true).pop(
+                                      false); // dismisses only the dialog and returns false
+                                },
+                                child: Text('Cancel'),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true).pop(
+                                      true); // dismisses only the dialog and returns true
+                                },
+                                child: Text('Yes'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      if (result) {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          print(selectedDate);
+                          print(selectedTime.format(context).toString());
+
+                          Provider.of<ListCalendarData>(context, listen: false)
+                              .deleteCalendarResult(widget.calendarResult);
+
+                          Navigator.of(context).pop();
+                          if (alreadyExisted) {
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      } else {
+                        Navigator.of(context)
+                            .pop(); // dismisses the entire widget
+                      }
+                    },
+                    child:
+                        Text("Delete Audit", style: ColorDefs.textBodyBlue20)),
+              ),
           ],
         ),
       ),
