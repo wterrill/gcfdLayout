@@ -1,5 +1,24 @@
-class Site {
+import 'package:hive/hive.dart';
+
+part 'Site.g.dart';
+
+@HiveType(typeId: 3)
+class Site extends HiveObject {
+  @HiveField(0)
   String siteName;
+  @HiveField(1)
+  String addressStreet;
+  @HiveField(2)
+  String city;
+  @HiveField(3)
+  String state;
+  @HiveField(4)
+  String zip;
+  @HiveField(5)
+  String phone;
+  @HiveField(6)
+  String hoursOfOperation;
+
   Site({this.siteName}) {
     this.siteName = "Manna";
     int index = sites.indexOf(siteName);
@@ -10,13 +29,6 @@ class Site {
     hoursOfOperation = hoursOfOperations[index];
     addressStreet = addressStreets[index];
   }
-
-  String addressStreet;
-  String city;
-  String state;
-  String zip;
-  String phone;
-  String hoursOfOperation;
 }
 
 List<String> sites = [

@@ -43,7 +43,7 @@ SPEC CHECKSUMS:
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545
   flutter_pdf_viewer: c9a114aa98a9466325a3a27b3b360b3fd7bf581c
-  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   plugin_scaffold: e7c52bc1cfb6e672959f798dfc9dea8dff55daeb
 

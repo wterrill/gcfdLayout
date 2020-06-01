@@ -3,19 +3,34 @@ import 'package:auditor/Definitions/programTypeTextAndColorLookup.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CalendarResult {
+import 'package:hive/hive.dart';
+part 'CalendarResult.g.dart';
+
+@HiveType(typeId: 1)
+class CalendarResult extends HiveObject {
+  @HiveField(0)
   final String startTime;
+  @HiveField(1)
   final String agency;
+  @HiveField(2)
   final String auditType;
+  @HiveField(3)
   final String programNum;
+  @HiveField(4)
   final String programType;
+  @HiveField(5)
   final String auditor;
+  @HiveField(6)
   final String status;
+  @HiveField(7)
   final String message;
+  @HiveField(8)
   Color programTypeColor;
+  @HiveField(9)
+  DateTime startDateTime;
+  @HiveField(10)
   Site siteInfo = Site();
 
-  DateTime startDateTime;
   // String date;
 
   CalendarResult(

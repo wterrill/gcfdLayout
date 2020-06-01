@@ -1,4 +1,6 @@
 import 'package:auditor/pages/AuditPage/AuditPage.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ColorAdapter.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
@@ -14,7 +16,9 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'Definitions/Site.dart';
 import 'pages/developer/hiveTest/Contact.dart';
+import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -27,6 +31,9 @@ void main() async {
     Hive.init(appDocumentDirectory.path as String);
   }
   Hive.registerAdapter(ContactAdapter());
+  Hive.registerAdapter(CalendarResultAdapter());
+  Hive.registerAdapter(ColorAdapter());
+  Hive.registerAdapter(SiteAdapter());
 
   runApp(
     MultiProvider(

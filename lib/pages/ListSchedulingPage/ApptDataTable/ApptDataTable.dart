@@ -2,15 +2,32 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import 'CalendarResult.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
+
+// FutureBuilder<String>(
+//   future: _calculation, // a Future<String> or null
+//   builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+//     switch (snapshot.connectionState) {
+//       case ConnectionState.none: return new Text('Press button to start');
+//       case ConnectionState.waiting: return new Text('Awaiting result...');
+//       default:
+//         if (snapshot.hasError)
+//           return new Text('Error: ${snapshot.error}');
+//         else
+//           return new Text('Result: ${snapshot.data}');
+//     }
+//   },
+// )
 
 class ApptDataTable extends StatefulWidget {
   CalendarResultsDataSource _calendarResultsDataSource =
@@ -21,16 +38,33 @@ class ApptDataTable extends StatefulWidget {
 }
 
 class _ApptDataTableState extends State<ApptDataTable> {
+  @override
+  void initState() {
+    super.initState();
+    initHive();
+  }
+
+  void initHive() {
+    Hive.openBox<CalendarResult>('calendar').then((value) {
+      print("in .then() for initialized");
+      initialized = true;
+      print(value);
+      setState(() {});
+    });
+  }
+
   String filterText = "";
 
   CalendarResultsDataSource _calendarResultsDataSource =
       CalendarResultsDataSource([]);
+
   bool isLoaded = false;
   String lastFilterText = "";
   bool filterTimeToggle;
   int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
+  bool initialized = false;
 
   void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex,
       bool ascending) {
@@ -90,7 +124,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
 
   List<CalendarResult> convertResultsToCalendar(
       List<Map<String, String>> mapCalendarResults) {
-    return mapCalendarResults.map((result) {
+    List<CalendarResult> results;
+    results = mapCalendarResults.map((result) {
       return CalendarResult(
         startTime: result['startTime'],
         agency: result['agency'],
@@ -102,6 +137,22 @@ class _ApptDataTableState extends State<ApptDataTable> {
         message: result['message'],
       );
     }).toList();
+
+    if (initialized) {
+      Box box = Hive.box<CalendarResult>('calendar');
+      // var beer = box.get('results');
+      var beer = box.get(0);
+
+      if (beer != null) {
+        results = box.values.toList();
+      } else {
+        for (var result in results) {
+          box.add(result);
+        }
+      }
+    }
+
+    return results;
   }
 
   List<DateTime> getTimeRange() {
@@ -138,121 +189,126 @@ class _ApptDataTableState extends State<ApptDataTable> {
     print("building paginated data table");
     getData();
     print("BUILD PAGINATEDDATATABLE2");
-    return Expanded(
-      child: Container(
-        color: ColorDefs.colorTimeBackground,
-        child: SingleChildScrollView(
-          child: CustomPaginatedDataTable(
-            onPageChanged: (value) {
-              // print("onPageChanged value: $value");
-              // print(
-              //     'onPageChanged _calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}');
-              // print('_rowsPerPage: $_rowsPerPage');
-              // if (value + _rowsPerPage > _calendarResultsDataSource.rowCount) {
-              //   print(
-              //       "adjust!!!! to: ${_calendarResultsDataSource.rowCount - value}");
-              //   _rowsPerPage = _calendarResultsDataSource.rowCount - value;
-              //   print(_rowsPerPage);
-              //   // setState(() {});
-              //   // _normalRowPerPage =
-              // }
-            },
-            source: _calendarResultsDataSource,
-            showCheckboxColumn: false,
-            headingRowHeight: 70,
-            rowsPerPage: _rowsPerPage,
-            onRowsPerPageChanged: (int value) {
-              setState(() {
-                print("value: $value");
-                print(
-                    "_calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}");
-                _rowsPerPage = value;
-                print(_rowsPerPage);
-              });
-            },
-            sortColumnIndex: _sortColumnIndex,
-            sortAscending: _sortAscending,
-            // onSelectAll: _calendarResultsDataSource.selectAll,
-            columnSpacing: 0,
-            dataRowHeight: 50,
-            horizontalMargin: 0,
-            columns: <DataColumn>[
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child:
-                              Text('Date', style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.getDateFormatted(),
-                      columnIndex,
-                      ascending)),
-              DataColumn(
-                label: Expanded(
-                    child: Center(
-                        child: Text('Start', style: ColorDefs.textBodyBlue20))),
-                numeric: false,
-                onSort: (int columnIndex, bool ascending) => _sort<String>(
-                    (CalendarResult d) => d.startTime, columnIndex, ascending),
+    return !initialized
+        ? (Text("Initializing"))
+        : Expanded(
+            child: Container(
+              color: ColorDefs.colorTimeBackground,
+              child: SingleChildScrollView(
+                child: CustomPaginatedDataTable(
+                  onPageChanged: (value) {
+                    // print("onPageChanged value: $value");
+                    // print(
+                    //     'onPageChanged _calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}');
+                    // print('_rowsPerPage: $_rowsPerPage');
+                    // if (value + _rowsPerPage > _calendarResultsDataSource.rowCount) {
+                    //   print(
+                    //       "adjust!!!! to: ${_calendarResultsDataSource.rowCount - value}");
+                    //   _rowsPerPage = _calendarResultsDataSource.rowCount - value;
+                    //   print(_rowsPerPage);
+                    //   // setState(() {});
+                    //   // _normalRowPerPage =
+                    // }
+                  },
+                  source: _calendarResultsDataSource,
+                  showCheckboxColumn: false,
+                  headingRowHeight: 70,
+                  rowsPerPage: _rowsPerPage,
+                  onRowsPerPageChanged: (int value) {
+                    setState(() {
+                      print("value: $value");
+                      print(
+                          "_calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}");
+                      _rowsPerPage = value;
+                      print(_rowsPerPage);
+                    });
+                  },
+                  sortColumnIndex: _sortColumnIndex,
+                  sortAscending: _sortAscending,
+                  // onSelectAll: _calendarResultsDataSource.selectAll,
+                  columnSpacing: 0,
+                  dataRowHeight: 50,
+                  horizontalMargin: 0,
+                  columns: <DataColumn>[
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Date',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>(
+                                (CalendarResult d) => d.getDateFormatted(),
+                                columnIndex,
+                                ascending)),
+                    DataColumn(
+                      label: Expanded(
+                          child: Center(
+                              child: Text('Start',
+                                  style: ColorDefs.textBodyBlue20))),
+                      numeric: false,
+                      onSort: (int columnIndex, bool ascending) =>
+                          _sort<String>((CalendarResult d) => d.startTime,
+                              columnIndex, ascending),
+                    ),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Agency',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.agency,
+                                columnIndex, ascending)),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Prog. #',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.programNum,
+                                columnIndex, ascending)),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Audit Type',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.auditType,
+                                columnIndex, ascending)),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Prog. Type',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.programType,
+                                columnIndex, ascending)),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Auditor',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.auditor,
+                                columnIndex, ascending)),
+                    DataColumn(
+                        label: Expanded(
+                            child: Center(
+                                child: Text('Status',
+                                    style: ColorDefs.textBodyBlue20))),
+                        numeric: false,
+                        onSort: (int columnIndex, bool ascending) =>
+                            _sort<String>((CalendarResult d) => d.status,
+                                columnIndex, ascending)),
+                  ],
+                ),
               ),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child:
-                              Text('Agency', style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.agency, columnIndex, ascending)),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child: Text('Prog. #',
-                              style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.programNum,
-                      columnIndex,
-                      ascending)),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child: Text('Audit Type',
-                              style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.auditType,
-                      columnIndex,
-                      ascending)),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child: Text('Prog. Type',
-                              style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.programType,
-                      columnIndex,
-                      ascending)),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child: Text('Auditor',
-                              style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.auditor, columnIndex, ascending)),
-              DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child:
-                              Text('Status', style: ColorDefs.textBodyBlue20))),
-                  numeric: false,
-                  onSort: (int columnIndex, bool ascending) => _sort<String>(
-                      (CalendarResult d) => d.status, columnIndex, ascending)),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

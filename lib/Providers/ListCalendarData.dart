@@ -16,6 +16,21 @@ class ListCalendarData with ChangeNotifier {
   bool newEventAdded = false;
   bool filterTimeToggle = false;
 
+  ListCalendarData() {
+    initializeApp();
+    initializeNewCalendar();
+  }
+
+  void initializeApp() {
+    masterEvents = masterDayEvents;
+    print("initialized CalendarData Provider... using Event");
+  }
+
+////////////////// Data Fetch, Data Save Operations
+
+void fetchData(){}
+
+////////////////// Calendar Operations
   void deleteCalendarResult(CalendarResult calendarResult) {
     for (var i = 0; i < masterEvents.length; i++) {
       if (masterEvents[i]['startTime'] == calendarResult.startTime &&
@@ -43,20 +58,10 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  ListCalendarData() {
-    initializeApp();
-    initializeNewCalendar();
-  }
-
   void initializeNewCalendar() {
     initialized = true;
     print("new notifying listeners");
     notifyListeners();
-  }
-
-  void initializeApp() {
-    masterEvents = masterDayEvents;
-    print("initialized CalendarData Provider... using Event");
   }
 
   void addEvent(Map<String, String> event) {
