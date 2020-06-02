@@ -96,7 +96,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
           children: <Widget>[
             LookAhead(
               lookAheadCallback: (List<String> val) {
-                selectedSiteName = val[1];
+                selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
               },
             ),
@@ -166,7 +166,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     fromCalendar = await showDatePicker(
                       helpText: "Select a Date",
                       cancelText: "Cancel",
-                      confirmText: "Schedule New Audit",
+                      confirmText: "Confirm",
                       errorFormatText: "errorFormat",
                       errorInvalidText: "errorInvalidText",
                       fieldHintText: "fieldHintText",
@@ -297,8 +297,21 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     print(selectedDateTime.toString());
                     print(selectedSiteName);
                     print(selectedProgramNumber);
+
+                    // Provider.of<ListCalendarData>(context, listen: false)
+                    //     .addEvent({
+                    //   'startTime': selectedDateTime.toString(),
+                    //   'message': '',
+                    //   'agency': selectedSiteName,
+                    //   'auditType': selectedAuditType,
+                    //   'programNum': selectedProgramNumber,
+                    //   'programType': selectedProgType,
+                    //   'auditor': selectedAuditor,
+                    //   'status': "scheduled"
+                    // });
+
                     Provider.of<ListCalendarData>(context, listen: false)
-                        .addEvent({
+                        .addBoxEvent({
                       'startTime': selectedDateTime.toString(),
                       'message': '',
                       'agency': selectedSiteName,

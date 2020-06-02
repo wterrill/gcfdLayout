@@ -39,20 +39,6 @@ class ApptDataTable extends StatefulWidget {
 
 class _ApptDataTableState extends State<ApptDataTable> {
   @override
-  void initState() {
-    super.initState();
-    initHive();
-  }
-
-  void initHive() {
-    Hive.openBox<CalendarResult>('calendar').then((value) {
-      print("in .then() for initialized");
-      initialized = true;
-      print(value);
-      setState(() {});
-    });
-  }
-
   String filterText = "";
 
   CalendarResultsDataSource _calendarResultsDataSource =
@@ -64,7 +50,6 @@ class _ApptDataTableState extends State<ApptDataTable> {
   int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
-  bool initialized = false;
 
   void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex,
       bool ascending) {
@@ -77,16 +62,18 @@ class _ApptDataTableState extends State<ApptDataTable> {
 
   void getData() {
     print("entered getData");
-    final mapCalendarResults =
-        Provider.of<ListCalendarData>(context).masterEvents;
+    Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
+    List<CalendarResult> calendarResults = [];
+    if (calendarBox != null) {
+      calendarResults = calendarBox.values.toList() as List<CalendarResult>;
+    }
 
-    List<Map<String, String>> filteredMapCalendarResults =
-        filter(mapCalendarResults);
+    List<CalendarResult> filteredCalendarResults = filter(calendarResults);
 
-    filteredMapCalendarResults = filterTimeApply(filteredMapCalendarResults);
+    calendarResults = filterTimeApply(filteredCalendarResults);
 
-    List<CalendarResult> calendarResults =
-        convertResultsToCalendar(filteredMapCalendarResults);
+    // List<CalendarResult> calendarResults =
+    //     convertResultsToCalendar(filteredMapCalendarResults);
 
     bool firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent = !isLoaded ||
         (lastFilterText != filterText && filterText != "") ||
@@ -105,13 +92,13 @@ class _ApptDataTableState extends State<ApptDataTable> {
     }
   }
 
-  List<Map<String, String>> filter(List<Map<String, String>> listToFilter) {
-    List<Map<String, String>> filteredResults = [];
+  List<CalendarResult> filter(List<CalendarResult> listToFilter) {
+    List<CalendarResult> filteredResults = [];
     if (filterText != "") {
-      for (Map<String, String> result in listToFilter) {
-        if (result['agency'].toLowerCase().contains(filterText.toLowerCase())) {
+      for (CalendarResult result in listToFilter) {
+        if (result.agency.toLowerCase().contains(filterText.toLowerCase())) {
           filteredResults.add(result);
-        } else if (result['programNum']
+        } else if (result.programNum
             .toLowerCase()
             .contains(filterText.toLowerCase())) {
           filteredResults.add(result);
@@ -122,55 +109,22 @@ class _ApptDataTableState extends State<ApptDataTable> {
     return listToFilter;
   }
 
-  List<CalendarResult> convertResultsToCalendar(
-      List<Map<String, String>> mapCalendarResults) {
-    List<CalendarResult> results;
-    results = mapCalendarResults.map((result) {
-      return CalendarResult(
-        startTime: result['startTime'],
-        agency: result['agency'],
-        auditType: result['auditType'],
-        programNum: result['programNum'],
-        programType: result['programType'],
-        auditor: result['auditor'],
-        status: result['status'],
-        message: result['message'],
-      );
-    }).toList();
-
-    if (initialized) {
-      Box box = Hive.box<CalendarResult>('calendar');
-      // var beer = box.get('results');
-      var beer = box.get(0);
-
-      if (beer != null) {
-        results = box.values.toList();
-      } else {
-        for (var result in results) {
-          box.add(result);
-        }
-      }
-    }
-
-    return results;
-  }
-
-  List<DateTime> getTimeRange() {
+  Map<String, DateTime> getTimeRange() {
     DateTime now = DateTime.now();
     DateTime future = now.add(Duration(days: 7));
     DateTime past = now.subtract(Duration(days: 7));
-    return [past, future];
+    return {'past': past, 'future': future};
   }
 
-  List<Map<String, String>> filterTimeApply(
-      List<Map<String, String>> listToFilter) {
-    List<Map<String, String>> filteredResults = [];
+  List<CalendarResult> filterTimeApply(List<CalendarResult> listToFilter) {
+    List<CalendarResult> filteredResults = [];
+
     if (filterTimeToggle) {
-      for (Map<String, String> result in listToFilter) {
-        List<DateTime> range = getTimeRange();
-        var beer = result['startTime'];
-        DateTime resultTime = DateTime.parse(beer);
-        if (resultTime.isAfter(range[0]) && resultTime.isBefore(range[1])) {
+      Map<String, DateTime> range = getTimeRange();
+      for (CalendarResult result in listToFilter) {
+        DateTime resultTime = result.startDateTime;
+        if (resultTime.isAfter(range['past']) &&
+            resultTime.isBefore(range['future'])) {
           filteredResults.add(result);
         }
       }
@@ -181,6 +135,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
 
   @override
   Widget build(BuildContext context) {
+    bool initialized = Provider.of<ListCalendarData>(context).initialized;
     filterTimeToggle = Provider.of<ListCalendarData>(context).filterTimeToggle;
 
     lastFilterText =
@@ -190,7 +145,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
     getData();
     print("BUILD PAGINATEDDATATABLE2");
     return !initialized
-        ? (Text("Initializing"))
+        ? (Text("Initializing..."))
         : Expanded(
             child: Container(
               color: ColorDefs.colorTimeBackground,

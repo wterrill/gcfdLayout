@@ -2,8 +2,8 @@ analyzer:
   # enable-experiment:
   #   - non-nullable
   strong-mode:
-    implicit-casts: true
-    implicit-dynamic: true
+    implicit-casts: false
+    implicit-dynamic: false
   errors:
       missing_return: error
       missing_required_param: error
