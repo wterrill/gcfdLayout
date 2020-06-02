@@ -23,7 +23,7 @@ class ListCalendarData with ChangeNotifier {
 
   ListCalendarData() {
     initializeApp();
-    initializeNewCalendar();
+    // initializeNewCalendar();
   }
 
   void initializeApp() {
@@ -77,18 +77,24 @@ class ListCalendarData with ChangeNotifier {
 
 ////////////////// Calendar Operations
   void deleteCalendarResult(CalendarResult calendarResult) {
-    for (var i = 0; i < masterEvents.length; i++) {
-      if (masterEvents[i]['startTime'] == calendarResult.startTime &&
-          masterEvents[i]['agency'] == calendarResult.agency &&
-          masterEvents[i]['auditType'] == calendarResult.auditType &&
-          masterEvents[i]['programNum'] == calendarResult.programNum &&
-          masterEvents[i]['programType'] == calendarResult.programType &&
-          masterEvents[i]['auditor'] == calendarResult.auditor &&
-          masterEvents[i]['status'] == calendarResult.status) {
-        masterEvents.removeAt(i);
-      }
-    }
+    calendarBox.delete(
+        '${calendarResult.startTime}-${calendarResult.agency}-${calendarResult.programNum}-${calendarResult.auditor}');
+    // for (var i = 0; i < calendarBox.values.length; i++) {
+    //   CalendarResult value = calendarBox.get(i) as CalendarResult;
+    //   if (value == null) {
+    //     print("space in calendarBox at: $i");
+    //   } else if (value.startTime == calendarResult.startTime &&
+    //       value.agency == calendarResult.agency &&
+    //       value.auditType == calendarResult.auditType &&
+    //       value.programNum == calendarResult.programNum &&
+    //       value.programType == calendarResult.programType &&
+    //       value.auditor == calendarResult.auditor &&
+    //       value.status == calendarResult.status) {
+    //     calendarBox.delete(i);
+    //   }
+    // }
     newEventAdded = true;
+    // calendarBox.compact();
     notifyListeners();
   }
 
@@ -103,23 +109,27 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  void initializeNewCalendar() {
-    // initialized = true;
-    // print("new notifying listeners");
-    // notifyListeners();
-  }
+  // void initializeNewCalendar() {
+  // initialized = true;
+  // print("new notifying listeners");
+  // notifyListeners();
+  // }
 
-  void addEvent(Map<String, String> event) {
-    masterEvents.add(event);
-    newEventAdded = true;
-    notifyListeners();
-  }
+  // void addEvent(Map<String, String> event) {
+  //   masterEvents.add(event);
+  //   newEventAdded = true;
+  //   notifyListeners();
+  // }
 
   void addBoxEvent(Map<String, String> event) {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
-    calendarBox.add(newEvent);
-    calEventToBeSent.add(anotherEvent);
+    calendarBox.put(
+        '${newEvent.startTime}-${newEvent.agency}-${newEvent.programNum}-${newEvent.auditor}',
+        newEvent);
+    calEventToBeSent.put(
+        '${anotherEvent.startTime}-${anotherEvent.agency}-${anotherEvent.programNum}-${anotherEvent.auditor}',
+        anotherEvent);
     newEventAdded = true;
     notifyListeners();
   }
