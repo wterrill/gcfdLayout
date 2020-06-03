@@ -1,3 +1,9 @@
+List<String> auditors = [
+  "Sarah Connor",
+  "Kyle Reese",
+  "Charlie Chaplin",
+];
+
 List<String> sites = [
   "Manna",
   "Marillac House",
@@ -14,19 +20,20 @@ List<String> sites = [
 ];
 
 List<String> auditTypes = [
+  "Select",
   "Annual",
+  "Food Rescue",
+  "CEDA",
   "Bi-Annual",
   "Complaint",
-  "Grant",
-  "CEDA",
-  "Food Rescue",
-  "Follow Up"
+  "Follow Up",
+  "Grant"
 ];
 
 List<String> programTypes = [
-  "Pantry Audit",
-  "Senior Adults Program",
   "Healthy Student Market",
+  "Senior Adults Program",
+  "Pantry Audit",
   "Congregate Audit"
 ];
 
