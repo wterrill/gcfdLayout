@@ -50,11 +50,15 @@ class CalendarResult extends HiveObject {
   }
 
   String getStartTimeFormatted() {
-    return DateFormat.Hm().format(startDateTime).toString();
+    return DateFormat.jm().format(startDateTime).toString();
   }
 
   String getDateFormatted() {
     return DateFormat('MM-dd-yyyy').format(startDateTime).toString();
+  }
+
+  String getDateTimeFormatted() {
+    return DateFormat('dd-MM-yyyy HH:mm').format(startDateTime).toString();
   }
 
   bool selected = false;

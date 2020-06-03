@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -32,8 +33,7 @@ class _LookAheadState extends State<LookAhead> {
               //     .style
               //     .copyWith(fontStyle: FontStyle.italic),
               decoration: InputDecoration(
-                labelText:
-                    'Enter part of agency name or program number to search',
+                labelText: 'Enter agency name or program number',
                 border: OutlineInputBorder(),
                 suffixIcon: IconButton(
                   onPressed: () => _typeAheadController.clear(),
@@ -59,14 +59,35 @@ class _LookAheadState extends State<LookAhead> {
             });
             return subsubsites;
           },
+
           itemBuilder: (context, String suggestion) {
-            return ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-              dense: true,
-              title: Text(suggestion), // .titleCase),
-            );
+            return Listener(
+                child: Container(
+                  color: ColorDefs.colorDarkest, // or whatever color
+                  child: ListTile(
+                    dense: true,
+                    title: Text(suggestion),
+                  ),
+                ),
+                onPointerDown: (_) {
+                  print(suggestion);
+                  _typeAheadController.text = suggestion; //.titleCase;
+
+                  List<String> nameArray = suggestion.split(" - ");
+                  print(
+                      "name: ${nameArray[0]} program number: ${nameArray[1]}");
+                  widget.lookAheadCallback(nameArray);
+                });
           },
+
+          // itemBuilder: (context, String suggestion) {
+          //   return ListTile(
+          //     contentPadding:
+          //         EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+          //     dense: true,
+          //     title: Text(suggestion), // .titleCase),
+          //   );
+          // },
           onSuggestionSelected: (suggestion) {
             _typeAheadController.text = suggestion; //.titleCase;
 

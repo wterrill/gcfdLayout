@@ -319,7 +319,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       'programNum': selectedProgramNumber,
                       'programType': selectedProgType,
                       'auditor': selectedAuditor,
-                      'status': "scheduled"
+                      'status': "Scheduled"
                     });
 
                     Navigator.of(context).pop();

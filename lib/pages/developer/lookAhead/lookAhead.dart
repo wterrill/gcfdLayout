@@ -27,38 +27,51 @@ class _LookAheadState extends State<LookAhead> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           TypeAheadField<String>(
-              textFieldConfiguration: TextFieldConfiguration<String>(
-                  autofocus: true,
-                  // style: DefaultTextStyle.of(context)
-                  //     .style
-                  //     .copyWith(fontStyle: FontStyle.italic),
-                  decoration: InputDecoration(border: OutlineInputBorder()),
-                  controller: this._typeAheadController),
-              suggestionsCallback: (pattern) async {
-                pattern = pattern.toLowerCase();
-                var subsites = sites.where((site) {
-                  print(pattern);
-                  String sitename = site[1] as String;
-                  print(sitename);
-                  sitename = sitename.toLowerCase();
-                  print(sitename);
-                  return sitename.contains(pattern);
-                }); //.toList();
-                Iterable<String> subsubsites =
-                    subsites.map((subsite) => subsite[1] as String);
-                return subsubsites;
-              },
-              itemBuilder: (context, String suggestion) {
-                return ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-                  dense: true,
-                  title: Text(suggestion.titleCase),
-                );
-              },
-              onSuggestionSelected: (suggestion) {
-                this._typeAheadController.text = suggestion.titleCase;
-              })
+            textFieldConfiguration: TextFieldConfiguration<String>(
+                autofocus: true,
+                // style: DefaultTextStyle.of(context)
+                //     .style
+                //     .copyWith(fontStyle: FontStyle.italic),
+                decoration: InputDecoration(border: OutlineInputBorder()),
+                controller: this._typeAheadController),
+            suggestionsCallback: (pattern) async {
+              pattern = pattern.toLowerCase();
+              var subsites = sites.where((site) {
+                print(pattern);
+                String sitename = site[1] as String;
+                print(sitename);
+                sitename = sitename.toLowerCase();
+                print(sitename);
+                return sitename.contains(pattern);
+              }); //.toList();
+              Iterable<String> subsubsites =
+                  subsites.map((subsite) => subsite[1] as String);
+              return subsubsites;
+            },
+            itemBuilder: (context, suggestion) {
+              return Listener(
+                  child: ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text(suggestion),
+                  ),
+                  onPointerDown: (_) {
+                    print(suggestion);
+                    this._typeAheadController.text = suggestion.titleCase;
+                  });
+            },
+
+            // itemBuilder: (context, String suggestion) {
+            //   return ListTile(
+            //     contentPadding:
+            //         EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+            //     dense: true,
+            //     title: Text(suggestion.titleCase),
+            //   );
+            // },
+            onSuggestionSelected: (suggestion) {
+              this._typeAheadController.text = suggestion.titleCase;
+            },
+          )
         ],
       ),
     );

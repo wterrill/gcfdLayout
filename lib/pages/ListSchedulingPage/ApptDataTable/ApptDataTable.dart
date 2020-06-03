@@ -1,13 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
+// import 'dart:async';
+// import 'dart:convert';
 
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/pages/developer/hiveTest/Contact.dart';
+// import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import 'CalendarResult.dart';
@@ -193,7 +193,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>(
-                                (CalendarResult d) => d.getDateFormatted(),
+                                (CalendarResult d) => d.getDateTimeFormatted(),
                                 columnIndex,
                                 ascending)),
                     DataColumn(

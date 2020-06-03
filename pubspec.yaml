@@ -38,7 +38,7 @@ dependencies:
   flutter_signature_pad: ^2.0.2
   flutter_pdf_viewer: ^0.6.1
   csv: ^4.0.3
-  flutter_typeahead: ^1.8.0
+  flutter_typeahead: <=1.8.0
   recase: ^3.0.0
   universal_html: ^1.2.1
   image: ^2.1.12
