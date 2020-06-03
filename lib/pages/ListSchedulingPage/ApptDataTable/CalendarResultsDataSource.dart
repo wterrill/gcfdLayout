@@ -77,8 +77,13 @@ class CalendarResultsDataSource extends DataTableSource {
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 250),
                     child: Text('${calendarResult.agency}',
-                        style: ColorDefs.textBodyWhite15)),
+                        style: ColorDefs.textBodyWhite15,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                ),
               ))),
           DataCell(Container(
               height: double.infinity,

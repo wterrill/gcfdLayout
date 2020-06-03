@@ -118,7 +118,7 @@ class ListCalendarData with ChangeNotifier {
   void generateAppointments() {
     toggleGenerateApointments != toggleGenerateApointments;
     DateTime now = DateTime.now();
-    DateTime pastTime = now.subtract(Duration(days: 365));
+    DateTime pastTime = now.subtract(Duration(days: 325));
     Random random = Random();
     List<List<dynamic>> agencies =
         Provider.of<SiteData>(navigatorKey.currentContext, listen: false)

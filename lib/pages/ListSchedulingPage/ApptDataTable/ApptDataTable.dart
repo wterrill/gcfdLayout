@@ -193,7 +193,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>(
-                                (CalendarResult d) => d.getDateTimeFormatted(),
+                                (CalendarResult d) =>
+                                    d.startDateTime.toString(),
                                 columnIndex,
                                 ascending)),
                     DataColumn(
