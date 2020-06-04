@@ -55,7 +55,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                 Expanded(
                   child: Container(
                     color: ColorDefs.colorDarkBackground,
-                    child: Provider.of<ListCalendarData>(context).initialized
+                    child: Provider.of<ListCalendarData>(context).initializedx
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -151,12 +151,55 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                               ApptDataTable()
                             ],
                           )
-                        : Text("not initialized"),
+                        : Center(
+                            child:
+                                //CircularProgressIndicator(
+                                // backgroundColor: Colors.cyan,
+                                // strokeWidth: 10,
+                                // )
+
+                                // CircularProgressIndicator(
+                                // value: .5,
+                                // valueColor: AlwaysStoppedAnimation<Color>(
+                                //     ColorDefs.colorAudit3
+                                // )
+                                Container(
+                              height: 300,
+                              width: 300,
+                              child: Stack(
+                                children: [
+                                  Center(child: Text("Loading Data...")),
+                                  // Center(
+                                  //   child: SizedBox(
+                                  //       width: 100,
+                                  //       height: 100,
+                                  //       child: CircularProgressIndicator(
+                                  //           strokeWidth: 10,
+                                  //           // value: .5,
+                                  //           valueColor:
+                                  //               AlwaysStoppedAnimation<Color>(
+                                  //                   ColorDefs.colorAudit3))),
+                                  // ),
+                                  // Center(
+                                  //   child: SizedBox(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       child: CircularProgressIndicator(
+                                  //           strokeWidth: 30,
+                                  //           // value: .5,
+                                  //           valueColor:
+                                  //               AlwaysStoppedAnimation<Color>(
+                                  //                   ColorDefs.colorAudit2))),
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ],
+              // ),
             ),
-            // ),
             if (backgroundDisable)
               Container(color: ColorDefs.colorDisabledBackground),
 

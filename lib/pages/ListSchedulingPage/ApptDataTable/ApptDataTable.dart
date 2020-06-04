@@ -135,7 +135,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
 
   @override
   Widget build(BuildContext context) {
-    bool initialized = Provider.of<ListCalendarData>(context).initialized;
+    bool initializedx = Provider.of<ListCalendarData>(context).initializedx;
     filterTimeToggle = Provider.of<ListCalendarData>(context).filterTimeToggle;
 
     lastFilterText =
@@ -144,7 +144,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
     print("building paginated data table");
     getData();
     print("BUILD PAGINATEDDATATABLE2");
-    return !initialized
+    return !initializedx
         ? (Text("Initializing..."))
         : Expanded(
             child: Container(

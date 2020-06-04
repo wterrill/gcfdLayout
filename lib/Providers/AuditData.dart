@@ -1,6 +1,6 @@
 import 'package:auditor/AuditClasses/Audit.dart';
 // import 'package:auditor/AuditClasses/Question.dart';
-import 'package:auditor/AuditClasses/Sections.dart';
+import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/ExternalDataAudit.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +11,14 @@ class AuditData with ChangeNotifier {
 
   AuditData() {
     initialize();
+  }
+
+  void updateSectionStatus(Status status) {
+    print("in updateSectionStatus");
+    if (status != activeSection.status) {
+      activeSection.status = status;
+      notifyListeners();
+    }
   }
 
   void initialize() {

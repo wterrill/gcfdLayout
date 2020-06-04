@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auditor/AuditClasses/Question.dart';
-import 'package:auditor/AuditClasses/Sections.dart';
+import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';

@@ -1,5 +1,5 @@
 import 'package:auditor/AuditClasses/Audit.dart';
-import 'package:auditor/AuditClasses/Sections.dart';
+import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/LayoutData.dart';
@@ -49,6 +49,21 @@ class _AuditPageState extends State<AuditPage> {
                     Container(
                       child: AuditQuestions(activeSection: activeSection),
                     ),
+                    if (activeSection.name == "Confirm Details")
+                      FlatButton(
+                        color: Colors.blue,
+                        textColor: Colors.black,
+                        // color: ColorDefs.colorTopDrawerAlternating,
+                        child:
+                            Text("Confirm", style: ColorDefs.textBodyBlack20),
+                        onPressed: () {
+                          for (Section section in activeAudit.sections) {
+                            section.status = Status.available;
+                            activeSection.status = Status.completed;
+                            setState(() {});
+                          }
+                        },
+                      ),
                     FlatButton(
                       color: Colors.blue,
                       textColor: Colors.black,

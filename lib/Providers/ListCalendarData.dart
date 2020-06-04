@@ -23,7 +23,7 @@ class ListCalendarData with ChangeNotifier {
   bool filterTimeToggle = false;
 
   Box box;
-  bool initialized = false;
+  bool initializedx = false;
   Box calendarBox;
   Box calEventToBeSent;
 
@@ -60,7 +60,7 @@ class ListCalendarData with ChangeNotifier {
 
       var beer = calendarBox.values.toList() as List<CalendarResult>;
       print(beer);
-      initialized = true;
+      initializedx = true;
       notifyListeners();
     });
   }
@@ -89,7 +89,7 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  void addBoxEvent(Map<String, String> event) {
+  void addBoxEvent({Map<String, String> event, bool notify}) {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
     calendarBox.put(
@@ -99,7 +99,7 @@ class ListCalendarData with ChangeNotifier {
         '${anotherEvent.startTime}-${anotherEvent.agency}-${anotherEvent.programNum}-${anotherEvent.auditor}',
         anotherEvent);
     newEventAdded = true;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 
   CalendarResult convertMapToCalendarResult(Map<String, String> result) {
@@ -144,7 +144,7 @@ class ListCalendarData with ChangeNotifier {
       String status =
           randomDate.isBefore(DateTime.now()) ? "Completed" : "Scheduled";
       print(status);
-      addBoxEvent({
+      addBoxEvent(event: {
         'startTime': startTime,
         'agency': agency,
         'auditType': auditType,
@@ -152,8 +152,9 @@ class ListCalendarData with ChangeNotifier {
         'programType': programType,
         'auditor': auditor,
         'status': status
-      });
+      }, notify: false);
     }
+    notifyListeners();
   }
 
   void deleteAllAppointments() {

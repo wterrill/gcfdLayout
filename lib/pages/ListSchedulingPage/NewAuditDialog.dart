@@ -311,7 +311,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     // });
 
                     Provider.of<ListCalendarData>(context, listen: false)
-                        .addBoxEvent({
+                        .addBoxEvent(event: {
                       'startTime': selectedDateTime.toString(),
                       'message': '',
                       'agency': selectedSiteName,
@@ -320,7 +320,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       'programType': selectedProgType,
                       'auditor': selectedAuditor,
                       'status': "Scheduled"
-                    });
+                    }, notify: true);
 
                     Navigator.of(context).pop();
                     if (alreadyExisted) {

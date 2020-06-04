@@ -11,7 +11,7 @@ import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/LayoutData.dart';
-import 'package:statsfl/statsfl.dart';
+// import 'package:statsfl/statsfl.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/foundation.dart' show kIsWeb;

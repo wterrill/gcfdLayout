@@ -1,24 +1,22 @@
 import 'Question.dart';
 
+enum Status { disabled, selected, available, inProgress, completed }
+
 class Section {
-  // info
-  String name;
-
-  // Subtrees
-  List<Question> questions;
-
-  // display info
-  bool completed = false;
-
   Map<String, List<Map<String, dynamic>>> section;
+
+  String name;
+  List<Question> questions;
+  var status = Status.disabled;
 
   Section({this.section}) {
     List<Map<String, dynamic>> questionsList = section.values.toList()[0];
-
     questions = questionsList.map<Question>((question) {
-      print("+++++++++++++++++++++++ ${question} ");
       return Question(questionMap: question);
     }).toList();
     name = section.keys.toList()[0];
+    if (name == "Confirm Details") {
+      status = Status.selected;
+    }
   }
 }
