@@ -172,11 +172,30 @@ class AuditInfoDialog extends StatelessWidget {
                               Provider.of<AuditData>(context, listen: false)
                                   .toggleStartAudit();
 
-                              Navigator.push<dynamic>(
-                                context,
-                                MaterialPageRoute<dynamic>(
-                                    builder: (context) => AuditPage()),
-                              );
+                              switch (calendarResult.programType) {
+                                case "Healthy Student Market":
+                                  Dialogs.showNotImplemented(context);
+                                  break;
+
+                                case "Senior Adults Program":
+                                  Dialogs.showNotImplemented(context);
+                                  break;
+                                case "Pantry Audit":
+                                  Navigator.push<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                        builder: (context) => AuditPage(
+                                            programType: calendarResult
+                                                .programType
+                                                .toLowerCase())),
+                                  );
+                                  break;
+                                case "Congregate Audit":
+                                  Dialogs.showNotImplemented(context);
+                                  break;
+                                default:
+                                  Dialogs.showNotImplemented(context);
+                              }
                             },
                             child: AutoSizeText('Begin Audit',
                                 style: ColorDefs.textBodyWhite20),

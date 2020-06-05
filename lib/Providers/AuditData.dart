@@ -23,7 +23,6 @@ class AuditData with ChangeNotifier {
 
   void initialize() {
     print("initialized AuditData");
-    createAuditClass();
   }
 
   void toggleStartAudit() {
@@ -31,13 +30,19 @@ class AuditData with ChangeNotifier {
     notifyListeners();
   }
 
-  void createAuditClass() {
-    activeAudit = Audit(auditSectionsQuestions);
-    activeSection = activeAudit.sections[0];
+  void createAuditClass(String type) {
+    if (type == "pantry audit") {
+      activeAudit = Audit(pantryAuditSectionsQuestions);
+      activeSection = activeAudit.sections[0];
+    }
   }
 
   void updateActiveSection(Section newSection) {
     activeSection = newSection;
     notifyListeners();
+  }
+
+  void createNewAudit(String type) {
+    createAuditClass(type);
   }
 }

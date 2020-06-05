@@ -60,7 +60,7 @@ class Dialogs {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('This functionality is not yet available'),
+          Text('This program type is not yet available'),
         ],
       ),
     );

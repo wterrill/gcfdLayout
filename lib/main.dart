@@ -64,10 +64,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/login': (context) => LoginScreen(),
+        // '/login': (context) => LoginScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => ListSchedulingPage(),
-        '/audit': (context) => AuditPage(),
+        // '/second': (context) => ListSchedulingPage(),
+        // '/audit': (context) => AuditPage(),
       },
       theme: ThemeData(
         // Define the default brightness and colors.

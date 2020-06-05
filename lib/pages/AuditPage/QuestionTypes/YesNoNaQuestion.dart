@@ -12,9 +12,12 @@ class YesNoNaQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  YesNoNaQuestion(
-      {Key key, this.index, this.activeSection, this.questionAutoGroup})
-      : super(key: key);
+  YesNoNaQuestion({
+    Key key,
+    this.index,
+    this.activeSection,
+    this.questionAutoGroup,
+  }) : super(key: key);
 
   @override
   _YesNoNaQuestionState createState() => _YesNoNaQuestionState();
@@ -35,39 +38,96 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
                   group: widget.questionAutoGroup,
                   style: ColorDefs.textBodyBlack20),
             ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("YES"),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
+                dynamic result = setQuestionValue(
+                    widget.activeSection.questions[index].userResponse, "Yes");
+                widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
                         checkSectionDone(widget.activeSection));
                 setState(() {});
               },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: buttonColorPicker(
+                      widget.activeSection.questions[index], "Yes"),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                width: 80,
+                child: Center(
+                    child: Text("Yes", style: ColorDefs.textBodyBlack20)),
+              ),
             ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("NO"),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
+                dynamic result = setQuestionValue(
+                    widget.activeSection.questions[index].userResponse, "No");
+                widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
                         checkSectionDone(widget.activeSection));
                 setState(() {});
               },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: buttonColorPicker(
+                      widget.activeSection.questions[index], "No"),
+                  borderRadius: BorderRadius.circular(20.0),
+                  // border:
+                  //     Border.all(width: 2.0, color: Colors.grey)
+                ),
+                width: 80,
+                child:
+                    Center(child: Text("No", style: ColorDefs.textBodyBlack20)),
+              ),
             ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("N/A"),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
+                dynamic result = setQuestionValue(
+                    widget.activeSection.questions[index].userResponse, "NA");
+                widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
                         checkSectionDone(widget.activeSection));
                 setState(() {});
               },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: buttonColorPicker(
+                      widget.activeSection.questions[index], "NA"),
+                  borderRadius: BorderRadius.circular(20.0),
+                  // border:
+                  //     Border.all(width: 2.0, color: Colors.grey)
+                ),
+                width: 80,
+                child: Center(
+                    child: Text("N/A", style: ColorDefs.textBodyBlack20)),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                widget.activeSection.questions[index].textBoxRollOut =
+                    !widget.activeSection.questions[index].textBoxRollOut;
+                setState(() {});
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Icon(Icons.chat_bubble,
+                    color:
+                        widget.activeSection.questions[index].optionalComment ==
+                                null
+                            ? ColorDefs.colorChatNeutral
+                            : ColorDefs.colorChatSelected),
+              ),
             ),
           ],
         ),
-        CommentSection(index: index, activeSection: activeSection)
+        CommentSection(
+            index: index, activeSection: activeSection, key: UniqueKey())
       ],
     );
   }

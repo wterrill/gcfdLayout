@@ -24,14 +24,27 @@ class CommentSection extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentSection> {
   @override
+  void initState() {
+    super.initState();
+
+    String text = widget.activeSection.questions[widget.index].optionalComment;
+
+    if (text != null) {
+      controller.text = text;
+    }
+  }
+
+  TextEditingController controller = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     int index = widget.index;
     Section activeSection = widget.activeSection;
     return AnimatedContainer(
       height: widget.activeSection.questions[index].textBoxRollOut ? 100 : 0,
       color: Colors.white,
-      duration: Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 150),
       child: TextField(
+        controller: controller,
         onChanged: (value) {
           widget.activeSection.questions[index].optionalComment = value;
           if (widget.mandatory) {

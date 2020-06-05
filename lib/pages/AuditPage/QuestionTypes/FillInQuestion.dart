@@ -43,7 +43,7 @@ class _FillInQuestionState extends State<FillInQuestion> {
                 child: Icon(Icons.chat_bubble,
                     color:
                         widget.activeSection.questions[index].optionalComment ==
-                                ""
+                                null
                             ? ColorDefs.colorChatRequired
                             : ColorDefs.colorChatSelected),
               ),
@@ -51,10 +51,10 @@ class _FillInQuestionState extends State<FillInQuestion> {
           ],
         ),
         CommentSection(
-          index: index,
-          activeSection: activeSection,
-          mandatory: true,
-        )
+            index: index,
+            activeSection: activeSection,
+            // mandatory: true,
+            key: UniqueKey())
       ],
     );
   }

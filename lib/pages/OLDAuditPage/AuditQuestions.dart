@@ -202,10 +202,10 @@ class _AuditQuestionsState extends State<AuditQuestions> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Icon(Icons.chat_bubble,
-                color:
-                    widget.activeSection.questions[index].optionalComment == ""
-                        ? ColorDefs.colorChatNeutral
-                        : ColorDefs.colorChatSelected),
+                color: widget.activeSection.questions[index].optionalComment ==
+                        null
+                    ? ColorDefs.colorChatNeutral
+                    : ColorDefs.colorChatSelected),
           ),
         ),
       ],
@@ -224,10 +224,10 @@ class _AuditQuestionsState extends State<AuditQuestions> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Icon(Icons.chat_bubble,
-                color:
-                    widget.activeSection.questions[index].optionalComment == ""
-                        ? ColorDefs.colorChatRequired
-                        : ColorDefs.colorChatSelected),
+                color: widget.activeSection.questions[index].optionalComment ==
+                        null
+                    ? ColorDefs.colorChatRequired
+                    : ColorDefs.colorChatSelected),
           ),
         ),
       ],
@@ -276,10 +276,10 @@ class _AuditQuestionsState extends State<AuditQuestions> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Icon(Icons.chat_bubble,
-                color:
-                    widget.activeSection.questions[index].optionalComment == ""
-                        ? ColorDefs.colorChatNeutral
-                        : ColorDefs.colorChatSelected),
+                color: widget.activeSection.questions[index].optionalComment ==
+                        null
+                    ? ColorDefs.colorChatNeutral
+                    : ColorDefs.colorChatSelected),
           ),
         ),
       ],
@@ -334,10 +334,10 @@ class _AuditQuestionsState extends State<AuditQuestions> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Icon(Icons.chat_bubble,
-                color:
-                    widget.activeSection.questions[index].optionalComment == ""
-                        ? ColorDefs.colorChatNeutral
-                        : ColorDefs.colorChatSelected),
+                color: widget.activeSection.questions[index].optionalComment ==
+                        null
+                    ? ColorDefs.colorChatNeutral
+                    : ColorDefs.colorChatSelected),
           ),
         ),
       ],

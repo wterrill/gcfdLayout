@@ -20,7 +20,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   String selectedAuditType = "Select";
   String selectedProgType = "Select";
   DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay selectedTime = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
   String selectedAuditor = "Select";
@@ -216,15 +216,14 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 GestureDetector(
                   onTap: () async {
                     TimeOfDay fromTimeSelector = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                      // builder: (BuildContext context, Widget child) {
-                      //   return Directionality(
-                      //     // textDirection: TextDirection.LTR,
-                      //     child: child,
-                      //   );
-                      // },
-                    );
+                        context: context, initialTime: selectedTime
+                        // builder: (BuildContext context, Widget child) {
+                        //   return Directionality(
+                        //     // textDirection: TextDirection.LTR,
+                        //     child: child,
+                        //   );
+                        // },
+                        );
                     setState(() {
                       if (fromTimeSelector != null) {
                         selectedTime = fromTimeSelector;

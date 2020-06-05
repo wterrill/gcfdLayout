@@ -95,14 +95,15 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
                 child: Icon(Icons.chat_bubble,
                     color:
                         widget.activeSection.questions[index].optionalComment ==
-                                ""
+                                null
                             ? ColorDefs.colorChatNeutral
                             : ColorDefs.colorChatSelected),
               ),
             ),
           ],
         ),
-        CommentSection(index: index, activeSection: activeSection)
+        CommentSection(
+            index: index, activeSection: activeSection, key: UniqueKey())
       ],
     );
   }

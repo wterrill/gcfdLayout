@@ -5,10 +5,10 @@ class Question {
   dynamic userResponse; // what the user reponsed on the questionnaire
   dynamic happyPathResponse; // what the desired response is
   List<String> dropDownMenu;
-  String optionalComment; //="";
+  String optionalComment; //= "";
   String note;
   bool textBoxRollOut = false;
-  String mandatoryComment;
+  // String mandatoryComment;
   bool completed = false;
   bool flagged = false;
 

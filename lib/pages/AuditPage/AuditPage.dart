@@ -10,20 +10,31 @@ import 'AuditButtons.dart';
 import 'AuditQuestions.dart';
 
 class AuditPage extends StatefulWidget {
-  AuditPage({Key key}) : super(key: key);
+  final String programType;
+  AuditPage({Key key, this.programType}) : super(key: key);
   @override
   _AuditPageState createState() => _AuditPageState();
 }
 
 class _AuditPageState extends State<AuditPage> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<AuditData>(context, listen: false)
+        .createNewAudit(widget.programType);
+  }
+
+  // bool auditBuilt = false;
+  @override
   Widget build(BuildContext context) {
     print("building AuditPage");
+
     Audit activeAudit = Provider.of<AuditData>(context).activeAudit;
     Section activeSection = Provider.of<AuditData>(context).activeSection;
-    bool startAudit = Provider.of<AuditData>(context).auditStarted;
+    // bool startAudit = Provider.of<AuditData>(context).auditStarted;
     double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     double mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    bool auditBuilt = true;
     return MaterialApp(
       theme: ThemeData(
         // Define the default brightness and colors.
