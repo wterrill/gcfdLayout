@@ -49,15 +49,18 @@ Map<String, dynamic> audit1Section1 = <String, dynamic>{
 List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Did the Food Depository establish the service area?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
     'text': 'Does pantry serve outside this service area?',
-    'type': 'yesNo'
+    'type': 'yesNo',
   },
+
+  // TODO this needs to somehow be linked to the question above so that it can be blank, but still show up as completed, if the question above is "no"
   <String, dynamic>{
     'text': 'If yes, how many and from where do guests travel?',
-    'type': 'fillIn'
+    'type': 'fillIn',
   },
   <String, dynamic>{
     'text': 'How often can a guest receive food from the pantry?',
@@ -70,82 +73,126 @@ List<Map<String, dynamic>> audit1Section1Questions = [
       'Monthly',
       'Unlimited',
       'Other'
+    ],
+    'happyPathResponse': [
+      'daily',
+      'weekly',
+      'bi-monthly',
+      'monthly',
+      'unlimited',
+      'other'
     ]
   },
   <String, dynamic>{
     'text':
         'Does the pantry allow guests to receive food at least once every 30 days?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Are referrals from an outside agency required to receive food?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
     'text': 'Are appointments required to receive food?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
     'text': 'Does the pantry require any documentation?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         'Describe the types of documentation requested and the purpose (only allowed to verify residency and identity):',
-    'type': 'fillIn'
+    'type': 'fillIn',
   },
   <String, dynamic>{
     'text': 'Does this pantry operate under the rural exemption?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
     'text': 'Does this food pantry also operate a soup kitchen?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+  },
+  //TODO: this below question needs to be linked to the above question
+  <String, dynamic>{
+    'text':
+        'If yes, is the food properly separated and tracked for two programs?',
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text':
         'If yes, is the food properly separated and tracked for two programs?',
     'type': 'yesNo'
   },
-  <String, dynamic>{'text': 'Is Program on Food Rescue?', 'type': 'yesNo'},
+
   <String, dynamic>{
-    'text':
-        'Food Service Sanitation Manager Certificates (at least two are required)',
+    'text': 'Is Program on Food Rescue/Agency Enabled?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes', 'na']
+  },
+  <String, dynamic>{
+    'text': 'Food Service Sanitation Manager Certificates',
     'type': 'fillIn'
   },
+  <String, dynamic>{'text': 'Remove:', 'type': 'fillIn'},
+
   <String, dynamic>{'text': 'Last Order Date:', 'type': 'date'},
+
   <String, dynamic>{
     'text': 'What is the number of deliveries per month?',
     'type': 'fillIn'
   },
+
   <String, dynamic>{
     'text': 'Has an order been placed from the menu in the past month?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
-    'text': 'Has FoodBank Manager been used in the past month?',
-    'type': 'yesNo'
+    'text': 'Has an online intake system been used in the past month?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Is information on our Agency Locator accurate?',
-    'type': 'yesNo'
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Yes',
+      'No',
+      'Closed Program',
+    ],
+    'happyPathResponse': ['yes', 'closed program']
   },
 ];
 
 List<Map<String, dynamic>> audit1Section2Questions = [
-  <String, dynamic>{'text': "Is entrance clearly marked?", 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': "Is entrance clearly marked?",
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text': "Is there a sign posted outside with days and hours of operation?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         "Is there a sign posted with service requirements/guidelines visible to guests?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': "Is the Food Depository contact information posted?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
@@ -154,8 +201,9 @@ List<Map<String, dynamic>> audit1Section2Questions = [
   },
   <String, dynamic>{
     'text':
-        "Are TEFAP posters accessible to guests?(Ex: Income Eligibility, Notice to Program Participants, Prohibited Activities, /“And Justice for All/”, Written Notice of Beneficiary Rights)",
-    'type': 'yesNo'
+        "Are TEFAP posters accessible to guests?(Ex: Income Eligibility, Notice to Program Participants, Prohibited Activities, /“And Justice for All/”)",
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
 ];
 
@@ -163,77 +211,98 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text':
         "Are activities conducted that might be interpreted as requiring fees/donations/memberships?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
-    'text': "Is FoodBank Manager being utilized?",
-    'type': 'yesNo'
+    'text': "Is an online intake system being utilized?",
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
-    'text':
-        "If FoodBank Manager is not being utilized, are DHS signature documents used?",
-    'type': 'yesNo'
+    'text': "If it is not being utilized, are DHS signature documents used?",
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text': "Does the guest sign his/her name upon receipt?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': "Is the address recorded upon receipt?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': "Is the household size recorded upon receipt?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         "Does the pantry have the guest sign even if only privately donated food is received?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         "Are original DHS signature documents and surveys submitted to the Food Depository monthly?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': "Is the TEFAP manual accessible to pantry staff and/or volunteers?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': "Are proxy forms used?", 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': "Are proxy forms used?",
+    'type': 'yesNo',
+  },
+//TODO The above question needs to be linked to the below question
   <String, dynamic>{
     'text':
         "If yes, do they contain the original signature of the recipient getting food?",
-    'type': 'yesNo'
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
+
   <String, dynamic>{
     'text':
         "Does the proxy sign the proxy form in the presence of pantry personnel?",
-    'type': 'yesNo'
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text':
         "Do pantry personnel sign the proxy form at the time of distribution?",
-    'type': 'yesNo'
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text': "Are TANF commodities being distributed?",
     'type': 'yesNo'
   },
+  //TODO the answer from the above question should be linked to the below question,
+  //if yes above, it should be yes below
   <String, dynamic>{
     'text': "If yes, do guests complete the required TANF information?",
-    'type': 'yesNo'
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text':
         "Are guests without children in the household completing TANF information?",
-    'type': 'yesNo'
+    'type': 'yesNoNa',
+    'happyPathResponse': ['yes', 'na']
   },
   <String, dynamic>{
     'text': "Technology being used:	#of Tablets:",
     'type': 'fillIn'
   },
   <String, dynamic>{'text': "#of Computers:", 'type': 'fillIn'},
+
   <String, dynamic>{'text': "Guest disposition", 'type': 'fillIn'},
   <String, dynamic>{
     'text': "Guests served during site visit:",
@@ -242,70 +311,104 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{'text': "Guests served each month:", 'type': 'fillIn'},
   <String, dynamic>{'text': "Volunteer disposition:", 'type': 'fillIn'},
   <String, dynamic>{'text': "# of Intake volunteers:", 'type': 'fillIn'},
-  <String, dynamic>{
-    'text': "# of Meal Distribution volunteers:",
-    'type': 'fillIn'
-  },
+  <String, dynamic>{'text': "# of Distribution volunteers:", 'type': 'fillIn'},
   <String, dynamic>{
     'text': "How does the pantry recruit volunteers?",
     'type': 'fillIn'
   },
   <String, dynamic>{
     'text': "Are other activities unrelated to TEFAP disrupting distribution?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
   <String, dynamic>{
     'text': "Do all distribution activities appear to be appropriate?",
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': "Distribution style: Cafeteria Restaurant Other",
     'type': 'dropDown',
-    'menuItems': ['Select', 'Cafeteria', 'Restaurant', 'Other']
-  }
+    'menuItems': [
+      'Select',
+      'Client Choice',
+      'Prepacked',
+      'Partial Client Choice'
+    ],
+    'happyPathResponse': ['client choice', 'prepacked', 'partial client choice']
+  },
+//TODO: The below question needs to be linked to the above question
+  <String, dynamic>{'text': "If not client choice, why?", 'type': 'fillIn'},
 ];
 
 List<Map<String, dynamic>> audit1Section4Questions = [
   <String, dynamic>{
     'text': 'Are floors, pallets, and shelving clean?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': 'Is storage area organized?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Is storage area organized?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text': 'Are pest proof containers utilized?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Are non-food items and toxic items stored separately?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': 'Is food 6 inches off floor?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Is food being rotated via FIFO?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Is food 6 inches off floor?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text':
         'Is food kept far enough away from walls and floor to permit good air circulation and to allow for pest control?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Are proper temperatures for dry food storage maintained?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
+  //TODO: Make comment mandatory
   <String, dynamic>{
     'text':
         'Is the food stored in a secure location with adequate space? If no, explain:',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Is food clearly marked for use by food program only?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': 'Is storage area only for approved food program?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': 'Is equipment well maintained?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Is equipment well maintained?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text': 'Appropriate amount of food in inventory?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text': '# of cases of dry food currently in inventory:',
@@ -322,7 +425,8 @@ List<Map<String, dynamic>> audit1Section4Questions = [
   <String, dynamic>{
     'text':
         'Does the pantry have other foods to distribute with government commodities?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{'text': 'Area 1: ', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Area 2: ', 'type': 'fillIn'},
@@ -331,32 +435,72 @@ List<Map<String, dynamic>> audit1Section4Questions = [
 ];
 
 List<Map<String, dynamic>> audit1Section5Questions = [
-  <String, dynamic>{'text': 'Are units clean?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Are units defrosted?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Are units organized?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Is food being rotated via FIFO?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Do units have thermometers?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Are units clean?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Are units defrosted?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Are units organized?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Is food being rotated via FIFO?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Do units have thermometers?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text': 'Are units only for approved food program?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': 'Is food appropriately labeled?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Is food appropriately labeled?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text': 'Is food appropriately stocked and not overstuffed in units?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
-  <String, dynamic>{'text': 'Are units numbered?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Is equipment well maintained?', 'type': 'yesNo'},
-  <String, dynamic>{'text': 'Are cold storage units secured?', 'type': 'yesNo'},
+  <String, dynamic>{
+    'text': 'Are units numbered?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Is equipment well maintained?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
+  <String, dynamic>{
+    'text': 'Are cold storage units secured?',
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
+  },
   <String, dynamic>{
     'text':
         'Are refrigerated items kept at temperatures between 35-40 degrees Fahrenheit?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         'Are frozen items kept at a temperature below zero degrees Fahrenheit?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{'text': 'Cold Storage Unit 1 ºF', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Cold Storage Unit 2 ºF', 'type': 'fillIn'},
@@ -385,6 +529,10 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{'text': 'USDA Tag # ', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Serial # ', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Type ', 'type': 'fillIn'},
+  <String, dynamic>{
+    'text': '*Units should not be shared with other programs ',
+    'type': 'Display',
+  },
 ];
 
 List<Map<String, dynamic>> audit1Section6Questions = [
@@ -398,7 +546,8 @@ List<Map<String, dynamic>> audit1Section6Questions = [
   <String, dynamic>{
     'text':
         'Are floors, doors, windows, and roofs well sealed to prevent pest entry and water damage?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{'text': 'Appropriate Lighting', 'type': 'fillIn'},
   <String, dynamic>{'text': 'Ventilation', 'type': 'fillIn'},
@@ -410,8 +559,10 @@ List<Map<String, dynamic>> audit1Section6Questions = [
   <String, dynamic>{'text': 'Pest Control Company:', 'type': 'fillIn'},
   <String, dynamic>{
     'text': 'Evidence of Rodents/ Insects (Includes fruit and house flies):',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['no']
   },
+  //TODO the below question should be linked to the above question
   <String, dynamic>{'text': 'If yes, details:', 'type': 'fillIn'},
 ];
 
@@ -423,18 +574,32 @@ List<Map<String, dynamic>> audit1Section7Questions = [
   <String, dynamic>{
     'text':
         'Does the program know what to do if there is a discrimination complaint?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         'If there have been any discrimination complaints, have they been forwarded to the Food Depository?',
-    'type': 'yesNo'
+    'type': 'yesNo',
+    'happyPathResponse': ['yes']
   },
   <String, dynamic>{
     'text':
         'If the pantry has questions or problems, what is the name and phone number of their Food Depository contact person?',
     'type': 'fillIn'
   },
+  <String, dynamic>{'text': 'Issues from last site visit?', 'type': 'fillIn'},
+  <String, dynamic>{
+    'text': 'Distribution Stie Staff Comments: ',
+    'type': 'fillIn'
+  },
+  <String, dynamic>{'text': 'Food Depository Comments', 'type': 'fillIn'},
+  <String, dynamic>{'text': 'Donors', 'type': 'fillIn'},
+  <String, dynamic>{'text': 'Date Tax Exemption Verified', 'type': 'date'},
+  <String, dynamic>{'text': 'Re-verified by:', 'type': 'fillIn'},
+  <String, dynamic>{'text': 'GCFD Monitor', 'type': 'fillIn'},
+  <String, dynamic>{'text': 'Reviewed by', 'type': 'fillIn'},
+  <String, dynamic>{'text': 'Findings Found:', 'type': 'yesNo'},
 ];
 
 List<Map<String, List<Map<String, dynamic>>>> auditSectionsQuestions = [
@@ -451,37 +616,3 @@ List<Map<String, List<Map<String, dynamic>>>> auditSectionsQuestions = [
     "Complaints & Problems": audit1Section7Questions
   },
 ];
-
-//Not included:
-// Issues from last site visit?
-// Distribution Site Staff Comments:
-// Food Depository Comments:
-// Donors:
-// Date Tax Exemption Verified:
-// Reverified by:
-// GCFD Monitor:
-// Reviewed by:
-// Findings found: Yes No
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Did the Food Depository establish the service area? ☐ Yes	☒ No
-// Does pantry serve outside this service area? ☐ Yes	☐ No (This could Yes or No)
-// If yes, how many and from where do guests travel? ___________________________________________________
-// How often can a guest receive food from the pantry? _________________________________________________
-// Does the pantry allow guests to receive food at least once every 30 days? ☒ Yes	☐ No
-// Are referrals from an outside agency required to receive food? ☐ Yes	☒ No
-// Are appointments required to receive food? ☐ Yes	☒ No
-// Does the pantry require any documentation? ☒ Yes	☐ No
-// Describe the types of documentation requested and the purpose (only allowed to verify residency and identity): ________________________________________________________________________________________________
-// Does this pantry operate under the rural exemption? ☐ Yes	☒ No
-// Does this food pantry also operate a soup kitchen? ☐ Yes	☐ No (This could be a Yes or No)
-// If yes, is the food properly separated and tracked for two programs? ☐ Yes	☐ No 	☐ N/A (This could be a Yes or N/A)
-// Is Program on Food Rescue/Agency Enabled? ☐ Yes	☐ No	(This could be a Yes or No)
-// Food Service Sanitation Manager Certificates: ________________________________________________________________________________________________________________________________________________________________________________________________________________________
-// Remove: ____________________________________________________________________________________________________
-// ________________________________________________________________________________________________ ___________
-// Last Order Date: ________________
-// What is the number of deliveries per month? ____________________
-// Has an order been placed from the menu in the past month?      ☒ Yes	☐ No
-// Has an online intake system been used in the past month? 	    ☒ Yes	☐ No
-// Is information on our Agency Locator accurate?		    ☒ Yes	☐ No	☒ Closed Program (If it’s a No, it’s an internal fix; the site does not get cited for this)

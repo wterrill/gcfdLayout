@@ -130,7 +130,7 @@ class Dialogs {
       context: context, //navigatorKey.currentState.overlay.context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Audit Info"),
+          // title: Text("Audit Info"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return SingleChildScrollView(

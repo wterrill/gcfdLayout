@@ -61,33 +61,45 @@ class _LookAheadState extends State<LookAhead> {
           },
 
           itemBuilder: (context, String suggestion) {
-            return Listener(
-                child: Container(
-                  color: ColorDefs.colorDarkest, // or whatever color
-                  child: ListTile(
-                    dense: true,
-                    title: Text(suggestion),
-                  ),
-                ),
-                onPointerDown: (_) {
-                  print(suggestion);
-                  _typeAheadController.text = suggestion; //.titleCase;
+            return GestureDetector(
+              onPanDown: (_) {
+                print(suggestion);
+                _typeAheadController.text = suggestion; //.titleCase;
 
-                  List<String> nameArray = suggestion.split(" - ");
-                  print(
-                      "name: ${nameArray[0]} program number: ${nameArray[1]}");
-                  widget.lookAheadCallback(nameArray);
-                });
+                List<String> nameArray = suggestion.split(" - ");
+                print("name: ${nameArray[0]} program number: ${nameArray[1]}");
+                widget.lookAheadCallback(nameArray);
+              },
+              child: Container(
+                color: Colors.purple,
+                child: ListTile(
+                  dense: true,
+                  title: Text(suggestion),
+                ),
+              ),
+            );
           },
 
-          // itemBuilder: (context, String suggestion) {
-          //   return ListTile(
-          //     contentPadding:
-          //         EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-          //     dense: true,
-          //     title: Text(suggestion), // .titleCase),
-          //   );
-          // },
+// itemBuilder: (context, String suggestion) {
+//                 return Listener(
+//               child: Container(
+//                 color: ColorDefs.colorAudit2, // or whatever color
+//                 child: ListTile(
+//                   dense: true,
+//                   title: Text(suggestion),
+//                 ),
+//               ),
+//               onPointerDown: (_) {
+//                 print(suggestion);
+//                 _typeAheadController.text = suggestion; //.titleCase;
+
+//                 List<String> nameArray = suggestion.split(" - ");
+//                 print("name: ${nameArray[0]} program number: ${nameArray[1]}");
+//                 widget.lookAheadCallback(nameArray);
+//               },
+//             );
+//           },
+
           onSuggestionSelected: (suggestion) {
             _typeAheadController.text = suggestion; //.titleCase;
 
