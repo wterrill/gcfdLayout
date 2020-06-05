@@ -5,7 +5,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import 'CommentSection.dart';
 import 'commonQuestionMethods.dart';
 
@@ -64,9 +63,6 @@ class _DateQuestionState extends State<DateQuestion> {
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
                           checkSectionDone(widget.activeSection));
-                  // setState(() {});
-
-                  // print(selectedDate);
                 },
                 child: Icon(Icons.calendar_today,
                     color:
@@ -74,9 +70,6 @@ class _DateQuestionState extends State<DateQuestion> {
                                 null)
                             ? Colors.red
                             : Colors.green)),
-
-            // DateFormat('EEEE').format(startingDate).toString();
-
             GestureDetector(
               onTap: () {
                 widget.activeSection.questions[index].textBoxRollOut =

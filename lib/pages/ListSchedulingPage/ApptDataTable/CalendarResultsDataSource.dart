@@ -1,11 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/main.dart';
-import 'package:auditor/pages/AuditPage/AuditPage.dart';
-import 'package:auditor/providers/AuditData.dart';
-import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'CalendarResult.dart';
 
@@ -156,11 +152,4 @@ class CalendarResultsDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => _selectedCount;
-
-  // void selectAll(bool checked) {
-  //   for (CalendarResult calendarResult in _calendarResults)
-  //     calendarResult.selected = checked;
-  //   _selectedCount = checked ? _calendarResults.length : 0;
-  //   notifyListeners();
-  // }
 }

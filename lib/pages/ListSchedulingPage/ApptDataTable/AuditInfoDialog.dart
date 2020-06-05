@@ -122,34 +122,7 @@ class AuditInfoDialog extends StatelessWidget {
                 ],
               ),
             ),
-            // Expanded(
-            //   flex: 5,
-            //   child: Container(
-            //     color: Colors.black,
-            //     child: Center(
-            //       child: ListTile(
-            //         title: DecoratedBox(
-            //           decoration: BoxDecoration(
-            //             color: ColorDefs.colorAudit2,
-            //             borderRadius: BorderRadius.circular(50.0),
-            //             // border: Border.all(
-            //             //     width: 2.0, color: Colors.grey)
-            //           ),
-            //           child: FlatButton(
-            //             // disabledTextColor: Colors.blue,
-            //             shape: RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(50.0)),
-            //             onPressed: () {
-            //               Dialogs.showNotImplemented(context);
-            //             },
-            //             child: AutoSizeText('Navigate Me',
-            //                 style: ColorDefs.textBodyWhite20),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+
             Expanded(
               flex: 3,
               child: Column(

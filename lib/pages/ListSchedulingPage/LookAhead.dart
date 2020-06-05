@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/colorDefs.dart';
+// import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -7,7 +7,7 @@ import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
   LookAhead({Key key, this.lookAheadCallback}) : super(key: key);
-  Function lookAheadCallback;
+  final Function lookAheadCallback;
 
   @override
   _LookAheadState createState() => _LookAheadState();
@@ -19,19 +19,14 @@ class _LookAheadState extends State<LookAhead> {
 
   @override
   Widget build(BuildContext context) {
-    // Function beer = widget.lookAheadCallback;
-    // print(widget.lookAheadCallback);
-    List<List<dynamic>> sites = Provider.of<SiteData>(context)
-        .rowsAsListOfValues; //as List<List<dynamic>>;
+    List<List<dynamic>> sites =
+        Provider.of<SiteData>(context).rowsAsListOfValues;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         TypeAheadField<String>(
           textFieldConfiguration: TextFieldConfiguration<String>(
               autofocus: false,
-              // style: DefaultTextStyle.of(context)
-              //     .style
-              //     .copyWith(fontStyle: FontStyle.italic),
               decoration: InputDecoration(
                 labelText: 'Enter agency name or program number',
                 border: OutlineInputBorder(),
@@ -49,9 +44,8 @@ class _LookAheadState extends State<LookAhead> {
               String sitename = site[3] as String;
               sitename = sitename.toLowerCase();
               return sitename.contains(pattern);
-            }); //.toList();
+            });
             Iterable<String> subsubsites = subsites.map((subsite) {
-              // String nameProgNum = subsite[3] as String;
               String progNum = subsite[0] as String;
               String name = subsite[2] as String;
 
@@ -59,12 +53,11 @@ class _LookAheadState extends State<LookAhead> {
             });
             return subsubsites;
           },
-
           itemBuilder: (context, String suggestion) {
             return GestureDetector(
               onPanDown: (_) {
                 print(suggestion);
-                _typeAheadController.text = suggestion; //.titleCase;
+                _typeAheadController.text = suggestion;
 
                 List<String> nameArray = suggestion.split(" - ");
                 print("name: ${nameArray[0]} program number: ${nameArray[1]}");
@@ -79,27 +72,6 @@ class _LookAheadState extends State<LookAhead> {
               ),
             );
           },
-
-// itemBuilder: (context, String suggestion) {
-//                 return Listener(
-//               child: Container(
-//                 color: ColorDefs.colorAudit2, // or whatever color
-//                 child: ListTile(
-//                   dense: true,
-//                   title: Text(suggestion),
-//                 ),
-//               ),
-//               onPointerDown: (_) {
-//                 print(suggestion);
-//                 _typeAheadController.text = suggestion; //.titleCase;
-
-//                 List<String> nameArray = suggestion.split(" - ");
-//                 print("name: ${nameArray[0]} program number: ${nameArray[1]}");
-//                 widget.lookAheadCallback(nameArray);
-//               },
-//             );
-//           },
-
           onSuggestionSelected: (suggestion) {
             _typeAheadController.text = suggestion; //.titleCase;
 

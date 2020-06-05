@@ -8,13 +8,10 @@ class Question {
   String optionalComment; //= "";
   String note;
   bool textBoxRollOut = false;
-  // String mandatoryComment;
   bool completed = false;
   bool flagged = false;
 
-  // input
   Map<String, dynamic> questionMap;
-//  Question({Map<String, dynamic> questionMap}) {
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;

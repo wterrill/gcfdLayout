@@ -1,12 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
-import 'package:auditor/AuditClasses/Question.dart';
 import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/AuditData.dart';
 
 import 'QuestionTypes/DateQuestion.dart';
 import 'QuestionTypes/Display.dart';
@@ -17,7 +12,7 @@ import 'QuestionTypes/YesNoQuestion.dart';
 
 class AuditQuestions extends StatefulWidget {
   AuditQuestions({Key key, this.activeSection}) : super(key: key);
-  Section activeSection;
+  final Section activeSection;
 
   @override
   _AuditQuestionsState createState() => _AuditQuestionsState();

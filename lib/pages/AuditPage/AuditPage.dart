@@ -24,20 +24,16 @@ class _AuditPageState extends State<AuditPage> {
         .createNewAudit(widget.programType);
   }
 
-  // bool auditBuilt = false;
   @override
   Widget build(BuildContext context) {
     print("building AuditPage");
 
     Audit activeAudit = Provider.of<AuditData>(context).activeAudit;
     Section activeSection = Provider.of<AuditData>(context).activeSection;
-    // bool startAudit = Provider.of<AuditData>(context).auditStarted;
     double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     double mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
-    bool auditBuilt = true;
     return MaterialApp(
       theme: ThemeData(
-        // Define the default brightness and colors.
         brightness: Brightness.light,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
@@ -64,7 +60,6 @@ class _AuditPageState extends State<AuditPage> {
                       FlatButton(
                         color: Colors.blue,
                         textColor: Colors.black,
-                        // color: ColorDefs.colorTopDrawerAlternating,
                         child:
                             Text("Confirm", style: ColorDefs.textBodyBlack20),
                         onPressed: () {
@@ -78,7 +73,6 @@ class _AuditPageState extends State<AuditPage> {
                     FlatButton(
                       color: Colors.blue,
                       textColor: Colors.black,
-                      // color: ColorDefs.colorTopDrawerAlternating,
                       child: Text("Cancel Audit",
                           style: ColorDefs.textBodyBlack20),
                       onPressed: () {

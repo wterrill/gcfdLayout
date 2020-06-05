@@ -1,4 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 List<String> audit1Sections = [
   'Confirm Details',
   'Intro',
@@ -11,16 +10,6 @@ List<String> audit1Sections = [
   'Review',
   'Verification'
 ];
-
-// Date of Visit: _____________________________		Start Time: 1pm___________   End Time: ____________
-// Type of Visit: ☐ Annual  ☐ Bi-Annual  ☐ Complaint  ☐ Grant  ☐ CEDA  ☐  Food Rescue  ☐ Follow Up
-// Agency Name: _________________________________________	Agency/Program Number: _______________________
-// Site Address: __________________________________________	GCFD Monitor: _____________________________________
-
-// Program Contact: ________________________________________________________________________________
-// Person interviewed: ______________________________________________________________________________
-// Program Operating Hours: _________________________________________________________________________
-// Service Area: ____________________________________________________________________________________
 
 List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Date of Visit:', 'type': 'display'},

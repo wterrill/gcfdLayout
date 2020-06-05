@@ -1,36 +1,19 @@
-// import 'dart:async';
 import 'dart:ui';
-
-// import 'package:flutter/foundation.dart';
-// import 'package:auditor/pages/AuditPage/AuditPage.dart';
-// import 'package:auditor/pages/ListSchedulingPage/jsonDataTabledemo.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
-import 'package:auditor/providers/CalendarData.dart';
-// import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
-// import 'package:auditor/Definitions/Event.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
-import 'NewAuditDialog.dart';
 import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-// import 'package:auditor/providers/LayoutData.dart';
-// import 'package:rxdart/rxdart.dart';
-
-// import 'dart:developer';
 
 class ListSchedulingPage extends StatefulWidget {
-  // final controller = StreamController<String>();
-
   @override
   _ListSchedulingPageState createState() => _ListSchedulingPageState();
 }
 
 class _ListSchedulingPageState extends State<ListSchedulingPage> {
-  // final controller = BehaviorSubject<String>();
   bool backgroundDisable = false;
   final filterTextController = TextEditingController();
 
@@ -43,8 +26,6 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   @override
   Widget build(BuildContext context) {
     bool filteredTime = Provider.of<ListCalendarData>(context).filterTimeToggle;
-    // var mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    // backgroundDisable = Provider.of<LayoutData>(context).backgroundDisable;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -152,45 +133,12 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                             ],
                           )
                         : Center(
-                            child:
-                                //CircularProgressIndicator(
-                                // backgroundColor: Colors.cyan,
-                                // strokeWidth: 10,
-                                // )
-
-                                // CircularProgressIndicator(
-                                // value: .5,
-                                // valueColor: AlwaysStoppedAnimation<Color>(
-                                //     ColorDefs.colorAudit3
-                                // )
-                                Container(
+                            child: Container(
                               height: 300,
                               width: 300,
                               child: Stack(
                                 children: [
                                   Center(child: Text("Loading Data...")),
-                                  // Center(
-                                  //   child: SizedBox(
-                                  //       width: 100,
-                                  //       height: 100,
-                                  //       child: CircularProgressIndicator(
-                                  //           strokeWidth: 10,
-                                  //           // value: .5,
-                                  //           valueColor:
-                                  //               AlwaysStoppedAnimation<Color>(
-                                  //                   ColorDefs.colorAudit3))),
-                                  // ),
-                                  // Center(
-                                  //   child: SizedBox(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       child: CircularProgressIndicator(
-                                  //           strokeWidth: 30,
-                                  //           // value: .5,
-                                  //           valueColor:
-                                  //               AlwaysStoppedAnimation<Color>(
-                                  //                   ColorDefs.colorAudit2))),
-                                  // )
                                 ],
                               ),
                             ),

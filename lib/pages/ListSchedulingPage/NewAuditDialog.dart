@@ -8,7 +8,7 @@ import 'ApptDataTable/CalendarResult.dart';
 import 'LookAhead.dart';
 
 class NewAuditDialog extends StatefulWidget {
-  CalendarResult calendarResult;
+  final CalendarResult calendarResult;
   NewAuditDialog({Key key, this.calendarResult}) : super(key: key);
 
   @override

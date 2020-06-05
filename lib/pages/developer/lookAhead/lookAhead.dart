@@ -59,15 +59,6 @@ class _LookAheadState extends State<LookAhead> {
                     this._typeAheadController.text = suggestion.titleCase;
                   });
             },
-
-            // itemBuilder: (context, String suggestion) {
-            //   return ListTile(
-            //     contentPadding:
-            //         EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            //     dense: true,
-            //     title: Text(suggestion.titleCase),
-            //   );
-            // },
             onSuggestionSelected: (suggestion) {
               this._typeAheadController.text = suggestion.titleCase;
             },

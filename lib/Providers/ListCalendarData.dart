@@ -1,15 +1,8 @@
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
-import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
-import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:auditor/Definitions/Event.dart';
-// import 'package:auditor/Definitions/colorDefs.dart';
-// import 'package:auditor/Definitions/siteColorTextColorLookup.dart';
-import 'package:auditor/utilities/HourStringInt.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
@@ -31,11 +24,9 @@ class ListCalendarData with ChangeNotifier {
 
   ListCalendarData() {
     initializeApp();
-    // initializeNewCalendar();
   }
 
   void initializeApp() {
-    masterEvents = masterDayEvents;
     print("initialized CalendarData Provider... using Event");
     initHive();
   }
@@ -74,7 +65,6 @@ class ListCalendarData with ChangeNotifier {
     calendarBox.delete(
         '${calendarResult.startTime}-${calendarResult.agency}-${calendarResult.programNum}-${calendarResult.auditor}');
     newEventAdded = true;
-    // calendarBox.compact();
     notifyListeners();
   }
 

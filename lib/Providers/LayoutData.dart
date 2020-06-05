@@ -9,7 +9,6 @@ class LayoutData with ChangeNotifier {
 
   //SchedulingPage
   bool backgroundDisable;
-  Event selectedEvent;
 
   LayoutData() {
     initializeApp();
@@ -18,12 +17,6 @@ class LayoutData with ChangeNotifier {
   void initializeApp() {
     backgroundDisable = false;
     numberOfDaysShown = 8;
-    notifyListeners();
-  }
-
-  void toggleBigDrawerWidget({Event event}) {
-    backgroundDisable = !backgroundDisable;
-    if (event != null) selectedEvent = event;
     notifyListeners();
   }
 

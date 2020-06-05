@@ -6,7 +6,6 @@ import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
-import 'package:statsfl/statsfl.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -32,12 +31,6 @@ class _LoginFormState extends State<LoginForm> {
       margin: EdgeInsets.symmetric(
           horizontal: .2 * Provider.of<LayoutData>(context).mediaArea.width),
       color: ColorDefs.colorTopHeader,
-      // height: 380,
-      // width: 300,
-      // decoration: new BoxDecoration(
-      //   color: ColorDefs.colorTopHeader,
-      //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      // ),
       child: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -104,18 +97,6 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(height: 3),
-          // Align(
-          //     alignment: Alignment.centerRight,
-          //     child: Padding(
-          //       padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-          //       child: GestureDetector(
-          //         onTap: () {
-          //           Dialogs.showNotImplemented(context);
-          //         },
-          //         child: Text("I forgot my password",
-          //             style: ColorDefs.textBodyBlack10),
-          //       ),
-          //     )),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 10.0),
             child: ListTile(
@@ -162,15 +143,6 @@ class _LoginFormState extends State<LoginForm> {
         PageRouteBuilder<void>(
           transitionDuration: Duration(seconds: 2),
           pageBuilder: (_, __, ___) => //StatsFl(
-              // isEnabled: true, //Toggle on/off
-              // width: 600, //Set size
-              // height: 20, //
-              // showText: true, // Hide text label
-              // sampleTime:
-              //     .5, //Interval between fps calculations, in seconds.
-              // totalTime: 15, //Total length of timeline, in seconds.
-              // align: Alignment.topLeft, //Alignment of statsbox
-              // child:
               ListSchedulingPage(),
           // ),
         ),

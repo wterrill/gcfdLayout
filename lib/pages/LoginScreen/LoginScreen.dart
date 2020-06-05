@@ -40,14 +40,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-// class _LoginScreenState extends State<LoginScreen> {
-//   bool _obscureText = true;
-//   final myController = TextEditingController();
-
-//   @override
-//   void dispose() {
-//     // Clean up the controller when the widget is disposed.
-//     myController.dispose();
-//     super.dispose();
-//   }

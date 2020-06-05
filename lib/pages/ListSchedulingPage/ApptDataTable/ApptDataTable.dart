@@ -1,44 +1,19 @@
-// import 'dart:async';
-// import 'dart:convert';
-
 import 'package:auditor/Definitions/colorDefs.dart';
-// import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-// import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import 'CalendarResult.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
 
-// FutureBuilder<String>(
-//   future: _calculation, // a Future<String> or null
-//   builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-//     switch (snapshot.connectionState) {
-//       case ConnectionState.none: return new Text('Press button to start');
-//       case ConnectionState.waiting: return new Text('Awaiting result...');
-//       default:
-//         if (snapshot.hasError)
-//           return new Text('Error: ${snapshot.error}');
-//         else
-//           return new Text('Result: ${snapshot.data}');
-//     }
-//   },
-// )
-
 class ApptDataTable extends StatefulWidget {
-  CalendarResultsDataSource _calendarResultsDataSource =
-      CalendarResultsDataSource([]);
-
   @override
   _ApptDataTableState createState() => _ApptDataTableState();
 }
 
 class _ApptDataTableState extends State<ApptDataTable> {
-  @override
   String filterText = "";
 
   CalendarResultsDataSource _calendarResultsDataSource =
@@ -71,9 +46,6 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> filteredCalendarResults = filter(calendarResults);
 
     calendarResults = filterTimeApply(filteredCalendarResults);
-
-    // List<CalendarResult> calendarResults =
-    //     convertResultsToCalendar(filteredMapCalendarResults);
 
     bool firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent = !isLoaded ||
         (lastFilterText != filterText && filterText != "") ||
@@ -151,20 +123,6 @@ class _ApptDataTableState extends State<ApptDataTable> {
               color: ColorDefs.colorTimeBackground,
               child: SingleChildScrollView(
                 child: CustomPaginatedDataTable(
-                  onPageChanged: (value) {
-                    // print("onPageChanged value: $value");
-                    // print(
-                    //     'onPageChanged _calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}');
-                    // print('_rowsPerPage: $_rowsPerPage');
-                    // if (value + _rowsPerPage > _calendarResultsDataSource.rowCount) {
-                    //   print(
-                    //       "adjust!!!! to: ${_calendarResultsDataSource.rowCount - value}");
-                    //   _rowsPerPage = _calendarResultsDataSource.rowCount - value;
-                    //   print(_rowsPerPage);
-                    //   // setState(() {});
-                    //   // _normalRowPerPage =
-                    // }
-                  },
                   source: _calendarResultsDataSource,
                   showCheckboxColumn: false,
                   headingRowHeight: 70,
@@ -180,7 +138,6 @@ class _ApptDataTableState extends State<ApptDataTable> {
                   },
                   sortColumnIndex: _sortColumnIndex,
                   sortAscending: _sortAscending,
-                  // onSelectAll: _calendarResultsDataSource.selectAll,
                   columnSpacing: 0,
                   dataRowHeight: 50,
                   horizontalMargin: 0,

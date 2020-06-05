@@ -260,7 +260,6 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
     setState(() {
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
-      // _selectedRowCount = widget.source.selectedRowCount;
       _rows.clear();
     });
   }
@@ -347,24 +346,6 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
         MaterialLocalizations.of(context);
     // HEADER
     final List<Widget> headerWidgets = <Widget>[];
-    double startPadding = 24.0;
-    // headerWidgets.add(Text(""));
-    // if (_selectedRowCount == 0) {
-    //   headerWidgets.add(Expanded(child: widget.header));
-    //   if (widget.header is ButtonBar) {
-    //     // We adjust the padding when a button bar is present, because the
-    //     // ButtonBar introduces 2 pixels of outside padding, plus 2 pixels
-    //     // around each button on each side, and the button itself will have 8
-    //     // pixels internally on each side, yet we want the left edge of the
-    //     // inside of the button to line up with the 24.0 left inset.
-    //     // TODO(ianh): Better magic. See https://github.com/flutter/flutter/issues/4460
-    //     startPadding = 12.0;
-    //   }
-    // } else {
-    //   headerWidgets.add(Expanded(
-    //     child: Text(localizations.selectedRowCountTitle(_selectedRowCount)),
-    //   ));
-    // }
     if (widget.actions != null) {
       headerWidgets.addAll(widget.actions.map<Widget>((Widget action) {
         return Padding(
@@ -452,32 +433,6 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // Semantics(
-              //   container: true,
-              //   child: DefaultTextStyle(
-              //     // These typographic styles aren't quite the regular ones. We pick the closest ones from the regular
-              //     // list and then tweak them appropriately.
-              //     // See https://material.io/design/components/data-tables.html#tables-within-cards
-              //     style: _selectedRowCount > 0 ? themeData.textTheme.subtitle1.copyWith(color: themeData.accentColor)
-              //                                  : themeData.textTheme.headline6.copyWith(fontWeight: FontWeight.w400),
-              //     child: IconTheme.merge(
-              //       data: const IconThemeData(
-              //         opacity: 0.54
-              //       ),
-              //       child: Ink(
-              //         height: 64.0,
-              //         color: _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
-              //         child: Padding(
-              //           padding: EdgeInsetsDirectional.only(start: startPadding, end: 14.0),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.end,
-              //             children: headerWidgets,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 dragStartBehavior: widget.dragStartBehavior,

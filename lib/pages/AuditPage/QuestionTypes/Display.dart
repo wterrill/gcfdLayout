@@ -1,12 +1,7 @@
 import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'CommentSection.dart';
-import 'commonQuestionMethods.dart';
 
 class Display extends StatefulWidget {
   final int index;
@@ -27,7 +22,6 @@ class _DisplayState extends State<Display> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
-    Section activeSection = widget.activeSection;
     return Column(
       children: [
         Row(
@@ -40,7 +34,6 @@ class _DisplayState extends State<Display> {
             ),
           ],
         ),
-        // CommentSection(index: index, activeSection: activeSection)
       ],
     );
   }

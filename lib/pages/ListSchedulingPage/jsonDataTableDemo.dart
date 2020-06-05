@@ -128,8 +128,7 @@ class ResultsDataSource extends DataTableSource {
 }
 
 class JsonDataTableDemo extends StatefulWidget {
-  ResultsDataSource _resultsDataSource = ResultsDataSource([]);
-  bool isLoaded = false;
+  // ResultsDataSource _resultsDataSource = ResultsDataSource([]);
 
   @override
   _JsonDataTableDemoState createState() => _JsonDataTableDemoState();
