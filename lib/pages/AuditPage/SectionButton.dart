@@ -25,6 +25,7 @@ class _SectionButtonState extends State<SectionButton> {
     Status status = widget.section.status;
     Widget icon;
     Color buttonColor;
+    bool buttonDisabled = false;
     switch (status) {
       case Status.disabled:
         icon = Icon(
@@ -32,6 +33,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorAlternateDark,
         );
         buttonColor = ColorDefs.colorAlternateDark;
+        buttonDisabled = true;
         break;
 
       case Status.available:
@@ -40,6 +42,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorChatSelected,
         );
         buttonColor = ColorDefs.colorChatSelected;
+        buttonDisabled = false;
         break;
 
       case Status.selected:
@@ -48,6 +51,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorAudit2,
         );
         buttonColor = ColorDefs.colorAudit2;
+        buttonDisabled = false;
         break;
 
       case Status.inProgress:
@@ -56,6 +60,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorAudit4,
         );
         buttonColor = ColorDefs.colorAudit4;
+        buttonDisabled = false;
         break;
 
       case Status.completed:
@@ -64,6 +69,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorButtonYes,
         );
         buttonColor = ColorDefs.colorButtonYes;
+        buttonDisabled = false;
         break;
       default:
         icon = Icon(
@@ -71,6 +77,7 @@ class _SectionButtonState extends State<SectionButton> {
           color: ColorDefs.colorChatSelected,
         );
         buttonColor = ColorDefs.colorChatSelected;
+        buttonDisabled = false;
     }
 
     return Column(
@@ -85,9 +92,10 @@ class _SectionButtonState extends State<SectionButton> {
             ),
             color: buttonColor,
             onPressed: () {
-              print(widget.section.name);
-              Provider.of<AuditData>(context, listen: false)
-                  .updateActiveSection(widget.section);
+              buttonDisabled
+                  ? null
+                  : Provider.of<AuditData>(context, listen: false)
+                      .updateActiveSection(widget.section);
             },
             child: AutoSizeText(
               widget.section.name,

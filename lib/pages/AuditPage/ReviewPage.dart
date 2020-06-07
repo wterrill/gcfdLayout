@@ -46,8 +46,11 @@ class ExpandableContent extends StatelessWidget {
       String dateString;
       if (question.typeOfQuestion.toLowerCase() == "date") {
         DateTime dateTime = question.userResponse as DateTime;
-
-        dateString = DateFormat('EEE, MMM-dd-yyyy').format(dateTime);
+        if (dateTime == null) {
+          dateString = "";
+        } else {
+          dateString = DateFormat('EEE, MMM-dd-yyyy').format(dateTime);
+        }
       }
       columnContent.add(
         ListTile(
