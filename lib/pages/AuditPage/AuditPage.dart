@@ -6,8 +6,10 @@ import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'AuditButtons.dart';
+import 'ReviewPage.dart';
+import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
+import 'VerificationPage.dart';
 
 class AuditPage extends StatefulWidget {
   final String programType;
@@ -52,10 +54,25 @@ class _AuditPageState extends State<AuditPage> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Container(child: AuditButtons(activeAudit: activeAudit)),
-                    Container(
-                      child: AuditQuestions(activeSection: activeSection),
+                    Container(child: SectionButtons(activeAudit: activeAudit)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Divider(
+                        color: ColorDefs.colorAlternatingDark,
+                        thickness: 1,
+                      ),
                     ),
+                    if (activeSection.name == "Review")
+                      ReviewPage(
+                        activeAudit: activeAudit,
+                      ),
+                    if (activeSection.name == "Verification")
+                      VerificationPage(),
+                    if (activeSection.name != "Review" &&
+                        activeSection.name != "Verification")
+                      Container(
+                        child: AuditQuestions(activeSection: activeSection),
+                      ),
                     if (activeSection.name == "Confirm Details")
                       FlatButton(
                         color: Colors.blue,

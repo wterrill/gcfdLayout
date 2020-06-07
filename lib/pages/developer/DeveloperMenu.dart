@@ -3,6 +3,7 @@ import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 // import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
 import 'package:flutter/material.dart';
 
+import 'authenticationEndpoint.dart/testAuthentication.dart';
 import 'fingerSign/fingerSign.dart';
 import 'hiveTest/Contact.dart';
 import 'hiveTest/HiveTest.dart';
@@ -153,6 +154,17 @@ class DeveloperMenu extends StatelessWidget {
                     },
                   ),
                 ),
+              );
+            },
+          ),
+          FlatButton(
+            color: Colors.red,
+            child: Text("Authentication"),
+            onPressed: () {
+              Navigator.push<dynamic>(
+                context,
+                MaterialPageRoute<dynamic>(
+                    builder: (context) => testAuthentication()),
               );
             },
           ),

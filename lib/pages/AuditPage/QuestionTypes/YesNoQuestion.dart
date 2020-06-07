@@ -103,7 +103,10 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
           ],
         ),
         CommentSection(
-            index: index, activeSection: activeSection, key: UniqueKey())
+            index: index,
+            activeSection: activeSection,
+            key: UniqueKey(),
+            mandatory: false)
       ],
     );
   }

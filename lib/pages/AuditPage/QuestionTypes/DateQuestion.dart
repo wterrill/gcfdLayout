@@ -63,6 +63,7 @@ class _DateQuestionState extends State<DateQuestion> {
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
                           checkSectionDone(widget.activeSection));
+                  setState(() {});
                 },
                 child: Icon(Icons.calendar_today,
                     color:
@@ -89,7 +90,11 @@ class _DateQuestionState extends State<DateQuestion> {
           ],
         ),
         CommentSection(
-            index: index, activeSection: activeSection, key: UniqueKey())
+          index: index,
+          activeSection: activeSection,
+          key: UniqueKey(),
+          mandatory: false,
+        )
       ],
     );
   }

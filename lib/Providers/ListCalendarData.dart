@@ -113,7 +113,7 @@ class ListCalendarData with ChangeNotifier {
     List<List<dynamic>> agencies =
         Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
             .rowsAsListOfValues;
-    for (var i = 0; i < 800; i++) {
+    for (var i = 0; i < 10; i++) {
       int randomNumber = random.nextInt(365 * 24 * 60);
       DateTime randomDate = pastTime.add(Duration(minutes: randomNumber));
       String startTime = randomDate.toString();

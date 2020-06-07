@@ -13,9 +13,9 @@ class CommentSection extends StatefulWidget {
   final bool mandatory;
   CommentSection({
     Key key,
-    this.index,
-    this.activeSection,
-    this.mandatory,
+    @required this.index,
+    @required this.activeSection,
+    @required this.mandatory,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,14 @@ class _CommentSectionState extends State<CommentSection> {
   void initState() {
     super.initState();
 
-    String text = widget.activeSection.questions[widget.index].optionalComment;
+    String text;
+
+    if (widget.mandatory) {
+      text =
+          widget.activeSection.questions[widget.index].userResponse as String;
+    } else {
+      text = widget.activeSection.questions[widget.index].optionalComment;
+    }
 
     if (text != null) {
       controller.text = text;
@@ -46,12 +53,13 @@ class _CommentSectionState extends State<CommentSection> {
       child: TextField(
         controller: controller,
         onChanged: (value) {
-          widget.activeSection.questions[index].optionalComment = value;
           if (widget.mandatory) {
             widget.activeSection.questions[index].userResponse = value;
             Status sectionStatus = checkSectionDone(activeSection);
             Provider.of<AuditData>(context, listen: false)
                 .updateSectionStatus(sectionStatus);
+          } else {
+            widget.activeSection.questions[index].optionalComment = value;
           }
 
           if (value.length < 2) {

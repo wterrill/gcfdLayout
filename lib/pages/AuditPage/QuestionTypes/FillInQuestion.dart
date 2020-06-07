@@ -41,11 +41,11 @@ class _FillInQuestionState extends State<FillInQuestion> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Icon(Icons.chat_bubble,
-                    color:
-                        widget.activeSection.questions[index].optionalComment ==
-                                null
-                            ? ColorDefs.colorChatRequired
-                            : ColorDefs.colorChatSelected),
+                    color: widget.activeSection.questions[index].userResponse ==
+                            null
+                        ? ColorDefs.colorChatRequired
+                        // : ColorDefs.colorChatSelected),
+                        : ColorDefs.colorButtonYes),
               ),
             ),
           ],
@@ -53,7 +53,7 @@ class _FillInQuestionState extends State<FillInQuestion> {
         CommentSection(
             index: index,
             activeSection: activeSection,
-            // mandatory: true,
+            mandatory: true,
             key: UniqueKey())
       ],
     );

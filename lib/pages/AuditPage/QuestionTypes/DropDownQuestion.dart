@@ -87,7 +87,10 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
           ],
         ),
         CommentSection(
-            index: index, activeSection: activeSection, key: UniqueKey())
+            index: index,
+            activeSection: activeSection,
+            key: UniqueKey(),
+            mandatory: false)
       ],
     );
   }

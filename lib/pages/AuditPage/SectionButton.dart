@@ -1,40 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:auditor/AuditClasses/Audit.dart';
 import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
-
-class AuditButtons extends StatefulWidget {
-  AuditButtons({Key key, this.activeAudit}) : super(key: key);
-  final Audit activeAudit;
-
-  @override
-  _AuditButtonsState createState() => _AuditButtonsState();
-}
-
-class _AuditButtonsState extends State<AuditButtons> {
-  @override
-  Widget build(BuildContext context) {
-    print("building auditButtons");
-    AutoSizeGroup buttonAutoGroup = AutoSizeGroup();
-    return Container(
-        height: 72,
-        child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            separatorBuilder: (context, index) =>
-                Container(width: 5, color: Colors.transparent),
-            itemCount: widget.activeAudit.sections.length,
-            itemBuilder: (context, index) {
-              return SectionButton(
-                  section: widget.activeAudit.sections[index],
-                  buttonAutoGroup: buttonAutoGroup);
-            }));
-  }
-}
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SectionButton extends StatefulWidget {
   final Section section;
@@ -55,12 +24,14 @@ class _SectionButtonState extends State<SectionButton> {
   Widget build(BuildContext context) {
     Status status = widget.section.status;
     Widget icon;
+    Color buttonColor;
     switch (status) {
       case Status.disabled:
         icon = Icon(
           Icons.lock,
           color: ColorDefs.colorAlternateDark,
         );
+        buttonColor = ColorDefs.colorAlternateDark;
         break;
 
       case Status.available:
@@ -68,6 +39,7 @@ class _SectionButtonState extends State<SectionButton> {
           Icons.slideshow,
           color: ColorDefs.colorChatSelected,
         );
+        buttonColor = ColorDefs.colorChatSelected;
         break;
 
       case Status.selected:
@@ -75,6 +47,7 @@ class _SectionButtonState extends State<SectionButton> {
           Icons.adjust,
           color: ColorDefs.colorAudit2,
         );
+        buttonColor = ColorDefs.colorAudit2;
         break;
 
       case Status.inProgress:
@@ -82,6 +55,7 @@ class _SectionButtonState extends State<SectionButton> {
           Icons.watch_later,
           color: ColorDefs.colorAudit4,
         );
+        buttonColor = ColorDefs.colorAudit4;
         break;
 
       case Status.completed:
@@ -89,20 +63,27 @@ class _SectionButtonState extends State<SectionButton> {
           Icons.check_circle,
           color: ColorDefs.colorButtonYes,
         );
+        buttonColor = ColorDefs.colorButtonYes;
         break;
       default:
         icon = Icon(
           Icons.slideshow,
           color: ColorDefs.colorChatSelected,
         );
+        buttonColor = ColorDefs.colorChatSelected;
     }
 
     return Column(
       children: [
         Container(
           width: 110,
+          height: 70,
           child: FlatButton(
-            color: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              // side: BorderSide(color: ColorDefs.colorDarkBackground),
+            ),
+            color: buttonColor,
             onPressed: () {
               print(widget.section.name);
               Provider.of<AuditData>(context, listen: false)
@@ -112,8 +93,8 @@ class _SectionButtonState extends State<SectionButton> {
               widget.section.name,
               group: widget.buttonAutoGroup,
               maxLines: 2,
-              minFontSize: 5,
-              style: ColorDefs.textBodyBlack20,
+              minFontSize: 14,
+              style: ColorDefs.textBodyBlack10,
               wrapWords: false,
               softWrap: true,
               textAlign: TextAlign.center,

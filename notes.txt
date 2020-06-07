@@ -42,3 +42,27 @@ Hive.openBox('boxName');
 6. register it: Hive.registerAdapter(CLASSAdapter(), TypeID)  (0, 1, 2....)
 
 it seems like, when things are weird, that running 'flutter clean' followed by flutter pub get and then the build_runner thing above works?
+
+
+
+ MXOTestAud1/ Password1 
+ MXOTestAud2/ Password1 
+ MXOTestAud3/ Password1 
+
+MXOTestMGR1/ Password1 
+MXOTestMGR2/ Password1 
+MXOTestMGR3/ Password1
+
+Get:
+http://12.216.81.220:88/api/SiteInfo	
+
+
+Post
+http://12.216.81.220:88/api/AuthenticateUser
+
+http://12.216.81.220:88/api/Audit/Schedule	
+http://10.99.1.107:88/api/AudSchedule	
+http://10.99.1.107:88/api/Audit/FileUpload
+
+
+

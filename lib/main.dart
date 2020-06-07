@@ -76,8 +76,8 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
-
           return Scaffold(body: LoginScreen());
+          // return Scaffold(body: ListSchedulingPage());
         }),
       ),
       //),
