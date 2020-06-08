@@ -1,15 +1,33 @@
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+
 import 'MetaData.dart';
 import 'Section.dart';
 
-class Audit {
-  String name;
-  List<Section> sections = [];
-  bool completed;
-  List<MetaData> metadata;
-  List<Map<String, List<Map<String, dynamic>>>> received;
+import 'package:hive/hive.dart';
+part 'Audit.g.dart';
 
-  Audit(this.received) {
-    for (Map<String, List<Map<String, dynamic>>> section in received) {
+@HiveType(typeId: 6)
+class Audit extends HiveObject {
+  @HiveField(0)
+  String name;
+
+  @HiveField(1)
+  List<Section> sections = [];
+
+  @HiveField(2)
+  bool completed;
+
+  @HiveField(3)
+  List<MetaData> metadata;
+
+  @HiveField(4)
+  List<Map<String, List<Map<String, dynamic>>>> questionnaire;
+
+  @HiveField(5)
+  CalendarResult calendarResult;
+
+  Audit({this.questionnaire, this.calendarResult}) {
+    for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));
       print(sections);
     }

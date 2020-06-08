@@ -12,6 +12,9 @@ import 'package:auditor/providers/LayoutData.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'AuditClasses/Question.dart';
+import 'AuditClasses/Section.dart';
+import 'AuditClasses/Audit.dart';
 import 'Definitions/Site.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
@@ -29,6 +32,10 @@ void main() async {
   Hive.registerAdapter(CalendarResultAdapter());
   Hive.registerAdapter(ColorAdapter());
   Hive.registerAdapter(SiteAdapter());
+  Hive.registerAdapter(AuditAdapter());
+  Hive.registerAdapter(QuestionAdapter());
+  Hive.registerAdapter(SectionAdapter());
+  Hive.registerAdapter(StatusAdapter());
 
   runApp(
     MultiProvider(

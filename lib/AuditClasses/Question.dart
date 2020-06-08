@@ -1,17 +1,41 @@
-class Question {
-  // info
+import 'package:hive/hive.dart';
+part 'Question.g.dart';
+
+@HiveType(typeId: 8)
+class Question extends HiveObject {
+  @HiveField(0)
   String text;
+
+  @HiveField(1)
   String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display
-  dynamic userResponse; // what the user reponsed on the questionnaire
-  dynamic happyPathResponse; // what the desired response is
+
+  @HiveField(2)
+  String userResponse; // what the user reponsed on the questionnaire
+
+  @HiveField(3)
+  List<String> happyPathResponse; // what the desired response is
+
+  @HiveField(4)
   List<String> dropDownMenu;
-  String optionalComment; //= "";
+
+  @HiveField(5)
+  String optionalComment;
+
+  @HiveField(6)
   String note;
+
+  @HiveField(7)
   bool textBoxRollOut = false;
+
+  @HiveField(8)
   bool completed = false;
+
+  @HiveField(9)
   bool flagged = false;
 
+  @HiveField(10)
   Map<String, dynamic> questionMap;
+
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;

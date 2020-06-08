@@ -23,7 +23,7 @@ Color buttonColorPicker(Question questionData, String buttonText) {
   return finalButtonColor;
 }
 
-dynamic setQuestionValue(dynamic currentValue, dynamic buttonText) {
+String setQuestionValue(String currentValue, String buttonText) {
   bool isNotSameAsText = currentValue != buttonText;
   bool isSameAsText = currentValue == buttonText;
 

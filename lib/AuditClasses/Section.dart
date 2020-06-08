@@ -1,12 +1,33 @@
 import 'Question.dart';
+import 'package:hive/hive.dart';
+part 'Section.g.dart';
 
-enum Status { disabled, selected, available, inProgress, completed }
+@HiveType(typeId: 9)
+enum Status {
+  @HiveField(0)
+  disabled,
+  @HiveField(1)
+  selected,
+  @HiveField(2)
+  available,
+  @HiveField(3)
+  inProgress,
+  @HiveField(4)
+  completed
+}
 
-class Section {
+@HiveType(typeId: 7)
+class Section extends HiveObject {
+  @HiveField(0)
   Map<String, List<Map<String, dynamic>>> section;
 
+  @HiveField(1)
   String name;
+
+  @HiveField(2)
   List<Question> questions;
+
+  @HiveField(3)
   var status = Status.disabled;
 
   Section({this.section}) {

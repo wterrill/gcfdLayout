@@ -154,13 +154,16 @@ class AuditInfoDialog extends StatelessWidget {
                                   Dialogs.showNotImplemented(context);
                                   break;
                                 case "Pantry Audit":
+                                  bool alreadyExist = Provider.of<AuditData>(
+                                          context,
+                                          listen: false)
+                                      .getAudit(calendarResult);
                                   Navigator.push<dynamic>(
                                     context,
                                     MaterialPageRoute<dynamic>(
                                         builder: (context) => AuditPage(
-                                            programType: calendarResult
-                                                .programType
-                                                .toLowerCase())),
+                                            calendarResult: calendarResult,
+                                            alreadyExist: alreadyExist)),
                                   );
                                   break;
                                 case "Congregate Audit":

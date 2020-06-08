@@ -30,8 +30,7 @@ class _CommentSectionState extends State<CommentSection> {
     String text;
 
     if (widget.mandatory) {
-      text =
-          widget.activeSection.questions[widget.index].userResponse as String;
+      text = widget.activeSection.questions[widget.index].userResponse;
     } else {
       text = widget.activeSection.questions[widget.index].optionalComment;
     }

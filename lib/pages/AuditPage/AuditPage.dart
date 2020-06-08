@@ -1,6 +1,7 @@
 import 'package:auditor/AuditClasses/Audit.dart';
 import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,12 @@ import 'AuditQuestions.dart';
 import 'VerificationPage.dart';
 
 class AuditPage extends StatefulWidget {
-  final String programType;
-  AuditPage({Key key, this.programType}) : super(key: key);
+  final bool alreadyExist;
+  final CalendarResult calendarResult;
+  // final String programType;
+  AuditPage(
+      {Key key, @required this.calendarResult, @required this.alreadyExist})
+      : super(key: key);
   @override
   _AuditPageState createState() => _AuditPageState();
 }
@@ -22,8 +27,12 @@ class _AuditPageState extends State<AuditPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AuditData>(context, listen: false)
-        .createNewAudit(widget.programType);
+    if (widget.alreadyExist) {
+      Provider.of<AuditData>(context, listen: false).loadExisting();
+    } else {
+      Provider.of<AuditData>(context, listen: false)
+          .createNewAudit(widget.calendarResult);
+    }
   }
 
   @override

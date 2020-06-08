@@ -38,8 +38,8 @@ class _DateQuestionState extends State<DateQuestion> {
             (widget.activeSection.questions[index].userResponse != null)
                 ? Text(
                     DateFormat.yMMMMd('en_US')
-                        .format(widget.activeSection.questions[index]
-                            .userResponse as DateTime)
+                        .format(DateTime.parse(
+                            widget.activeSection.questions[index].userResponse))
                         .toString(),
                   )
                 : Text(""),
@@ -59,7 +59,7 @@ class _DateQuestionState extends State<DateQuestion> {
                     },
                   );
                   widget.activeSection.questions[index].userResponse =
-                      selectedDate;
+                      selectedDate.toString();
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
                           checkSectionDone(widget.activeSection));
