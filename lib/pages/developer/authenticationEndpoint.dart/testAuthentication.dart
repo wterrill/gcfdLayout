@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
 
@@ -51,7 +51,8 @@ class testAuthentication extends StatelessWidget {
             RaisedButton(
               onPressed: () async {
                 //TODO: need to turn of CORS headers in the server
-                client
+                // client
+                http
                     .get(
                   "http://12.216.81.220:88/api/AuthenticateUser",
                   // headers: {
@@ -72,7 +73,8 @@ class testAuthentication extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                client.get("http://12.216.81.220:88/api/SiteInfo").then((res) {
+                // client
+                http.get("http://12.216.81.220:88/api/SiteInfo").then((res) {
                   print(res.body);
                 });
               },
@@ -93,10 +95,13 @@ class testAuthentication extends StatelessWidget {
                   'StartTime': '2020-06-15T12:00:00.000Z',
                   'DeviceId': 'abc123'
                 }));
-                client
-                    .post('http://12.216.81.220:88/api/Audit/Schedule',
+                // client
+                http
+                    .post(
+                        'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
                         headers: <String, String>{
                           'Content-Type': 'application/json; charset=UTF-8',
+                          'X-Requested-With': 'XMLHttpRequest',
                         },
                         // body: beer
                         body: jsonEncode(<String, dynamic>{
