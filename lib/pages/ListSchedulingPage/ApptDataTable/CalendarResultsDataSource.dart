@@ -30,6 +30,24 @@ class CalendarResultsDataSource extends DataTableSource {
     assert(index >= 0);
     if (index >= _calendarResults.length) return null;
     final CalendarResult calendarResult = _calendarResults[index];
+    Color selectColor(String programType) {
+      Color color = ColorDefs.colorAlternateLight;
+
+      if (programType == "Healthy Student Market") {
+        color = ColorDefs.colorAudit1;
+      }
+      if (programType == "Senior Adults Program") {
+        color = ColorDefs.colorAudit2;
+      }
+      if (programType == "Pantry Audit") {
+        color = ColorDefs.colorAudit3;
+      }
+      if (programType == "Congregate Audit") {
+        color = ColorDefs.colorAudit4;
+      }
+      return color;
+    }
+
     return DataRow.byIndex(
         index: index,
         selected: calendarResult.selected,
@@ -102,21 +120,27 @@ class CalendarResultsDataSource extends DataTableSource {
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Center(
+                    child: Container(
+                  color: selectColor(calendarResult.programType),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
                     child: Text('${calendarResult.auditType}',
-                        style: ColorDefs.textBodyWhite15)),
+                        style: ColorDefs.textBodyWhite15),
+                  ),
+                )),
               ))),
-          DataCell(Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
-                    child: Text('${calendarResult.programType}',
-                        style: ColorDefs.textBodyWhite15)),
-              ))),
+          // DataCell(Container(
+          //     height: double.infinity,
+          //     width: double.infinity,
+          //     color: index.isEven
+          //         ? ColorDefs.colorAlternatingDark
+          //         : ColorDefs.colorDarkBackground,
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(2.0),
+          //       child: Center(
+          //           child: Text('${calendarResult.programType}',
+          //               style: ColorDefs.textBodyWhite15)),
+          //     ))),
           DataCell(Container(
               height: double.infinity,
               width: double.infinity,

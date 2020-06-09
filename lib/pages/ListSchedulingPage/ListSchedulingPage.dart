@@ -3,6 +3,7 @@ import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
@@ -26,6 +27,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   @override
   Widget build(BuildContext context) {
     bool filteredTime = Provider.of<ListCalendarData>(context).filterTimeToggle;
+    String dayOfWeek = DateFormat('EEEE').format(DateTime.now()).toString();
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -93,7 +95,8 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                 ? Text("Show All",
                                                     style: ColorDefs
                                                         .textBodyBlue20)
-                                                : Text("Show This Week",
+                                                : Text(
+                                                    "Show from last $dayOfWeek to next $dayOfWeek ",
                                                     style: ColorDefs
                                                         .textBodyWhite20),
                                           ),

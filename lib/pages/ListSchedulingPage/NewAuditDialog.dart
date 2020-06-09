@@ -95,6 +95,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             LookAhead(
+              setValue: selectedSiteName,
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
@@ -328,7 +329,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                   }
                 },
                 child: alreadyExisted
-                    ? Text("Re-Schedule Audit", style: ColorDefs.textBodyBlue20)
+                    ? Text("Save Audit", style: ColorDefs.textBodyBlue20)
                     : Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
               ),
             ),

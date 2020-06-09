@@ -164,7 +164,7 @@ class DeveloperMenu extends StatelessWidget {
               Navigator.push<dynamic>(
                 context,
                 MaterialPageRoute<dynamic>(
-                    builder: (context) => testAuthentication()),
+                    builder: (context) => TestAuthentication()),
               );
             },
           ),

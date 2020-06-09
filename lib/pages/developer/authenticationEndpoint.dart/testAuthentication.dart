@@ -3,6 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
+import 'dart:io';
+import 'package:async/async.dart';
+import 'package:path/path.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
 
 // Future<List<Result>> fetchResults(http.Client client) async {
 //   final response =
@@ -31,96 +37,296 @@ import 'package:ntlm/ntlm.dart';
 
 // http://12.216.81.220:88/api/SiteInfo
 
-class testAuthentication extends StatelessWidget {
-  const testAuthentication({Key key}) : super(key: key);
+class TestAuthentication extends StatefulWidget {
+  const TestAuthentication({Key key}) : super(key: key);
 
   @override
+  _TestAuthenticationState createState() => _TestAuthenticationState();
+}
+
+class _TestAuthenticationState extends State<TestAuthentication> {
+  @override
+  String result = "Awaiting results...";
+
+  Uint8List pickedImage;
+
   Widget build(BuildContext context) {
-    NTLMClient client = new NTLMClient(
+    NTLMClient client = NTLMClient(
       domain: "",
       workstation: "LAPTOP",
       username: "MXOTestAud1",
       password: "Password1",
     );
 
-    return Container(
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RaisedButton(
-              onPressed: () async {
-                //TODO: need to turn of CORS headers in the server
-                // client
-                http
-                    .get(
-                  "http://12.216.81.220:88/api/AuthenticateUser",
-                  // headers: {
-                  //   "Access-Control-Allow-Origin":
-                  //       "*", // Required for CORS support to work
-                  //   "Access-Control-Allow-Credentials":
-                  //       "true", // Required for cookies, authorization headers with HTTPS
-                  //   "Access-Control-Allow-Headers":
-                  //       "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-                  //   "Access-Control-Allow-Methods": "POST, OPTIONS, GET"
-                  // },
-                )
-                    .then((res) {
-                  print(res.body);
-                });
-              },
-              child: Text("Authenticate"),
-            ),
-            RaisedButton(
-              onPressed: () {
-                // client
-                http.get("http://12.216.81.220:88/api/SiteInfo").then((res) {
-                  print(res.body);
-                });
-              },
-              child: Text("siteInfo"),
-            ),
-            RaisedButton(
-              onPressed: () {
-                // client.post("http://12.216.81.220:88/api/SiteInfo").then((res) {
-                //   print(res.body);
-                // });
-                print(jsonEncode(<String, dynamic>{
-                  'AED': 'A',
-                  'AgencyNumber': 'A99999',
-                  'ProgramNumber': 'PY99999',
-                  'ProgramType': 2,
-                  'Auditor': 'WillTerrill',
-                  'AuditType': 2,
-                  'StartTime': '2020-06-15T12:00:00.000Z',
-                  'DeviceId': 'abc123'
-                }));
-                // client
-                http
-                    .post(
-                        'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
-                        headers: <String, String>{
-                          'Content-Type': 'application/json; charset=UTF-8',
-                          'X-Requested-With': 'XMLHttpRequest',
+    void upload() async {
+      File imageFile = File.fromRawPath(pickedImage);
+
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      var length = await imageFile.length();
+
+      var uri = Uri.parse('http://12.216.81.220:88/api/Audit/FileUpload');
+
+      var request = http.MultipartRequest("POST", uri);
+      var multipartFile = http.MultipartFile('file', stream, length,
+          filename: basename(imageFile.path));
+      //contentType:  MediaType('image', 'png'));
+
+      request.files.add(multipartFile);
+      var response = await request.send();
+      print(response.statusCode);
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+    }
+
+    void pickImage() async {
+      /// You can set the parameter asUint8List to true
+      /// to get only the bytes from the image
+      Uint8List fromPicker =
+          await ImagePickerWeb.getImage(outputType: ImageType.bytes)
+              as Uint8List;
+
+      if (fromPicker != null) {
+        // debugPrint(fromPicker.toString());
+      }
+
+      /// Default behavior would be getting the Image.memory
+      // Image fromPicker = await ImagePickerWeb.getImage(outputType: ImageType.widget);
+
+      if (fromPicker != null) {
+        // pickedImage = fromPicker;
+        if (pickedImage == null) {
+          print("buggered");
+        }
+        setState(() {
+          pickedImage = fromPicker;
+        });
+      }
+    }
+
+    void upload2() {
+      // File file = File.fromRawPath(pickedImage);
+      String base64Image =
+          base64Encode(pickedImage); //base64Encode(file.readAsBytesSync());
+      String fileName = "beer"; //file.path.split("/").last;
+
+      http.post('http://12.216.81.220:88/api/Audit/FileUpload', body: {
+        "image": base64Image,
+        "name": fileName,
+        "AgencyNumber": "A00078",
+        "ProgramNumber": "PY00002",
+        "ProgramType": "1",
+        "Auditor": "MXOTestAud1",
+        "AuditType": "2",
+        "StartTime": "2020-06-10T13:00:00.000Z",
+        "DeviceId": "aaabbbccc"
+      }).then((res) {
+        print(res.statusCode);
+        print(res.body);
+      }).catchError((dynamic err) {
+        print(err);
+      });
+    }
+
+    void asyncFileUpload() async {
+      if (pickedImage == null) {
+        print("buggered");
+      }
+      //String text, File file) async {
+      //create multipart request for POST or PATCH method
+      var request = http.MultipartRequest(
+          "POST", Uri.parse("http://12.216.81.220:88/api/Audit/FileUpload"));
+      //add text fields
+      // request.fields["text_field"] = text;
+      request.fields["AgencyNumber"] = "A00078";
+      request.fields["ProgramNumber"] = "PY00002";
+      request.fields["ProgramType"] = "1";
+      request.fields["Auditor"] = "MXOTestAud1";
+      request.fields["AuditType"] = "2";
+      request.fields["StartTime"] = "2020-06-10T13:00:00.000Z";
+      request.fields["DeviceId"] = "aaabbbccc";
+
+      //create multipart using filepath, string or bytes
+      // var pic = await http.MultipartFile.fromPath("file_field", file.path);
+      var pic = await http.MultipartFile.fromBytes("file_field", pickedImage,
+          contentType: MediaType('image', 'png'));
+      //add multipart to request
+      request.files.add(pic);
+      var response = await request.send();
+
+      //Get the response from the server
+      var responseData = await response.stream.toBytes();
+      var responseString = String.fromCharCodes(responseData);
+      print(responseString);
+    }
+
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
+                    onPressed: () async {
+                      //TODO: need to turn of CORS headers in the server
+                      client
+                          // http
+                          .get(
+                        "http://12.216.81.220:88/api/AuthenticateUser",
+                        // headers: {
+                        //   "Access-Control-Allow-Origin":
+                        //       "*", // Required for CORS support to work
+                        //   "Access-Control-Allow-Credentials":
+                        //       "true", // Required for cookies, authorization headers with HTTPS
+                        //   "Access-Control-Allow-Headers":
+                        //       "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+                        //   "Access-Control-Allow-Methods": "POST, OPTIONS, GET"
+                        // },
+                      )
+                          .then((res) {
+                        print(res.body);
+                        setState(() {
+                          result = res.body;
+                        });
+                      }).catchError((String e) {
+                        setState(
+                          () {
+                            result = e;
+                          },
+                        );
+                      });
+                      ;
+                    },
+                    child: Text("Authenticate"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      // client
+                      http.get("http://12.216.81.220:88/api/SiteInfo").then(
+                        (res) {
+                          print(res.body);
+                          setState(
+                            () {
+                              result = res.body;
+                            },
+                          );
                         },
-                        // body: beer
-                        body: jsonEncode(<String, dynamic>{
-                          'AED': 'A',
-                          'AgencyNumber': 'A00091',
-                          'ProgramNumber': 'PY00005',
-                          'ProgramType': 1,
-                          'Auditor': 'MXOTestAud1',
-                          'AuditType': 1,
-                          'StartTime': '2020-06-15T12:00:00.000Z',
-                          'DeviceId': 'abc123'
-                        }))
-                    .then((res) {
-                  print(res.body);
-                });
-              },
-              child: Text("schedule audit"),
-            ),
-          ],
+                      ).catchError((String e) {
+                        setState(
+                          () {
+                            result = e;
+                          },
+                        );
+                      });
+                    },
+                    child: Text("siteInfo"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      // client.post("http://12.216.81.220:88/api/SiteInfo").then((res) {
+                      //   print(res.body);
+                      // });
+                      print(jsonEncode(<String, dynamic>{
+                        'AED': 'A',
+                        'AgencyNumber': 'A99999',
+                        'ProgramNumber': 'PY99999',
+                        'ProgramType': 2,
+                        'Auditor': 'WillTerrill',
+                        'AuditType': 2,
+                        'StartTime': '2020-06-15T12:00:00.000Z',
+                        'DeviceId': 'abc123'
+                      }));
+                      // client
+                      http
+                          .post(
+                              'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+                              headers: <String, String>{
+                                'Content-Type':
+                                    'application/json; charset=UTF-8',
+                                'X-Requested-With': 'XMLHttpRequest',
+                              },
+                              // body: beer
+                              body: jsonEncode(<String, dynamic>{
+                                'AED': 'A',
+                                'AgencyNumber': 'A00091',
+                                'ProgramNumber': 'PY00005',
+                                'ProgramType': 1,
+                                'Auditor': 'MXOTestAud1',
+                                'AuditType': 1,
+                                'StartTime': '2020-06-15T12:00:00.000Z',
+                                'DeviceId': 'abc123'
+                              }))
+                          .then((res) {
+                        print(res.body);
+                        setState(() {
+                          result = res.body;
+                        });
+                      }).catchError((String e) {
+                        setState(
+                          () {
+                            result = e;
+                          },
+                        );
+                      });
+                    },
+                    child: Text("schedule audit"),
+                  ),
+                  RaisedButton(
+                      onPressed: () => pickImage(), child: Text("pick Image")),
+                  RaisedButton(
+                      onPressed: () => asyncFileUpload(),
+                      // onPressed: () => upload2(),
+                      child: Text("send Image")),
+                  RaisedButton(
+                      // onPressed: () => asyncFileUpload(),
+                      onPressed: () {
+                        // client.post("http://12.216.81.220:88/api/SiteInfo").then((res) {
+                        //   print(res.body);
+                        // });
+
+                        // https://cors-anywhere.herokuapp.com/
+
+                        String body = jsonEncode(<String, dynamic>{
+                          'MyDeviceId': 'aaabbbccc',
+                          'QueryType': 1,
+                        });
+                        print(body);
+                        http
+                            // client
+                            .post('http://12.216.81.220:88/api/Audit/Get',
+                                headers: <String, String>{
+                                  'Content-Type':
+                                      'application/json; charset=UTF-8',
+                                  'X-Requested-With': 'XMLHttpRequest',
+                                },
+                                // body: beer
+//  MyDeviceId	string(500)	No
+// QueryType	int	No	"1: Query All
+// 0: Query All But Me"
+
+                                body: body)
+                            .then((res) {
+                          print(res.body);
+                          setState(() {
+                            result = res.body;
+                          });
+                        }).catchError((String e) {
+                          setState(
+                            () {
+                              result = e;
+                            },
+                          );
+                        });
+                      },
+                      child: Text("get appointments"))
+                ],
+              ),
+              Expanded(child: Text(result))
+            ],
+          ),
         ),
       ),
     );
@@ -157,7 +363,7 @@ class Post {
     );
   }
   Map toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
     map["userId"] = userId;
     map["title"] = title;
     map["body"] = body;

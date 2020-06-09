@@ -176,7 +176,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                     DataColumn(
                         label: Expanded(
                             child: Center(
-                                child: Text('Prog. #',
+                                child: Text('Prog #',
                                     style: ColorDefs.textBodyBlue20))),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
@@ -191,15 +191,15 @@ class _ApptDataTableState extends State<ApptDataTable> {
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.auditType,
                                 columnIndex, ascending)),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Prog. Type',
-                                    style: ColorDefs.textBodyBlue20))),
-                        numeric: false,
-                        onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.programType,
-                                columnIndex, ascending)),
+                    // DataColumn(
+                    //     label: Expanded(
+                    //         child: Center(
+                    //             child: Text('Prog Type',
+                    //                 style: ColorDefs.textBodyBlue20))),
+                    //     numeric: false,
+                    //     onSort: (int columnIndex, bool ascending) =>
+                    //         _sort<String>((CalendarResult d) => d.programType,
+                    //             columnIndex, ascending)),
                     DataColumn(
                         label: Expanded(
                             child: Center(

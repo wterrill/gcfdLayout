@@ -6,14 +6,21 @@ import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
-  LookAhead({Key key, this.lookAheadCallback}) : super(key: key);
+  LookAhead({Key key, this.lookAheadCallback, this.setValue}) : super(key: key);
   final Function lookAheadCallback;
+  final String setValue;
 
   @override
   _LookAheadState createState() => _LookAheadState();
 }
 
 class _LookAheadState extends State<LookAhead> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    _typeAheadController.text = widget.setValue;
+  }
+
   final TextEditingController _typeAheadController = TextEditingController();
   dynamic suggestion;
 
