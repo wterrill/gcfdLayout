@@ -68,6 +68,27 @@ class Dialogs {
     );
   }
 
+  static void showBadSchedule(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+              'This audit cannot be scheduled as entered.  Please verify that all fields are filled.'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showPdfCreated(BuildContext context) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,

@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,27 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    bool validateEntry() {
+      bool validated = true;
+      if (selectedAuditType == null) {
+        validated = false;
+      } else if (selectedAuditor == null) {
+        validated = false;
+      } else if (selectedDate == null) {
+        validated = false;
+      } else if (selectedProgType == null) {
+        validated = false;
+      } else if (selectedProgramNumber == null) {
+        validated = false;
+      } else if (selectedSiteName == null) {
+        validated = false;
+      } else if (selectedTime == null) {
+        validated = false;
+      }
+
+      return validated;
+    }
+
     List<DropdownMenuItem<String>> dropdown(List<String> stringArray) {
       List<DropdownMenuItem<String>> dropDownList =
           stringArray.map<DropdownMenuItem<String>>((String value) {
@@ -281,50 +303,55 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     _formKey.currentState.save();
                     print(selectedDate);
                     print(selectedTime.format(context).toString());
-                    if (alreadyExisted) {
+                    bool validated = validateEntry();
+                    if (validated) {
+                      if (alreadyExisted) {
+                        Provider.of<ListCalendarData>(context, listen: false)
+                            .deleteCalendarResult(widget.calendarResult);
+                      }
+
+                      // TimeOfDay t;
+                      // final now = new DateTime.now();
+                      DateTime selectedDateTime = DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedTime.hour,
+                          selectedTime.minute);
+                      print(selectedDateTime.toString());
+                      print(selectedSiteName);
+                      print(selectedProgramNumber);
+
+                      // Provider.of<ListCalendarData>(context, listen: false)
+                      //     .addEvent({
+                      //   'startTime': selectedDateTime.toString(),
+                      //   'message': '',
+                      //   'agency': selectedSiteName,
+                      //   'auditType': selectedAuditType,
+                      //   'programNum': selectedProgramNumber,
+                      //   'programType': selectedProgType,
+                      //   'auditor': selectedAuditor,
+                      //   'status': "scheduled"
+                      // });
+
                       Provider.of<ListCalendarData>(context, listen: false)
-                          .deleteCalendarResult(widget.calendarResult);
-                    }
+                          .addBoxEvent(event: {
+                        'startTime': selectedDateTime.toString(),
+                        'message': '',
+                        'agency': selectedSiteName,
+                        'auditType': selectedAuditType,
+                        'programNum': selectedProgramNumber,
+                        'programType': selectedProgType,
+                        'auditor': selectedAuditor,
+                        'status': "Scheduled"
+                      }, notify: true);
 
-                    // TimeOfDay t;
-                    // final now = new DateTime.now();
-                    DateTime selectedDateTime = DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedTime.hour,
-                        selectedTime.minute);
-                    print(selectedDateTime.toString());
-                    print(selectedSiteName);
-                    print(selectedProgramNumber);
-
-                    // Provider.of<ListCalendarData>(context, listen: false)
-                    //     .addEvent({
-                    //   'startTime': selectedDateTime.toString(),
-                    //   'message': '',
-                    //   'agency': selectedSiteName,
-                    //   'auditType': selectedAuditType,
-                    //   'programNum': selectedProgramNumber,
-                    //   'programType': selectedProgType,
-                    //   'auditor': selectedAuditor,
-                    //   'status': "scheduled"
-                    // });
-
-                    Provider.of<ListCalendarData>(context, listen: false)
-                        .addBoxEvent(event: {
-                      'startTime': selectedDateTime.toString(),
-                      'message': '',
-                      'agency': selectedSiteName,
-                      'auditType': selectedAuditType,
-                      'programNum': selectedProgramNumber,
-                      'programType': selectedProgType,
-                      'auditor': selectedAuditor,
-                      'status': "Scheduled"
-                    }, notify: true);
-
-                    Navigator.of(context).pop();
-                    if (alreadyExisted) {
                       Navigator.of(context).pop();
+                      if (alreadyExisted) {
+                        Navigator.of(context).pop();
+                      }
+                    } else {
+                      Dialogs.showBadSchedule(context);
                     }
                   }
                 },

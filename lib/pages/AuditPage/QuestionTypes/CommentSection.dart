@@ -71,6 +71,10 @@ class _CommentSectionState extends State<CommentSection> {
             ? ColorDefs.textBodyBlack20
             : ColorDefs.textTransparent,
         decoration: new InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () => controller.clear(),
+              icon: Icon(Icons.clear),
+            ),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -78,7 +82,7 @@ class _CommentSectionState extends State<CommentSection> {
             disabledBorder: InputBorder.none,
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: "Enter comments here"),
+            hintText: "Enter comments "),
       ),
     );
   }

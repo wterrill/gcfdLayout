@@ -201,7 +201,7 @@ class AuditInfoDialog extends StatelessWidget {
                                 Dialogs.showRescheduleAudit(
                                     context, calendarResult);
                               },
-                              child: AutoSizeText('Edit Audit',
+                              child: AutoSizeText('Reschedule Audit',
                                   style: ColorDefs.textBodyBronze20),
                             ),
                           ),
