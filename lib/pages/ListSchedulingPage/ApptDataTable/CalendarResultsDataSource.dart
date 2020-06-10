@@ -118,16 +118,22 @@ class CalendarResultsDataSource extends DataTableSource {
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
               child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
-                    child: Container(
-                  color: selectColor(calendarResult.programType),
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: selectColor(calendarResult.programType),
+                      borderRadius: BorderRadius.circular(20.0),
+                      border: Border.all(width: 2.0, color: Colors.grey)),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Text('${calendarResult.auditType}',
-                        style: ColorDefs.textBodyWhite15),
+                    child: Center(
+                      child: Text('${calendarResult.auditType}',
+                          style: ColorDefs.textBodyWhite15),
+                    ),
                   ),
-                )),
+                ),
               ))),
           // DataCell(Container(
           //     height: double.infinity,

@@ -4,23 +4,8 @@ List<String> auditors = [
   "Charlie Chaplin",
 ];
 
-List<String> sites = [
-  "Manna",
-  "Marillac House",
-  "Irving Park",
-  "Ravenswood",
-  "LakeView",
-  "Casa Catalina",
-  "St Cyprian's",
-  "Chicago Hope",
-  "Care for Real",
-  "Common",
-  "Care for Friends",
-  "New Morning Star"
-];
-
 List<String> auditTypes = [
-  "Select",
+  //'Select'
   "Annual",
   "Food Rescue",
   "CEDA",

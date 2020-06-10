@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
+import 'package:basic_utils/basic_utils.dart';
 
 // Future<List<Result>> fetchResults(http.Client client) async {
 //   final response =
@@ -58,83 +59,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       password: "Password1",
     );
 
-    void upload() async {
-      File imageFile = File.fromRawPath(pickedImage);
-
-      var stream =
-          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-      var length = await imageFile.length();
-
-      var uri = Uri.parse('http://12.216.81.220:88/api/Audit/FileUpload');
-
-      var request = http.MultipartRequest("POST", uri);
-      var multipartFile = http.MultipartFile('file', stream, length,
-          filename: basename(imageFile.path));
-      //contentType:  MediaType('image', 'png'));
-
-      request.files.add(multipartFile);
-      var response = await request.send();
-      print(response.statusCode);
-      response.stream.transform(utf8.decoder).listen((value) {
-        print(value);
-      });
-    }
-
-    void pickImage() async {
-      /// You can set the parameter asUint8List to true
-      /// to get only the bytes from the image
-      Uint8List fromPicker =
-          await ImagePickerWeb.getImage(outputType: ImageType.bytes)
-              as Uint8List;
-
-      if (fromPicker != null) {
-        // debugPrint(fromPicker.toString());
-      }
-
-      /// Default behavior would be getting the Image.memory
-      // Image fromPicker = await ImagePickerWeb.getImage(outputType: ImageType.widget);
-
-      if (fromPicker != null) {
-        // pickedImage = fromPicker;
-        if (pickedImage == null) {
-          print("buggered");
-        }
-        setState(() {
-          pickedImage = fromPicker;
-        });
-      }
-    }
-
-    void upload2() {
-      // File file = File.fromRawPath(pickedImage);
-      String base64Image =
-          base64Encode(pickedImage); //base64Encode(file.readAsBytesSync());
-      String fileName = "beer"; //file.path.split("/").last;
-
-      http.post('http://12.216.81.220:88/api/Audit/FileUpload', body: {
-        "image": base64Image,
-        "name": fileName,
-        "AgencyNumber": "A00078",
-        "ProgramNumber": "PY00002",
-        "ProgramType": "1",
-        "Auditor": "MXOTestAud1",
-        "AuditType": "2",
-        "StartTime": "2020-06-10T13:00:00.000Z",
-        "DeviceId": "aaabbbccc"
-      }).then((res) {
-        print(res.statusCode);
-        print(res.body);
-      }).catchError((dynamic err) {
-        print(err);
-      });
-    }
-
     void asyncFileUpload() async {
       if (pickedImage == null) {
         print("buggered");
       }
       //String text, File file) async {
       //create multipart request for POST or PATCH method
+
       var request = http.MultipartRequest(
           "POST", Uri.parse("http://12.216.81.220:88/api/Audit/FileUpload"));
       //add text fields
@@ -159,6 +90,131 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
       print(responseString);
+      setState(() {
+        result = responseString;
+      });
+    }
+
+    void pickImage() async {
+      /// You can set the parameter asUint8List to true
+      /// to get only the bytes from the image
+      Uint8List fromPicker =
+          await ImagePickerWeb.getImage(outputType: ImageType.bytes)
+              as Uint8List;
+
+      if (fromPicker != null) {
+        // debugPrint(fromPicker.toString());
+      }
+
+      /// Default behavior would be getting the Image.memory
+      // Image fromPicker = await ImagePickerWeb.getImage(outputType: ImageType.widget);
+
+      if (fromPicker != null) {
+        pickedImage = fromPicker;
+        if (pickedImage == null) {
+          print("buggered");
+        }
+        setState(() {
+          pickedImage = fromPicker;
+        });
+      }
+    }
+
+    void uploadPic() {
+      String base64Image = base64Encode(pickedImage);
+
+      String body = jsonEncode(<String, dynamic>{
+        "AgencyNumber": "A00078",
+        "ProgramNumber": "PY00002",
+        "ProgramType": "1",
+        "Auditor": "jchang",
+        "AuditType": "2",
+        "StartTime": "2020-05-29T13:00:00.000Z",
+        "DeviceId": "aaabbbccc",
+        "Files": [
+          {
+            "Filename": "snail",
+            "FileExtension": ".png",
+            "FileContent": "$base64Image"
+          }
+        ]
+      });
+
+      print(body);
+
+      http.post(
+          'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/FileUpload',
+          body: body,
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+          }).then((res) {
+        print(res.statusCode);
+        print(res.body);
+        setState(() {
+          result = res.body;
+        });
+      }).catchError((dynamic err) {
+        print(err);
+        setState(() {
+          result = err.toString();
+        });
+      });
+    }
+
+    void downloadSched() async {
+      var queryParameters = {
+        "MyDeviceId": "aaabbbccc",
+        "QueryType": "1",
+      };
+
+      var headers = {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      Map<String, dynamic> response = await HttpUtils.getForJson(
+          'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Get',
+          queryParameters: queryParameters,
+          headers: headers);
+
+      // var uri = Uri.http(
+      //     'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Get',
+      //     '',
+      //     queryParameters);
+      // var response = await http.get(uri, headers: {
+      //   HttpHeaders.contentTypeHeader: 'application/json',
+      // });
+      print(response);
+      result = response.toString();
+
+//       String body = jsonEncode(<String, dynamic>{
+//         "MyDeviceId": "aaabbbccc",
+//         "QueryType": 1,
+//       });
+
+//       http.get(
+//           'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Get',
+
+// //            queryParameters :{
+// //   'param1': 'one',
+// //   'param2': 'two',
+// // };
+//           headers: {
+//             'Content-type': 'application/json',
+//             'Accept': 'application/json'
+//           }).then((res) {
+//         print(res.statusCode);
+//         print(res.body);
+//         setState(() {
+//           result = res.body;
+//         });
+//       }).catchError((dynamic err) {
+//         print(err);
+//         setState(() {
+//           result = err.toString();
+//         });
+//       });
     }
 
     return Scaffold(
@@ -166,148 +222,101 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         child: Center(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RaisedButton(
-                    onPressed: () async {
-                      //TODO: need to turn of CORS headers in the server
-                      client
-                          // http
-                          .get(
-                        "http://12.216.81.220:88/api/AuthenticateUser",
-                        // headers: {
-                        //   "Access-Control-Allow-Origin":
-                        //       "*", // Required for CORS support to work
-                        //   "Access-Control-Allow-Credentials":
-                        //       "true", // Required for cookies, authorization headers with HTTPS
-                        //   "Access-Control-Allow-Headers":
-                        //       "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-                        //   "Access-Control-Allow-Methods": "POST, OPTIONS, GET"
-                        // },
-                      )
-                          .then((res) {
-                        print(res.body);
-                        setState(() {
-                          result = res.body;
-                        });
-                      }).catchError((String e) {
-                        setState(
-                          () {
-                            result = e;
-                          },
-                        );
-                      });
-                      ;
-                    },
-                    child: Text("Authenticate"),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      // client
-                      http.get("http://12.216.81.220:88/api/SiteInfo").then(
-                        (res) {
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RaisedButton(
+                      onPressed: () async {
+                        //TODO: need to turn of CORS headers in the server
+                        client
+                            // http
+                            .get(
+                          "http://12.216.81.220:88/api/AuthenticateUser",
+                          // headers: {
+                          //   "Access-Control-Allow-Origin":
+                          //       "*", // Required for CORS support to work
+                          //   "Access-Control-Allow-Credentials":
+                          //       "true", // Required for cookies, authorization headers with HTTPS
+                          //   "Access-Control-Allow-Headers":
+                          //       "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+                          //   "Access-Control-Allow-Methods": "POST, OPTIONS, GET"
+                          // },
+                        )
+                            .then((res) {
                           print(res.body);
+                          setState(() {
+                            result = res.body;
+                          });
+                        }).catchError((String e) {
                           setState(
                             () {
-                              result = res.body;
+                              result = e;
                             },
                           );
-                        },
-                      ).catchError((String e) {
-                        setState(
-                          () {
-                            result = e;
-                          },
-                        );
-                      });
-                    },
-                    child: Text("siteInfo"),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      // client.post("http://12.216.81.220:88/api/SiteInfo").then((res) {
-                      //   print(res.body);
-                      // });
-                      print(jsonEncode(<String, dynamic>{
-                        'AED': 'A',
-                        'AgencyNumber': 'A99999',
-                        'ProgramNumber': 'PY99999',
-                        'ProgramType': 2,
-                        'Auditor': 'WillTerrill',
-                        'AuditType': 2,
-                        'StartTime': '2020-06-15T12:00:00.000Z',
-                        'DeviceId': 'abc123'
-                      }));
-                      // client
-                      http
-                          .post(
-                              'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
-                              headers: <String, String>{
-                                'Content-Type':
-                                    'application/json; charset=UTF-8',
-                                'X-Requested-With': 'XMLHttpRequest',
-                              },
-                              // body: beer
-                              body: jsonEncode(<String, dynamic>{
-                                'AED': 'A',
-                                'AgencyNumber': 'A00091',
-                                'ProgramNumber': 'PY00005',
-                                'ProgramType': 1,
-                                'Auditor': 'MXOTestAud1',
-                                'AuditType': 1,
-                                'StartTime': '2020-06-15T12:00:00.000Z',
-                                'DeviceId': 'abc123'
-                              }))
-                          .then((res) {
-                        print(res.body);
-                        setState(() {
-                          result = res.body;
                         });
-                      }).catchError((String e) {
-                        setState(
-                          () {
-                            result = e;
+                        ;
+                      },
+                      child: Text("Authenticate"),
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        // client
+                        http.get("http://12.216.81.220:88/api/SiteInfo").then(
+                          (res) {
+                            print(res.body);
+                            setState(
+                              () {
+                                result = res.body;
+                              },
+                            );
                           },
-                        );
-                      });
-                    },
-                    child: Text("schedule audit"),
-                  ),
-                  RaisedButton(
-                      onPressed: () => pickImage(), child: Text("pick Image")),
-                  RaisedButton(
-                      onPressed: () => asyncFileUpload(),
-                      // onPressed: () => upload2(),
-                      child: Text("send Image")),
-                  RaisedButton(
-                      // onPressed: () => asyncFileUpload(),
+                        ).catchError((String e) {
+                          setState(
+                            () {
+                              result = e;
+                            },
+                          );
+                        });
+                      },
+                      child: Text("siteInfo"),
+                    ),
+                    RaisedButton(
                       onPressed: () {
                         // client.post("http://12.216.81.220:88/api/SiteInfo").then((res) {
                         //   print(res.body);
                         // });
-
-                        // https://cors-anywhere.herokuapp.com/
-
-                        String body = jsonEncode(<String, dynamic>{
-                          'MyDeviceId': 'aaabbbccc',
-                          'QueryType': 1,
-                        });
-                        print(body);
+                        print(jsonEncode(<String, dynamic>{
+                          'AED': 'A',
+                          'AgencyNumber': 'A99999',
+                          'ProgramNumber': 'PY99999',
+                          'ProgramType': 2,
+                          'Auditor': 'WillTerrill',
+                          'AuditType': 2,
+                          'StartTime': '2020-06-15T12:00:00.000Z',
+                          'DeviceId': 'abc123'
+                        }));
+                        // client
                         http
-                            // client
-                            .post('http://12.216.81.220:88/api/Audit/Get',
+                            .post(
+                                'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
                                 headers: <String, String>{
                                   'Content-Type':
                                       'application/json; charset=UTF-8',
                                   'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 // body: beer
-//  MyDeviceId	string(500)	No
-// QueryType	int	No	"1: Query All
-// 0: Query All But Me"
-
-                                body: body)
+                                body: jsonEncode(<String, dynamic>{
+                                  'AED': 'A',
+                                  'AgencyNumber': 'A00091',
+                                  'ProgramNumber': 'PY00005',
+                                  'ProgramType': 1,
+                                  'Auditor': 'MXOTestAud1',
+                                  'AuditType': 1,
+                                  'StartTime': '2020-06-15T12:00:00.000Z',
+                                  'DeviceId': 'abc123'
+                                }))
                             .then((res) {
                           print(res.body);
                           setState(() {
@@ -321,8 +330,24 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                           );
                         });
                       },
-                      child: Text("get appointments"))
-                ],
+                      child: Text("schedule audit"),
+                    ),
+                    RaisedButton(
+                        onPressed: () => pickImage(),
+                        child: Text("pick Image")),
+                    // RaisedButton(
+                    //     onPressed: () => asyncFileUpload(),
+                    //     child: Text("send Image asyncFileUpload")),
+                    RaisedButton(
+                        onPressed: () => uploadPic(),
+                        child: Text("send Image upload2")),
+                    RaisedButton(
+                        onPressed: () {
+                          downloadSched();
+                        },
+                        child: Text("get appointments"))
+                  ],
+                ),
               ),
               Expanded(child: Text(result))
             ],
