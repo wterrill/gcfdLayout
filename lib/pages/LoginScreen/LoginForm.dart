@@ -6,6 +6,11 @@ import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
+import 'package:http/http.dart' as http;
+
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -47,9 +52,9 @@ class _LoginFormState extends State<LoginForm> {
             child: TextFormField(
               onChanged: (input) =>
                   _onChangeField(input: input, from: "username"),
-              validator: (input) => !input.contains('@')
-                  ? "make sure your username has a '@'"
-                  : null,
+              // validator: (input) => !input.contains('@')
+              //     ? "make sure your username has a '@'"
+              //     : null,
               onSaved: (input) => _username = input,
               style: ColorDefs.textBodyBlack20,
               decoration: InputDecoration(
@@ -66,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
             child: TextFormField(
               onChanged: (input) =>
                   _onChangeField(input: input, from: "password"),
-              validator: (input) => input.length < 6
+              validator: (input) => input.length < 1
                   ? "your password requires at least 6 characters"
                   : null,
               onSaved: (input) => _password = input,
@@ -135,18 +140,33 @@ class _LoginFormState extends State<LoginForm> {
       print(_username);
       print(_password);
       Dialogs.showAlertDialog(context);
-      bool result = await Authentication.getAuthentication();
-      print("result = $result");
+      // bool result = await Authentication.getAuthentication();
+      http.Response result = await Authentication.authenticate(
+          username: _username, password: _password);
+      // Map<String, String>
+      try {
+        dynamic resultMap = json.decode(result.body);
+        dynamic isAuthenticated = resultMap['IsAuthenticated'];
 
-      Navigator.push(
-        context,
-        PageRouteBuilder<void>(
-          transitionDuration: Duration(seconds: 2),
-          pageBuilder: (_, __, ___) => //StatsFl(
-              ListSchedulingPage(),
-          // ),
-        ),
-      );
+        if (isAuthenticated as bool) {
+          Navigator.push(
+            context,
+            PageRouteBuilder<void>(
+              transitionDuration: Duration(seconds: 2),
+              pageBuilder: (_, __, ___) => //StatsFl(
+                  ListSchedulingPage(),
+              // ),
+            ),
+          );
+        } else {
+          Navigator.of(context).pop();
+          Dialogs.failedAuthentication(context);
+        }
+      } catch (error) {
+        print(error);
+        Navigator.of(context).pop();
+        Dialogs.failedAuthentication(context);
+      }
     }
   }
 
@@ -161,13 +181,13 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
-    if (from == "username") if (input.length > 3) {
+    if (from == "username") if (input.length > 1) {
       _dirtyUsername = true;
     } else {
       _dirtyUsername = false;
     }
 
-    if (from == "password") if (input.length > 3) {
+    if (from == "password") if (input.length > 1) {
       _dirtyPassword = true;
     } else {
       _dirtyPassword = false;

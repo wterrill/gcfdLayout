@@ -7,9 +7,9 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:path/path.dart';
 // import 'package:image_picker_web/image_picker_web.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
-import 'package:basic_utils/basic_utils.dart';
 import 'dart:convert';
 
 class TestAuthentication extends StatefulWidget {
@@ -47,6 +47,15 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       //     pickedImage = fromPicker;
       //   });
       // }
+
+      // File _image;
+      final picker = ImagePicker();
+
+      PickedFile fromPicker =
+          await picker.getImage(source: ImageSource.gallery);
+
+      pickedImage = await fromPicker.readAsBytes();
+      setState(() {});
     }
 
     void uploadPic() {
@@ -70,9 +79,9 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
 
       print(body);
-
-      http.post(
-          'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/FileUpload',
+      // http.
+      // https://cors-anywhere.herokuapp.com/
+      client.post('http://12.216.81.220:88/api/Audit/FileUpload',
           body: body,
           headers: {
             'Content-type': 'application/json',
@@ -96,28 +105,38 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         "MyDeviceId": "aaabbbccc",
         "QueryType": "1",
       };
-
-      var headers = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      };
-
-      Map<String, dynamic> response = await HttpUtils.getForJson(
-          'http://12.216.81.220:88/api/Audit/Get',
-          queryParameters: queryParameters,
-          headers: headers);
+      client
+          .get(
+              "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}")
+          .then(
+        (res) {
+          print(res.body);
+          setState(
+            () {
+              result = res.body;
+            },
+          );
+        },
+      ).catchError((String e) {
+        setState(
+          () {
+            result = e;
+          },
+        );
+      });
 
       JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-      String prettyprint = encoder.convert(response);
+      String prettyprint = encoder.convert(result);
       print(prettyprint);
-      print(response);
+      print(result);
       setState(() {
         result = prettyprint;
       });
     }
 
     void getSiteInfo() {
-      http.get("http://12.216.81.220:88/api/SiteInfo").then(
+      // http
+      client.get("http://12.216.81.220:88/api/SiteInfo").then(
         (res) {
           print(res.body);
           setState(
@@ -136,10 +155,9 @@ class _TestAuthenticationState extends State<TestAuthentication> {
     }
 
     void scheduleAudit() {
-      // client
-      http
-          .post(
-              'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+      client
+          // http
+          .post('http://12.216.81.220:88/api/Audit/Schedule',
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -152,8 +170,8 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                 'ProgramType': 1,
                 'Auditor': 'MXOTestAud1',
                 'AuditType': 1,
-                'StartTime': '2020-06-21T12:00:00.000Z',
-                'DeviceId': 'beerisamazinglygood'
+                'StartTime': '2020-06-30T12:00:00.000Z',
+                'DeviceId': '****************************'
               }))
           .then((res) {
         print(res.body);
@@ -170,15 +188,15 @@ class _TestAuthenticationState extends State<TestAuthentication> {
     }
 
     void deleteScheduledAudit() {
-      // client
-      http
-          .post(
-              'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+      client
+
+          // http
+          // https://cors-anywhere.herokuapp.com/
+          .post('http://12.216.81.220:88/api/Audit/Schedule',
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
               },
-              // body: beer
               body: jsonEncode(<String, dynamic>{
                 'AED': 'D',
                 'AgencyNumber': 'A00091',
@@ -186,8 +204,8 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                 'ProgramType': 1,
                 'Auditor': 'MXOTestAud1',
                 'AuditType': 1,
-                'StartTime': '2020-06-21 12:00:00.000',
-                'DeviceId': 'beerisamazinglygood'
+                'StartTime': '2020-06-30T12:00:00.000Z',
+                'DeviceId': '****************************'
               }))
           .then((res) {
         print(res.body);
@@ -205,14 +223,15 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
     void sendFullAudit() {
       String body = jsonEncode(auditToSend);
-      http
-          .post(
-              'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+
+      client
+          // http
+          // https://cors-anywhere.herokuapp.com/
+          .post('http://12.216.81.220:88/api/Audit/',
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
               },
-              // body: beer
               body: body)
           .then((res) {
         print(res.body);
@@ -233,21 +252,31 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         "MyDeviceId": "aaabbbccc",
         "QueryType": "1",
       };
-
-      var headers = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      };
-
-      Map<String, dynamic> response = await HttpUtils.getForJson(
-          'http://12.216.81.220:88/api/Audit/Query',
-          queryParameters: queryParameters,
-          headers: headers);
+      //http
+      client
+          .get(
+              "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}")
+          .then(
+        (res) {
+          print(res.body);
+          setState(
+            () {
+              result = res.body;
+            },
+          );
+        },
+      ).catchError((String e) {
+        setState(
+          () {
+            result = e;
+          },
+        );
+      });
 
       JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-      String prettyprint = encoder.convert(response);
+      String prettyprint = encoder.convert(result);
       print(prettyprint);
-      print(response);
+      // print(respo,nse);
       setState(() {
         result = prettyprint;
       });
@@ -283,7 +312,6 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                             },
                           );
                         });
-                        ;
                       },
                       child: Text("Authenticate"),
                     ),

@@ -27,7 +27,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   @override
   Widget build(BuildContext context) {
     bool filteredTime = Provider.of<ListCalendarData>(context).filterTimeToggle;
-    String dayOfWeek = DateFormat('EEEE').format(DateTime.now()).toString();
+    String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -96,7 +96,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                     style: ColorDefs
                                                         .textBodyBlue20)
                                                 : Text(
-                                                    "Show from last $dayOfWeek to next $dayOfWeek ",
+                                                    "Show last $dayOfWeek. to next $dayOfWeek. ",
                                                     style: ColorDefs
                                                         .textBodyWhite20),
                                           ),
@@ -104,7 +104,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                       ),
                                       SizedBox(
                                         height: 40,
-                                        width: 300,
+                                        width: 250,
                                         child: TextField(
                                           onChanged: (text) {
                                             Provider.of<ListCalendarData>(

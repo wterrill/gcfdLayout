@@ -26,6 +26,26 @@ class Dialogs {
     );
   }
 
+  static void failedAuthentication(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Username or password is not correct.  Please try again.'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showVersionDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,
