@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
+import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,17 @@ class ListCalendarData with ChangeNotifier {
 
   void fetchData() {}
 
+  void sendToCloud() async {
+    List<dynamic> dynKeys = calEventToBeSent.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      CalendarResult result =
+          calEventToBeSent.get(toBeSentKeys[i]) as CalendarResult;
+      bool successful = await ScheduleAuditComms.scheduleAudit(result);
+      if (successful) calEventToBeSent.delete(toBeSentKeys[i]);
+    }
+  }
+
 ////////////////// Hive operations
 
   void initHive() {
@@ -63,7 +75,7 @@ class ListCalendarData with ChangeNotifier {
 ////////////////// Calendar Operations
   void deleteCalendarResult(CalendarResult calendarResult) {
     calendarBox.delete(
-        '${calendarResult.startTime}-${calendarResult.agency}-${calendarResult.programNum}-${calendarResult.auditor}');
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
     newEventAdded = true;
     notifyListeners();
   }
@@ -83,10 +95,10 @@ class ListCalendarData with ChangeNotifier {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
     calendarBox.put(
-        '${newEvent.startTime}-${newEvent.agency}-${newEvent.programNum}-${newEvent.auditor}',
+        '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}',
         newEvent);
     calEventToBeSent.put(
-        '${anotherEvent.startTime}-${anotherEvent.agency}-${anotherEvent.programNum}-${anotherEvent.auditor}',
+        '${anotherEvent.startTime}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}',
         anotherEvent);
     newEventAdded = true;
     if (notify) notifyListeners();
@@ -95,7 +107,8 @@ class ListCalendarData with ChangeNotifier {
   CalendarResult convertMapToCalendarResult(Map<String, String> result) {
     return CalendarResult(
       startTime: result['startTime'],
-      agency: result['agency'],
+      agencyName: result['agencyName'],
+      agencyNum: result['agencyNum'],
       auditType: result['auditType'],
       programNum: result['programNum'],
       programType: result['programType'],

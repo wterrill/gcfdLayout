@@ -53,8 +53,7 @@ MXOTestMGR1/ Password1
 MXOTestMGR2/ Password1 
 MXOTestMGR3/ Password1
 
-Get:
-http://12.216.81.220:88/api/SiteInfo	
+
 
 
 Post

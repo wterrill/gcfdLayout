@@ -55,6 +55,7 @@ class _LookAheadState extends State<LookAhead> {
             Iterable<String> subsubsites = subsites.map((subsite) {
               String progNum = subsite[0] as String;
               String name = subsite[2] as String;
+              String agencyName = subsite[1] as String;
 
               return name.titleCase + " - " + progNum;
             });

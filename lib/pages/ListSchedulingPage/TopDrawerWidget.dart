@@ -1,6 +1,8 @@
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:provider/provider.dart';
 
 class TopDrawerWidget extends StatefulWidget {
   TopDrawerWidget({Key key}) : super(key: key);
@@ -108,16 +110,23 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                         height: 35.4,
                         width: double.infinity,
                         color: ColorDefs.colorTopDrawerAlternating,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Icon(Icons.sync, color: ColorDefs.colorAudit2),
-                            Center(
-                                child: Text("Sync",
-                                    style: ColorDefs.textBodyBlue20)),
-                            Icon(Icons.sync,
-                                color: ColorDefs.colorTopDrawerBackground),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            Provider.of<ListCalendarData>(context,
+                                    listen: false)
+                                .sendToCloud();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Icon(Icons.sync, color: ColorDefs.colorAudit2),
+                              Center(
+                                  child: Text("Sync",
+                                      style: ColorDefs.textBodyBlue20)),
+                              Icon(Icons.sync,
+                                  color: ColorDefs.colorTopDrawerBackground),
+                            ],
+                          ),
                         )),
                   ),
                 ])),

@@ -27,7 +27,7 @@ class AuditInfoDialog extends StatelessWidget {
               child: Container(
                 color: calendarResult.programTypeColor,
                 child: Center(
-                    child: AutoSizeText(calendarResult.agency,
+                    child: AutoSizeText(calendarResult.agencyName,
                         textAlign: TextAlign.center,
                         style: ColorDefs.textBodyWhite20)),
               ),

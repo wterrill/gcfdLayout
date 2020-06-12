@@ -31,13 +31,13 @@ class AuditData with ChangeNotifier {
 
   void saveAudit() {
     auditBox.put(
-        '${activeAudit.calendarResult.startTime}-${activeAudit.calendarResult.agency}-${activeAudit.calendarResult.programNum}-${activeAudit.calendarResult.auditor}',
+        '${activeAudit.calendarResult.startTime}-${activeAudit.calendarResult.agencyName}-${activeAudit.calendarResult.programNum}-${activeAudit.calendarResult.auditor}',
         activeAudit);
   }
 
   bool getAudit(CalendarResult calendarResult) {
     retrievedAudit = auditBox.get(
-            '${calendarResult.startTime}-${calendarResult.agency}-${calendarResult.programNum}-${calendarResult.auditor}')
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as Audit;
     print(retrievedAudit);
     if (retrievedAudit == null) {

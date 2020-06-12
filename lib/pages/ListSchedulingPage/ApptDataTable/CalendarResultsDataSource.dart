@@ -53,7 +53,7 @@ class CalendarResultsDataSource extends DataTableSource {
         selected: calendarResult.selected,
         onSelectChanged: (bool value) {
           print(value);
-          print(calendarResult.agency);
+          print(calendarResult.agencyName);
           Dialogs.showAuditInfo(
               navigatorKey.currentState.overlay.context, calendarResult);
         },
@@ -93,7 +93,7 @@ class CalendarResultsDataSource extends DataTableSource {
                 child: Center(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: 250),
-                    child: Text('${calendarResult.agency}',
+                    child: Text('${calendarResult.agencyName}',
                         style: ColorDefs.textBodyWhite15,
                         overflow: TextOverflow.ellipsis),
                   ),

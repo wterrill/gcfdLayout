@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   TimeOfDay selectedTime = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
+  String selectedAgencyNum;
   String selectedAuditor = "Select";
   bool alreadyExisted = false;
   // String auditor;
@@ -37,9 +39,10 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       this.selectedDate = widget.calendarResult.startDateTime;
       this.selectedTime =
           TimeOfDay.fromDateTime(widget.calendarResult.startDateTime);
-      this.selectedSiteName = widget.calendarResult.agency;
+      this.selectedSiteName = widget.calendarResult.agencyName;
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
+      this.selectedAgencyNum = widget.calendarResult.agencyNum;
       alreadyExisted = true;
     }
   }
@@ -72,13 +75,25 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    String lookupAgencyName(String selectedProgramNumber) {
+      String agencyName = "";
+      List<List<dynamic>> sites =
+          Provider.of<SiteData>(context, listen: false).rowsAsListOfValues;
+      for (List<dynamic> site in sites) {
+        if (site[0] == selectedProgramNumber) {
+          return site[1] as String;
+        }
+      }
+      return agencyName;
+    }
+
     bool validateEntry() {
       bool validated = true;
       if (selectedAuditType == null) {
         validated = false;
       } else if (selectedAuditor == null) {
         validated = false;
-      } else if (selectedDate == null) {
+      } else if (selectedDate.isBefore(DateTime.now())) {
         validated = false;
       } else if (selectedProgType == null) {
         validated = false;
@@ -121,6 +136,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
+                selectedAgencyNum = lookupAgencyName(selectedProgramNumber);
               },
             ),
             Row(
@@ -338,7 +354,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                           .addBoxEvent(event: {
                         'startTime': selectedDateTime.toString(),
                         'message': '',
-                        'agency': selectedSiteName,
+                        'agencyName': selectedSiteName,
+                        'agencyNum': selectedAgencyNum,
                         'auditType': selectedAuditType,
                         'programNum': selectedProgramNumber,
                         'programType': selectedProgType,

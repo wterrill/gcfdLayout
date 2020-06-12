@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
@@ -22,7 +22,8 @@ class TestAuthentication extends StatefulWidget {
 class _TestAuthenticationState extends State<TestAuthentication> {
   @override
   String result = "Awaiting results...";
-
+  bool isNtlm = false;
+  dynamic sender;
   Uint8List pickedImage;
 
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
     );
 
     void pickImage() async {
+//web
       // Uint8List fromPicker =
       //     await ImagePickerWeb.getImage(outputType: ImageType.bytes)
       //         as Uint8List;
@@ -48,17 +50,17 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       //   });
       // }
 
-      // File _image;
+//ios
+      File _image;
       final picker = ImagePicker();
-
       PickedFile fromPicker =
           await picker.getImage(source: ImageSource.gallery);
-
       pickedImage = await fromPicker.readAsBytes();
       setState(() {});
     }
 
     void uploadPic() {
+      result = "";
       String base64Image = base64Encode(pickedImage);
 
       String body = jsonEncode(<String, dynamic>{
@@ -79,14 +81,22 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
 
       print(body);
-      // http.
-      // https://cors-anywhere.herokuapp.com/
-      client.post('http://12.216.81.220:88/api/Audit/FileUpload',
-          body: body,
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          }).then((res) {
+      if (isNtlm) {
+        sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
+            body: body,
+            headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json'
+            });
+      } else {
+        sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
+            body: body,
+            headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json'
+            });
+      }
+      sender.then((http.Response res) {
         print(res.statusCode);
         print(res.body);
         setState(() {
@@ -100,16 +110,22 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void downloadSched() async {
+      result = "";
       var queryParameters = {
         "MyDeviceId": "aaabbbccc",
         "QueryType": "1",
       };
-      client
-          .get(
-              "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}")
-          .then(
-        (res) {
+      if (isNtlm) {
+        sender = client.get(
+            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+      } else {
+        sender = http.get(
+            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+      }
+      sender.then(
+        (http.Response res) {
           print(res.body);
           setState(
             () {
@@ -134,10 +150,17 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void getSiteInfo() {
+      result = "";
       // http
-      client.get("http://12.216.81.220:88/api/SiteInfo").then(
-        (res) {
+      if (isNtlm) {
+        sender = client.get("http://12.216.81.220:88/api/SiteInfo");
+      } else {
+        sender = http.get("http://12.216.81.220:88/api/SiteInfo");
+      }
+      sender.then(
+        (http.Response res) {
           print(res.body);
           setState(
             () {
@@ -154,26 +177,56 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void scheduleAudit() {
-      client
-          // http
-          .post('http://12.216.81.220:88/api/Audit/Schedule',
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest',
-              },
-              // body: beer
-              body: jsonEncode(<String, dynamic>{
-                'AED': 'A',
-                'AgencyNumber': 'A00091',
-                'ProgramNumber': 'PY00005',
-                'ProgramType': 1,
-                'Auditor': 'MXOTestAud1',
-                'AuditType': 1,
-                'StartTime': '2020-06-30T12:00:00.000Z',
-                'DeviceId': '****************************'
-              }))
-          .then((res) {
+      result = "";
+      // String body = jsonEncode(<String, dynamic>{
+      //   'AED': 'A',
+      //   'AgencyNumber': 'A00091',
+      //   'ProgramNumber': 'PY00005',
+      //   'ProgramType': 1,
+      //   'Auditor': 'MXOTestAud1',
+      //   'AuditType': 1,
+      //   'StartTime': '2020-06-30T12:00:00.000Z',
+      //   'DeviceId': '****************************'
+      // });
+      // print(body);
+
+      if (isNtlm) {
+        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'AED': 'A',
+              'AgencyNumber': 'A00091',
+              'ProgramNumber': 'PY00005',
+              'ProgramType': 1,
+              'Auditor': 'MXOTestAud1',
+              'AuditType': 1,
+              'StartTime': '2020-06-30T12:00:00.000Z',
+              'DeviceId': '****************************'
+            }));
+      } else {
+        sender = http.post('http://12.216.81.220:88/api/Audit/Schedule',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'AED': 'A',
+              'AgencyNumber': 'A00091',
+              'ProgramNumber': 'PY00005',
+              'ProgramType': 1,
+              'Auditor': 'MXOTestAud1',
+              'AuditType': 1,
+              'StartTime': '2020-06-30T12:00:00.000Z',
+              'DeviceId': '****************************'
+            }));
+      }
+
+      sender.then((http.Response res) {
         print(res.body);
         setState(() {
           result = res.body;
@@ -187,27 +240,37 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void deleteScheduledAudit() {
-      client
+      result = "";
+      dynamic body = jsonEncode(<String, dynamic>{
+        'AED': 'D',
+        'AgencyNumber': 'A00091',
+        'ProgramNumber': 'PY00005',
+        'ProgramType': 1,
+        'Auditor': 'MXOTestAud1',
+        'AuditType': 1,
+        'StartTime': '2020-06-30T12:00:00.000Z',
+        'DeviceId': '****************************'
+      });
 
-          // http
-          // https://cors-anywhere.herokuapp.com/
-          .post('http://12.216.81.220:88/api/Audit/Schedule',
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest',
-              },
-              body: jsonEncode(<String, dynamic>{
-                'AED': 'D',
-                'AgencyNumber': 'A00091',
-                'ProgramNumber': 'PY00005',
-                'ProgramType': 1,
-                'Auditor': 'MXOTestAud1',
-                'AuditType': 1,
-                'StartTime': '2020-06-30T12:00:00.000Z',
-                'DeviceId': '****************************'
-              }))
-          .then((res) {
+      if (isNtlm) {
+        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: body as String);
+      } else {
+        sender = http.post(
+            'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: body as String);
+      }
+      sender.then((http.Response res) {
         print(res.body);
         setState(() {
           result = res.body;
@@ -221,19 +284,28 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void sendFullAudit() {
+      result = "";
       String body = jsonEncode(auditToSend);
 
-      client
-          // http
-          // https://cors-anywhere.herokuapp.com/
-          .post('http://12.216.81.220:88/api/Audit/',
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest',
-              },
-              body: body)
-          .then((res) {
+      if (isNtlm) {
+        sender = client.post('http://12.216.81.220:88/api/Audit/',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: body);
+      } else {
+        sender = http.post(
+            'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: body);
+      }
+      sender.then((http.Response res) {
         print(res.body);
         setState(() {
           result = res.body;
@@ -247,17 +319,24 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
     void getFullAudit() async {
+      result = "";
       var queryParameters = {
         "MyDeviceId": "aaabbbccc",
         "QueryType": "1",
       };
-      //http
-      client
-          .get(
-              "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}")
-          .then(
-        (res) {
+
+      if (isNtlm) {
+        sender = client.get(
+            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+      } else {
+        sender = http.get(
+            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+      }
+
+      sender.then(
+        (http.Response res) {
           print(res.body);
           setState(
             () {
@@ -282,6 +361,42 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+////////////////////////////////////////////////////////////////
+    void getAuditors() {
+      result = "";
+
+      if (isNtlm) {
+        sender = client.get("http://12.216.81.220:88/api/GetAuditors");
+      } else {
+        sender = http.get("http://12.216.81.220:88/api/GetAuditors");
+      }
+      sender.then(
+        (http.Response res) {
+          print(res.body);
+          setState(
+            () {
+              result = res.body;
+            },
+          );
+        },
+      ).catchError((String e) {
+        setState(
+          () {
+            result = e;
+          },
+        );
+      });
+
+      JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+      String prettyprint = encoder.convert(result);
+      print(prettyprint);
+      // print(respo,nse);
+      setState(() {
+        result = prettyprint;
+      });
+    }
+
+////////////////////////////////////////////////////////////////
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
@@ -355,6 +470,11 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                           getFullAudit();
                         },
                         child: Text("get Full Audit")),
+                    RaisedButton(
+                        onPressed: () {
+                          getAuditors();
+                        },
+                        child: Text("get Auditors")),
                   ],
                 ),
               ),

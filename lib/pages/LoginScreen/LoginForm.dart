@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/communications/Authentication.dart';
+import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
@@ -141,29 +141,27 @@ class _LoginFormState extends State<LoginForm> {
       print(_password);
       Dialogs.showAlertDialog(context);
       // bool result = await Authentication.getAuthentication();
-      http.Response result = await Authentication.authenticate(
+      // http.Response result = await Authentication.authenticate(
+      //     username: _username, password: _password);
+
+      bool isAuthenticated = await Authentication.authenticate(
           username: _username, password: _password);
       // Map<String, String>
-      try {
-        dynamic resultMap = json.decode(result.body);
-        dynamic isAuthenticated = resultMap['IsAuthenticated'];
+      // try {
+      //   dynamic resultMap = json.decode(result.body);
+      //   dynamic isAuthenticated = resultMap['IsAuthenticated'];
 
-        if (isAuthenticated as bool) {
-          Navigator.push(
-            context,
-            PageRouteBuilder<void>(
-              transitionDuration: Duration(seconds: 2),
-              pageBuilder: (_, __, ___) => //StatsFl(
-                  ListSchedulingPage(),
-              // ),
-            ),
-          );
-        } else {
-          Navigator.of(context).pop();
-          Dialogs.failedAuthentication(context);
-        }
-      } catch (error) {
-        print(error);
+      if (isAuthenticated) {
+        Navigator.push(
+          context,
+          PageRouteBuilder<void>(
+            transitionDuration: Duration(seconds: 2),
+            pageBuilder: (_, __, ___) => //StatsFl(
+                ListSchedulingPage(),
+            // ),
+          ),
+        );
+      } else {
         Navigator.of(context).pop();
         Dialogs.failedAuthentication(context);
       }

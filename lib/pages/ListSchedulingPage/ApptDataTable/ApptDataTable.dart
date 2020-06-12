@@ -68,7 +68,9 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> filteredResults = [];
     if (filterText != "") {
       for (CalendarResult result in listToFilter) {
-        if (result.agency.toLowerCase().contains(filterText.toLowerCase())) {
+        if (result.agencyName
+            .toLowerCase()
+            .contains(filterText.toLowerCase())) {
           filteredResults.add(result);
         } else if (result.programNum
             .toLowerCase()
@@ -171,7 +173,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                                     style: ColorDefs.textBodyBlue20))),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.agency,
+                            _sort<String>((CalendarResult d) => d.agencyName,
                                 columnIndex, ascending)),
                     DataColumn(
                         label: Expanded(

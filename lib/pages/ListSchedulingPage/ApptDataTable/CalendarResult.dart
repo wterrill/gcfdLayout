@@ -11,31 +11,34 @@ class CalendarResult extends HiveObject {
   @HiveField(0)
   final String startTime;
   @HiveField(1)
-  final String agency;
+  final String agencyName;
   @HiveField(2)
-  final String auditType;
+  final String agencyNum;
   @HiveField(3)
-  final String programNum;
+  final String auditType;
   @HiveField(4)
-  final String programType;
+  final String programNum;
   @HiveField(5)
-  final String auditor;
+  final String programType;
   @HiveField(6)
-  final String status;
+  final String auditor;
   @HiveField(7)
-  final String message;
+  final String status;
   @HiveField(8)
-  Color programTypeColor;
+  final String message;
   @HiveField(9)
-  DateTime startDateTime;
+  Color programTypeColor;
   @HiveField(10)
+  DateTime startDateTime;
+  @HiveField(11)
   Site siteInfo = Site();
 
   // String date;
 
   CalendarResult(
       {this.startTime,
-      this.agency,
+      this.agencyName,
+      this.agencyNum,
       this.auditType,
       this.programNum,
       this.programType,

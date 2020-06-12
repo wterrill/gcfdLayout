@@ -18,44 +18,47 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
     };
     return CalendarResult(
       startTime: fields[0] as String,
-      agency: fields[1] as String,
-      auditType: fields[2] as String,
-      programNum: fields[3] as String,
-      programType: fields[4] as String,
-      auditor: fields[5] as String,
-      status: fields[6] as String,
-      message: fields[7] as String,
-      programTypeColor: fields[8] as Color,
+      agencyName: fields[1] as String,
+      agencyNum: fields[2] as String,
+      auditType: fields[3] as String,
+      programNum: fields[4] as String,
+      programType: fields[5] as String,
+      auditor: fields[6] as String,
+      status: fields[7] as String,
+      message: fields[8] as String,
+      programTypeColor: fields[9] as Color,
     )
-      ..startDateTime = fields[9] as DateTime
-      ..siteInfo = fields[10] as Site;
+      ..startDateTime = fields[10] as DateTime
+      ..siteInfo = fields[11] as Site;
   }
 
   @override
   void write(BinaryWriter writer, CalendarResult obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.startTime)
       ..writeByte(1)
-      ..write(obj.agency)
+      ..write(obj.agencyName)
       ..writeByte(2)
-      ..write(obj.auditType)
+      ..write(obj.agencyNum)
       ..writeByte(3)
-      ..write(obj.programNum)
+      ..write(obj.auditType)
       ..writeByte(4)
-      ..write(obj.programType)
+      ..write(obj.programNum)
       ..writeByte(5)
-      ..write(obj.auditor)
+      ..write(obj.programType)
       ..writeByte(6)
-      ..write(obj.status)
+      ..write(obj.auditor)
       ..writeByte(7)
-      ..write(obj.message)
+      ..write(obj.status)
       ..writeByte(8)
-      ..write(obj.programTypeColor)
+      ..write(obj.message)
       ..writeByte(9)
-      ..write(obj.startDateTime)
+      ..write(obj.programTypeColor)
       ..writeByte(10)
+      ..write(obj.startDateTime)
+      ..writeByte(11)
       ..write(obj.siteInfo);
   }
 }
