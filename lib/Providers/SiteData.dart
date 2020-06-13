@@ -1,20 +1,23 @@
-import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auditor/Definitions/ExternalSiteData.dart';
 import 'package:csv/csv.dart';
+import 'package:hive/hive.dart';
 
 List<List<dynamic>> rowsAsListOfValues;
 List<dynamic> headers;
 
-class NewSiteData with ChangeNotifier {
+class SiteData with ChangeNotifier {
   List<List<dynamic>> rowsAsListOfValues;
   List<dynamic> headers;
   SiteList siteList;
+  Box siteListBox;
+  bool siteListInitialized = false;
 
-  NewSiteData() {
+  SiteData() {
     initialize();
     initializeFakeSiteData();
   }
@@ -29,13 +32,33 @@ class NewSiteData with ChangeNotifier {
 
   void initialize() {
     //TODO get siteData database ready
+    initHive();
+  }
+
+  void initHive() {
+    Future siteListFuture = Hive.openBox<SiteList>('siteListBox');
+
+    Future.wait<dynamic>([siteListFuture]).then((List<dynamic> value) {
+      print("siteList HIVE INTIALIZED");
+      print(value);
+      print(value.runtimeType);
+      siteListBox = Hive.box<SiteList>('siteListBox');
+      siteListInitialized = true;
+      siteList = siteListBox.get('siteList') as SiteList;
+      notifyListeners();
+    });
   }
 
   void siteSync() async {
     print("sync");
     dynamic result = await SiteComms.getSites();
     print(result);
-    siteList = SiteList(siteList: result as List<NewSite>);
+    siteList = SiteList(siteList: result as List<Site>);
     print(siteList);
+    siteListBox.put('siteList', siteList);
+    print(siteList);
+    SiteList beer = siteListBox.get('siteList') as SiteList;
+    print(beer.siteList);
+    notifyListeners();
   }
 }

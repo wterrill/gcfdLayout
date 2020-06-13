@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'NewSite.dart';
+part of 'Site.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NewSiteAdapter extends TypeAdapter<NewSite> {
+class SiteAdapter extends TypeAdapter<Site> {
   @override
   final typeId = 10;
 
   @override
-  NewSite read(BinaryReader reader) {
+  Site read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return NewSite(
+    return Site(
       programNumber: fields[0] as String,
       programName: fields[1] as String,
       programDisplayName: fields[2] as String,
@@ -34,7 +34,7 @@ class NewSiteAdapter extends TypeAdapter<NewSite> {
   }
 
   @override
-  void write(BinaryWriter writer, NewSite obj) {
+  void write(BinaryWriter writer, Site obj) {
     writer
       ..writeByte(13)
       ..writeByte(0)

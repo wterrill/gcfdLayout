@@ -17,7 +17,7 @@ class SiteListAdapter extends TypeAdapter<SiteList> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SiteList(
-      siteList: (fields[0] as List)?.cast<NewSite>(),
+      siteList: (fields[0] as List)?.cast<Site>(),
     );
   }
 

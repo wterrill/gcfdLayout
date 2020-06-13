@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/programTypeTextAndColorLookup.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +31,7 @@ class CalendarResult extends HiveObject {
   @HiveField(10)
   DateTime startDateTime;
   @HiveField(11)
-  NewSite siteInfo = NewSite();
+  Site siteInfo = Site();
 
   // String date;
 

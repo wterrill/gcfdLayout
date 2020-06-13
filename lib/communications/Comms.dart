@@ -1,16 +1,12 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
-import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/NewSiteData.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
-import 'package:provider/provider.dart';
 
 bool isNtlm = false;
 dynamic sender;
@@ -270,10 +266,9 @@ class SiteComms {
         try {
           dynamic parsed =
               json.decode(res.body)['Result'].cast<Map<String, dynamic>>();
-          List<NewSite> oneliner = parsed
-              .map<NewSite>(
-                  (Map<String, dynamic> json) => NewSite.fromJson(json))
-              .toList() as List<NewSite>;
+          List<Site> oneliner = parsed
+              .map<Site>((Map<String, dynamic> json) => Site.fromJson(json))
+              .toList() as List<Site>;
           print(oneliner);
           return oneliner;
         } catch (error) {

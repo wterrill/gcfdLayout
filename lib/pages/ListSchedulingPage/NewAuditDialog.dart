@@ -1,9 +1,8 @@
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/Definitions/NewSite.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/NewSiteData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -77,8 +76,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
-    SiteList siteList =
-        Provider.of<NewSiteData>(context, listen: false).siteList;
+    SiteList siteList = Provider.of<SiteData>(context, listen: false).siteList;
 
     bool validateEntry() {
       bool validated = true;

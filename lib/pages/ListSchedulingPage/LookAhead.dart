@@ -1,12 +1,12 @@
 // import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/NewSiteData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:recase/recase.dart';
+// import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
   LookAhead({Key key, this.lookAheadCallback, this.setValue}) : super(key: key);
@@ -20,6 +20,7 @@ class LookAhead extends StatefulWidget {
 class _LookAheadState extends State<LookAhead> {
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _typeAheadController.text = widget.setValue;
   }
@@ -29,7 +30,14 @@ class _LookAheadState extends State<LookAhead> {
 
   @override
   Widget build(BuildContext context) {
-    SiteList siteList = Provider.of<NewSiteData>(context).siteList;
+    SiteList siteList = Provider.of<SiteData>(context).siteList;
+    if (siteList == null) {
+      siteList = SiteList(siteList: [
+        Site(
+            programDisplayName:
+                "For first use, please allow the device to sync")
+      ]);
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -47,21 +55,16 @@ class _LookAheadState extends State<LookAhead> {
               controller: _typeAheadController),
           suggestionsCallback: (pattern) async {
             pattern = pattern.toLowerCase();
-            Iterable<NewSite> subsites =
-                siteList.siteList.where((NewSite site) {
-              // print(site.length);
-              // print(site);
-              String sitename = site.programDisplayName as String;
+            Iterable<Site> subsites = siteList.siteList.where((Site site) {
+              String sitename = site.programDisplayName;
               sitename = sitename.toLowerCase();
+              if (siteList.siteList.length == 1) {
+                return true;
+              }
               return sitename.contains(pattern);
             });
             Iterable<String> subsubsites = subsites.map((subsite) {
-              String progNum = subsite.programNumber;
-              String name = subsite.agencyName;
               String displayName = subsite.programDisplayName;
-              // String agencyName = subsite[1] as String;
-
-              // return name.titleCase + " - " + prog,/Num;
               return displayName;
             });
             return subsubsites;

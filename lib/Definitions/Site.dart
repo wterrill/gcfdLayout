@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'NewSite.g.dart';
+part 'Site.g.dart';
 
 @HiveType(typeId: 10)
-class NewSite extends HiveObject {
+class Site extends HiveObject {
   @HiveField(0)
   final String programNumber; //PY00002",
   @HiveField(1)
@@ -31,7 +31,7 @@ class NewSite extends HiveObject {
   @HiveField(12)
   final String serviceArea; // null
 
-  NewSite(
+  Site(
       {this.programNumber,
       this.programName,
       this.programDisplayName,
@@ -46,8 +46,8 @@ class NewSite extends HiveObject {
       this.operateHours,
       this.serviceArea}) {}
 
-  factory NewSite.fromJson(Map<String, dynamic> json) {
-    return NewSite(
+  factory Site.fromJson(Map<String, dynamic> json) {
+    return Site(
       programName: json['ProgramName'] as String,
       programDisplayName: json['ProgramDisplayName'] as String,
       agencyNumber: json['AgencyNumber'] as String,

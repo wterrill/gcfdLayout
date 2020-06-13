@@ -1,7 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/NewSiteData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
@@ -115,11 +115,10 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                         child: GestureDetector(
                           onTap: () async {
                             // Sync all data
-                            await Provider.of<NewSiteData>(context,
-                                    listen: false)
+                            await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
                             SiteList siteList =
-                                Provider.of<NewSiteData>(context, listen: false)
+                                Provider.of<SiteData>(context, listen: false)
                                     .siteList;
                             Provider.of<ListCalendarData>(context,
                                     listen: false)

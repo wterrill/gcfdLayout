@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:hive/hive.dart';
 
 part 'SiteList.g.dart';
@@ -6,13 +6,13 @@ part 'SiteList.g.dart';
 @HiveType(typeId: 11)
 class SiteList extends HiveObject {
   @HiveField(0)
-  final List<NewSite> siteList;
+  List<Site> siteList;
 
   SiteList({this.siteList}) {}
 
   String agencyNameFromAgencyNumber(String agencyNumber) {
     // String agencyName;
-    for (NewSite site in siteList) {
+    for (Site site in siteList) {
       if (site.agencyNumber == agencyNumber) {
         return site.agencyName;
       }
@@ -21,7 +21,7 @@ class SiteList extends HiveObject {
   }
 
   String agencyNameFromProgramNumber(String programNumber) {
-    for (NewSite site in siteList) {
+    for (Site site in siteList) {
       if (site.programNumber == programNumber) {
         return site.agencyName;
       }

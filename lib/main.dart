@@ -1,7 +1,7 @@
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ColorAdapter.dart';
 import 'package:auditor/providers/AuditData.dart';
-import 'package:auditor/providers/NewSiteData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
@@ -15,7 +15,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'AuditClasses/Question.dart';
 import 'AuditClasses/Section.dart';
 import 'AuditClasses/Audit.dart';
-import 'Definitions/NewSite.dart';
+import 'Definitions/Site.dart';
+import 'Definitions/SiteList.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 
@@ -31,11 +32,12 @@ void main() async {
   Hive.registerAdapter(ContactAdapter());
   Hive.registerAdapter(CalendarResultAdapter());
   Hive.registerAdapter(ColorAdapter());
-  Hive.registerAdapter(NewSiteAdapter());
+  Hive.registerAdapter(SiteAdapter());
   Hive.registerAdapter(AuditAdapter());
   Hive.registerAdapter(QuestionAdapter());
   Hive.registerAdapter(SectionAdapter());
   Hive.registerAdapter(StatusAdapter());
+  Hive.registerAdapter(SiteListAdapter());
 
   runApp(
     MultiProvider(
@@ -52,7 +54,7 @@ void main() async {
         //   lazy: false,
         // ),
         ChangeNotifierProvider(
-          create: (context) => NewSiteData(),
+          create: (context) => SiteData(),
           lazy: false,
         ),
       ],
@@ -97,10 +99,11 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
-          return kIsWeb
-              ? Scaffold(body: ListSchedulingPage())
-              : Scaffold(body: LoginScreen());
+          // return kIsWeb
+          //     ? Scaffold(body: ListSchedulingPage())
+          //     : Scaffold(body: LoginScreen());
           // return Scaffold(body: ListSchedulingPage());
+          return Scaffold(body: LoginScreen());
         }),
       ),
       //),
