@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 
 import 'NewSiteData.dart';
-import 'SiteData.dart';
 
 class ListCalendarData with ChangeNotifier {
   String filterValue = "";
@@ -47,8 +46,8 @@ class ListCalendarData with ChangeNotifier {
     for (var i = 0; i < toBeSentKeys.length; i++) {
       CalendarResult result =
           calEventToBeSent.get(toBeSentKeys[i]) as CalendarResult;
-      bool successful = await ScheduleAuditComms.scheduleAudit(result);
-      if (successful) calEventToBeSent.delete(toBeSentKeys[i]);
+      dynamic successful = await ScheduleAuditComms.scheduleAudit(result);
+      if (successful as bool) calEventToBeSent.delete(toBeSentKeys[i]);
     }
   }
 
@@ -146,7 +145,7 @@ class ListCalendarData with ChangeNotifier {
     DateTime pastTime = now.subtract(Duration(days: 325));
     Random random = Random();
     List<List<dynamic>> agencies =
-        Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+        Provider.of<NewSiteData>(navigatorKey.currentContext, listen: false)
             .rowsAsListOfValues;
     for (var i = 0; i < value; i++) {
       int randomNumber = random.nextInt(365 * 24 * 60);

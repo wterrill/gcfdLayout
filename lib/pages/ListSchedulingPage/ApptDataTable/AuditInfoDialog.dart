@@ -91,7 +91,7 @@ class AuditInfoDialog extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     // color: Colors.grey,
-                    child: AutoSizeText(calendarResult.siteInfo.addressStreet,
+                    child: AutoSizeText(calendarResult.siteInfo.address1,
                         style: ColorDefs.textBodyBlue20),
                   ),
                   Container(
@@ -102,7 +102,7 @@ class AuditInfoDialog extends StatelessWidget {
                   ),
                   Container(
                     // color: Colors.grey,
-                    child: AutoSizeText('${calendarResult.siteInfo.phone}',
+                    child: AutoSizeText('${calendarResult.siteInfo.contact}',
                         style: ColorDefs.textBodyBlue20),
                   ),
                   Container(
@@ -112,8 +112,7 @@ class AuditInfoDialog extends StatelessWidget {
                         TextSpan(
                             text: 'Open: ', style: ColorDefs.textBodyBlue20),
                         TextSpan(
-                            text:
-                                ' ${calendarResult.siteInfo.hoursOfOperation}',
+                            text: ' ${calendarResult.siteInfo.operateHours}',
                             style: ColorDefs.textBodyWhite20),
                       ],
                     ),

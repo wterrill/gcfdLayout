@@ -1,6 +1,8 @@
 // import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/SiteData.dart';
+import 'package:auditor/providers/NewSiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +29,7 @@ class _LookAheadState extends State<LookAhead> {
 
   @override
   Widget build(BuildContext context) {
-    List<List<dynamic>> sites =
-        Provider.of<SiteData>(context).rowsAsListOfValues;
+    SiteList siteList = Provider.of<NewSiteData>(context).siteList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -46,19 +47,22 @@ class _LookAheadState extends State<LookAhead> {
               controller: _typeAheadController),
           suggestionsCallback: (pattern) async {
             pattern = pattern.toLowerCase();
-            var subsites = sites.where((site) {
-              print(site.length);
-              print(site);
-              String sitename = site[3] as String;
+            Iterable<NewSite> subsites =
+                siteList.siteList.where((NewSite site) {
+              // print(site.length);
+              // print(site);
+              String sitename = site.programDisplayName as String;
               sitename = sitename.toLowerCase();
               return sitename.contains(pattern);
             });
             Iterable<String> subsubsites = subsites.map((subsite) {
-              String progNum = subsite[0] as String;
-              String name = subsite[2] as String;
-              String agencyName = subsite[1] as String;
+              String progNum = subsite.programNumber;
+              String name = subsite.agencyName;
+              String displayName = subsite.programDisplayName;
+              // String agencyName = subsite[1] as String;
 
-              return name.titleCase + " - " + progNum;
+              // return name.titleCase + " - " + prog,/Num;
+              return displayName;
             });
             return subsubsites;
           },

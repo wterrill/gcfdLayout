@@ -171,7 +171,7 @@ class Authentication {
 }
 
 class ScheduleAuditComms {
-  static Future<bool> scheduleAudit(CalendarResult calendarResult) async {
+  static Future<dynamic> scheduleAudit(CalendarResult calendarResult) async {
     String body = jsonEncode(<String, dynamic>{
       'AED': 'A',
       'AgencyNumber': calendarResult.agencyNum,
@@ -206,7 +206,7 @@ class ScheduleAuditComms {
     }).catchError((Object e) {
       print(e);
       return false;
-    }) as Future<bool>;
+    }) as Future<dynamic>;
   }
 
   static Future<dynamic> getScheduled(int allNotMe, SiteList siteList) async {
@@ -233,8 +233,8 @@ class ScheduleAuditComms {
           List<CalendarResult> finalList = [];
           for (dynamic event in listEvents) {
             CalendarResult newResult = CalendarResult(
-                agencyName:
-                    siteList.lookupAgencyName(event['AgencyNumber'] as String),
+                agencyName: siteList.agencyNameFromAgencyNumber(
+                    event['AgencyNumber'] as String),
                 programNum: event['ProgramNumber'] as String,
                 programType:
                     convertNumberToProgramType(event['ProgramType'] as int),

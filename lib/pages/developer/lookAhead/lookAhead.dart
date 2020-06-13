@@ -1,4 +1,4 @@
-import 'package:auditor/providers/SiteData.dart';
+import 'package:auditor/providers/NewSiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class _LookAheadState extends State<LookAhead> {
 
   @override
   Widget build(BuildContext context) {
-    List<List<dynamic>> sites = Provider.of<SiteData>(context)
+    List<List<dynamic>> sites = Provider.of<NewSiteData>(context)
         .rowsAsListOfValues; //as List<List<dynamic>>;
     print("sites type: ${sites.runtimeType}");
     return Scaffold(

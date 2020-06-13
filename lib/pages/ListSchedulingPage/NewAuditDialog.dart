@@ -1,7 +1,9 @@
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/Definitions/NewSite.dart';
+import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/SiteData.dart';
+import 'package:auditor/providers/NewSiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -75,17 +77,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String lookupAgencyName(String selectedProgramNumber) {
-      String agencyName = "";
-      List<List<dynamic>> sites =
-          Provider.of<SiteData>(context, listen: false).rowsAsListOfValues;
-      for (List<dynamic> site in sites) {
-        if (site[0] == selectedProgramNumber) {
-          return site[1] as String;
-        }
-      }
-      return agencyName;
-    }
+    SiteList siteList =
+        Provider.of<NewSiteData>(context, listen: false).siteList;
 
     bool validateEntry() {
       bool validated = true;
@@ -136,7 +129,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
-                selectedAgencyNum = lookupAgencyName(selectedProgramNumber);
+                selectedAgencyNum =
+                    siteList.agencyNameFromProgramNumber(selectedProgramNumber);
               },
             ),
             Row(

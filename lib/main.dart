@@ -2,7 +2,6 @@ import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.da
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ColorAdapter.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/NewSiteData.dart';
-import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
@@ -16,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'AuditClasses/Question.dart';
 import 'AuditClasses/Section.dart';
 import 'AuditClasses/Audit.dart';
-import 'Definitions/Site.dart';
+import 'Definitions/NewSite.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 
@@ -32,7 +31,7 @@ void main() async {
   Hive.registerAdapter(ContactAdapter());
   Hive.registerAdapter(CalendarResultAdapter());
   Hive.registerAdapter(ColorAdapter());
-  Hive.registerAdapter(SiteAdapter());
+  Hive.registerAdapter(NewSiteAdapter());
   Hive.registerAdapter(AuditAdapter());
   Hive.registerAdapter(QuestionAdapter());
   Hive.registerAdapter(SectionAdapter());
@@ -48,10 +47,10 @@ void main() async {
           lazy: false,
         ),
         ChangeNotifierProvider(create: (context) => WebData()),
-        ChangeNotifierProvider(
-          create: (context) => SiteData(),
-          lazy: false,
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SiteData(),
+        //   lazy: false,
+        // ),
         ChangeNotifierProvider(
           create: (context) => NewSiteData(),
           lazy: false,

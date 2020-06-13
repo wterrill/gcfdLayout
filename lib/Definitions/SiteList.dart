@@ -10,10 +10,19 @@ class SiteList extends HiveObject {
 
   SiteList({this.siteList}) {}
 
-  String lookupAgencyName(String agencyNumber) {
+  String agencyNameFromAgencyNumber(String agencyNumber) {
     // String agencyName;
     for (NewSite site in siteList) {
       if (site.agencyNumber == agencyNumber) {
+        return site.agencyName;
+      }
+    }
+    return "SITE NOT FOUND";
+  }
+
+  String agencyNameFromProgramNumber(String programNumber) {
+    for (NewSite site in siteList) {
+      if (site.programNumber == programNumber) {
         return site.agencyName;
       }
     }
