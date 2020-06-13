@@ -5,7 +5,7 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
   switch (site) {
     case ("Pantry Audit"):
       endColorText = <String, dynamic>{
-        'color': ColorDefs.colorAudit1,
+        'color': ColorDefs.colorAudit3,
         'text': ColorDefs.textBodyWhite20
       };
       break;
@@ -19,7 +19,7 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
 
     case ("Healthy Student Market"):
       endColorText = <String, dynamic>{
-        'color': ColorDefs.colorAudit3,
+        'color': ColorDefs.colorAudit1,
         'text': ColorDefs.textBodyWhite20
       };
       break;

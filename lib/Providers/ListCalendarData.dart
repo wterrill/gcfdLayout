@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
+import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
@@ -7,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
+import 'NewSiteData.dart';
 import 'SiteData.dart';
 
 class ListCalendarData with ChangeNotifier {
@@ -34,9 +36,12 @@ class ListCalendarData with ChangeNotifier {
 
 ////////////////// Data Fetch, Data Save Operations
 
-  void fetchData() {}
+  void dataSync(BuildContext context, SiteList siteList) async {
+    await sendScheduledToCloud();
+    await getScheduledFromCloud(context, siteList);
+  }
 
-  void sendToCloud() async {
+  void sendScheduledToCloud() async {
     List<dynamic> dynKeys = calEventToBeSent.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
@@ -45,6 +50,21 @@ class ListCalendarData with ChangeNotifier {
       bool successful = await ScheduleAuditComms.scheduleAudit(result);
       if (successful) calEventToBeSent.delete(toBeSentKeys[i]);
     }
+  }
+
+  void getScheduledFromCloud(BuildContext context, SiteList siteList) async {
+    int allNotMe = 0; // "1: Query All   0: Query All But Me"
+    if (calendarBox.keys.toList().length == 0) {
+      allNotMe = 1;
+    }
+    dynamic result = await ScheduleAuditComms.getScheduled(allNotMe, siteList);
+    List<CalendarResult> downloadedCalendarResults =
+        result as List<CalendarResult>;
+    for (CalendarResult result in downloadedCalendarResults) {
+      addCalendarItem(result);
+    }
+    newEventAdded = true;
+    notifyListeners();
   }
 
 ////////////////// Hive operations
@@ -69,7 +89,9 @@ class ListCalendarData with ChangeNotifier {
   }
 
   void addCalendarItem(CalendarResult calendarItem) {
-    calendarBox.add(calendarItem);
+    calendarBox.put(
+        '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}',
+        calendarItem);
   }
 
 ////////////////// Calendar Operations
@@ -118,7 +140,7 @@ class ListCalendarData with ChangeNotifier {
     );
   }
 
-  void generateAppointments() {
+  void generateAppointments(int value) {
     toggleGenerateApointments != toggleGenerateApointments;
     DateTime now = DateTime.now();
     DateTime pastTime = now.subtract(Duration(days: 325));
@@ -126,7 +148,7 @@ class ListCalendarData with ChangeNotifier {
     List<List<dynamic>> agencies =
         Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
             .rowsAsListOfValues;
-    for (var i = 0; i < 800; i++) {
+    for (var i = 0; i < value; i++) {
       int randomNumber = random.nextInt(365 * 24 * 60);
       DateTime randomDate = pastTime.add(Duration(minutes: randomNumber));
       String startTime = randomDate.toString();
@@ -149,7 +171,7 @@ class ListCalendarData with ChangeNotifier {
       print(status);
       addBoxEvent(event: {
         'startTime': startTime,
-        'agency': agency,
+        'agencyName': agency,
         'auditType': auditType,
         'programNum': programNum,
         'programType': programType,

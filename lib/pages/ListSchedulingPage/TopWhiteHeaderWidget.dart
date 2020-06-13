@@ -1,4 +1,5 @@
 // import 'package:auditor/providers/LayoutData.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -25,21 +26,29 @@ class TopWhiteHeaderWidget extends StatelessWidget {
               ),
             ),
           ),
-          FlatButton(
-            child: Text("Generate Appointments FOR TESTING (800 appointments)",
+          RaisedButton(
+            color: Colors.yellow,
+            child: Text("Generate 50 random Appointments",
                 style: ColorDefs.textBodyBlack10),
             onPressed: () {
               Provider.of<ListCalendarData>(context, listen: false)
-                  .generateAppointments();
+                  .generateAppointments(50);
             },
           ),
-          FlatButton(
+          RaisedButton(
+            color: Colors.red,
             child: Text("DELETE ALL", style: ColorDefs.textBodyBlack10),
             onPressed: () {
               Provider.of<ListCalendarData>(context, listen: false)
                   .deleteAllAppointments();
             },
           ),
+          RaisedButton(
+              color: Colors.blue,
+              child: Text("Version"),
+              onPressed: () {
+                Dialogs.showVersionDialog(context);
+              }),
           Padding(
             padding: EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 5.0),
             child: Container(

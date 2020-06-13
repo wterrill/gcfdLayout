@@ -1,6 +1,7 @@
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ColorAdapter.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/NewSiteData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:auditor/providers/WebData.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,21 @@ void main() async {
           create: (context) => SiteData(),
           lazy: false,
         ),
+        ChangeNotifierProvider(
+          create: (context) => NewSiteData(),
+          lazy: false,
+        ),
       ],
+
+      //     MultiProvider(
+      // providers: [
+      //   ChangeNotifierProvider(builder: (_) => Auth()),
+      //   ChangeNotifierProxyProvider<Auth, Messages>(
+      //     update: (context, auth, previousMessages) => Messages(auth),
+      //     create: (BuildContext context) => Messages(null),
+      //   ),
+      // ],
+
       child: MyApp(),
     ),
   );
@@ -83,7 +98,9 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
-          return Scaffold(body: LoginScreen());
+          return kIsWeb
+              ? Scaffold(body: ListSchedulingPage())
+              : Scaffold(body: LoginScreen());
           // return Scaffold(body: ListSchedulingPage());
         }),
       ),

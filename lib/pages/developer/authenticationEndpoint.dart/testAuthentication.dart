@@ -159,6 +159,8 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       } else {
         sender = http.get("http://12.216.81.220:88/api/SiteInfo");
       }
+      print(sender);
+
       sender.then(
         (http.Response res) {
           print(res.body);

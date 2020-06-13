@@ -44,7 +44,8 @@ class ExpandableContent extends StatelessWidget {
     List<Widget> columnContent = [];
     for (Question question in sectionData.questions) {
       String dateString;
-      if (question.typeOfQuestion.toLowerCase() == "date") {
+      if (question.typeOfQuestion.toLowerCase() == "date" &&
+          question.userResponse != null) {
         DateTime dateTime = DateTime.parse(question.userResponse);
         if (dateTime == null) {
           dateString = "";
@@ -72,7 +73,8 @@ class ExpandableContent extends StatelessWidget {
                 Text(question.userResponse),
               if (question.optionalComment != null)
                 Text(question.optionalComment),
-              if (question.typeOfQuestion.toLowerCase() == "date")
+              if (question.typeOfQuestion.toLowerCase() == "date" &&
+                  dateString != null)
                 Text(dateString)
             ],
           ),

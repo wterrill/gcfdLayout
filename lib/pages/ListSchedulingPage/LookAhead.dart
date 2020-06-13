@@ -1,4 +1,5 @@
 // import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -72,7 +73,7 @@ class _LookAheadState extends State<LookAhead> {
                 widget.lookAheadCallback(nameArray);
               },
               child: Container(
-                color: Colors.purple,
+                color: ColorDefs.colorAlternatingDark,
                 child: ListTile(
                   dense: true,
                   title: Text(suggestion),
