@@ -2,8 +2,7 @@ import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/main.dart';
 import 'package:flutter/material.dart';
-
-import 'CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 
 class CalendarResultsDataSource extends DataTableSource {
   final List<CalendarResult> _calendarResults;

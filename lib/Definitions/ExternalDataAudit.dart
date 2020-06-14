@@ -20,7 +20,12 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Site address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
-  <String, dynamic>{'text': 'Person Interviewed:', 'type': 'fillIn'},
+  <String, dynamic>{
+    'text': 'Person Interviewed:',
+    'type': 'fillIn',
+    'databaseVar': 'PersonInterviewed',
+    'databaseVarType': 'string'
+  },
   <String, dynamic>{'text': 'Program Operating Hours:', 'type': 'display'},
   <String, dynamic>{'text': 'Service Area:', 'type': 'display'},
 ];
@@ -77,6 +82,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     ],
     'databaseVar': 'HowOftenGuestsReceiveFood',
     'databaseVarType': 'string',
+    'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
   },
   <String, dynamic>{
     'text':

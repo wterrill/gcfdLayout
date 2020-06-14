@@ -1,6 +1,6 @@
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/Definitions/Site.dart';
-import 'package:auditor/Definitions/SiteList.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
+import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';

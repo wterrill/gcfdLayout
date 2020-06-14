@@ -1,7 +1,7 @@
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auditor/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
 

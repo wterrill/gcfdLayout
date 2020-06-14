@@ -1,7 +1,7 @@
-import 'package:auditor/AuditClasses/Audit.dart';
-import 'package:auditor/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/ExternalDataAudit.dart';
-import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

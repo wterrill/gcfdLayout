@@ -1,5 +1,5 @@
-import 'package:auditor/Definitions/Site.dart';
-import 'package:auditor/Definitions/SiteList.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
+import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 

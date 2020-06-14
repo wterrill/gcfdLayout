@@ -1,8 +1,8 @@
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
-import 'package:auditor/Definitions/SiteList.dart';
+import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
-import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';

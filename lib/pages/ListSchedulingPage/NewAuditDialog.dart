@@ -1,13 +1,12 @@
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/Definitions/SiteList.dart';
+import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import 'ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'LookAhead.dart';
 
 class NewAuditDialog extends StatefulWidget {

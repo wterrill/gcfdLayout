@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/Site.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/programTypeTextAndColorLookup.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

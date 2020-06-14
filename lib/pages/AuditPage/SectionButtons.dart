@@ -1,9 +1,9 @@
-import 'package:auditor/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 
-import 'package:auditor/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 // import 'package:auditor/AuditClasses/Section.dart';
 // import 'package:auditor/Definitions/colorDefs.dart';
 // import 'package:auditor/providers/AuditData.dart';
@@ -33,10 +33,25 @@ class _SectionButtonsState extends State<SectionButtons> {
         <String, dynamic>{"beer": "women"}
       ]
     };
+    Map<String, List<Map<String, dynamic>>> developerData = {
+      "*Developer*": [
+        <String, dynamic>{"beer": "women"}
+      ]
+    };
     Section review = Section(section: reviewData);
     Section verification = Section(section: verificationData);
-    buttonSections.add(review);
-    buttonSections.add(verification);
+    Section developer = Section(section: developerData);
+    bool addThem = true;
+    for (Section section in buttonSections) {
+      if (section.name == 'Review') {
+        addThem = false;
+      }
+    }
+    if (addThem) {
+      buttonSections.add(review);
+      buttonSections.add(verification);
+      buttonSections.add(developer);
+    }
   }
 
   @override

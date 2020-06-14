@@ -1,6 +1,6 @@
-import 'package:auditor/Definitions/Site.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
-import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:flutter/material.dart';

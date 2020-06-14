@@ -1,13 +1,14 @@
-import 'package:auditor/AuditClasses/Audit.dart';
-import 'package:auditor/AuditClasses/Question.dart';
-import 'package:auditor/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Question.dart';
+import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'DeveloperPage.dart';
 import 'ReviewPage.dart';
 import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
@@ -81,6 +82,7 @@ class _AuditPageState extends State<AuditPage> {
                       ),
                     if (activeSection.name == "Verification")
                       VerificationPage(),
+                    if (activeSection.name == "*Developer*") DeveloperPage(),
                     if (activeSection.name != "Review" &&
                         activeSection.name != "Verification")
                       Container(

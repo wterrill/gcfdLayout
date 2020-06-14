@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/Site.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:hive/hive.dart';
 
 part 'SiteList.g.dart';

@@ -415,7 +415,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         client
                             // http
                             .get(
-                          "http://12.216.81.220:88/api/AuthenticateUser",
+                          "https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/AuthenticateUser",
                         )
                             .then((res) {
                           print(res.body);

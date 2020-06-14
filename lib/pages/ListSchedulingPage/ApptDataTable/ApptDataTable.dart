@@ -3,8 +3,7 @@ import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-
-import 'CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
 

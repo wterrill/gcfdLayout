@@ -1,4 +1,4 @@
-import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
+import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 
 import 'MetaData.dart';
 import 'Section.dart';
