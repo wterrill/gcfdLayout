@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/SiteList.dart';
+import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -17,124 +18,6 @@ NTLMClient client = NTLMClient(
   password: "Password1",
 );
 
-String converNumberToStatus(int number) {
-  String value = "NONE";
-  switch (number) {
-    case (0):
-      value = "Scheduled";
-      break;
-    case (1):
-      value = "Completed";
-  }
-  return value;
-}
-
-int convertAuditTypeToNumber(String auditTypeString) {
-  int value = 0;
-  switch (auditTypeString) {
-    case ("Annual"):
-      value = 1;
-      break;
-
-    case ("Food Rescue"):
-      value = 2;
-      break;
-
-    case ("CEDA"):
-      value = 3;
-      break;
-
-    case ("Bi-Annual"):
-      value = 4;
-      break;
-
-    case ("Complaint"):
-      value = 5;
-      break;
-
-    case ("Follow Up"):
-      value = 6;
-      break;
-
-    case ("Grant"):
-      value = 7;
-      break;
-  }
-  return value;
-}
-
-String convertNumberToAuditType(int number) {
-  String value = "NONE";
-  switch (number) {
-    case (1):
-      value = "Annual";
-      break;
-
-    case (2):
-      value = "Food Rescue";
-      break;
-
-    case (3):
-      value = "CEDA";
-      break;
-
-    case (4):
-      value = "Bi-Annual";
-      break;
-
-    case (5):
-      value = "Complaint";
-      break;
-
-    case (6):
-      value = "Follow Up";
-      break;
-
-    case (7):
-      value = "Grant";
-      break;
-  }
-  return value;
-}
-
-int convertProgramTypeToNumber(String programType) {
-  int value = 0;
-  switch (programType) {
-    case ("Pantry Audit"):
-      value = 1;
-      break;
-    case ("Congregate Audit"):
-      value = 2;
-      break;
-    case ("Senior Adults Program"):
-      value = 3;
-      break;
-    case ("Healthy Student Market"):
-      value = 4;
-      break;
-  }
-  return value;
-}
-
-String convertNumberToProgramType(int number) {
-  String value = "None";
-  switch (number) {
-    case (1):
-      value = "Pantry Audit";
-      break;
-    case (2):
-      value = "Congregate Audit";
-      break;
-    case (3):
-      value = "Senior Adults Program";
-      break;
-    case (4):
-      value = "Healthy Student Market";
-      break;
-  }
-  return value;
-}
-
 class Authentication {
   static Future<bool> getAuthentication() async {
     return Future.delayed(Duration(milliseconds: 1000), () => true);
@@ -148,21 +31,26 @@ class Authentication {
       password: password,
     );
 
-    return client
-        .get(
-      "http://12.216.81.220:88/api/AuthenticateUser",
-    )
-        .then((result) {
-      bool isAuthenticated = false;
-      try {
-        dynamic resultMap = json.decode(result.body);
-        dynamic dynIsAuthenticated = resultMap['IsAuthenticated'];
-        isAuthenticated = dynIsAuthenticated as bool;
-      } catch (error) {
-        return false;
-      }
-      return isAuthenticated;
-    });
+    try {
+      return client
+          .get(
+        "http://12.216.81.220:88/api/AuthenticateUser",
+      )
+          .then((result) {
+        bool isAuthenticated = false;
+        try {
+          dynamic resultMap = json.decode(result.body);
+          dynamic dynIsAuthenticated = resultMap['IsAuthenticated'];
+          isAuthenticated = dynIsAuthenticated as bool;
+        } catch (error) {
+          return false;
+        }
+        return isAuthenticated;
+      });
+    } catch (error) {
+      print(error);
+      return false;
+    }
   }
 }
 

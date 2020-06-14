@@ -99,6 +99,28 @@ class Dialogs {
     );
   }
 
+  static void failedAuthenticationWithError(
+      BuildContext context, String errorString) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+              'There was an error communicating with the server. Error = $errorString'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showVersionDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,

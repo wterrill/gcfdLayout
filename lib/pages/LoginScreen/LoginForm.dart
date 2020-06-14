@@ -143,9 +143,18 @@ class _LoginFormState extends State<LoginForm> {
       // bool result = await Authentication.getAuthentication();
       // http.Response result = await Authentication.authenticate(
       //     username: _username, password: _password);
-
-      bool isAuthenticated = await Authentication.authenticate(
-          username: _username, password: _password);
+      bool isAuthenticated = false;
+      bool isError = false;
+      String errorString = "";
+      try {
+        isAuthenticated = await Authentication.authenticate(
+            username: _username, password: _password);
+      } catch (error) {
+        print(error);
+        isAuthenticated = false;
+        isError = true;
+        errorString = error.toString();
+      }
       // Map<String, String>
       // try {
       //   dynamic resultMap = json.decode(result.body);
@@ -163,7 +172,11 @@ class _LoginFormState extends State<LoginForm> {
         );
       } else {
         Navigator.of(context).pop();
-        Dialogs.failedAuthentication(context);
+        if (!isError) {
+          Dialogs.failedAuthentication(context);
+        } else {
+          Dialogs.failedAuthenticationWithError(context, errorString);
+        }
       }
     }
   }
