@@ -107,6 +107,7 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
             index: index,
             activeSection: activeSection,
             key: UniqueKey(),
+            numKeyboard: false,
             mandatory: false)
       ],
     );

@@ -31,7 +31,6 @@ class SiteData with ChangeNotifier {
   }
 
   void initialize() {
-    //TODO get siteData database ready
     initHive();
   }
 
@@ -57,8 +56,6 @@ class SiteData with ChangeNotifier {
     print(siteList);
     siteListBox.put('siteList', siteList);
     print(siteList);
-    SiteList beer = siteListBox.get('siteList') as SiteList;
-    print(beer.siteList);
     notifyListeners();
   }
 }

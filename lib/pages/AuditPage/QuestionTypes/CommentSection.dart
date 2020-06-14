@@ -11,12 +11,14 @@ class CommentSection extends StatefulWidget {
   final int index;
   final Section activeSection;
   final bool mandatory;
-  CommentSection({
-    Key key,
-    @required this.index,
-    @required this.activeSection,
-    @required this.mandatory,
-  }) : super(key: key);
+  final bool numKeyboard;
+  CommentSection(
+      {Key key,
+      @required this.index,
+      @required this.activeSection,
+      @required this.mandatory,
+      @required this.numKeyboard})
+      : super(key: key);
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -50,6 +52,8 @@ class _CommentSectionState extends State<CommentSection> {
       color: Colors.white,
       duration: Duration(milliseconds: 150),
       child: TextField(
+        keyboardType:
+            widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
           if (widget.mandatory) {
@@ -65,7 +69,6 @@ class _CommentSectionState extends State<CommentSection> {
             // setState(() {});
           }
         },
-        keyboardType: TextInputType.multiline,
         maxLines: null,
         style: widget.activeSection.questions[index].textBoxRollOut
             ? ColorDefs.textBodyBlack20

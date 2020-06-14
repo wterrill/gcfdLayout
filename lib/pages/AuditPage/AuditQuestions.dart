@@ -1,3 +1,4 @@
+import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/AuditClasses/Section.dart';
@@ -6,13 +7,16 @@ import 'package:auditor/Definitions/colorDefs.dart';
 import 'QuestionTypes/DateQuestion.dart';
 import 'QuestionTypes/Display.dart';
 import 'QuestionTypes/DropDownQuestion.dart';
+import 'QuestionTypes/FillInNumQuestion.dart';
 import 'QuestionTypes/FillInQuestion.dart';
 import 'QuestionTypes/YesNoNaQuestion.dart';
 import 'QuestionTypes/YesNoQuestion.dart';
 
 class AuditQuestions extends StatefulWidget {
-  AuditQuestions({Key key, this.activeSection}) : super(key: key);
+  AuditQuestions({Key key, this.activeSection, this.activecalendarResult})
+      : super(key: key);
   final Section activeSection;
+  final CalendarResult activecalendarResult;
 
   @override
   _AuditQuestionsState createState() => _AuditQuestionsState();
@@ -41,6 +45,7 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                       Display(
                         index: index,
                         activeSection: widget.activeSection,
+                        activeCalendarResult: widget.activecalendarResult,
                       ),
                     if (widget.activeSection.questions[index].typeOfQuestion ==
                         "yesNo")
@@ -51,6 +56,12 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                     if (widget.activeSection.questions[index].typeOfQuestion ==
                         "fillIn")
                       FillInQuestion(
+                          index: index,
+                          activeSection: widget.activeSection,
+                          questionAutoGroup: questionAutoGroup),
+                    if (widget.activeSection.questions[index].typeOfQuestion ==
+                        "fillInNum")
+                      FillInNumQuestion(
                           index: index,
                           activeSection: widget.activeSection,
                           questionAutoGroup: questionAutoGroup),

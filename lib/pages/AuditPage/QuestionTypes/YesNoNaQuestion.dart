@@ -130,6 +130,7 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
             index: index,
             activeSection: activeSection,
             key: UniqueKey(),
+            numKeyboard: false,
             mandatory: false)
       ],
     );

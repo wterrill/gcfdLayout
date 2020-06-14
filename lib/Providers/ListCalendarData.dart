@@ -136,6 +136,9 @@ class ListCalendarData with ChangeNotifier {
       auditor: result['auditor'],
       status: result['status'],
       message: result['message'],
+      siteInfo: Provider.of<SiteData>(navigatorKey.currentContext)
+          .siteList
+          .getSiteFromProgramNumber(result['programNum']),
     );
   }
 

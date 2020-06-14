@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
@@ -19,6 +20,58 @@ class Dialogs {
     );
     showDialog<void>(
       barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void showSites(BuildContext context, List<Site> siteList) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Container(
+        width: 600,
+        height: 900,
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: siteList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (siteList[index].agencyName != null)
+                    Text(siteList[index].agencyName),
+                  if (siteList[index].agencyNumber != null)
+                    Text(siteList[index].agencyNumber),
+                  if (siteList[index].address1 != null)
+                    Text(siteList[index].address1),
+                  if (siteList[index].address2 != null)
+                    Text(siteList[index].address2),
+                  if (siteList[index].city != null) Text(siteList[index].city),
+                  if (siteList[index].state != null)
+                    Text(siteList[index].state),
+                  if (siteList[index].zip != null) Text(siteList[index].zip),
+                  if (siteList[index].contact != null)
+                    Text(siteList[index].contact),
+                  if (siteList[index].operateHours != null)
+                    Text(siteList[index].operateHours),
+                  if (siteList[index].programName != null)
+                    Text(siteList[index].programName),
+                  if (siteList[index].programNumber != null)
+                    Text(siteList[index].programNumber),
+                  if (siteList[index].serviceArea != null)
+                    Text(siteList[index].serviceArea),
+                  if (siteList[index].programDisplayName != null)
+                    Text(siteList[index].programDisplayName),
+                ],
+              ));
+            }),
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return alert;

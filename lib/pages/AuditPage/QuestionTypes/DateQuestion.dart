@@ -93,6 +93,7 @@ class _DateQuestionState extends State<DateQuestion> {
           index: index,
           activeSection: activeSection,
           key: UniqueKey(),
+          numKeyboard: false,
           mandatory: false,
         )
       ],

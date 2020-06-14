@@ -89,6 +89,7 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
             index: index,
             activeSection: activeSection,
             key: UniqueKey(),
+            numKeyboard: false,
             mandatory: false)
       ],
     );

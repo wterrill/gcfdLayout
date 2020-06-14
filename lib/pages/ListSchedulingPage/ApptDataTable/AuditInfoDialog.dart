@@ -89,35 +89,45 @@ class AuditInfoDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    // color: Colors.grey,
-                    child: AutoSizeText(calendarResult.siteInfo.address1,
-                        style: ColorDefs.textBodyBlue20),
-                  ),
-                  Container(
-                    // color: Colors.grey,
-                    child: AutoSizeText(
-                        '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state},  ${calendarResult.siteInfo.zip},',
-                        style: ColorDefs.textBodyBlue20),
-                  ),
-                  Container(
-                    // color: Colors.grey,
-                    child: AutoSizeText('${calendarResult.siteInfo.contact}',
-                        style: ColorDefs.textBodyBlue20),
-                  ),
-                  Container(
-                      child: AutoSizeText.rich(
-                    TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Open: ', style: ColorDefs.textBodyBlue20),
-                        TextSpan(
-                            text: ' ${calendarResult.siteInfo.operateHours}',
-                            style: ColorDefs.textBodyWhite20),
-                      ],
+                  if (calendarResult.siteInfo.address1 != null)
+                    Container(
+                      // color: Colors.grey,
+                      child: AutoSizeText(calendarResult.siteInfo.address1,
+                          style: ColorDefs.textBodyBlue20),
                     ),
-                    minFontSize: 5,
-                  )),
+                  if (calendarResult.siteInfo.address2 != null)
+                    Container(
+                      // color: Colors.grey,
+                      child: AutoSizeText(calendarResult.siteInfo.address2,
+                          style: ColorDefs.textBodyBlue20),
+                    ),
+                  if (calendarResult.siteInfo.city != null)
+                    Container(
+                      // color: Colors.grey,
+                      child: AutoSizeText(
+                          '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state ?? ""},  ${calendarResult.siteInfo.zip ?? ""},',
+                          style: ColorDefs.textBodyBlue20),
+                    ),
+                  if (calendarResult.siteInfo.contact != null)
+                    Container(
+                      // color: Colors.grey,
+                      child: AutoSizeText('${calendarResult.siteInfo.contact}',
+                          style: ColorDefs.textBodyBlue20),
+                    ),
+                  if (calendarResult.siteInfo.operateHours != null)
+                    Container(
+                        child: AutoSizeText.rich(
+                      TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Open: ', style: ColorDefs.textBodyBlue20),
+                          TextSpan(
+                              text: ' ${calendarResult.siteInfo.operateHours}',
+                              style: ColorDefs.textBodyWhite20),
+                        ],
+                      ),
+                      minFontSize: 5,
+                    )),
                 ],
               ),
             ),

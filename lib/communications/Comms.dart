@@ -237,7 +237,10 @@ class ScheduleAuditComms {
                 auditor: event['Auditor'] as String,
                 auditType: convertNumberToAuditType(event['AuditType'] as int),
                 startTime: event['StartTime'] as String,
-                status: converNumberToStatus(event['Status'] as int));
+                status: converNumberToStatus(event['Status'] as int),
+                siteInfo: siteList.getSiteFromProgramORAgencyNumber(
+                    event['ProgramNumber'] as String,
+                    event['AgencyNumber'] as String));
             finalList.add(newResult);
           }
 

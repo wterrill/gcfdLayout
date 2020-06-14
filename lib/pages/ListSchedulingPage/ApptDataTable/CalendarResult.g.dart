@@ -27,9 +27,8 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       status: fields[7] as String,
       message: fields[8] as String,
       programTypeColor: fields[9] as Color,
-    )
-      ..startDateTime = fields[10] as DateTime
-      ..siteInfo = fields[11] as Site;
+      siteInfo: fields[11] as Site,
+    )..startDateTime = fields[10] as DateTime;
   }
 
   @override

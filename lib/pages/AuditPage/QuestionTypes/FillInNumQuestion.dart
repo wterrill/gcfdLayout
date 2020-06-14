@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 
 import 'CommentSection.dart';
 
-class FillInQuestion extends StatefulWidget {
+class FillInNumQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInQuestion(
+  FillInNumQuestion(
       {Key key, this.index, this.activeSection, this.questionAutoGroup})
       : super(key: key);
 
   @override
-  _FillInQuestionState createState() => _FillInQuestionState();
+  _FillInNumQuestionState createState() => _FillInNumQuestionState();
 }
 
-class _FillInQuestionState extends State<FillInQuestion> {
+class _FillInNumQuestionState extends State<FillInNumQuestion> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
@@ -61,7 +61,7 @@ class _FillInQuestionState extends State<FillInQuestion> {
             index: index,
             activeSection: activeSection,
             mandatory: true,
-            numKeyboard: false,
+            numKeyboard: true,
             key: UniqueKey())
       ],
     );

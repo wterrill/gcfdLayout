@@ -48,15 +48,23 @@ class _SectionButtonsState extends State<SectionButtons> {
       child: Container(
         height: 100,
         child: ListView.separated(
+          physics: ClampingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           separatorBuilder: (context, index) =>
               Container(width: 5, color: Colors.transparent),
           itemCount: widget.activeAudit.sections.length,
           itemBuilder: (context, index) {
-            return SectionButton(
+            SectionButton sectionButton = SectionButton(
                 section: widget.activeAudit.sections[index],
                 buttonAutoGroup: buttonAutoGroup);
+            if (index == 0)
+              return Padding(
+                  padding: EdgeInsets.only(left: 10.0), child: sectionButton);
+            if (index == widget.activeAudit.sections.length - 1)
+              return Padding(
+                  padding: EdgeInsets.only(right: 10.0), child: sectionButton);
+            return sectionButton;
           },
         ),
       ),

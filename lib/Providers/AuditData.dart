@@ -11,6 +11,7 @@ class AuditData with ChangeNotifier {
   Section activeSection;
   Box auditBox;
   Audit retrievedAudit;
+  CalendarResult activeCalendarResult;
 
   AuditData() {
     initialize();
@@ -65,9 +66,10 @@ class AuditData with ChangeNotifier {
     notifyListeners();
   }
 
-  void loadExisting() {
+  void loadExisting(CalendarResult calendarResult) {
     activeAudit = retrievedAudit;
     activeSection = activeAudit.sections[0];
+    activeCalendarResult = calendarResult;
   }
 
   void createAuditClass(CalendarResult calendarResult) {
@@ -76,6 +78,7 @@ class AuditData with ChangeNotifier {
           questionnaire: pantryAuditSectionsQuestions,
           calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
+      activeCalendarResult = calendarResult;
     }
   }
 

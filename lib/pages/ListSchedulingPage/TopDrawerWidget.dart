@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/Definitions/Site.dart';
 import 'package:auditor/Definitions/SiteList.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
@@ -72,13 +73,16 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                   ),
                   GestureDetector(
                     onTap: () {
-                      Dialogs.showNotImplemented(context);
+                      SiteList siteList =
+                          Provider.of<SiteData>(context, listen: false)
+                              .siteList;
+                      Dialogs.showSites(context, siteList.siteList);
                     },
                     child: Container(
                         height: 35.4,
                         width: double.infinity,
                         child: Center(
-                            child: Text("Forms",
+                            child: Text("Sites",
                                 style: ColorDefs.textBodyBlue20))),
                   ),
                   GestureDetector(
@@ -120,7 +124,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             SiteList siteList =
                                 Provider.of<SiteData>(context, listen: false)
                                     .siteList;
-                            Provider.of<ListCalendarData>(context,
+                            await Provider.of<ListCalendarData>(context,
                                     listen: false)
                                 .dataSync(context, siteList);
                           },

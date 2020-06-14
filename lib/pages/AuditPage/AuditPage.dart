@@ -1,4 +1,5 @@
 import 'package:auditor/AuditClasses/Audit.dart';
+import 'package:auditor/AuditClasses/Question.dart';
 import 'package:auditor/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/CalendarResult.dart';
@@ -28,7 +29,8 @@ class _AuditPageState extends State<AuditPage> {
   void initState() {
     super.initState();
     if (widget.alreadyExist) {
-      Provider.of<AuditData>(context, listen: false).loadExisting();
+      Provider.of<AuditData>(context, listen: false)
+          .loadExisting(widget.calendarResult);
     } else {
       Provider.of<AuditData>(context, listen: false)
           .createNewAudit(widget.calendarResult);
@@ -43,6 +45,8 @@ class _AuditPageState extends State<AuditPage> {
     Section activeSection = Provider.of<AuditData>(context).activeSection;
     double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
     double mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    CalendarResult activeCalendarResult =
+        Provider.of<AuditData>(context).activeCalendarResult;
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
@@ -80,22 +84,96 @@ class _AuditPageState extends State<AuditPage> {
                     if (activeSection.name != "Review" &&
                         activeSection.name != "Verification")
                       Container(
-                        child: AuditQuestions(activeSection: activeSection),
+                        child: AuditQuestions(
+                            activeSection: activeSection,
+                            activecalendarResult: activeCalendarResult),
                       ),
                     if (activeSection.name == "Confirm Details")
-                      FlatButton(
+                      RaisedButton(
+                        disabledColor: ColorDefs.colorButtonNeutral,
                         color: Colors.blue,
                         textColor: Colors.black,
                         child:
                             Text("Confirm", style: ColorDefs.textBodyBlack20),
-                        onPressed: () {
-                          for (Section section in activeAudit.sections) {
-                            section.status = Status.available;
-                            activeSection.status = Status.completed;
-                            setState(() {});
-                          }
-                        },
+                        onPressed: (activeSection.status != Status.completed)
+                            ? null
+                            : () {
+                                for (Section section in activeAudit.sections) {
+                                  section.status = Status.available;
+                                  activeSection.status = Status.completed;
+                                  setState(() {});
+                                }
+                              },
                       ),
+                    if (activeSection.name == "Review")
+                      RaisedButton(
+                          disabledColor: ColorDefs.colorButtonNeutral,
+                          color: Colors.blue,
+                          textColor: Colors.black,
+                          child:
+                              Text("Submit", style: ColorDefs.textBodyBlack20),
+                          onPressed: (
+                              // activeSection.status != Status.completed)
+                              //   ? null
+                              //   :
+                              () {
+                            Map<String, dynamic> resultMap =
+                                <String, dynamic>{};
+                            for (Section section in activeAudit.sections) {
+                              for (Question question in section.questions) {
+                                String name = question
+                                    .questionMap['databaseVar'] as String;
+                                if (name != null) {
+                                  print("beer");
+                                }
+                                String qtype = question
+                                    .questionMap['databaseVarType'] as String;
+                                String comment = question
+                                    .questionMap['databaseOptCom'] as String;
+
+                                if (qtype == "bool") {
+                                  if (question.userResponse == "Yes") {
+                                    resultMap[name] = 1;
+                                  } else if (question.userResponse == "No") {
+                                    resultMap[name] = 0;
+                                  } else {
+                                    resultMap[name] = null;
+                                  }
+                                  try {
+                                    resultMap[comment] =
+                                        question.optionalComment;
+                                  } catch (err) {
+                                    print(err);
+                                    print("moving on");
+                                  }
+                                }
+
+                                if (qtype == "string") {
+                                  resultMap[name] = question.userResponse;
+                                  try {
+                                    resultMap[comment] =
+                                        question.optionalComment;
+                                  } catch (err) {
+                                    print(err);
+                                    print("moving on");
+                                  }
+                                }
+
+                                if (qtype == "date") {
+                                  resultMap[name] = question.userResponse;
+
+                                  try {
+                                    resultMap[comment] =
+                                        question.optionalComment;
+                                  } catch (err) {
+                                    print(err);
+                                    print("moving on");
+                                  }
+                                }
+                              }
+                            }
+                            print(resultMap);
+                          })),
                     FlatButton(
                       color: Colors.blue,
                       textColor: Colors.black,

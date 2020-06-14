@@ -22,7 +22,7 @@ class TestAuthentication extends StatefulWidget {
 class _TestAuthenticationState extends State<TestAuthentication> {
   @override
   String result = "Awaiting results...";
-  bool isNtlm = false;
+  bool isNtlm = true;
   dynamic sender;
   Uint8List pickedImage;
 
@@ -415,7 +415,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         client
                             // http
                             .get(
-                          "https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/AuthenticateUser",
+                          "http://12.216.81.220:88/api/AuthenticateUser",
                         )
                             .then((res) {
                           print(res.body);
