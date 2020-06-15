@@ -38,8 +38,8 @@ class _DateQuestionState extends State<DateQuestion> {
             (widget.activeSection.questions[index].userResponse != null)
                 ? Text(
                     DateFormat.yMMMMd('en_US')
-                        .format(DateTime.parse(
-                            widget.activeSection.questions[index].userResponse))
+                        .format(DateTime.parse(widget.activeSection
+                            .questions[index].userResponse as String))
                         .toString(),
                   )
                 : Text(""),

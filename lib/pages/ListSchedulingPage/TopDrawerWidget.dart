@@ -1,6 +1,6 @@
 import 'package:auditor/Definitions/Dialogs.dart';
-import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
   AnimationController controller;
   Animation<double> animation;
   bool _drawerState;
+  bool startSync = false;
 
   @override
   void initState() {
@@ -119,6 +120,11 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                         child: GestureDetector(
                           onTap: () async {
                             // Sync all data
+                            setState(() {
+                              startSync = true;
+                            });
+                            await Future.delayed(
+                                Duration(seconds: 3), () => true);
                             await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
                             SiteList siteList =
@@ -127,6 +133,12 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             await Provider.of<ListCalendarData>(context,
                                     listen: false)
                                 .dataSync(context, siteList);
+                            await Provider.of<AuditData>(context, listen: false)
+                                .dataSync(context, siteList);
+
+                            setState(() {
+                              startSync = false;
+                            });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -135,8 +147,15 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                               Center(
                                   child: Text("Sync",
                                       style: ColorDefs.textBodyBlue20)),
-                              Icon(Icons.sync,
-                                  color: ColorDefs.colorTopDrawerBackground),
+                              Container(
+                                height: 20,
+                                width: 20,
+                                child: startSync
+                                    ? CircularProgressIndicator()
+                                    : Icon(Icons.sync,
+                                        color:
+                                            ColorDefs.colorTopDrawerBackground),
+                              ),
                             ],
                           ),
                         )),

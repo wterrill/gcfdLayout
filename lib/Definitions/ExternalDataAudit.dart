@@ -1091,6 +1091,7 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'type': 'yesNo',
     'databaseVarType': 'bool',
     'databaseVar': 'FindingsFound',
+    'databaseOptCom': 'FindingsFoundComments'
   },
 ];
 

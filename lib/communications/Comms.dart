@@ -54,6 +54,89 @@ class Authentication {
   }
 }
 
+class FullAuditComms {
+  static void sendFullAudit(Map<String, dynamic> auditToSend) {
+    String body = jsonEncode(auditToSend);
+
+    if (isNtlm) {
+      sender = client.post('http://12.216.81.220:88/api/Audit/',
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: body);
+    } else {
+      sender = http.post(
+          'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: body);
+    }
+    sender.then((http.Response res) {
+      print(res.body);
+    }).catchError((Object e) {
+      print(e.toString());
+    });
+  }
+
+  // void getFullAudit() async {
+  //   var queryParameters = {
+  //     "MyDeviceId": "aaabbbccc",
+  //     "QueryType": "1",
+  //   };
+
+  //   if (isNtlm) {
+  //     sender = client.get(
+  //         "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+  //   } else {
+  //     sender = http.get(
+  //         "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+  //   }
+
+  //   sender.then(
+  //     (http.Response res) {
+  //       print(res.body);
+  //     },
+  //   ).catchError((Object e) {
+  //     print(e.toString());
+  //   });
+  // }
+
+  static Future<dynamic> getFullAudit(int allNotMe) async {
+    var queryParameters = {
+      "MyDeviceId": kIsWeb ? "website" : "app",
+      "QueryType": 1
+      //TODO replace this: allNotMe.toString(), // "1: Query All   0: Query All But Me"
+    };
+
+    if (isNtlm) {
+      sender = client.get(
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+    } else {
+      sender = http.get(
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+    }
+
+    return sender.then(
+      (http.Response res) {
+        print(res.body);
+        try {
+          dynamic resultMap = json.decode(res.body);
+          print(resultMap);
+          List<dynamic> listEvents = resultMap["Result"] as List<dynamic>;
+          return listEvents;
+        } catch (error) {
+          print(error);
+        }
+      },
+    ).catchError((Object e) {
+      print(e);
+    }) as Future<dynamic>;
+  }
+}
+
 class ScheduleAuditComms {
   static Future<dynamic> scheduleAudit(CalendarResult calendarResult) async {
     String body = jsonEncode(<String, dynamic>{

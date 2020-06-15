@@ -21,26 +21,27 @@ class QuestionAdapter extends TypeAdapter<Question> {
     )
       ..text = fields[0] as String
       ..typeOfQuestion = fields[1] as String
-      ..userResponse = fields[2] as String
+      ..userResponse = fields[2] as dynamic
       ..happyPathResponse = (fields[3] as List)?.cast<String>()
       ..dropDownMenu = (fields[4] as List)?.cast<String>()
       ..optionalComment = fields[5] as String
       ..note = fields[6] as String
       ..textBoxRollOut = fields[7] as bool
       ..completed = fields[8] as bool
-      ..flagged = fields[9] as bool;
+      ..flagged = fields[9] as bool
+      ..displayVariable = fields[11] as String;
   }
 
   @override
   void write(BinaryWriter writer, Question obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
       ..write(obj.typeOfQuestion)
       ..writeByte(2)
-      ..write(obj.userResponse)
+      ..write<dynamic>(obj.userResponse)
       ..writeByte(3)
       ..write(obj.happyPathResponse)
       ..writeByte(4)
@@ -56,6 +57,8 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..writeByte(9)
       ..write(obj.flagged)
       ..writeByte(10)
-      ..write(obj.questionMap);
+      ..write(obj.questionMap)
+      ..writeByte(11)
+      ..write(obj.displayVariable);
   }
 }

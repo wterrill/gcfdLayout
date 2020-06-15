@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,8 @@ class _CommentSectionState extends State<CommentSection> {
     String text;
 
     if (widget.mandatory) {
-      text = widget.activeSection.questions[widget.index].userResponse;
+      text =
+          widget.activeSection.questions[widget.index].userResponse?.toString();
     } else {
       text = widget.activeSection.questions[widget.index].optionalComment;
     }
@@ -57,7 +59,16 @@ class _CommentSectionState extends State<CommentSection> {
         controller: controller,
         onChanged: (value) {
           if (widget.mandatory) {
-            widget.activeSection.questions[index].userResponse = value;
+            if (widget.numKeyboard) {
+              try {
+                widget.activeSection.questions[index].userResponse =
+                    int.parse(value);
+              } catch (error) {
+                Dialogs.failedAuthentication(context);
+              }
+            } else {
+              widget.activeSection.questions[index].userResponse = value;
+            }
             Status sectionStatus = checkSectionDone(activeSection);
             Provider.of<AuditData>(context, listen: false)
                 .updateSectionStatus(sectionStatus);

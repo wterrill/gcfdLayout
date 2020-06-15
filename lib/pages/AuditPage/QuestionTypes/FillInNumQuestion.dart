@@ -19,15 +19,15 @@ class FillInNumQuestion extends StatefulWidget {
 
 class _FillInNumQuestionState extends State<FillInNumQuestion> {
   @override
+  void initState() {
+    super.initState();
+    widget.activeSection.questions[widget.index].textBoxRollOut = true;
+  }
+
+  @override
   Widget build(BuildContext context) {
     int index = widget.index;
     Section activeSection = widget.activeSection;
-
-    @override
-    void initState() {
-      super.initState();
-      widget.activeSection.questions[widget.index].textBoxRollOut = true;
-    }
 
     return Column(
       children: [

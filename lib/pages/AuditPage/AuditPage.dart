@@ -3,6 +3,8 @@ import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
+import 'package:auditor/Utilities/Conversion.dart';
+import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/LayoutData.dart';
 import 'package:flutter/material.dart';
@@ -112,8 +114,8 @@ class _AuditPageState extends State<AuditPage> {
                           disabledColor: ColorDefs.colorButtonNeutral,
                           color: Colors.blue,
                           textColor: Colors.black,
-                          child:
-                              Text("Submit", style: ColorDefs.textBodyBlack20),
+                          child: Text("Submit Audit",
+                              style: ColorDefs.textBodyBlack20),
                           onPressed: (
                               // activeSection.status != Status.completed)
                               //   ? null
@@ -172,9 +174,35 @@ class _AuditPageState extends State<AuditPage> {
                                     print("moving on");
                                   }
                                 }
+                                print("go again");
                               }
                             }
+                            resultMap.remove(null);
                             print(resultMap);
+                            Map<String, dynamic> pantryDetail =
+                                <String, dynamic>{"PantryDetail": resultMap};
+
+                            Map<String, dynamic> mainBody = <String, dynamic>{
+                              "AgencyNumber":
+                                  activeAudit.calendarResult.agencyNum,
+                              "ProgramNumber":
+                                  activeAudit.calendarResult.programNum,
+                              "ProgramType": convertProgramTypeToNumber(
+                                  activeAudit.calendarResult.programType),
+                              "Auditor": activeAudit.calendarResult.auditor,
+                              "AuditType": convertAuditTypeToNumber(
+                                  activeAudit.calendarResult.auditType),
+                              "StartTime": activeAudit
+                                  .calendarResult.startDateTime
+                                  .toString(),
+                              "DeviceId": "99BottlesOfBeerOnTheWall",
+                              "PantryFollowUp": null,
+                              "CongregateDetail": null,
+                              "PPCDetail": null,
+                            };
+                            mainBody["PantryDetail"] = pantryDetail;
+                            print(mainBody);
+                            FullAuditComms.sendFullAudit(mainBody);
                           })),
                     FlatButton(
                       color: Colors.blue,

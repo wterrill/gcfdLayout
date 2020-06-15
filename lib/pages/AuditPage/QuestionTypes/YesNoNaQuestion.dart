@@ -41,7 +41,9 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
             GestureDetector(
               onTap: () {
                 String result = setQuestionValue(
-                    widget.activeSection.questions[index].userResponse, "Yes");
+                    widget.activeSection.questions[index].userResponse
+                        as String,
+                    "Yes");
                 widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
@@ -63,7 +65,9 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
             GestureDetector(
               onTap: () {
                 String result = setQuestionValue(
-                    widget.activeSection.questions[index].userResponse, "No");
+                    widget.activeSection.questions[index].userResponse
+                        as String,
+                    "No");
                 widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
@@ -87,7 +91,9 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
             GestureDetector(
               onTap: () {
                 String result = setQuestionValue(
-                    widget.activeSection.questions[index].userResponse, "NA");
+                    widget.activeSection.questions[index].userResponse
+                        as String,
+                    "NA");
                 widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(

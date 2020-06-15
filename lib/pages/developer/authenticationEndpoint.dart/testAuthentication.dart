@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
@@ -415,7 +414,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         client
                             // http
                             .get(
-                          "https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/AuthenticateUser",
+                          "http://12.216.81.220:88/api/AuthenticateUser",
                         )
                             .then((res) {
                           print(res.body);

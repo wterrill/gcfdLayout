@@ -13,7 +13,7 @@ class ReviewPage extends StatelessWidget {
     return Container(
         height: 700,
         child: ListView.builder(
-          itemCount: activeAudit.sections.length - 3,
+          itemCount: activeAudit.sections.length - 4,
           itemBuilder: (context, i) {
             return new ExpansionTile(
               title: new Text(
@@ -46,7 +46,7 @@ class ExpandableContent extends StatelessWidget {
       String dateString;
       if (question.typeOfQuestion.toLowerCase() == "date" &&
           question.userResponse != null) {
-        DateTime dateTime = DateTime.parse(question.userResponse);
+        DateTime dateTime = DateTime.parse(question.userResponse as String);
         if (dateTime == null) {
           dateString = "";
         } else {
@@ -70,7 +70,7 @@ class ExpandableContent extends StatelessWidget {
               ),
               if (question.userResponse != null &&
                   question.typeOfQuestion.toLowerCase() != "date")
-                Text(question.userResponse),
+                Text(question.userResponse.toString()),
               if (question.optionalComment != null)
                 Text(question.optionalComment),
               if (question.typeOfQuestion.toLowerCase() == "date" &&

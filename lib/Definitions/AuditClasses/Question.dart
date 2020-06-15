@@ -10,7 +10,7 @@ class Question extends HiveObject {
   String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display
 
   @HiveField(2)
-  String userResponse; // what the user reponsed on the questionnaire
+  dynamic userResponse; // what the user reponsed on the questionnaire
 
   @HiveField(3)
   List<String> happyPathResponse; // what the desired response is

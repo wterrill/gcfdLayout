@@ -6,9 +6,6 @@ import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/LayoutData.dart';
-import 'package:http/http.dart' as http;
-
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 

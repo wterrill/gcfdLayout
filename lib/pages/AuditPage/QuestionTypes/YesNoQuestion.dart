@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
@@ -41,12 +42,17 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
             GestureDetector(
               onTap: () {
                 String result = setQuestionValue(
-                    widget.activeSection.questions[index].userResponse, "Yes");
+                    widget.activeSection.questions[index].userResponse
+                        as String,
+                    "Yes");
                 widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(
                         checkSectionDone(widget.activeSection));
-                Provider.of<AuditData>(context, listen: false).saveAudit();
+                Audit thisAudit =
+                    Provider.of<AuditData>(context, listen: false).activeAudit;
+                Provider.of<AuditData>(context, listen: false)
+                    .saveAudit(thisAudit);
                 setState(() {});
               },
               child: Container(
@@ -64,7 +70,9 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
             GestureDetector(
               onTap: () {
                 String result = setQuestionValue(
-                    widget.activeSection.questions[index].userResponse, "No");
+                    widget.activeSection.questions[index].userResponse
+                        as String,
+                    "No");
                 widget.activeSection.questions[index].userResponse = result;
                 Provider.of<AuditData>(context, listen: false)
                     .updateSectionStatus(

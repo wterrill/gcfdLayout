@@ -35,7 +35,8 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                   style: ColorDefs.textBodyBlack20),
             ),
             DropdownButton<String>(
-              value: widget.activeSection.questions[index].userResponse ??
+              value: widget.activeSection.questions[index].userResponse
+                      as String ??
                   "Select",
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,

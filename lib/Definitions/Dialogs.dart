@@ -99,6 +99,27 @@ class Dialogs {
     );
   }
 
+  static void numbersOnly(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+              'This field only accepts numbers.  Please enter a whole digit number'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void failedAuthenticationWithError(
       BuildContext context, String errorString) {
     AlertDialog alert = AlertDialog(
