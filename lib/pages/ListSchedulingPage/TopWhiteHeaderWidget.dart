@@ -1,5 +1,6 @@
 // import 'package:auditor/providers/LayoutData.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -48,6 +49,16 @@ class TopWhiteHeaderWidget extends StatelessWidget {
               child: Text("Version"),
               onPressed: () {
                 Dialogs.showVersionDialog(context);
+              }),
+          RaisedButton(
+              color: Colors.blue,
+              child: Text("Developer"),
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => DeveloperMenu()),
+                );
               }),
           Padding(
             padding: EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 5.0),

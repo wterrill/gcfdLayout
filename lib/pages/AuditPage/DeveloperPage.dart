@@ -35,8 +35,14 @@ class DeveloperPage extends StatelessWidget {
                 break;
 
               case ("fillIn"):
-                question.userResponse =
-                    question.text + "This, right here, is a mandatory comment";
+                if (!question.text
+                    .contains("If yes, how many and from where")) {
+                  question.userResponse = question.text +
+                      "This, right here, is a mandatory comment";
+                } else {
+                  question.userResponse = "Illinois and Wisconsin";
+                }
+
                 break;
 
               case ("fillInNum"):

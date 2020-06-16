@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
@@ -58,6 +59,11 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
                           checkSectionDone(widget.activeSection));
+                  Audit thisAudit =
+                      Provider.of<AuditData>(context, listen: false)
+                          .activeAudit;
+                  Provider.of<AuditData>(context, listen: false)
+                      .saveAudit(thisAudit);
                 });
               },
               items: widget.activeSection.questions[index].dropDownMenu

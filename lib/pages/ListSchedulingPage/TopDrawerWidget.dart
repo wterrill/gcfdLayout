@@ -123,8 +123,6 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             setState(() {
                               startSync = true;
                             });
-                            await Future.delayed(
-                                Duration(seconds: 3), () => true);
                             await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
                             SiteList siteList =

@@ -8,6 +8,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
+import 'package:intl/intl.dart';
 
 bool isNtlm = true;
 dynamic sender;
@@ -39,6 +40,7 @@ class Authentication {
           .then((result) {
         bool isAuthenticated = false;
         try {
+          print(result.body);
           dynamic resultMap = json.decode(result.body);
           dynamic dynIsAuthenticated = resultMap['IsAuthenticated'];
           isAuthenticated = dynIsAuthenticated as bool;
@@ -57,6 +59,7 @@ class Authentication {
 class FullAuditComms {
   static void sendFullAudit(Map<String, dynamic> auditToSend) {
     String body = jsonEncode(auditToSend);
+    print(body);
 
     if (isNtlm) {
       sender = client.post('http://12.216.81.220:88/api/Audit/',
@@ -177,6 +180,7 @@ class ScheduleAuditComms {
   }
 
   static Future<dynamic> getScheduled(int allNotMe, SiteList siteList) async {
+    allNotMe = 1;
     var queryParameters = {
       "MyDeviceId": kIsWeb ? "website" : "app",
       "QueryType": allNotMe.toString(), // "1: Query All   0: Query All But Me"
@@ -199,20 +203,37 @@ class ScheduleAuditComms {
           List<dynamic> listEvents = resultMap["Result"] as List<dynamic>;
           List<CalendarResult> finalList = [];
           for (dynamic event in listEvents) {
-            CalendarResult newResult = CalendarResult(
-                agencyName: siteList.agencyNameFromAgencyNumber(
-                    event['AgencyNumber'] as String),
-                programNum: event['ProgramNumber'] as String,
-                programType:
-                    convertNumberToProgramType(event['ProgramType'] as int),
-                auditor: event['Auditor'] as String,
-                auditType: convertNumberToAuditType(event['AuditType'] as int),
-                startTime: event['StartTime'] as String,
-                status: converNumberToStatus(event['Status'] as int),
-                siteInfo: siteList.getSiteFromProgramORAgencyNumber(
-                    event['ProgramNumber'] as String,
-                    event['AgencyNumber'] as String));
-            finalList.add(newResult);
+            String agencyName = siteList
+                .agencyNameFromAgencyNumber(event['AgencyNumber'] as String);
+            String agencyNum = event['AgencyNumber'] as String;
+            String programNum = event['ProgramNumber'] as String;
+            String programType =
+                convertNumberToProgramType(event['ProgramType'] as int);
+            String auditor = event['Auditor'] as String;
+            String auditType =
+                convertNumberToAuditType(event['AuditType'] as int);
+            String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000')
+                .format(DateTime.parse(event['StartTime'] as String));
+            String status = converNumberToStatus(event['Status'] as int);
+            Site siteInfo = siteList.getSiteFromAgencyNumber(
+                agencyNumber: event['AgencyNumber'] as String);
+            siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
+
+            if (startTime != null) {
+              CalendarResult newResult = CalendarResult(
+                  agencyName: agencyName,
+                  agencyNum: agencyNum,
+                  programNum: programNum,
+                  programType: programType,
+                  auditor: auditor,
+                  auditType: auditType,
+                  startTime: startTime,
+                  status: status,
+                  siteInfo: siteInfo);
+              finalList.add(newResult);
+            } else {
+              print('$agencyName did not have a startTime associated with it');
+            }
           }
 
           return finalList;

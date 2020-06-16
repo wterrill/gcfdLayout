@@ -10,13 +10,22 @@ class SiteList extends HiveObject {
 
   SiteList({this.siteList}) {}
 
+  String agencyNumFromAgencyName(String agencyName) {
+    for (Site site in siteList) {
+      if (site.agencyName == agencyName) {
+        return site.agencyNumber;
+      }
+    }
+    return "SITE NOT FOUND: agencyNumFromAgencyName";
+  }
+
   String agencyNameFromAgencyNumber(String agencyNumber) {
     for (Site site in siteList) {
       if (site.agencyNumber == agencyNumber) {
         return site.agencyName;
       }
     }
-    return "SITE NOT FOUND";
+    return "SITE NOT FOUND: agencyNameFromAgencyNumber";
   }
 
   String agencyNameFromProgramNumber(String programNumber) {
@@ -25,24 +34,24 @@ class SiteList extends HiveObject {
         return site.agencyName;
       }
     }
-    return "SITE NOT FOUND";
+    return "SITE NOT FOUND agencyNameFromProgramNumber";
   }
 
-  Site getSiteFromProgramNumber(String programNumber) {
-    Site site;
-    for (Site site in siteList) {
-      if (site.programNumber == programNumber) {
-        site = site;
-        return site;
-      }
-    }
-    if (site == null) {
-      print("ERROR IN SITE");
-    }
-    return site;
-  }
+  // Site getSiteFromProgramNumber(String programNumber) {
+  //   Site site;
+  //   for (Site site in siteList) {
+  //     if (site.programNumber == programNumber) {
+  //       site = site;
+  //       return site;
+  //     }
+  //   }
+  //   if (site == null) {
+  //     print("ERROR IN SITE: getSiteFromProgramNumber");
+  //   }
+  //   return site;
+  // }
 
-  Site getSiteFromAgencyNumber(String agencyNumber) {
+  Site getSiteFromAgencyNumber({String agencyNumber}) {
     Site site;
     for (Site site in siteList) {
       if (site.agencyNumber == agencyNumber) {
@@ -51,21 +60,22 @@ class SiteList extends HiveObject {
       }
     }
     if (site == null) {
-      print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE");
+      print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE getSiteFromAgencyNumber");
     }
     return site;
   }
 
-  Site getSiteFromProgramORAgencyNumber(
-      String programNumber, String agencyNumber) {
-    Site site;
-    site = getSiteFromProgramNumber(programNumber);
-    if (site == null) {
-      site = getSiteFromAgencyNumber(agencyNumber);
-    }
-    if (site == null) {
-      print("ERROR IN PROGRAM LOOKUP FOR SITE");
-    }
-    return site;
-  }
+  // Site getSiteFromProgramORAgencyNumber(
+  //     {String programNumber, String agencyNumber}) {
+  //   Site site;
+  //   // site = getSiteFromProgramNumber(programNumber);
+  //   if (site == null) {
+  //     site = getSiteFromAgencyNumber(agencyNumber);
+  //   }
+  //   if (site == null) {
+  //     print(
+  //         "ERROR IN PROGRAM LOOKUP FOR SITE getSiteFromProgramORAgencyNumber");
+  //   }
+  //   return site;
+  // }
 }

@@ -127,7 +127,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
                 selectedAgencyNum =
-                    siteList.agencyNameFromProgramNumber(selectedProgramNumber);
+                    siteList.agencyNumFromAgencyName(selectedSiteName);
+                print(selectedAgencyNum);
               },
             ),
             Row(

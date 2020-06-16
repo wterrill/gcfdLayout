@@ -45,9 +45,11 @@ class AuditData with ChangeNotifier {
   }
 
   void saveAudit(Audit incomingAudit) {
-    auditBox.put(
-        '${activeAudit.calendarResult.startTime}-${activeAudit.calendarResult.agencyName}-${activeAudit.calendarResult.programNum}-${activeAudit.calendarResult.auditor}',
-        incomingAudit);
+    if (incomingAudit != null) {
+      auditBox.put(
+          '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}',
+          incomingAudit);
+    }
   }
 
   bool getAudit(CalendarResult calendarResult) {
@@ -107,7 +109,7 @@ class AuditData with ChangeNotifier {
 
   /////////////////////// sync stuff //////////////////////////
   void dataSync(BuildContext context, SiteList siteList) async {
-    await sendAuditsToCloud();
+    // await sendAuditsToCloud();
     await getAuditsFromCloud(context, siteList);
   }
 
@@ -131,6 +133,8 @@ class AuditData with ChangeNotifier {
     List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
     print(newAudits);
     for (Audit audit in newAudits) {
+      print(audit);
+
       saveAudit(audit);
     }
     notifyListeners();
@@ -144,19 +148,20 @@ class AuditData with ChangeNotifier {
       Map<String, dynamic> incomingPantryAudit =
           receivedAudit['PantryDetail'] as Map<String, dynamic>;
 
-      if (incomingPantryAudit != null) {
+      if (incomingPantryAudit != null && receivedAudit['StartTime'] != null) {
         CalendarResult newCalendarResult = CalendarResult(
           programType: convertNumberToProgramType(event['ProgramType'] as int),
           message: "",
-          siteInfo: siteList.getSiteFromProgramORAgencyNumber(
-              event['ProgramNumber'] as String,
-              event['AgencyNumber'] as String),
+          siteInfo: siteList.getSiteFromAgencyNumber(
+              //TODO handle first time spin up... siteList is null.
+              agencyNumber: event['AgencyNumber'] as String),
           agencyNum: event['AgencyNumber'] as String,
           programNum: event['ProgramNumber'] as String,
           agencyName: siteList
               .agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
           auditType: convertNumberToAuditType(event['AuditType'] as int),
-          startTime: incomingPantryAudit['DateOfSiteVisit'] as String,
+          startTime: receivedAudit['StartTime']
+              as String, //incomingPantryAudit['DateOfSiteVisit'] as String,
           status: "Completed",
           auditor: event['Auditor'] as String,
         );
@@ -193,7 +198,8 @@ class AuditData with ChangeNotifier {
                     question.userResponse =
                         incomingPantryAudit[databaseVar] as bool ? "Yes" : "No";
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
+
                     break;
 
                   case ("fillIn"):
@@ -203,7 +209,7 @@ class AuditData with ChangeNotifier {
                     question.userResponse =
                         incomingPantryAudit[databaseVar] as String;
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
 
                     break;
 
@@ -214,7 +220,7 @@ class AuditData with ChangeNotifier {
                     question.userResponse =
                         incomingPantryAudit[databaseVar] as int;
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
                     break;
 
                   case ("dropDown"):
@@ -224,7 +230,7 @@ class AuditData with ChangeNotifier {
                     question.userResponse =
                         incomingPantryAudit[databaseVar] as String;
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
                     break;
 
                   case ("yesNoNa"):
@@ -240,7 +246,7 @@ class AuditData with ChangeNotifier {
                       question.userResponse = "NA";
                     }
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
                     break;
 
                   case ("date"):
@@ -250,7 +256,7 @@ class AuditData with ChangeNotifier {
                     question.userResponse =
                         incomingPantryAudit[databaseVar] as String;
                     question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comment"] as String;
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
                     break;
                 }
               }
@@ -262,10 +268,13 @@ class AuditData with ChangeNotifier {
 
           }
         }
+        if (incomingPantryAudit != null) {
+          newAudits.add(newAudit);
+        }
       }
-      if (incomingPantryAudit != null) {
-        newAudits.add(newAudit);
-      }
+      // if (incomingPantryAudit != null) {
+      //   newAudits.add(newAudit);
+      // }
     }
     return newAudits;
   }

@@ -23,7 +23,7 @@ class DeveloperMenu extends StatelessWidget {
           Container(
             child: FlatButton(
                 color: Colors.red,
-                child: Text("Go back to Login Page"),
+                child: Text("Navigate back"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 }),
@@ -124,16 +124,16 @@ class DeveloperMenu extends StatelessWidget {
             },
           ),
 
-          FlatButton(
-            color: Colors.red,
-            child: Text("videogame"),
-            onPressed: () {
-              Navigator.push<dynamic>(
-                context,
-                MaterialPageRoute<dynamic>(builder: (context) => VideoGame()),
-              );
-            },
-          ),
+          // FlatButton(
+          //   color: Colors.red,
+          //   child: Text("videogame"),
+          //   onPressed: () {
+          //     Navigator.push<dynamic>(
+          //       context,
+          //       MaterialPageRoute<dynamic>(builder: (context) => VideoGame()),
+          //     );
+          //   },
+          // ),
           FlatButton(
             color: Colors.red,
             child: Text("hive test"),

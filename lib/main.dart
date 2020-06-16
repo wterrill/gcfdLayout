@@ -99,10 +99,10 @@ class MyApp extends StatelessWidget {
           Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<LayoutData>(context).safeArea = constraints;
           Provider.of<LayoutData>(context).mediaArea = mediaSize;
-          return kIsWeb
-              ? Scaffold(body: ListSchedulingPage())
-              : Scaffold(body: LoginScreen());
-          // return Scaffold(body: ListSchedulingPage());
+          // return kIsWeb
+          //     ? Scaffold(body: ListSchedulingPage())
+          //     : Scaffold(body: LoginScreen());
+          return Scaffold(body: ListSchedulingPage());
           // return Scaffold(body: LoginScreen());
         }),
       ),

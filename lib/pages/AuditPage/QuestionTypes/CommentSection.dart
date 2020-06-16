@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -76,9 +77,9 @@ class _CommentSectionState extends State<CommentSection> {
             widget.activeSection.questions[index].optionalComment = value;
           }
 
-          if (value.length < 2) {
-            // setState(() {});
-          }
+          Audit thisAudit =
+              Provider.of<AuditData>(context, listen: false).activeAudit;
+          Provider.of<AuditData>(context, listen: false).saveAudit(thisAudit);
         },
         maxLines: null,
         style: widget.activeSection.questions[index].textBoxRollOut

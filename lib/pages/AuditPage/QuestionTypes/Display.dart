@@ -38,30 +38,32 @@ class _DisplayState extends State<Display> {
           widget = Text(activeCalendarResult.startTime);
           break;
         case ("Date of Visit:"):
-          widget = Text(activeCalendarResult.startDateTime.toString());
+          widget = Text(activeCalendarResult?.startDateTime.toString());
           break;
         case ("Type of Visit:"):
-          widget = Text(activeCalendarResult.programType);
+          widget = Text(activeCalendarResult?.programType);
           break;
         case ("Agency Name:"):
-          widget = Text(activeCalendarResult.agencyName);
+          widget = Text(activeCalendarResult?.agencyName);
           break;
         case ("Agency/Program Number:"):
-          widget = Text(activeCalendarResult.programNum);
+          widget = Text(activeCalendarResult?.programNum);
           break;
         case ("Site address:"):
-          widget = Text(activeCalendarResult.siteInfo.address1 ??
-              "" + " " + activeCalendarResult.siteInfo.address2 ??
-              "" + " " + activeCalendarResult.siteInfo.city ??
-              "" + " " + activeCalendarResult.siteInfo.state ??
-              "" + " " + activeCalendarResult.siteInfo.zip ??
-              "");
+          String string = activeCalendarResult.siteInfo?.address1 ?? " ";
+          string = string + (activeCalendarResult.siteInfo?.address2 ?? " ");
+          string = string + (activeCalendarResult.siteInfo.city ?? " ");
+          string = string + (activeCalendarResult.siteInfo.state ?? " ");
+          string = string + (activeCalendarResult.siteInfo.zip ?? "");
+
+          widget = Text(string ?? "");
           break;
         case ("GCFD Monitor:"):
           widget = Text(activeCalendarResult.auditor);
           break;
         case ("Program Contact:"):
-          widget = Text(activeCalendarResult.siteInfo.contact);
+          widget =
+              Text(activeCalendarResult.siteInfo.contact ?? "None Defined");
           break;
         case ("Program Operating Hours:"):
           widget = Text(

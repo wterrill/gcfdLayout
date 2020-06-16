@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
@@ -63,6 +64,11 @@ class _DateQuestionState extends State<DateQuestion> {
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
                           checkSectionDone(widget.activeSection));
+                  Audit thisAudit =
+                      Provider.of<AuditData>(context, listen: false)
+                          .activeAudit;
+                  Provider.of<AuditData>(context, listen: false)
+                      .saveAudit(thisAudit);
                   setState(() {});
                 },
                 child: Icon(Icons.calendar_today,

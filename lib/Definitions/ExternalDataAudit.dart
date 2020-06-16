@@ -784,63 +784,63 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 1 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitOneTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitOneTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 2 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitTwoTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitTwoTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 3 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitThreeTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitThreeTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 4 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitFourTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitFourTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 5 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitFiveTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitFiveTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 6 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitSixTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitSixTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 7 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitSevenTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitSevenTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 8 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitEightTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitEightTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 9 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitNineTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitNineTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 10 ºF',
-    'type': 'fillInNum',
-    'databaseVar': 'ColdStorageUnitTenTemp',
-    'databaseVarType': 'int'
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitTenTempAndComments',
+    'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Walk in:',

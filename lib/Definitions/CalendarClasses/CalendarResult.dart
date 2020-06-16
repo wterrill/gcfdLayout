@@ -36,14 +36,14 @@ class CalendarResult extends HiveObject {
   // String date;
 
   CalendarResult(
-      {this.startTime,
-      this.agencyName,
-      this.agencyNum,
-      this.auditType,
-      this.programNum,
-      this.programType,
-      this.auditor,
-      this.status,
+      {@required this.startTime,
+      @required this.agencyName,
+      @required this.agencyNum,
+      @required this.auditType,
+      @required this.programNum,
+      @required this.programType,
+      @required this.auditor,
+      @required this.status,
       this.message,
       this.programTypeColor,
       @required this.siteInfo}) {

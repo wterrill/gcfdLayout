@@ -179,8 +179,8 @@ class _AuditPageState extends State<AuditPage> {
                             }
                             resultMap.remove(null);
                             print(resultMap);
-                            Map<String, dynamic> pantryDetail =
-                                <String, dynamic>{"PantryDetail": resultMap};
+                            // Map<String, dynamic> pantryDetail =
+                            //     <String, dynamic>{"PantryDetail": resultMap};
 
                             Map<String, dynamic> mainBody = <String, dynamic>{
                               "AgencyNumber":
@@ -200,7 +200,7 @@ class _AuditPageState extends State<AuditPage> {
                               "CongregateDetail": null,
                               "PPCDetail": null,
                             };
-                            mainBody["PantryDetail"] = pantryDetail;
+                            mainBody["PantryDetail"] = resultMap;
                             print(mainBody);
                             FullAuditComms.sendFullAudit(mainBody);
                           })),

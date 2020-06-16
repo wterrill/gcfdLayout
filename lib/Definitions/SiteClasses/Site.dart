@@ -5,13 +5,13 @@ part 'Site.g.dart';
 @HiveType(typeId: 10)
 class Site extends HiveObject {
   @HiveField(0)
-  final String programNumber; //PY00002",
+  String programNumber; //PY00002",
   @HiveField(1)
   final String programName; // "PROGRESSIVE LIFE GIVING  DNU",
   @HiveField(2)
   final String programDisplayName; // "PROGRESSIVE DNU - PY00002",
   @HiveField(3)
-  final String agencyNumber; // "A00078",
+  String agencyNumber; // "A00078",
   @HiveField(4)
   final String agencyName; // "PROGRESSIVE DNU",
   @HiveField(5)

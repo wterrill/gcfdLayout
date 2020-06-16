@@ -1,7 +1,10 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'CommentSection.dart';
 
@@ -43,6 +46,10 @@ class _FillInQuestionState extends State<FillInQuestion> {
               onTap: () {
                 widget.activeSection.questions[index].textBoxRollOut =
                     !widget.activeSection.questions[index].textBoxRollOut;
+                Audit thisAudit =
+                    Provider.of<AuditData>(context, listen: false).activeAudit;
+                Provider.of<AuditData>(context, listen: false)
+                    .saveAudit(thisAudit);
                 setState(() {});
               },
               child: Padding(

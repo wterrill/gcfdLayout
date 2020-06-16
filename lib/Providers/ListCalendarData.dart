@@ -59,8 +59,11 @@ class ListCalendarData with ChangeNotifier {
     dynamic result = await ScheduleAuditComms.getScheduled(allNotMe, siteList);
     List<CalendarResult> downloadedCalendarResults =
         result as List<CalendarResult>;
-    for (CalendarResult result in downloadedCalendarResults) {
-      addCalendarItem(result);
+    if (result != null) {
+      for (CalendarResult result in downloadedCalendarResults) {
+        // TODO handle if result == null
+        addCalendarItem(result);
+      }
     }
     newEventAdded = true;
     notifyListeners();
@@ -115,6 +118,7 @@ class ListCalendarData with ChangeNotifier {
   void addBoxEvent({Map<String, String> event, bool notify}) {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
+
     calendarBox.put(
         '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}',
         newEvent);
@@ -126,7 +130,10 @@ class ListCalendarData with ChangeNotifier {
   }
 
   CalendarResult convertMapToCalendarResult(Map<String, String> result) {
-    return CalendarResult(
+    if (result['startTime'] == null) {
+      print("here it is");
+    }
+    CalendarResult created = CalendarResult(
       startTime: result['startTime'],
       agencyName: result['agencyName'],
       agencyNum: result['agencyNum'],
@@ -136,10 +143,12 @@ class ListCalendarData with ChangeNotifier {
       auditor: result['auditor'],
       status: result['status'],
       message: result['message'],
-      siteInfo: Provider.of<SiteData>(navigatorKey.currentContext)
-          .siteList
-          .getSiteFromProgramNumber(result['programNum']),
+      siteInfo:
+          Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+              .siteList
+              .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']),
     );
+    return created;
   }
 
   void generateAppointments(int value) {
@@ -193,5 +202,6 @@ class ListCalendarData with ChangeNotifier {
       print(result);
       deleteCalendarResult(result);
     }
+    notifyListeners();
   }
 }

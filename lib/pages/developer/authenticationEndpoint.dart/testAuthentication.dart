@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
@@ -246,13 +248,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
       dynamic body = jsonEncode(<String, dynamic>{
         'AED': 'D',
-        'AgencyNumber': 'A00091',
-        'ProgramNumber': 'PY00005',
+        'AgencyNumber': 'SITE NOT FOUND',
+        'ProgramNumber': 'PY00049',
         'ProgramType': 1,
-        'Auditor': 'MXOTestAud1',
-        'AuditType': 1,
-        'StartTime': '2020-06-30T12:00:00.000Z',
-        'DeviceId': '****************************'
+        'Auditor': 'Charlie Chaplin',
+        'AuditType': 2,
+        'StartTime': '2020-06-16T15:30:00.000Z',
+        'DeviceId': 'app'
       });
 
       if (isNtlm) {
@@ -397,6 +399,40 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+    void deleteEverything() {
+      result = "";
+
+      if (isNtlm) {
+        sender = client.get("http://12.216.81.220:88/api/Audit/DeleteAll");
+      } else {
+        sender = http.get("http://12.216.81.220:88/api/Audit/DeleteAlls");
+      }
+      sender.then(
+        (http.Response res) {
+          print(res.body);
+          setState(
+            () {
+              result = res.body;
+            },
+          );
+        },
+      ).catchError((String e) {
+        setState(
+          () {
+            result = e;
+          },
+        );
+      });
+
+      JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+      String prettyprint = encoder.convert(result);
+      print(prettyprint);
+      // print(respo,nse);
+      setState(() {
+        result = prettyprint;
+      });
+    }
+
 ////////////////////////////////////////////////////////////////
     return Scaffold(
       body: Container(
@@ -479,13 +515,29 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                   ],
                 ),
               ),
+              RaisedButton(
+                  onPressed: () {
+                    Navigator.push<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                          builder: (context) => ListSchedulingPage()),
+                    );
+                  },
+                  child: Text("Go to scheduling page")),
               Container(
                 height: 800,
                 width: 600,
-                child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [Container(child: Text(result))]),
-              )
+                child: ListView(scrollDirection: Axis.vertical, children: [
+                  Container(
+                      child: Text(result, style: ColorDefs.textBodyWhite20))
+                ]),
+              ),
+              RaisedButton(
+                  color: Colors.red,
+                  onPressed: () {
+                    deleteEverything();
+                  },
+                  child: Text("DELETE REMOTE DATABASE - CAREFUL"))
             ],
           ),
         ),

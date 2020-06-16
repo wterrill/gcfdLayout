@@ -437,7 +437,7 @@ packages:
       name: ntlm
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   package_config:
     dependency: transitive
     description:
