@@ -77,15 +77,14 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    bool timeInPastOK = false;
     bool validateEntry() {
       bool validated = true;
-      if (selectedAuditType == null) {
+      if (selectedAuditType == "Select") {
         validated = false;
-      } else if (selectedAuditor == null) {
+      } else if (selectedAuditor == "Select") {
         validated = false;
-      } else if (selectedDate.isBefore(DateTime.now())) {
-        validated = false;
-      } else if (selectedProgType == null) {
+      } else if (selectedProgType == "Select") {
         validated = false;
       } else if (selectedProgramNumber == null) {
         validated = false;
@@ -96,6 +95,16 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       }
 
       return validated;
+    }
+
+    bool pastTimeWarning() {
+      bool pastTime = false;
+      DateTime enteredTime = DateTime(selectedDate.year, selectedDate.month,
+          selectedDate.day, selectedTime.hour, selectedTime.minute);
+      if (DateTime.now().isAfter(enteredTime)) {
+        pastTime = true;
+      }
+      return pastTime;
     }
 
     List<DropdownMenuItem<String>> dropdown(List<String> stringArray) {
@@ -204,7 +213,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       fieldLabelText: "fieldLabelText",
                       context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
+                      firstDate: DateTime(2018),
                       lastDate: DateTime(2030),
                       // builder: (BuildContext context, Widget child) {
                       //   return Theme(
@@ -306,13 +315,22 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: ColorDefs.colorAudit2)),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     print(selectedDate);
                     print(selectedTime.format(context).toString());
+                    bool validateDateTime = pastTimeWarning();
+                    if (validateDateTime) {
+                      Function callBack = () {
+                        timeInPastOK = true;
+                      };
+                      await Dialogs.timeInPast(context, callBack);
+                    }
+
                     bool validated = validateEntry();
-                    if (validated) {
+
+                    if (validated && timeInPastOK) {
                       if (alreadyExisted) {
                         Provider.of<ListCalendarData>(context, listen: false)
                             .deleteCalendarResult(widget.calendarResult);

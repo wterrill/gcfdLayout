@@ -27,6 +27,43 @@ class Dialogs {
     );
   }
 
+  static void timeInPast(
+      BuildContext context, Function continueCallBack) async {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+              'The date and time you entered is in the past.  Are you sure you want to schedule this audit?'),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          child: new Text("Continue"),
+          onPressed: () {
+            continueCallBack();
+            Navigator.of(context).pop(true);
+          },
+        ),
+        new FlatButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+    );
+    await showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showid(BuildContext context, String deviceid) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,
