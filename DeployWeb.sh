@@ -17,5 +17,4 @@ echo "Continuing flutter build"
 
 flutter build web --release
 firebase deploy
-flutter build ios --release
 

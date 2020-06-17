@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:device_id/device_id.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GeneralData with ChangeNotifier {
   String username;
@@ -20,7 +21,12 @@ class GeneralData with ChangeNotifier {
   void initializeApp() async {
     backgroundDisable = false;
     numberOfDaysShown = 8;
-    deviceid = await DeviceId.getID;
+
+    if (!kIsWeb) {
+      deviceid = await DeviceId.getID;
+    } else {
+      deviceid = "website";
+    }
     notifyListeners();
   }
 
