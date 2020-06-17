@@ -60,6 +60,8 @@ class ColorDefs {
   static TextStyle textBodyGrey20 =
       TextStyle(color: Colors.grey, fontSize: 20.0);
 
+  static TextStyle textBodyWhite30 =
+      TextStyle(color: Colors.white, fontSize: 30.0);
   static TextStyle textBodyWhite20 =
       TextStyle(color: Colors.white, fontSize: 20.0);
   static TextStyle textBodyWhite15 =

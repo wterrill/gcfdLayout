@@ -5,7 +5,7 @@ import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
-import 'package:auditor/providers/LayoutData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -28,22 +28,28 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(30),
       ),
       margin: EdgeInsets.symmetric(
-          horizontal: .2 * Provider.of<LayoutData>(context).mediaArea.width),
+          horizontal: .2 * Provider.of<GeneralData>(context).mediaArea.width),
       color: ColorDefs.colorTopHeader,
       child: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(height: 10),
+          Container(height: 20),
           AutoSizeText(
             "Sign in to GCFD",
-            style: ColorDefs.textBodyBlack20,
+            style: ColorDefs.textBodyBlack30,
             maxLines: 1,
             minFontSize: 5,
           ),
-          Container(height: 30),
+          Container(height: 70),
+          Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
+              width: double.infinity,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Username", style: ColorDefs.textBodyBlack20))),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
@@ -57,12 +63,23 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: ColorDefs.colorLoginBackground,
-                labelText: 'Username',
+                // labelText: 'Username',
                 labelStyle: ColorDefs.textBodyBlack20,
+                border: new OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(30.0),
+                  ),
+                ),
               ),
             ),
           ),
-          Container(height: 10),
+          Container(height: 40),
+          Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
+              width: double.infinity,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Password", style: ColorDefs.textBodyBlack20))),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
@@ -75,6 +92,11 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: _obscureText,
               style: ColorDefs.textBodyBlack20,
               decoration: InputDecoration(
+                border: new OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(30.0),
+                  ),
+                ),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -93,39 +115,47 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 filled: true,
                 fillColor: ColorDefs.colorLoginBackground,
-                labelText: 'Password',
+                // labelText: 'Password',
                 labelStyle: ColorDefs.textBodyBlack20,
               ),
             ),
           ),
           Container(height: 3),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 10.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 100.0, 8.0, 10.0),
             child: ListTile(
-              title: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: _enabledLoginButton
-                        ? ColorDefs.colorUserAccent
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(50.0),
-                    border: Border.all(
-                        width: 2.0,
-                        color: _enabledLoginButton
-                            ? Colors.transparent
-                            : Colors.grey)),
-                child: FlatButton(
-                  disabledTextColor: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                  onPressed: _enabledLoginButton ? _submit : null,
-                  child: Text('Log in',
-                      style: _enabledLoginButton
-                          ? ColorDefs.textBodyBlack20
-                          : ColorDefs.textBodyGrey20),
+              title: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 50.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: _enabledLoginButton
+                          ? ColorDefs.colorUserAccent
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(50.0),
+                      border: Border.all(
+                          width: 2.0,
+                          color: _enabledLoginButton
+                              ? Colors.transparent
+                              : Colors.grey)),
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: 56.0, maxWidth: 30.0),
+                    child: FlatButton(
+                      disabledTextColor: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      onPressed: _enabledLoginButton ? _submit : null,
+                      child: Text('Log In',
+                          style: _enabledLoginButton
+                              ? ColorDefs.textBodyWhite30
+                              : ColorDefs.textBodyGrey20),
+                    ),
+                  ),
                 ),
               ),
             ),
-          )
+          ),
+          Container(height: 20)
         ]),
       ),
     );
@@ -137,9 +167,6 @@ class _LoginFormState extends State<LoginForm> {
       print(_username);
       print(_password);
       Dialogs.showAlertDialog(context);
-      // bool result = await Authentication.getAuthentication();
-      // http.Response result = await Authentication.authenticate(
-      //     username: _username, password: _password);
       bool isAuthenticated = false;
       bool isError = false;
       String errorString = "";
@@ -152,12 +179,9 @@ class _LoginFormState extends State<LoginForm> {
         isError = true;
         errorString = error.toString();
       }
-      // Map<String, String>
-      // try {
-      //   dynamic resultMap = json.decode(result.body);
-      //   dynamic isAuthenticated = resultMap['IsAuthenticated'];
 
       if (isAuthenticated) {
+        Provider.of<GeneralData>(context, listen: false).username = _username;
         Navigator.push(
           context,
           PageRouteBuilder<void>(

@@ -6,7 +6,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/providers/AuditData.dart';
-import 'package:auditor/providers/LayoutData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,8 +46,8 @@ class _AuditPageState extends State<AuditPage> {
 
     Audit activeAudit = Provider.of<AuditData>(context).activeAudit;
     Section activeSection = Provider.of<AuditData>(context).activeSection;
-    double mediaWidth = Provider.of<LayoutData>(context).mediaArea.width;
-    double mediaHeight = Provider.of<LayoutData>(context).mediaArea.height;
+    double mediaWidth = Provider.of<GeneralData>(context).mediaArea.width;
+    double mediaHeight = Provider.of<GeneralData>(context).mediaArea.height;
     CalendarResult activeCalendarResult =
         Provider.of<AuditData>(context).activeCalendarResult;
     return MaterialApp(
@@ -195,7 +195,8 @@ class _AuditPageState extends State<AuditPage> {
                               "StartTime": activeAudit
                                   .calendarResult.startDateTime
                                   .toString(),
-                              "DeviceId": "99BottlesOfBeerOnTheWall",
+                              "DeviceId":
+                                  Provider.of<GeneralData>(context).deviceid,
                               "PantryFollowUp": null,
                               "CongregateDetail": null,
                               "PPCDetail": null,

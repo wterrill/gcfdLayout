@@ -27,6 +27,26 @@ class Dialogs {
     );
   }
 
+  static void showid(BuildContext context, String deviceid) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Your devices id number is $deviceid'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showSites(BuildContext context, List<Site> siteList) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,

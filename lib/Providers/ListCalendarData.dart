@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
+import 'GeneralData.dart';
 import 'SiteData.dart';
 
 class ListCalendarData with ChangeNotifier {
@@ -21,6 +22,7 @@ class ListCalendarData with ChangeNotifier {
   bool initializedx = false;
   Box calendarBox;
   Box calEventToBeSent;
+  String deviceid;
 
   bool toggleGenerateApointments = false;
 
@@ -35,7 +37,9 @@ class ListCalendarData with ChangeNotifier {
 
 ////////////////// Data Fetch, Data Save Operations
 
-  void dataSync(BuildContext context, SiteList siteList) async {
+  void dataSync(
+      BuildContext context, SiteList siteList, String deviceid) async {
+    deviceid = deviceid;
     await sendScheduledToCloud();
     await getScheduledFromCloud(context, siteList);
   }
@@ -46,7 +50,9 @@ class ListCalendarData with ChangeNotifier {
     for (var i = 0; i < toBeSentKeys.length; i++) {
       CalendarResult result =
           calEventToBeSent.get(toBeSentKeys[i]) as CalendarResult;
-      dynamic successful = await ScheduleAuditComms.scheduleAudit(result);
+
+      dynamic successful =
+          await ScheduleAuditComms.scheduleAudit(result, deviceid);
       if (successful as bool) calEventToBeSent.delete(toBeSentKeys[i]);
     }
   }
@@ -56,7 +62,8 @@ class ListCalendarData with ChangeNotifier {
     if (calendarBox.keys.toList().length == 0) {
       allNotMe = 1;
     }
-    dynamic result = await ScheduleAuditComms.getScheduled(allNotMe, siteList);
+    dynamic result =
+        await ScheduleAuditComms.getScheduled(allNotMe, siteList, deviceid);
     List<CalendarResult> downloadedCalendarResults =
         result as List<CalendarResult>;
     if (result != null) {

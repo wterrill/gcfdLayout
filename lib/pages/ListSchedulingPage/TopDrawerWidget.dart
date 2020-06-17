@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
@@ -123,6 +124,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             setState(() {
                               startSync = true;
                             });
+                            String deviceid =
+                                Provider.of<GeneralData>(context).deviceid;
                             await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
                             SiteList siteList =
@@ -130,7 +133,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                                     .siteList;
                             await Provider.of<ListCalendarData>(context,
                                     listen: false)
-                                .dataSync(context, siteList);
+                                .dataSync(context, siteList, deviceid);
                             await Provider.of<AuditData>(context, listen: false)
                                 .dataSync(context, siteList);
 

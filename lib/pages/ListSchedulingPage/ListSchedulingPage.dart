@@ -96,7 +96,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                     style: ColorDefs
                                                         .textBodyBlue20)
                                                 : Text(
-                                                    "Show last $dayOfWeek. to next $dayOfWeek. ",
+                                                    "Show last $dayOfWeek to next $dayOfWeek ",
                                                     style: ColorDefs
                                                         .textBodyWhite20),
                                           ),

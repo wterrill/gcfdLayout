@@ -84,32 +84,9 @@ class FullAuditComms {
     });
   }
 
-  // void getFullAudit() async {
-  //   var queryParameters = {
-  //     "MyDeviceId": "aaabbbccc",
-  //     "QueryType": "1",
-  //   };
-
-  //   if (isNtlm) {
-  //     sender = client.get(
-  //         "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
-  //   } else {
-  //     sender = http.get(
-  //         "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
-  //   }
-
-  //   sender.then(
-  //     (http.Response res) {
-  //       print(res.body);
-  //     },
-  //   ).catchError((Object e) {
-  //     print(e.toString());
-  //   });
-  // }
-
-  static Future<dynamic> getFullAudit(int allNotMe) async {
+  static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {
     var queryParameters = {
-      "MyDeviceId": kIsWeb ? "website" : "app",
+      "MyDeviceId": kIsWeb ? "website" : deviceid,
       "QueryType": 1
       //TODO replace this: allNotMe.toString(), // "1: Query All   0: Query All But Me"
     };
@@ -141,7 +118,8 @@ class FullAuditComms {
 }
 
 class ScheduleAuditComms {
-  static Future<dynamic> scheduleAudit(CalendarResult calendarResult) async {
+  static Future<dynamic> scheduleAudit(
+      CalendarResult calendarResult, String deviceid) async {
     String body = jsonEncode(<String, dynamic>{
       'AED': 'A',
       'AgencyNumber': calendarResult.agencyNum,
@@ -150,7 +128,7 @@ class ScheduleAuditComms {
       'Auditor': calendarResult.auditor,
       'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
       'StartTime': calendarResult.startDateTime.toString(),
-      'DeviceId': kIsWeb ? "website" : "app"
+      'DeviceId': kIsWeb ? "website" : deviceid
       //TODO setup device ID for the app.
     });
 
@@ -179,10 +157,11 @@ class ScheduleAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> getScheduled(int allNotMe, SiteList siteList) async {
-    allNotMe = 1;
+  static Future<dynamic> getScheduled(
+      int allNotMe, SiteList siteList, String deviceid) async {
+    // allNotMe = 1;
     var queryParameters = {
-      "MyDeviceId": kIsWeb ? "website" : "app",
+      "MyDeviceId": kIsWeb ? "website" : deviceid,
       "QueryType": allNotMe.toString(), // "1: Query All   0: Query All But Me"
     };
 

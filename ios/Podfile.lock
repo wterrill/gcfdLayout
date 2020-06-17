@@ -1,4 +1,6 @@
 PODS:
+  - device_id (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_full_pdf_viewer (1.0.1):
     - Flutter
@@ -18,6 +20,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - device_id (from `.symlinks/plugins/device_id/ios`)
   - Flutter (from `Flutter`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
@@ -29,6 +32,8 @@ DEPENDENCIES:
   - plugin_scaffold (from `.symlinks/plugins/plugin_scaffold/ios`)
 
 EXTERNAL SOURCES:
+  device_id:
+    :path: ".symlinks/plugins/device_id/ios"
   Flutter:
     :path: Flutter
   flutter_full_pdf_viewer:
@@ -49,6 +54,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/plugin_scaffold/ios"
 
 SPEC CHECKSUMS:
+  device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545

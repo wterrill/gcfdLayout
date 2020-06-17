@@ -1,6 +1,7 @@
-// import 'package:auditor/providers/LayoutData.dart';
+// import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -23,7 +24,7 @@ class TopWhiteHeaderWidget extends StatelessWidget {
             child: Hero(
               tag: "GCFD_Logo",
               child: Image(
-                image: AssetImage('assets/images/GCFD_Logo.jpg'),
+                image: AssetImage('assets/images/GCFD_Logo.png'),
               ),
             ),
           ),
@@ -90,7 +91,7 @@ class TopWhiteHeaderWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      "Sarah Connor",
+                      Provider.of<GeneralData>(context).username,
                       style: ColorDefs.textBodyBlack20,
                     ),
                   )

@@ -1,7 +1,9 @@
 List<String> auditors = [
-  "Sarah Connor",
-  "Kyle Reese",
+  "Will Terrill",
+  "Andrei Kliuchnik",
   "Charlie Chaplin",
+  "Jill Chang",
+  "Abraham Jimenez"
 ];
 
 List<String> auditTypes = [

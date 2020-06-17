@@ -17,8 +17,12 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 
+
 dependency_overrides: 
   path: 1.7.0
+  # dartx: ^0.3.0
+  # characters: ^0.3.0
+  
 
 dependencies:
   flutter:
@@ -49,11 +53,12 @@ dependencies:
   ntlm: ^1.2.0
   # image_picker_web: ^1.0.9
   image_picker: ^0.6.7+1
+  device_id: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^0.7.0+2
+  # hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
 
 # For information on the generic Dart part of this file, see the

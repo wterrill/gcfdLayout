@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-// import 'package:auditor/Definitions/Event.dart';
+import 'package:device_id/device_id.dart';
+import 'package:flutter/services.dart';
 
-class LayoutData with ChangeNotifier {
+class GeneralData with ChangeNotifier {
+  String username;
   double safeAreaDiff = 0.0;
   BoxConstraints safeArea;
   Size mediaArea;
   int numberOfDaysShown;
+  String deviceid;
 
   //SchedulingPage
   bool backgroundDisable;
 
-  LayoutData() {
+  GeneralData() {
     initializeApp();
   }
 
-  void initializeApp() {
+  void initializeApp() async {
     backgroundDisable = false;
     numberOfDaysShown = 8;
+    deviceid = await DeviceId.getID;
     notifyListeners();
   }
 

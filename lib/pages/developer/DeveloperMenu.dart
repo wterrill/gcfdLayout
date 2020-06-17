@@ -1,7 +1,10 @@
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
+import 'package:auditor/providers/GeneralData.dart';
 // import 'package:auditor/pages/developer/pdf/showPdfDocument.dart';
 // import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'authenticationEndpoint.dart/testAuthentication.dart';
 import 'fingerSign/fingerSign.dart';
@@ -159,13 +162,22 @@ class DeveloperMenu extends StatelessWidget {
           ),
           FlatButton(
             color: Colors.red,
-            child: Text("Authentication"),
+            child: Text("Netork Information"),
             onPressed: () {
               Navigator.push<dynamic>(
                 context,
                 MaterialPageRoute<dynamic>(
                     builder: (context) => TestAuthentication()),
               );
+            },
+          ),
+          FlatButton(
+            color: Colors.red,
+            child: Text("show device ID"),
+            onPressed: () {
+              String deviceid =
+                  Provider.of<GeneralData>(context, listen: false).deviceid;
+              Dialogs.showid(context, deviceid);
             },
           ),
         ],

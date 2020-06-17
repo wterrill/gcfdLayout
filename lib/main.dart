@@ -8,7 +8,7 @@ import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
-import 'package:auditor/providers/LayoutData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -43,7 +43,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ListCalendarData()),
-        ChangeNotifierProvider(create: (context) => LayoutData()),
+        ChangeNotifierProvider(create: (context) => GeneralData()),
         ChangeNotifierProvider(
           create: (context) => AuditData(),
           lazy: false,
@@ -84,7 +84,8 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
-        fontFamily: 'Georgia',
+        fontFamily:
+            'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
         textTheme: TextTheme(),
       ),
       home:
@@ -96,13 +97,13 @@ class MyApp extends StatelessWidget {
           print("constraints: $constraints");
           Size mediaSize = MediaQuery.of(context).size;
           double safeAreaSize = mediaSize.height - constraints.maxHeight;
-          Provider.of<LayoutData>(context).safeAreaDiff = safeAreaSize;
-          Provider.of<LayoutData>(context).safeArea = constraints;
-          Provider.of<LayoutData>(context).mediaArea = mediaSize;
-          // return kIsWeb
-          //     ? Scaffold(body: ListSchedulingPage())
-          //     : Scaffold(body: LoginScreen());
-          return Scaffold(body: ListSchedulingPage());
+          Provider.of<GeneralData>(context).safeAreaDiff = safeAreaSize;
+          Provider.of<GeneralData>(context).safeArea = constraints;
+          Provider.of<GeneralData>(context).mediaArea = mediaSize;
+          return kIsWeb
+              ? Scaffold(body: ListSchedulingPage())
+              : Scaffold(body: LoginScreen());
+          // return Scaffold(body: ListSchedulingPage());
           // return Scaffold(body: LoginScreen());
         }),
       ),

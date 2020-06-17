@@ -8,6 +8,9 @@ import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+
+import 'GeneralData.dart';
 
 class AuditData with ChangeNotifier {
   bool auditStarted = false;
@@ -129,7 +132,8 @@ class AuditData with ChangeNotifier {
     if (auditBox.keys.toList().length == 0) {
       allNotMe = 1;
     }
-    dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe);
+    String deviceid = Provider.of<GeneralData>(context).deviceid;
+    dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
     List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
     print(newAudits);
     for (Audit audit in newAudits) {

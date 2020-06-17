@@ -17,21 +17,27 @@ class LoginScreen extends StatelessWidget {
               child: Container(
                 color: ColorDefs.colorTopHeader,
                 child: Center(
-                    child: Hero(
-                  tag: "GCFD_Logo",
-                  child: Image(
-                    fit: BoxFit.fitHeight,
-                    image: AssetImage('assets/images/GCFD_Logo.jpg'),
+                    child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Hero(
+                    tag: "GCFD_Logo",
+                    child: Image(
+                      fit: BoxFit.fitHeight,
+                      image: AssetImage('assets/images/GCFD_Logo.png'),
+                    ),
                   ),
                 )),
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 5,
               child: Container(
                   color: ColorDefs.colorDarkBackground,
                   child: Center(
-                    child: LoginForm(),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 350.0),
+                      child: LoginForm(),
+                    ),
                   )),
             ),
           ]),
