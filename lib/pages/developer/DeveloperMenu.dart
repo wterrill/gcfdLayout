@@ -162,7 +162,7 @@ class DeveloperMenu extends StatelessWidget {
           ),
           FlatButton(
             color: Colors.red,
-            child: Text("Netork Information"),
+            child: Text("Network Information"),
             onPressed: () {
               Navigator.push<dynamic>(
                 context,
