@@ -52,9 +52,9 @@ class _DisplayState extends State<Display> {
         case ("Site address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";
           string = string + (activeCalendarResult.siteInfo?.address2 ?? " ");
-          string = string + (activeCalendarResult.siteInfo.city ?? " ");
-          string = string + (activeCalendarResult.siteInfo.state ?? " ");
-          string = string + (activeCalendarResult.siteInfo.zip ?? "");
+          string = string + (activeCalendarResult.siteInfo?.city ?? " ");
+          string = string + (activeCalendarResult.siteInfo?.state ?? " ");
+          string = string + (activeCalendarResult.siteInfo?.zip ?? "");
 
           widget = Text(string ?? "");
           break;
@@ -63,15 +63,15 @@ class _DisplayState extends State<Display> {
           break;
         case ("Program Contact:"):
           widget =
-              Text(activeCalendarResult.siteInfo.contact ?? "None Defined");
+              Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
           break;
         case ("Program Operating Hours:"):
           widget = Text(
-              activeCalendarResult.siteInfo.operateHours ?? "None Defined");
+              activeCalendarResult.siteInfo?.operateHours ?? "None Defined");
           break;
         case ("Service Area:"):
-          widget =
-              Text(activeCalendarResult.siteInfo.serviceArea ?? "None Defined");
+          widget = Text(
+              activeCalendarResult.siteInfo?.serviceArea ?? "None Defined");
           break;
       }
       return widget;

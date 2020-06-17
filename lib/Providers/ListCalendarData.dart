@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
+import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
@@ -7,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
-
-import 'GeneralData.dart';
 import 'SiteData.dart';
 
 class ListCalendarData with ChangeNotifier {
@@ -140,6 +139,15 @@ class ListCalendarData with ChangeNotifier {
     if (result['startTime'] == null) {
       print("here it is");
     }
+    Site siteInfo =
+        Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+                .siteList
+                .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']) ??
+            Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+                .siteList
+                .getSiteFromAgencyNumber(agencyNumber: "A00020");
+    //TODO this try catch needs to be taken out of here... specifically the catch
+
     CalendarResult created = CalendarResult(
       startTime: result['startTime'],
       agencyName: result['agencyName'],

@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
         fontFamily:
-            'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
+            'Arial', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
         textTheme: TextTheme(),
       ),
       home:

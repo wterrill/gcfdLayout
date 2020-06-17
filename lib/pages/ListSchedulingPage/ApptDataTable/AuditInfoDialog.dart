@@ -89,32 +89,32 @@ class AuditInfoDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  if (calendarResult.siteInfo.address1 != null)
+                  if (calendarResult.siteInfo?.address1 != null)
                     Container(
                       // color: Colors.grey,
                       child: AutoSizeText(calendarResult.siteInfo.address1,
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  if (calendarResult.siteInfo.address2 != null)
+                  if (calendarResult.siteInfo?.address2 != null)
                     Container(
                       // color: Colors.grey,
                       child: AutoSizeText(calendarResult.siteInfo.address2,
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  if (calendarResult.siteInfo.city != null)
+                  if (calendarResult.siteInfo?.city != null)
                     Container(
                       // color: Colors.grey,
                       child: AutoSizeText(
                           '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state ?? ""},  ${calendarResult.siteInfo.zip ?? ""},',
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  if (calendarResult.siteInfo.contact != null)
+                  if (calendarResult.siteInfo?.contact != null)
                     Container(
                       // color: Colors.grey,
                       child: AutoSizeText('${calendarResult.siteInfo.contact}',
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  if (calendarResult.siteInfo.operateHours != null)
+                  if (calendarResult.siteInfo?.operateHours != null)
                     Container(
                         child: AutoSizeText.rich(
                       TextSpan(

@@ -20,6 +20,7 @@ class AuditData with ChangeNotifier {
   Box auditsToSendBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
+  String deviceid;
 
   AuditData() {
     initialize();
@@ -67,7 +68,7 @@ class AuditData with ChangeNotifier {
     }
   }
 
-////////////////////////////E ND OF HIVE STUFF ////////////////
+//////////////////////////// END OF HIVE STUFF ////////////////
   void updateSectionStatus(Status status) {
     print("in updateSectionStatus");
     if (status != activeSection.status) {
@@ -111,9 +112,11 @@ class AuditData with ChangeNotifier {
   }
 
   /////////////////////// sync stuff //////////////////////////
-  void dataSync(BuildContext context, SiteList siteList) async {
-    // await sendAuditsToCloud();
-    await getAuditsFromCloud(context, siteList);
+  void dataSync(
+      BuildContext context, SiteList siteList, String deviceid) async {
+    deviceid = deviceid;
+    await sendAuditsToCloud();
+    await getAuditsFromCloud(context, siteList, deviceid);
   }
 
   void sendAuditsToCloud() async {
@@ -127,12 +130,13 @@ class AuditData with ChangeNotifier {
     }
   }
 
-  void getAuditsFromCloud(BuildContext context, SiteList siteList) async {
+  void getAuditsFromCloud(
+      BuildContext context, SiteList siteList, String deviceid) async {
     int allNotMe = 0; // "1: Query All   0: Query All But Me"
     if (auditBox.keys.toList().length == 0) {
       allNotMe = 1;
     }
-    String deviceid = Provider.of<GeneralData>(context).deviceid;
+
     dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
     List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
     print(newAudits);

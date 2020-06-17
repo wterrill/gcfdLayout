@@ -125,7 +125,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                               startSync = true;
                             });
                             String deviceid =
-                                Provider.of<GeneralData>(context).deviceid;
+                                Provider.of<GeneralData>(context, listen: false)
+                                    .deviceid;
                             await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
                             SiteList siteList =
@@ -135,7 +136,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                                     listen: false)
                                 .dataSync(context, siteList, deviceid);
                             await Provider.of<AuditData>(context, listen: false)
-                                .dataSync(context, siteList);
+                                .dataSync(context, siteList, deviceid);
 
                             setState(() {
                               startSync = false;

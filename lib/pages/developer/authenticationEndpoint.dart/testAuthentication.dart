@@ -11,7 +11,6 @@ import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
-import 'dart:convert';
 
 class TestAuthentication extends StatefulWidget {
   const TestAuthentication({Key key}) : super(key: key);

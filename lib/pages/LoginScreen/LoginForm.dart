@@ -23,6 +23,8 @@ class _LoginFormState extends State<LoginForm> {
   bool _dirtyUsername = false;
   bool _dirtyPassword = false;
   bool _enabledLoginButton = false;
+  var _userController = TextEditingController();
+  var _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
+              controller: _userController,
               onChanged: (input) =>
                   _onChangeField(input: input, from: "username"),
               // validator: (input) => !input.contains('@')
@@ -83,6 +86,7 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextFormField(
+              controller: _passwordController,
               onChanged: (input) =>
                   _onChangeField(input: input, from: "password"),
               validator: (input) => input.length < 1
@@ -121,6 +125,15 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(height: 3),
+          RaisedButton(
+              onPressed: () {
+                setState(() {
+                  _userController.text = "MXOTestAud1";
+                  _passwordController.text = "Password1";
+                  _enabledLoginButton = true;
+                });
+              },
+              child: Text("fast login")),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 100.0, 8.0, 10.0),
             child: ListTile(
