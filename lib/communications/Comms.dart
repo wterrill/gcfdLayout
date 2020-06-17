@@ -224,6 +224,30 @@ class ScheduleAuditComms {
       print(e);
     }) as Future<dynamic>;
   }
+
+  static Future<dynamic> getAuditors() async {
+    if (isNtlm) {
+      sender = client.get("http://12.216.81.220:88/api/GetAuditors");
+    } else {
+      sender = http.get("http://12.216.81.220:88/api/GetAuditors");
+    }
+
+    return sender.then(
+      (http.Response res) {
+        print(res.body);
+        try {
+          dynamic resultMap = json.decode(res.body);
+          print(resultMap);
+          List<dynamic> auditors = resultMap["Result"] as List<dynamic>;
+          return auditors;
+        } catch (error) {
+          print(error);
+        }
+      },
+    ).catchError((Object e) {
+      print(e);
+    }) as Future<dynamic>;
+  }
 }
 
 class SiteComms {

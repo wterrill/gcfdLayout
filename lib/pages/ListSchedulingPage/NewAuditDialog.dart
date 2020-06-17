@@ -45,6 +45,11 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       this.selectedAgencyNum = widget.calendarResult.agencyNum;
       alreadyExisted = true;
     }
+
+    auditorDropDownMenu =
+        Provider.of<ListCalendarData>(context, listen: false).auditorsList;
+    auditorDropDownMenu.insert(0, "Select");
+    siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
 
   List<String> auditTypeDropDownMenu = [
@@ -58,12 +63,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
     "Grant"
   ];
 
-  List<String> auditorDropDownMenu = [
-    "Select",
-    "Sarah Connor",
-    "Kyle Reese",
-    "Charlie Chaplin",
-  ];
+  SiteList siteList;
+
+  List<String> auditorDropDownMenu;
 
   List<String> programTypeDropDownMenu = [
     "Select",
@@ -75,8 +77,6 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   @override
   Widget build(BuildContext context) {
-    SiteList siteList = Provider.of<SiteData>(context, listen: false).siteList;
-
     bool validateEntry() {
       bool validated = true;
       if (selectedAuditType == null) {

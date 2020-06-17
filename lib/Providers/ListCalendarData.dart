@@ -23,6 +23,8 @@ class ListCalendarData with ChangeNotifier {
   Box calEventToBeSent;
   String deviceid;
 
+  List<String> auditorsList;
+
   bool toggleGenerateApointments = false;
 
   ListCalendarData() {
@@ -39,6 +41,7 @@ class ListCalendarData with ChangeNotifier {
   void dataSync(
       BuildContext context, SiteList siteList, String deviceid) async {
     deviceid = deviceid;
+    await getAuditors();
     await sendScheduledToCloud();
     await getScheduledFromCloud(context, siteList);
   }
@@ -73,6 +76,11 @@ class ListCalendarData with ChangeNotifier {
     }
     newEventAdded = true;
     notifyListeners();
+  }
+
+  void getAuditors() async {
+    dynamic temp = await ScheduleAuditComms.getAuditors();
+    auditorsList = List<String>.from(temp as List<dynamic>);
   }
 
 ////////////////// Hive operations
