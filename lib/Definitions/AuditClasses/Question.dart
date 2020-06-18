@@ -50,5 +50,6 @@ class Question extends HiveObject {
     } else {
       textBoxRollOut = true;
     }
+    happyPathResponse = questionMap['happyPathResponse'] as List<String>;
   }
 }

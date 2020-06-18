@@ -34,22 +34,27 @@ class _ApptDataTableState extends State<ApptDataTable> {
     });
   }
 
-  void getData() {
+  void getData(Box calendarBox) {
     print("entered getData");
-    Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
+
     List<CalendarResult> calendarResults = [];
     if (calendarBox != null) {
       calendarResults = calendarBox.values.toList() as List<CalendarResult>;
+      print(calendarResults);
+    } else {
+      print("calendar results are null");
     }
 
     List<CalendarResult> filteredCalendarResults = filter(calendarResults);
 
     calendarResults = filterTimeApply(filteredCalendarResults);
+    bool newEventAdded =
+        Provider.of<ListCalendarData>(context, listen: false).newEventAdded;
 
     bool firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent = !isLoaded ||
         (lastFilterText != filterText && filterText != "") ||
         (lastFilterText.length == 1 && filterText == "") ||
-        Provider.of<ListCalendarData>(context, listen: false).newEventAdded;
+        newEventAdded;
 
     if (firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent) {
       setState(() {
@@ -115,7 +120,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
         Provider.of<ListCalendarData>(context, listen: false).lastFilterValue;
     filterText = Provider.of<ListCalendarData>(context).filterValue;
     print("building paginated data table");
-    getData();
+    Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
+    getData(calendarBox);
     print("BUILD PAGINATEDDATATABLE2");
     return !initializedx
         ? (Text("Initializing..."))

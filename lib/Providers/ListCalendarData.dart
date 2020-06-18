@@ -21,6 +21,7 @@ class ListCalendarData with ChangeNotifier {
   bool initializedx = false;
   Box calendarBox;
   Box calEventToBeSent;
+  Box calToBeDeleted;
   String deviceid;
 
   List<String> auditorsList;
@@ -42,6 +43,7 @@ class ListCalendarData with ChangeNotifier {
       BuildContext context, SiteList siteList, String deviceid) async {
     deviceid = deviceid;
     await getAuditors();
+    await deleteFromCloud();
     await sendScheduledToCloud();
     await getScheduledFromCloud(context, siteList);
   }
@@ -54,8 +56,20 @@ class ListCalendarData with ChangeNotifier {
           calEventToBeSent.get(toBeSentKeys[i]) as CalendarResult;
 
       dynamic successful =
-          await ScheduleAuditComms.scheduleAudit(result, deviceid);
+          await ScheduleAuditComms.scheduleAudit(result, deviceid, "A");
       if (successful as bool) calEventToBeSent.delete(toBeSentKeys[i]);
+    }
+  }
+
+  void deleteFromCloud() async {
+    List<dynamic> dynKeys = calToBeDeleted.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      CalendarResult result =
+          calToBeDeleted.get(toBeSentKeys[i]) as CalendarResult;
+      dynamic successful =
+          await ScheduleAuditComms.scheduleAudit(result, deviceid, "D");
+      if (successful as bool) calToBeDeleted.delete(toBeSentKeys[i]);
     }
   }
 
@@ -89,16 +103,17 @@ class ListCalendarData with ChangeNotifier {
     Future calendarFuture = Hive.openBox<CalendarResult>('calendarBox');
     Future calEventToBeSentFuture =
         Hive.openBox<CalendarResult>('calEventToBeSent');
-    Future.wait<dynamic>([calendarFuture, calEventToBeSentFuture])
+    Future calEventToBeDeletedFuture =
+        Hive.openBox<CalendarResult>('calToBeDeleted');
+    Future.wait<dynamic>(
+            [calendarFuture, calEventToBeSentFuture, calEventToBeDeletedFuture])
         .then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
       print(value.runtimeType);
       calendarBox = Hive.box<CalendarResult>('calendarBox');
       calEventToBeSent = Hive.box<CalendarResult>('calEventToBeSent');
-
-      var beer = calendarBox.values.toList() as List<CalendarResult>;
-      print(beer);
+      calToBeDeleted = Hive.box<CalendarResult>('calToBeDeleted');
       initializedx = true;
       notifyListeners();
     });
@@ -108,12 +123,19 @@ class ListCalendarData with ChangeNotifier {
     calendarBox.put(
         '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}',
         calendarItem);
+    newEventAdded = true;
+    notifyListeners();
   }
 
 ////////////////// Calendar Operations
   void deleteCalendarResult(CalendarResult calendarResult) {
     calendarBox.delete(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
+    calEventToBeSent.delete(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
+    calToBeDeleted.put(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+        calendarResult);
     newEventAdded = true;
     notifyListeners();
   }

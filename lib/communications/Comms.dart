@@ -119,9 +119,9 @@ class FullAuditComms {
 
 class ScheduleAuditComms {
   static Future<dynamic> scheduleAudit(
-      CalendarResult calendarResult, String deviceid) async {
+      CalendarResult calendarResult, String deviceid, String addDelete) async {
     String body = jsonEncode(<String, dynamic>{
-      'AED': 'A',
+      'AED': addDelete,
       'AgencyNumber': calendarResult.agencyNum,
       'ProgramNumber': calendarResult.programNum,
       'ProgramType': convertProgramTypeToNumber(calendarResult.programType),

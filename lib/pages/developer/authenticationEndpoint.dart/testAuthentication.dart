@@ -133,10 +133,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
           );
         },
-      ).catchError((String e) {
+      ).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -170,10 +170,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
           );
         },
-      ).catchError((String e) {
+      ).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -233,10 +233,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         setState(() {
           result = res.body;
         });
-      }).catchError((String e) {
+      }).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -280,7 +280,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       }).catchError((String e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -312,10 +312,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         setState(() {
           result = res.body;
         });
-      }).catchError((String e) {
+      }).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -346,10 +346,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
           );
         },
-      ).catchError((String e) {
+      ).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -381,10 +381,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
           );
         },
-      ).catchError((String e) {
+      ).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -415,10 +415,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
           );
         },
-      ).catchError((String e) {
+      ).catchError((dynamic e) {
         setState(
           () {
-            result = e;
+            result = e.toString();
           },
         );
       });
@@ -456,10 +456,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                           setState(() {
                             result = res.body;
                           });
-                        }).catchError((String e) {
+                        }).catchError((dynamic e) {
                           setState(
                             () {
-                              result = e;
+                              result = e.toString();
                             },
                           );
                         });
@@ -533,10 +533,42 @@ class _TestAuthenticationState extends State<TestAuthentication> {
               ),
               RaisedButton(
                   color: Colors.red,
-                  onPressed: () {
-                    deleteEverything();
+                  onPressed: () async {
+                    AlertDialog alert = AlertDialog(
+                      elevation: 6.0,
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                              'This will delete all data in the remote database.  Are you sure you want to do this?'),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        new FlatButton(
+                          child: new Text("YES"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            deleteEverything();
+                          },
+                        ),
+                        new FlatButton(
+                          child: Text("NO"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                    await showDialog<void>(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return alert;
+                      },
+                    );
                   },
-                  child: Text("DELETE REMOTE DATABASE - CAREFUL"))
+                  child: Text("CAREFUL - DELETE REMOTE DATABASE - CAREFUL"))
             ],
           ),
         ),

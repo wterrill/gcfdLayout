@@ -414,8 +414,14 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                               ),
                               FlatButton(
                                 onPressed: () {
-                                  Navigator.of(context, rootNavigator: true).pop(
-                                      true); // dismisses only the dialog and returns true
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(true);
+                                  Provider.of<ListCalendarData>(context,
+                                          listen: false)
+                                      .deleteCalendarResult(
+                                          widget.calendarResult);
+                                  setState(
+                                      () {}); // dismisses only the dialog and returns true
                                 },
                                 child: Text('Yes'),
                               ),
