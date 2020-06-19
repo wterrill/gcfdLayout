@@ -57,14 +57,14 @@ class _ApptDataTableState extends State<ApptDataTable> {
         newEventAdded;
 
     if (firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent) {
-      setState(() {
-        _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
-        isLoaded = true;
-        Provider.of<ListCalendarData>(context, listen: false).lastFilterValue =
-            filterText;
-        Provider.of<ListCalendarData>(context, listen: false).newEventAdded =
-            false;
-      });
+      // setState(() {
+      _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
+      isLoaded = true;
+      Provider.of<ListCalendarData>(context, listen: false).lastFilterValue =
+          filterText;
+      Provider.of<ListCalendarData>(context, listen: false).newEventAdded =
+          false;
+      // });
     }
   }
 
@@ -114,11 +114,13 @@ class _ApptDataTableState extends State<ApptDataTable> {
   @override
   Widget build(BuildContext context) {
     bool initializedx = Provider.of<ListCalendarData>(context).initializedx;
-    filterTimeToggle = Provider.of<ListCalendarData>(context).filterTimeToggle;
+    filterTimeToggle =
+        Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
 
     lastFilterText =
         Provider.of<ListCalendarData>(context, listen: false).lastFilterValue;
-    filterText = Provider.of<ListCalendarData>(context).filterValue;
+    filterText =
+        Provider.of<ListCalendarData>(context, listen: false).filterValue;
     print("building paginated data table");
     Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
     getData(calendarBox);

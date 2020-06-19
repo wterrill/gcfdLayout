@@ -134,7 +134,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                                     .siteList;
                             await Provider.of<ListCalendarData>(context,
                                     listen: false)
-                                .dataSync(context, siteList, deviceid);
+                                .dataSync(context, siteList);
                             await Provider.of<AuditData>(context, listen: false)
                                 .dataSync(context, siteList, deviceid);
 

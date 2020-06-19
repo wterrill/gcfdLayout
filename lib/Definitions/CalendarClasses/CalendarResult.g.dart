@@ -28,6 +28,7 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       message: fields[8] as String,
       programTypeColor: fields[9] as Color,
       siteInfo: fields[11] as Site,
+      deviceid: fields[12] as String,
     )..startDateTime = fields[10] as DateTime;
   }
 
@@ -58,6 +59,8 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       ..writeByte(10)
       ..write(obj.startDateTime)
       ..writeByte(11)
-      ..write(obj.siteInfo);
+      ..write(obj.siteInfo)
+      ..writeByte(12)
+      ..write(obj.deviceid);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/pages/developer/hiveTroubleshooting/hiveTroubleshooting.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 import 'package:auditor/providers/GeneralData.dart';
 // import 'package:auditor/pages/developer/pdf/showPdfDocument.dart';
@@ -180,6 +181,15 @@ class DeveloperMenu extends StatelessWidget {
               Dialogs.showid(context, deviceid);
             },
           ),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => HiveTroubleShooting()),
+                );
+              },
+              child: Text("Hive Troubleshooting"))
         ],
       ),
     );

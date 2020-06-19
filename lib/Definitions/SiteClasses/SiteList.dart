@@ -1,5 +1,6 @@
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:hive/hive.dart';
+import 'dart:math';
 
 part 'SiteList.g.dart';
 
@@ -62,6 +63,12 @@ class SiteList extends HiveObject {
     if (site == null) {
       print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE getSiteFromAgencyNumber");
     }
+    return site;
+  }
+
+  Site getRandom() {
+    Random random = Random();
+    Site site = siteList[random.nextInt(siteList.length)];
     return site;
   }
 

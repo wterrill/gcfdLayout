@@ -247,13 +247,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
       dynamic body = jsonEncode(<String, dynamic>{
         'AED': 'D',
-        'AgencyNumber': 'SITE NOT FOUND',
-        'ProgramNumber': 'PY00049',
+        'AgencyNumber': 'A00091',
+        'ProgramNumber': 'PY00005',
         'ProgramType': 1,
-        'Auditor': 'Charlie Chaplin',
-        'AuditType': 2,
-        'StartTime': '2020-06-16T15:30:00.000Z',
-        'DeviceId': 'app'
+        'Auditor': 'MXOTestAud1',
+        'AuditType': 1,
+        'StartTime': '2020-06-30T12:00:00.000Z',
+        'DeviceId': '****************************'
       });
 
       if (isNtlm) {
@@ -516,6 +516,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
               ),
               RaisedButton(
                   onPressed: () {
+                    Navigator.of(context).pop();
                     Navigator.push<dynamic>(
                       context,
                       MaterialPageRoute<dynamic>(

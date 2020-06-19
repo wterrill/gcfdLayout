@@ -84,6 +84,27 @@ class Dialogs {
     );
   }
 
+  static void showNotSynced(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+              'This device has not had an initial sync with the database.  Please connect to a wifi connection and allow the device to sync prior to initial use.'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showSites(BuildContext context, List<Site> siteList) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,

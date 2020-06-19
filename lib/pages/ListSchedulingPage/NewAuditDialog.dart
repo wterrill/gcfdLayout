@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,11 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
     auditorDropDownMenu =
         Provider.of<ListCalendarData>(context, listen: false).auditorsList;
-    auditorDropDownMenu.insert(0, "Select");
+    bool hasSelect = (auditorDropDownMenu.contains("Select"));
+    if (!hasSelect) {
+      auditorDropDownMenu.insert(0, "Select");
+    }
+
     siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
 
@@ -326,6 +331,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         timeInPastOK = true;
                       };
                       await Dialogs.timeInPast(context, callBack);
+                    } else {
+                      timeInPastOK = true;
                     }
 
                     bool validated = validateEntry();
@@ -359,6 +366,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       //   'auditor': selectedAuditor,
                       //   'status': "scheduled"
                       // });
+                      String deviceid =
+                          Provider.of<GeneralData>(context, listen: false)
+                              .deviceid;
 
                       Provider.of<ListCalendarData>(context, listen: false)
                           .addBoxEvent(event: {
@@ -370,7 +380,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         'programNum': selectedProgramNumber,
                         'programType': selectedProgType,
                         'auditor': selectedAuditor,
-                        'status': "Scheduled"
+                        'status': "Scheduled",
+                        'deviceid': deviceid,
                       }, notify: true);
 
                       Navigator.of(context).pop();

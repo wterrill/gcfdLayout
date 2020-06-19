@@ -26,8 +26,11 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool filteredTime = Provider.of<ListCalendarData>(context).filterTimeToggle;
+    bool filteredTime =
+        Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
     String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
+    List<String> auditorsList =
+        Provider.of<ListCalendarData>(context, listen: false).auditorsList;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -60,7 +63,12 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                   color: ColorDefs
                                                       .colorDarkBackground)),
                                           onPressed: () {
-                                            Dialogs.showScheduledAudit(context);
+                                            if (auditorsList != null) {
+                                              Dialogs.showScheduledAudit(
+                                                  context);
+                                            } else {
+                                              Dialogs.showNotSynced(context);
+                                            }
                                           },
                                           child: Text("Schedule New Audit",
                                               style: ColorDefs.textBodyWhite20),

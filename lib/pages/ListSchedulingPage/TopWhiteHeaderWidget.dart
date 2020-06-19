@@ -30,11 +30,11 @@ class TopWhiteHeaderWidget extends StatelessWidget {
           ),
           RaisedButton(
             color: Colors.yellow,
-            child: Text("Generate 50 random Appointments",
+            child: Text("Generate 10 random Appointments",
                 style: ColorDefs.textBodyBlack10),
             onPressed: () {
               Provider.of<ListCalendarData>(context, listen: false)
-                  .generateAppointments(50);
+                  .generateAppointments(10);
             },
           ),
           RaisedButton(
@@ -55,6 +55,7 @@ class TopWhiteHeaderWidget extends StatelessWidget {
               color: Colors.blue,
               child: Text("Developer"),
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.push<dynamic>(
                   context,
                   MaterialPageRoute<dynamic>(
@@ -91,7 +92,9 @@ class TopWhiteHeaderWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      Provider.of<GeneralData>(context).username,
+                      Provider.of<GeneralData>(context, listen: false)
+                              .username ??
+                          "generic login",
                       style: ColorDefs.textBodyBlack20,
                     ),
                   )

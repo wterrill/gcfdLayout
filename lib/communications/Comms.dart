@@ -57,6 +57,7 @@ class Authentication {
 }
 
 class FullAuditComms {
+  //todo this needs to be future<dynamic>
   static void sendFullAudit(Map<String, dynamic> auditToSend) {
     String body = jsonEncode(auditToSend);
     print(body);
@@ -119,7 +120,7 @@ class FullAuditComms {
 
 class ScheduleAuditComms {
   static Future<dynamic> scheduleAudit(
-      CalendarResult calendarResult, String deviceid, String addDelete) async {
+      CalendarResult calendarResult, String addDelete) async {
     String body = jsonEncode(<String, dynamic>{
       'AED': addDelete,
       'AgencyNumber': calendarResult.agencyNum,
@@ -128,10 +129,10 @@ class ScheduleAuditComms {
       'Auditor': calendarResult.auditor,
       'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
       'StartTime': calendarResult.startDateTime.toString(),
-      'DeviceId': kIsWeb ? "website" : deviceid
+      'DeviceId': kIsWeb ? "website" : calendarResult.deviceid
       //TODO setup device ID for the app.
     });
-
+    print(calendarResult.deviceid);
     if (isNtlm) {
       sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
           headers: <String, String>{
@@ -197,6 +198,7 @@ class ScheduleAuditComms {
             Site siteInfo = siteList.getSiteFromAgencyNumber(
                 agencyNumber: event['AgencyNumber'] as String);
             siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
+            String siteidreceived = event['DeviceId'] as String;
 
             if (startTime != null) {
               CalendarResult newResult = CalendarResult(
@@ -208,7 +210,8 @@ class ScheduleAuditComms {
                   auditType: auditType,
                   startTime: startTime,
                   status: status,
-                  siteInfo: siteInfo);
+                  siteInfo: siteInfo,
+                  deviceid: siteidreceived);
               finalList.add(newResult);
             } else {
               print('$agencyName did not have a startTime associated with it');

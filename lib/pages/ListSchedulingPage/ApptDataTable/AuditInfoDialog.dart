@@ -77,6 +77,12 @@ class AuditInfoDialog extends StatelessWidget {
                             'Start time: ${DateFormat.yMd().add_jm().format(calendarResult.startDateTime)}',
                             style: ColorDefs.textBodyWhite15),
                       ),
+                      Container(
+                        color: Colors.black,
+                        child: AutoSizeText(
+                            'DeviceID: ${calendarResult.deviceid}',
+                            style: ColorDefs.textBodyBronze20),
+                      ),
                     ],
                   ),
                 ),

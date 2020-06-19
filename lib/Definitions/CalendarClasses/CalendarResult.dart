@@ -32,6 +32,8 @@ class CalendarResult extends HiveObject {
   DateTime startDateTime;
   @HiveField(11)
   Site siteInfo;
+  @HiveField(12)
+  String deviceid;
 
   // String date;
 
@@ -46,7 +48,8 @@ class CalendarResult extends HiveObject {
       @required this.status,
       this.message,
       this.programTypeColor,
-      @required this.siteInfo}) {
+      @required this.siteInfo,
+      @required this.deviceid}) {
     startDateTime = DateTime.parse(startTime);
     var lookup = programTypeTextAndColorLookup(programType);
     programTypeColor = lookup["color"] as Color;

@@ -20,7 +20,6 @@ class AuditData with ChangeNotifier {
   Box auditsToSendBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
-  String deviceid;
 
   AuditData() {
     initialize();
@@ -114,7 +113,6 @@ class AuditData with ChangeNotifier {
   /////////////////////// sync stuff //////////////////////////
   void dataSync(
       BuildContext context, SiteList siteList, String deviceid) async {
-    deviceid = deviceid;
     await sendAuditsToCloud();
     await getAuditsFromCloud(context, siteList, deviceid);
   }
@@ -172,7 +170,9 @@ class AuditData with ChangeNotifier {
               as String, //incomingPantryAudit['DateOfSiteVisit'] as String,
           status: "Completed",
           auditor: event['Auditor'] as String,
+          deviceid: event['DeviceId'] as String,
         );
+        print(event['DeviceId']);
 
         newAudit = Audit(
             calendarResult: newCalendarResult,

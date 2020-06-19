@@ -6,6 +6,10 @@ String converNumberToStatus(int number) {
       break;
     case (1):
       value = "Completed";
+      break;
+    case (-1):
+      value = "Deleted";
+      break;
   }
   return value;
 }
