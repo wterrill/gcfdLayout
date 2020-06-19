@@ -47,12 +47,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       alreadyExisted = true;
     }
 
-    auditorDropDownMenu =
-        Provider.of<ListCalendarData>(context, listen: false).auditorsList;
-    bool hasSelect = (auditorDropDownMenu.contains("Select"));
-    if (!hasSelect) {
-      auditorDropDownMenu.insert(0, "Select");
-    }
+    // auditorDropDownMenu =
+    //     Provider.of<ListCalendarData>(context, listen: false).auditorsList;
+    // bool hasSelect = (auditorDropDownMenu.contains("Select"));
+    // if (!hasSelect) {
+    //   auditorDropDownMenu.insert(0, "Select");
+    // }
 
     siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
@@ -70,7 +70,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   SiteList siteList;
 
-  List<String> auditorDropDownMenu;
+  List<String> auditorDropDownMenu = [
+    "Select",
+    "Will Terrill",
+    "Abraham Jimenez",
+    "Andrei Kliuchnik",
+  ];
 
   List<String> programTypeDropDownMenu = [
     "Select",
@@ -340,7 +345,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     if (validated && timeInPastOK) {
                       if (alreadyExisted) {
                         Provider.of<ListCalendarData>(context, listen: false)
-                            .deleteCalendarResult(widget.calendarResult);
+                            .deleteCalendarItem(widget.calendarResult);
                       }
 
                       // TimeOfDay t;
@@ -429,7 +434,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                                       .pop(true);
                                   Provider.of<ListCalendarData>(context,
                                           listen: false)
-                                      .deleteCalendarResult(
+                                      .deleteCalendarItem(
                                           widget.calendarResult);
                                   setState(
                                       () {}); // dismisses only the dialog and returns true
@@ -448,7 +453,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                           print(selectedTime.format(context).toString());
 
                           Provider.of<ListCalendarData>(context, listen: false)
-                              .deleteCalendarResult(widget.calendarResult);
+                              .deleteCalendarItem(widget.calendarResult);
 
                           Navigator.of(context).pop();
                           if (alreadyExisted) {

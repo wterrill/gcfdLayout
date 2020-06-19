@@ -63,12 +63,12 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                   color: ColorDefs
                                                       .colorDarkBackground)),
                                           onPressed: () {
-                                            if (auditorsList != null) {
-                                              Dialogs.showScheduledAudit(
-                                                  context);
-                                            } else {
-                                              Dialogs.showNotSynced(context);
-                                            }
+                                            //TODO this needs to be re-enabled for next auditors list
+                                            // if (auditorsList != null) {
+                                            Dialogs.showScheduledAudit(context);
+                                            // } else {
+                                            //   Dialogs.showNotSynced(context);
+                                            // }
                                           },
                                           child: Text("Schedule New Audit",
                                               style: ColorDefs.textBodyWhite20),

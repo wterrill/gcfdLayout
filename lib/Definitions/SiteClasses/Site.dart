@@ -48,6 +48,7 @@ class Site extends HiveObject {
 
   factory Site.fromJson(Map<String, dynamic> json) {
     return Site(
+      programNumber: json['ProgramNumber'] as String,
       programName: json['ProgramName'] as String,
       programDisplayName: json['ProgramDisplayName'] as String,
       agencyNumber: json['AgencyNumber'] as String,
