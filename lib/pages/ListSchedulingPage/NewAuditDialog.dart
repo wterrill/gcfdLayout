@@ -47,13 +47,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       alreadyExisted = true;
     }
 
-    // auditorDropDownMenu =
-    //     Provider.of<ListCalendarData>(context, listen: false).auditorsList;
-    // bool hasSelect = (auditorDropDownMenu.contains("Select"));
-    // if (!hasSelect) {
-    //   auditorDropDownMenu.insert(0, "Select");
-    // }
-
+    auditorDropDownMenu = Provider.of<ListCalendarData>(context, listen: false)
+        .auditorList
+        .getAuditorDropDown();
     siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
 

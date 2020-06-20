@@ -17,6 +17,8 @@ import 'Definitions/AuditClasses/Section.dart';
 import 'Definitions/AuditClasses/Audit.dart';
 import 'Definitions/SiteClasses/Site.dart';
 import 'Definitions/SiteClasses/SiteList.dart';
+import 'Definitions/AuditorClasses/Auditor.dart';
+import 'Definitions/AuditorClasses/AuditorList.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 
@@ -38,6 +40,8 @@ void main() async {
   Hive.registerAdapter(SectionAdapter());
   Hive.registerAdapter(StatusAdapter());
   Hive.registerAdapter(SiteListAdapter());
+  Hive.registerAdapter(AuditorAdapter());
+  Hive.registerAdapter(AuditorListAdapter());
 
   runApp(
     MultiProvider(

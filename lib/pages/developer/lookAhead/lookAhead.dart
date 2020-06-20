@@ -29,9 +29,6 @@ class _LookAheadState extends State<LookAhead> {
           TypeAheadField<String>(
             textFieldConfiguration: TextFieldConfiguration<String>(
                 autofocus: true,
-                // style: DefaultTextStyle.of(context)
-                //     .style
-                //     .copyWith(fontStyle: FontStyle.italic),
                 decoration: InputDecoration(border: OutlineInputBorder()),
                 controller: this._typeAheadController),
             suggestionsCallback: (pattern) async {
@@ -43,7 +40,7 @@ class _LookAheadState extends State<LookAhead> {
                 sitename = sitename.toLowerCase();
                 print(sitename);
                 return sitename.contains(pattern);
-              }); //.toList();
+              });
               Iterable<String> subsubsites =
                   subsites.map((subsite) => subsite[1] as String);
               return subsubsites;

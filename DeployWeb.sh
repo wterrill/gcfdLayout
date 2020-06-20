@@ -16,7 +16,7 @@ printf  "\";" >> lib/buildTime/flutterDate.dart
 echo "Continuing flutter build"
 
 flutter build web --release
-cd /build/web/ 
+cd build/web/ 
 git add .
 now=$(printf '%s' "$(date)")
 git commit -m "AutoCommit $now"

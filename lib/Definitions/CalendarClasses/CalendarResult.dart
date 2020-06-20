@@ -23,7 +23,7 @@ class CalendarResult extends HiveObject {
   @HiveField(6)
   final String auditor;
   @HiveField(7)
-  final String status;
+  String status;
   @HiveField(8)
   final String message;
   @HiveField(9)

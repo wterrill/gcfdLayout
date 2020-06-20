@@ -1,10 +1,10 @@
-List<String> auditors = [
-  "Will Terrill",
-  "Andrei Kliuchnik",
-  "Charlie Chaplin",
-  "Jill Chang",
-  "Abraham Jimenez"
-];
+// List<String> auditors = [
+//   "Will Terrill",
+//   "Andrei Kliuchnik",
+//   "Charlie Chaplin",
+//   "Jill Chang",
+//   "Abraham Jimenez"
+// ];
 
 List<String> auditTypes = [
   //'Select'
@@ -45,6 +45,6 @@ List<String> programTypes = [
 //   "PY00358",
 // ];
 
-List<String> auditor = ["Sarah Connor", "Kyle Reese"];
+// List<String> auditor = ["Sarah Connor", "Kyle Reese"];
 
-List<String> status = ["Scheduled", "Completed"];
+// List<String> status = ["Scheduled", "Completed"];

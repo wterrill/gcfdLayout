@@ -1,3 +1,5 @@
+import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
+import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Definitions/ExternalDataCalendar.dart';
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
@@ -25,10 +27,10 @@ class ListCalendarData with ChangeNotifier {
   Box calendarBox;
   Box calToBeSentBox;
   Box calToBeDeletedBox;
-  // Box auditorsListBox;
+  Box auditorsListBox;
   String deviceid;
 
-  List<String> auditorsList;
+  AuditorList auditorList;
 
   bool toggleGenerateApointments = false;
 
@@ -45,7 +47,7 @@ class ListCalendarData with ChangeNotifier {
 
   void dataSync(BuildContext context, SiteList siteList) async {
     deviceid = deviceid;
-    // await getAuditors();
+    await getAuditors();
     await deleteFromCloud();
     // await Future.delayed(Duration(milliseconds: 3000), () => true);
     await sendScheduledToCloud();
@@ -104,15 +106,11 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  // void getAuditors() async {
-  //   dynamic temp = await ScheduleAuditComms.getAuditors();
-  //   auditorsList = List<String>.from(temp as List<dynamic>);
-  //   bool hasSelect = (auditorsList.contains("Select"));
-  //   if (!hasSelect) {
-  //     auditorsList.insert(0, "Select");
-  //   }
-  //   saveAuditors(auditorsList);
-  // }
+  void getAuditors() async {
+    dynamic temp = await ScheduleAuditComms.getAuditors();
+    auditorList = temp as AuditorList;
+    saveAuditors(auditorList);
+  }
 
 ////////////////// Hive operations
 
@@ -122,13 +120,12 @@ class ListCalendarData with ChangeNotifier {
         Hive.openBox<CalendarResult>('calToBeSentBox');
     Future calEventToBeDeletedFuture =
         Hive.openBox<CalendarResult>('calToBeDeletedBox');
-    // Future auditorsListBoxFuture =
-    //     Hive.openBox<List<String>>('auditorsListBox');
+    Future auditorsListBoxFuture = Hive.openBox<AuditorList>('auditorsListBox');
     Future.wait<dynamic>([
       calendarFuture,
       calToBeSentBoxFuture,
       calEventToBeDeletedFuture,
-      // auditorsListBoxFuture
+      auditorsListBoxFuture
     ]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
@@ -136,8 +133,8 @@ class ListCalendarData with ChangeNotifier {
       calendarBox = Hive.box<CalendarResult>('calendarBox');
       calToBeSentBox = Hive.box<CalendarResult>('calToBeSentBox');
       calToBeDeletedBox = Hive.box<CalendarResult>('calToBeDeletedBox');
-      // auditorsListBox = Hive.box<List<String>>('auditorsListBox');
-      // loadAuditorsFromBox();
+      auditorsListBox = Hive.box<AuditorList>('auditorsListBox');
+      loadAuditorsFromBox();
       initializedx = true;
       notifyListeners();
     });
@@ -153,33 +150,32 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  // void saveAuditors(List<String> auditorsList) {
-  //   if(!kIsWeb) {auditorsListBox.put("auditorsList", auditorsList);}
-  // }
+  void saveAuditors(AuditorList auditorsList) {
+    auditorsListBox.put("auditorsList", auditorsList);
+  }
 
-  // void loadAuditorsFromBox() {
-  // if(!kIsWeb) auditorsList = auditorsListBox.get("auditorsList") as List<String>;  // RESTORE AUDITORS
-  // }
+  void loadAuditorsFromBox() {
+    auditorList =
+        auditorsListBox.get("auditorsList") as AuditorList; // RESTORE AUDITORS
+  }
 
 ////////////////// Calendar Operations
 
   void deleteCalendarItem(CalendarResult calendarResult) {
-    if (calendarResult.status == "Scheduled") {
-      calendarBox.delete(
-          '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-      // print(calendarBox.keys);
-      // print(calToBeSentBox.keys);
-      calToBeSentBox.delete(
-          '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-      // print(calToBeSentBox.keys);
-      // print(calToBeDeletedBox.keys);
-      calToBeDeletedBox.put(
-          '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
-          calendarResult);
-      newEventAdded = true;
-      // print(calToBeDeletedBox.keys);
-      notifyListeners();
-    }
+    calendarBox.delete(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
+    // print(calendarBox.keys);
+    // print(calToBeSentBox.keys);
+    calToBeSentBox.delete(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
+    // print(calToBeSentBox.keys);
+    // print(calToBeDeletedBox.keys);
+    calToBeDeletedBox.put(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+        calendarResult);
+    newEventAdded = true;
+    // print(calToBeDeletedBox.keys);
+    notifyListeners();
   }
 
   void updateFilterValue(String value) {
@@ -272,7 +268,11 @@ class ListCalendarData with ChangeNotifier {
 
       String programType = programTypes[random.nextInt(programTypes.length)];
       print(programType);
-      String auditor = auditors[random.nextInt(auditors.length)];
+      Auditor auditor =
+          Provider.of<ListCalendarData>(navigatorKey.currentContext)
+              .auditorList
+              .getRandom();
+
       print(auditor);
       String status =
           randomDate.isBefore(DateTime.now()) ? "Completed" : "Scheduled";
@@ -284,7 +284,7 @@ class ListCalendarData with ChangeNotifier {
         'auditType': auditType,
         'programNum': programNum,
         'programType': programType,
-        'auditor': auditor,
+        'auditor': auditor.toString(),
         'status': status
       }, notify: false);
     }

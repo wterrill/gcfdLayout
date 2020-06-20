@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
     bool filteredTime =
         Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
     String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
-    List<String> auditorsList =
-        Provider.of<ListCalendarData>(context, listen: false).auditorsList;
+    AuditorList auditorList =
+        Provider.of<ListCalendarData>(context, listen: false).auditorList;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -63,12 +64,12 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                   color: ColorDefs
                                                       .colorDarkBackground)),
                                           onPressed: () {
-                                            //TODO this needs to be re-enabled for next auditors list
-                                            // if (auditorsList != null) {
-                                            Dialogs.showScheduledAudit(context);
-                                            // } else {
-                                            //   Dialogs.showNotSynced(context);
-                                            // }
+                                            if (auditorList != null) {
+                                              Dialogs.showScheduledAudit(
+                                                  context);
+                                            } else {
+                                              Dialogs.showNotSynced(context);
+                                            }
                                           },
                                           child: Text("Schedule New Audit",
                                               style: ColorDefs.textBodyWhite20),

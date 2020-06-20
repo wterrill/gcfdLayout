@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'DeveloperPage.dart';
-import 'ReviewPage.dart';
+import 'ReviewSection/ReviewPage.dart';
 import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
 import 'VerificationPage.dart';
@@ -109,7 +109,7 @@ class _AuditPageState extends State<AuditPage> {
                                 }
                               },
                       ),
-                    if (activeSection.name == "Review")
+                    if (activeSection.name == "Verification")
                       RaisedButton(
                           disabledColor: ColorDefs.colorButtonNeutral,
                           color: Colors.blue,
@@ -181,7 +181,10 @@ class _AuditPageState extends State<AuditPage> {
                             print(resultMap);
                             // Map<String, dynamic> pantryDetail =
                             //     <String, dynamic>{"PantryDetail": resultMap};
-
+                            String deviceid =
+                                Provider.of<GeneralData>(context, listen: false)
+                                    .deviceid;
+                            activeCalendarResult.status = "Submitted";
                             Map<String, dynamic> mainBody = <String, dynamic>{
                               "AgencyNumber":
                                   activeAudit.calendarResult.agencyNum,
@@ -195,8 +198,7 @@ class _AuditPageState extends State<AuditPage> {
                               "StartTime": activeAudit
                                   .calendarResult.startDateTime
                                   .toString(),
-                              "DeviceId":
-                                  Provider.of<GeneralData>(context).deviceid,
+                              "DeviceId": deviceid,
                               "PantryFollowUp": null,
                               "CongregateDetail": null,
                               "PPCDetail": null,

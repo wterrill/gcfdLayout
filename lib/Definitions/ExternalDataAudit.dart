@@ -73,12 +73,12 @@ List<Map<String, dynamic>> audit1Section1Questions = [
       'Other'
     ],
     'happyPathResponse': [
-      'daily',
-      'weekly',
-      'bi-monthly',
-      'monthly',
-      'unlimited',
-      'other'
+      'Daily',
+      'Weekly',
+      'Bi-Monthly',
+      'Monthly',
+      'Unlimited',
+      'Other'
     ],
     'databaseVar': 'HowOftenGuestsReceiveFood',
     'databaseVarType': 'string',
@@ -217,7 +217,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
       'No',
       'Closed Program',
     ],
-    'happyPathResponse': ['Yes', 'closed program'],
+    'happyPathResponse': ['Yes', 'Closed Program'],
     'databaseVar': 'AgencyLocatorAccurate',
     'databaseVarType': 'string',
     'databaseOptCom': 'AgencyLocatorAccurateComments'
@@ -496,9 +496,9 @@ List<Map<String, dynamic>> audit1Section3Questions = [
       'Partial Client Choice'
     ],
     'happyPathResponse': [
-      'client choice',
-      'prepacked',
-      'partial client choice'
+      'Client Choice',
+      'Prepacked',
+      'Partial Client Choice'
     ],
     'databaseVar': 'DistributionStyle',
     'databaseVarType': 'string',

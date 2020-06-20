@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
+import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
+import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:flutter/foundation.dart';
@@ -242,7 +244,13 @@ class ScheduleAuditComms {
           dynamic resultMap = json.decode(res.body);
           print(resultMap);
           List<dynamic> auditors = resultMap["Result"] as List<dynamic>;
-          return auditors;
+          List<Auditor> auditorsList = [];
+          for (dynamic auditorDyn in auditors) {
+            Auditor auditor = Auditor(auditorName: auditorDyn as String);
+            auditorsList.add(auditor);
+          }
+          AuditorList auditorList = AuditorList(auditorList: auditorsList);
+          return auditorList;
         } catch (error) {
           print(error);
         }
