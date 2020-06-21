@@ -14,7 +14,8 @@ import 'DeveloperPage.dart';
 import 'ReviewSection/ReviewPage.dart';
 import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
-import 'VerificationPage.dart';
+import 'VerificationGoodPage.dart';
+import 'VerificationBadPage.dart';
 
 class AuditPage extends StatefulWidget {
   final bool alreadyExist;
@@ -82,8 +83,14 @@ class _AuditPageState extends State<AuditPage> {
                       ReviewPage(
                         activeAudit: activeAudit,
                       ),
-                    if (activeSection.name == "Verification")
-                      VerificationPage(),
+                    if (activeSection.name == "Verification" &&
+                        activeAudit.citations.length == 0)
+                      VerificationGoodPage(),
+                    if (activeSection.name == "Verification" &&
+                        activeAudit.citations.length != 0)
+                      VerificationBadPage(
+                        activeAudit: activeAudit,
+                      ),
                     if (activeSection.name == "*Developer*") DeveloperPage(),
                     if (activeSection.name != "Review" &&
                         activeSection.name != "Verification")

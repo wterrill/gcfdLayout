@@ -28,8 +28,9 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..note = fields[6] as String
       ..textBoxRollOut = fields[7] as bool
       ..completed = fields[8] as bool
-      ..flagged = fields[9] as bool
-      ..displayVariable = fields[11] as String;
+      ..unflagged = fields[9] as bool
+      ..displayVariable = fields[11] as String
+      ..fromSectionName = fields[12] as String;
   }
 
   @override
@@ -55,10 +56,12 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..writeByte(8)
       ..write(obj.completed)
       ..writeByte(9)
-      ..write(obj.flagged)
+      ..write(obj.unflagged)
       ..writeByte(10)
       ..write(obj.questionMap)
       ..writeByte(11)
-      ..write(obj.displayVariable);
+      ..write(obj.displayVariable)
+      ..writeByte(12)
+      ..write(obj.fromSectionName);
   }
 }

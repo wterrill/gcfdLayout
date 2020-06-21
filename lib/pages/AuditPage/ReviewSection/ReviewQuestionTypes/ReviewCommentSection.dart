@@ -50,7 +50,7 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
   Widget build(BuildContext context) {
     int index = widget.index;
     return AnimatedContainer(
-      height: widget.questions[index].textBoxRollOut ? 200 : 0,
+      height: widget.questions[index].textBoxRollOut ? 80 : 0,
       color: Colors.white,
       duration: Duration(milliseconds: 150),
       child: TextField(

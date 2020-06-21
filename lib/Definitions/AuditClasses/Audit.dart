@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 
 import 'MetaData.dart';
+import 'Question.dart';
 import 'Section.dart';
 
 import 'package:hive/hive.dart';
@@ -25,6 +26,12 @@ class Audit extends HiveObject {
 
   @HiveField(5)
   CalendarResult calendarResult;
+
+  @HiveField(6)
+  List<Question> citations = [];
+
+  @HiveField(7)
+  bool putProgramOnImmediateHold;
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {

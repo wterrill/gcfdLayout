@@ -51,7 +51,7 @@ class _CommentSectionState extends State<CommentSection> {
     int index = widget.index;
     Section activeSection = widget.activeSection;
     return AnimatedContainer(
-      height: widget.activeSection.questions[index].textBoxRollOut ? 200 : 0,
+      height: widget.activeSection.questions[index].textBoxRollOut ? 80 : 0,
       color: Colors.white,
       duration: Duration(milliseconds: 150),
       child: TextField(

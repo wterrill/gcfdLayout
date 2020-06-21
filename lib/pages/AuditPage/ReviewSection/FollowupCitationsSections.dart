@@ -17,59 +17,51 @@ class FollowupCitationsSections extends StatefulWidget {
 
 class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.activeAudit.sections.length - 4,
-        itemBuilder: (context, i) {
-          return FollowupCitationsQuestions(
-              sectionData: widget.activeAudit.sections[i + 1]);
-        },
-      ),
-    );
+  bool notHappyPath(Question question) {
+    bool isHappy = true;
+    if (question.happyPathResponse != null) {
+      if (!question.happyPathResponse.contains(question.userResponse)) {
+        isHappy = false;
+      }
+    }
+    return !isHappy;
   }
-}
-
-class FollowupCitationsQuestions extends StatefulWidget {
-  final Section sectionData;
-  FollowupCitationsQuestions({Key key, this.sectionData}) : super(key: key);
 
   @override
-  _FollowupCitationsQuestionsState createState() =>
-      _FollowupCitationsQuestionsState();
-}
-
-class _FollowupCitationsQuestionsState
-    extends State<FollowupCitationsQuestions> {
-  @override
-  Widget build(BuildContext context) {
-    bool notHappyPath(Question question) {
-      bool isHappy = true;
-      if (question.happyPathResponse != null) {
-        if (!question.happyPathResponse.contains(question.userResponse)) {
-          isHappy = false;
+  void initState() {
+    super.initState();
+    List<Question> citations = [];
+    if (widget.activeAudit.citations.length == 0) {
+      for (Section section in widget.activeAudit.sections) {
+        List<String> avoid = ["Intro", "Review", "Verification"];
+        if (!avoid.contains(section.name)) {
+          for (Question question in section.questions) {
+            if (notHappyPath(question) && question.userResponse != null) {
+              question.fromSectionName = section.name;
+              citations.add(question);
+            }
+          }
         }
       }
-      return !isHappy;
+      widget.activeAudit.citations = citations;
     }
+  }
 
-    List<Question> questions = widget.sectionData.questions;
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: widget.sectionData.questions.length,
-        itemBuilder: (context, index) {
-          return Container(
-            color: index.isEven
-                ? ColorDefs.colorAlternateDark
-                : ColorDefs.colorAlternateLight,
-            child: Container(
-              child: Column(
-                children: [
-                  if (notHappyPath(questions[index]) &&
-                      questions[index].userResponse != null)
+  Widget build(BuildContext context) {
+    return Container(
+        height: 100,
+        child: ListView.builder(
+          shrinkWrap: true,
+          // physics: NeverScrollableScrollPhysics(),
+          itemCount: widget.activeAudit.citations.length,
+          itemBuilder: (context, index) {
+            return Container(
+              color: index.isEven
+                  ? ColorDefs.colorAlternateDark
+                  : ColorDefs.colorAlternateLight,
+              child: Container(
+                child: Column(
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -78,25 +70,27 @@ class _FollowupCitationsQuestionsState
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
-                              questions[index].text,
+                              widget.activeAudit.citations[index].text,
                               style: TextStyle(fontSize: 15.0),
                             ),
                           ),
                         ),
                         Container(
                           height: 55,
-                          width: 180,
+                          width: 190,
                           child: Row(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: ColorDefs.colorAlternatingDark,
+                                      color: ColorDefs.colorButton1Background,
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     child: Center(
-                                      child: Text(widget.sectionData.name,
+                                      child: Text(
+                                          widget.activeAudit.citations[index]
+                                              .fromSectionName,
                                           // wrapWords: false,
                                           softWrap: true,
                                           textAlign: TextAlign.center,
@@ -110,8 +104,21 @@ class _FollowupCitationsQuestionsState
                                   // color: ColorDefs.colorButtonNeutral,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Icon(Icons.flag, color: Colors.red),
+                                        EdgeInsets.symmetric(horizontal: 12.0),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            widget.activeAudit.citations[index]
+                                                    .unflagged =
+                                                !widget.activeAudit
+                                                    .citations[index].unflagged;
+                                          });
+                                        },
+                                        child: Icon(Icons.flag,
+                                            color: widget.activeAudit
+                                                    .citations[index].unflagged
+                                                ? ColorDefs.colorChatNeutral
+                                                : Colors.red)),
                                   )),
                               // if (questions[index].userResponse != null &&
                               //     questions[index]
@@ -144,16 +151,17 @@ class _FollowupCitationsQuestionsState
                                     const EdgeInsets.symmetric(horizontal: 4.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    if (questions[index].optionalComment !=
-                                        null) {
-                                      questions[index].textBoxRollOut =
-                                          !questions[index].textBoxRollOut;
-                                      print(questions[index].textBoxRollOut);
-                                      setState(() {});
-                                    }
+                                    widget.activeAudit.citations[index]
+                                            .textBoxRollOut =
+                                        !widget.activeAudit.citations[index]
+                                            .textBoxRollOut;
+                                    print(widget.activeAudit.citations[index]
+                                        .textBoxRollOut);
+                                    setState(() {});
                                   },
                                   child: Icon(Icons.chat_bubble,
-                                      color: questions[index].optionalComment ==
+                                      color: widget.activeAudit.citations[index]
+                                                  .optionalComment ==
                                               null
                                           ? ColorDefs.colorChatNeutral
                                           : ColorDefs.colorChatSelected),
@@ -164,19 +172,18 @@ class _FollowupCitationsQuestionsState
                         )
                       ],
                     ),
-                  if (notHappyPath(questions[index]) &&
-                      questions[index].userResponse != null)
                     ReviewCommentSection(
                         index: index,
-                        questions: questions,
+                        questions: widget.activeAudit.citations,
                         key: UniqueKey(),
                         numKeyboard: false,
                         mandatory: false)
-                ],
+                  ],
+                ),
+                // leading: new Text(question.userResponse),
               ),
-              // leading: new Text(question.userResponse),
-            ),
-          );
-        });
+            );
+          },
+        ));
   }
 }

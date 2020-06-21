@@ -6,14 +6,14 @@ import 'package:image/image.dart' as img;
 import 'dart:math';
 import 'dart:typed_data';
 
-class VerificationPage extends StatefulWidget {
-  const VerificationPage({Key key}) : super(key: key);
+class VerificationGoodPage extends StatefulWidget {
+  const VerificationGoodPage({Key key}) : super(key: key);
 
   @override
-  _VerificationPageState createState() => _VerificationPageState();
+  _VerificationGoodPageState createState() => _VerificationGoodPageState();
 }
 
-class _VerificationPageState extends State<VerificationPage> {
+class _VerificationGoodPageState extends State<VerificationGoodPage> {
   Uint8List finalImage = null;
   var color = Colors.red;
   var strokeWidth = 5.0;
@@ -55,13 +55,26 @@ Pincode ___'''),
             ),
             finalImage == null
                 ? Container()
-                : LimitedBox(
-                    maxHeight: 200.0,
-                    child: Image.memory(finalImage.buffer.asUint8List())),
+                : Container(
+                    child: LimitedBox(
+                        maxHeight: 100.0,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                              bottom: BorderSide(
+                                  width: 2.0, color: Colors.lightBlue.shade900),
+                            )),
+                            child:
+                                Image.memory(finalImage.buffer.asUint8List()))),
+                  ),
+
+            // : LimitedBox(
+            //     maxHeight: 200.0,
+            //     child: Image.memory(finalImage.buffer.asUint8List())),
             if (finalImage == null)
               Container(
                 width: double.infinity,
-                height: 400,
+                height: 200,
                 decoration: BoxDecoration(
                   border:
                       Border.all(color: ColorDefs.colorUserAccent, width: 1.0),

@@ -31,13 +31,16 @@ class Question extends HiveObject {
   bool completed = false;
 
   @HiveField(9)
-  bool flagged = false;
+  bool unflagged = false;
 
   @HiveField(10)
   Map<String, dynamic> questionMap;
 
   @HiveField(11)
   String displayVariable;
+
+  @HiveField(12)
+  String fromSectionName;
 
   Question({this.questionMap}) {
     text = questionMap['text'] as String;

@@ -30,7 +30,9 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..name = fields[0] as String
       ..sections = (fields[1] as List)?.cast<Section>()
       ..completed = fields[2] as bool
-      ..metadata = (fields[3] as List)?.cast<MetaData>();
+      ..metadata = (fields[3] as List)?.cast<MetaData>()
+      ..citations = (fields[6] as List)?.cast<Question>()
+      ..putProgramOnImmediateHold = fields[7] as bool;
   }
 
   @override
@@ -48,6 +50,10 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..writeByte(4)
       ..write(obj.questionnaire)
       ..writeByte(5)
-      ..write(obj.calendarResult);
+      ..write(obj.calendarResult)
+      ..writeByte(6)
+      ..write(obj.citations)
+      ..writeByte(2)
+      ..write(obj.putProgramOnImmediateHold);
   }
 }
