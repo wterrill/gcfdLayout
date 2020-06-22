@@ -35,7 +35,7 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
   @override
   void write(BinaryWriter writer, CalendarResult obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.startTime)
       ..writeByte(1)

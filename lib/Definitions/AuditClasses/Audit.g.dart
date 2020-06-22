@@ -38,7 +38,7 @@ class AuditAdapter extends TypeAdapter<Audit> {
   @override
   void write(BinaryWriter writer, Audit obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -53,7 +53,7 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..write(obj.calendarResult)
       ..writeByte(6)
       ..write(obj.citations)
-      ..writeByte(2)
+      ..writeByte(7)
       ..write(obj.putProgramOnImmediateHold);
   }
 }

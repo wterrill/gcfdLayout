@@ -36,7 +36,7 @@ class QuestionAdapter extends TypeAdapter<Question> {
   @override
   void write(BinaryWriter writer, Question obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)

@@ -8,6 +8,7 @@ import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'DeveloperPage.dart';
@@ -51,6 +52,11 @@ class _AuditPageState extends State<AuditPage> {
     double mediaHeight = Provider.of<GeneralData>(context).mediaArea.height;
     CalendarResult activeCalendarResult =
         Provider.of<AuditData>(context).activeCalendarResult;
+    bool showSubmitButton =
+        (Provider.of<AuditData>(context).finalImage != null &&
+                activeAudit.citations.length == 0 ||
+            Provider.of<AuditData>(context).finalImage != null &&
+                Provider.of<AuditData>(context).finalImage2 != null);
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
@@ -117,103 +123,133 @@ class _AuditPageState extends State<AuditPage> {
                               },
                       ),
                     if (activeSection.name == "Verification")
-                      RaisedButton(
-                          disabledColor: ColorDefs.colorButtonNeutral,
-                          color: Colors.blue,
-                          textColor: Colors.black,
-                          child: Text("Submit Audit",
-                              style: ColorDefs.textBodyBlack20),
-                          onPressed: (
-                              // activeSection.status != Status.completed)
-                              //   ? null
-                              //   :
-                              () {
-                            Map<String, dynamic> resultMap =
-                                <String, dynamic>{};
-                            for (Section section in activeAudit.sections) {
-                              for (Question question in section.questions) {
-                                String name = question
-                                    .questionMap['databaseVar'] as String;
-                                if (name != null) {
-                                  print("beer");
-                                }
-                                String qtype = question
-                                    .questionMap['databaseVarType'] as String;
-                                String comment = question
-                                    .questionMap['databaseOptCom'] as String;
-
-                                if (qtype == "bool") {
-                                  if (question.userResponse == "Yes") {
-                                    resultMap[name] = 1;
-                                  } else if (question.userResponse == "No") {
-                                    resultMap[name] = 0;
-                                  } else {
-                                    resultMap[name] = null;
+                      if (showSubmitButton)
+                        RaisedButton(
+                            disabledColor: ColorDefs.colorButtonNeutral,
+                            color: Colors.blue,
+                            textColor: Colors.black,
+                            child: Text("Submit Audit",
+                                style: ColorDefs.textBodyBlack20),
+                            onPressed: (
+                                // activeSection.status != Status.completed)
+                                //   ? null
+                                //   :
+                                () {
+                              Map<String, dynamic> resultMap =
+                                  <String, dynamic>{};
+                              for (Section section in activeAudit.sections) {
+                                for (Question question in section.questions) {
+                                  String name = question
+                                      .questionMap['databaseVar'] as String;
+                                  if (name != null) {
+                                    print("beer");
                                   }
-                                  try {
-                                    resultMap[comment] =
-                                        question.optionalComment;
-                                  } catch (err) {
-                                    print(err);
-                                    print("moving on");
-                                  }
-                                }
+                                  String qtype = question
+                                      .questionMap['databaseVarType'] as String;
+                                  String comment = question
+                                      .questionMap['databaseOptCom'] as String;
 
-                                if (qtype == "string") {
-                                  resultMap[name] = question.userResponse;
-                                  try {
-                                    resultMap[comment] =
-                                        question.optionalComment;
-                                  } catch (err) {
-                                    print(err);
-                                    print("moving on");
+                                  if (qtype == "int") {
+                                    resultMap[name] =
+                                        question.userResponse as int;
+                                    try {
+                                      resultMap[comment] =
+                                          question.optionalComment;
+                                    } catch (err) {
+                                      print(err);
+                                      print("moving on");
+                                    }
                                   }
-                                }
 
-                                if (qtype == "date") {
-                                  resultMap[name] = question.userResponse;
-
-                                  try {
-                                    resultMap[comment] =
-                                        question.optionalComment;
-                                  } catch (err) {
-                                    print(err);
-                                    print("moving on");
+                                  if (qtype == "bool") {
+                                    if (question.userResponse == "Yes") {
+                                      resultMap[name] = 1;
+                                    } else if (question.userResponse == "No") {
+                                      resultMap[name] = 0;
+                                    } else {
+                                      resultMap[name] = null;
+                                    }
+                                    try {
+                                      resultMap[comment] =
+                                          question.optionalComment;
+                                    } catch (err) {
+                                      print(err);
+                                      print("moving on");
+                                    }
                                   }
+
+                                  if (qtype == "string") {
+                                    resultMap[name] = question.userResponse;
+                                    try {
+                                      resultMap[comment] =
+                                          question.optionalComment;
+                                    } catch (err) {
+                                      print(err);
+                                      print("moving on");
+                                    }
+                                  }
+
+                                  if (qtype == "date") {
+                                    resultMap[name] = question.userResponse;
+
+                                    try {
+                                      resultMap[comment] =
+                                          question.optionalComment;
+                                    } catch (err) {
+                                      print(err);
+                                      print("moving on");
+                                    }
+                                  }
+                                  print("go again");
                                 }
-                                print("go again");
                               }
-                            }
-                            resultMap.remove(null);
-                            print(resultMap);
-                            // Map<String, dynamic> pantryDetail =
-                            //     <String, dynamic>{"PantryDetail": resultMap};
-                            String deviceid =
-                                Provider.of<GeneralData>(context, listen: false)
-                                    .deviceid;
-                            activeCalendarResult.status = "Submitted";
-                            Map<String, dynamic> mainBody = <String, dynamic>{
-                              "AgencyNumber":
-                                  activeAudit.calendarResult.agencyNum,
-                              "ProgramNumber":
-                                  activeAudit.calendarResult.programNum,
-                              "ProgramType": convertProgramTypeToNumber(
-                                  activeAudit.calendarResult.programType),
-                              "Auditor": activeAudit.calendarResult.auditor,
-                              "AuditType": convertAuditTypeToNumber(
-                                  activeAudit.calendarResult.auditType),
-                              "StartTime": activeAudit
+                              resultMap.remove(null);
+                              print(resultMap);
+                              // Map<String, dynamic> pantryDetail =
+                              //     <String, dynamic>{"PantryDetail": resultMap};
+                              String deviceid = Provider.of<GeneralData>(
+                                      context,
+                                      listen: false)
+                                  .deviceid;
+                              activeCalendarResult.status = "Submitted";
+                              String dateOfSiteVisit = activeAudit
                                   .calendarResult.startDateTime
-                                  .toString(),
-                              "DeviceId": deviceid,
-                              "PantryFollowUp": null,
-                              "CongregateDetail": null,
-                              "PPCDetail": null,
-                            };
-                            mainBody["PantryDetail"] = resultMap;
-                            print(mainBody);
-                            FullAuditComms.sendFullAudit(mainBody);
-                          })),
+                                  .toString();
+
+                              String startOfAudit = DateFormat("HH:mm").format(
+                                  activeAudit.calendarResult.startDateTime);
+
+                              String endOfAudit = DateFormat("HH:mm").format(
+                                  activeAudit.calendarResult.startDateTime
+                                      .add(Duration(hours: 2)));
+
+                              Map<String, dynamic> mainBody = <String, dynamic>{
+                                "DateOfSiteVisit": dateOfSiteVisit,
+                                "StartOfAudit": startOfAudit,
+                                "EndOfAudit": endOfAudit,
+                                "GCFDAuditorID":
+                                    activeAudit.calendarResult.auditor,
+                                "AgencyNumber":
+                                    activeAudit.calendarResult.agencyNum,
+                                "ProgramNumber":
+                                    activeAudit.calendarResult.programNum,
+                                "ProgramType": convertProgramTypeToNumber(
+                                    activeAudit.calendarResult.programType),
+                                "Auditor": activeAudit.calendarResult.auditor,
+                                "AuditType": convertAuditTypeToNumber(
+                                    activeAudit.calendarResult.auditType),
+                                "StartTime": activeAudit
+                                    .calendarResult.startDateTime
+                                    .toString(),
+                                "DeviceId": deviceid,
+                                "PantryFollowUp": null,
+                                "CongregateDetail": null,
+                                "PPCDetail": null,
+                              };
+                              mainBody["PantryDetail"] = resultMap;
+                              print(mainBody);
+                              FullAuditComms.sendFullAudit(mainBody);
+                            })),
                     FlatButton(
                       color: Colors.blue,
                       textColor: Colors.black,

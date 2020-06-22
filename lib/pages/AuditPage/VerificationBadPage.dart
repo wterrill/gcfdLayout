@@ -1,10 +1,12 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -19,12 +21,14 @@ class VerificationBadPage extends StatefulWidget {
 }
 
 class _VerificationBadPageState extends State<VerificationBadPage> {
-  Uint8List finalImage = null;
-  Uint8List finalImage2 = null;
+  // Uint8List finalImage = null;
+  // Uint8List finalImage2 = null;
   var color = Colors.red;
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
   final _sign2 = GlobalKey<SignatureState>();
+  Uint8List finalImage = null;
+  Uint8List finalImage2 = null;
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,10 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.done, color: Colors.red),
+                            Icon(
+                              Icons.done,
+                              color: Colors.red,
+                            ),
                             Text("Yes")
                           ],
                         ),
@@ -208,6 +215,8 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         setState(() {
                           finalImage =
                               img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false)
+                              .finalImage = finalImage;
                         });
                         debugPrint("onPressed ");
                       },
@@ -340,6 +349,8 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         setState(() {
                           finalImage2 =
                               img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false)
+                              .finalImage2 = finalImage2;
                         });
                         debugPrint("onPressed ");
                       },

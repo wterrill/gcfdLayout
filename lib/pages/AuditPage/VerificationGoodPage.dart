@@ -1,10 +1,13 @@
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 import 'dart:math';
 import 'dart:typed_data';
+
+import 'package:provider/provider.dart';
 
 class VerificationGoodPage extends StatefulWidget {
   const VerificationGoodPage({Key key}) : super(key: key);
@@ -144,6 +147,8 @@ Pincode ___'''),
                         setState(() {
                           finalImage =
                               img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false)
+                              .finalImage = finalImage;
                         });
                         debugPrint("onPressed ");
                       },

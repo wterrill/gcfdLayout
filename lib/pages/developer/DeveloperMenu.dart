@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/developer/hiveTroubleshooting/hiveTroubleshooting.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
+import 'package:auditor/pages/developer/scrollStuff/scrollStuff.dart';
 import 'package:auditor/providers/GeneralData.dart';
 // import 'package:auditor/pages/developer/pdf/showPdfDocument.dart';
 // import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
@@ -189,7 +190,16 @@ class DeveloperMenu extends StatelessWidget {
                       builder: (context) => HiveTroubleShooting()),
                 );
               },
-              child: Text("Hive Troubleshooting"))
+              child: Text("Hive Troubleshooting")),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => ProductDetails()),
+                );
+              },
+              child: Text("Scroll changes testing"))
         ],
       ),
     );

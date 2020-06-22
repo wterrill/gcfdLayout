@@ -62,7 +62,7 @@ class AuditInfoDialog extends StatelessWidget {
                         // Audit Type
                         color: Colors.black,
                         child: AutoSizeText(
-                            'Auditor: ${calendarResult.programType}',
+                            'Auditor: ${calendarResult.auditor}',
                             style: ColorDefs.textBodyWhite15),
                       ),
                       Container(

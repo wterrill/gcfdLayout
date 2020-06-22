@@ -1,4 +1,5 @@
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
             },
           ),
           RaisedButton(
-            child: Text("toSendKeys"),
+            child: Text("calendar toSendKeys"),
             onPressed: () {
               result = Provider.of<ListCalendarData>(context, listen: false)
                   .calToBeSentBox
@@ -49,10 +50,32 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
             },
           ),
           RaisedButton(
-            child: Text("toDeleteKeys"),
+            child: Text("calendar toDeleteKeys"),
             onPressed: () {
               result = Provider.of<ListCalendarData>(context, listen: false)
                   .calToBeDeletedBox
+                  .keys
+                  .toList();
+              setState(() {});
+            },
+          ),
+          RaisedButton(
+            color: Colors.red,
+            child: Text("auditData keys"),
+            onPressed: () {
+              result = Provider.of<AuditData>(context, listen: false)
+                  .auditBox
+                  .keys
+                  .toList();
+              setState(() {});
+            },
+          ),
+          RaisedButton(
+            color: Colors.red,
+            child: Text("auditData to send keys"),
+            onPressed: () {
+              result = Provider.of<AuditData>(context, listen: false)
+                  .auditsToSendBox
                   .keys
                   .toList();
               setState(() {});

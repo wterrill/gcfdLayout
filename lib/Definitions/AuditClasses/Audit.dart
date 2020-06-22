@@ -37,6 +37,26 @@ class Audit extends HiveObject {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));
       print(sections);
+      name = convertProgramTypeToOfficial(calendarResult.programType);
     }
+  }
+
+  String convertProgramTypeToOfficial(String programType) {
+    String value = "Error in Name";
+    switch (programType) {
+      case ("Pantry Audit"):
+        value = "Pantry Policy / Procedures Checklist";
+        break;
+      case ("Congregate Audit"):
+        value = "Congregate Policy Checklist";
+        break;
+      case ("Senior Adults Program"):
+        value = "Senior Adults Policy Checklist";
+        break;
+      case ("Healthy Student Market"):
+        value = "Healthy Student Policy Checklist";
+        break;
+    }
+    return value;
   }
 }

@@ -9,6 +9,7 @@ import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'dart:typed_data';
 
 import 'GeneralData.dart';
 
@@ -20,6 +21,8 @@ class AuditData with ChangeNotifier {
   Box auditsToSendBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
+  Uint8List finalImage;
+  Uint8List finalImage2;
 
   AuditData() {
     initialize();

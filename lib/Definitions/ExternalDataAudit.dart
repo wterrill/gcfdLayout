@@ -173,7 +173,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Remove:',
     'type': 'fillIn',
-    'databaseVar': 'Remove',
+    'databaseVar': 'RemoveField',
     'databaseVarType': 'string',
   },
 
@@ -785,61 +785,61 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Cold Storage Unit 1 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitOneTempAndComments',
+    'databaseVar': 'ColdStorageUnitOneAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 2 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTwoTempAndComments',
+    'databaseVar': 'ColdStorageUnitTwoAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 3 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitThreeTempAndComments',
+    'databaseVar': 'ColdStorageUnitThreeAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 4 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFourTempAndComments',
+    'databaseVar': 'ColdStorageUnitFourAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 5 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFiveTempAndComments',
+    'databaseVar': 'ColdStorageUnitFiveAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 6 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSixTempAndComments',
+    'databaseVar': 'ColdStorageUnitSixTempComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 7 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSevenTempAndComments',
+    'databaseVar': 'ColdStorageUnitSevenTempComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 8 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitEightTempAndComments',
+    'databaseVar': 'ColdStorageUnitEightTempComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 9 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitNineTempAndComments',
+    'databaseVar': 'ColdStorageUnitNineTempComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 10 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTenTempAndComments',
+    'databaseVar': 'ColdStorageUnitTenTempComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
