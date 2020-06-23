@@ -177,7 +177,8 @@ class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
                         questions: widget.activeAudit.citations,
                         key: UniqueKey(),
                         numKeyboard: false,
-                        mandatory: false)
+                        mandatory: false,
+                        actionItem: false)
                   ],
                 ),
                 // leading: new Text(question.userResponse),

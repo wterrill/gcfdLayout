@@ -17,6 +17,7 @@ import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
 import 'VerificationGoodPage.dart';
 import 'VerificationBadPage.dart';
+import 'dart:convert';
 
 class AuditPage extends StatefulWidget {
   final bool alreadyExist;
@@ -57,6 +58,7 @@ class _AuditPageState extends State<AuditPage> {
                 activeAudit.citations.length == 0 ||
             Provider.of<AuditData>(context).finalImage != null &&
                 Provider.of<AuditData>(context).finalImage2 != null);
+
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,

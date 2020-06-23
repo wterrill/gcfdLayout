@@ -10,13 +10,13 @@ import 'package:provider/provider.dart';
 
 import 'commonQuestionMethods.dart';
 
-class ReviewCommentSection extends StatefulWidget {
+class ReviewCommentSection2 extends StatefulWidget {
   final int index;
   final List<Question> questions;
   final bool mandatory;
   final bool numKeyboard;
   final bool actionItem;
-  ReviewCommentSection(
+  ReviewCommentSection2(
       {Key key,
       @required this.index,
       @required this.questions,
@@ -26,10 +26,10 @@ class ReviewCommentSection extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ReviewCommentSectionState createState() => _ReviewCommentSectionState();
+  _ReviewCommentSection2State createState() => _ReviewCommentSection2State();
 }
 
-class _ReviewCommentSectionState extends State<ReviewCommentSection> {
+class _ReviewCommentSection2State extends State<ReviewCommentSection2> {
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,12 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
       text = widget.questions[widget.index].userResponse?.toString();
     } else {
       if (widget.actionItem == true) {
-        text = widget.questions[widget.index].actionItemComment;
+        if (widget.questions[widget.index].actionItem ==
+            "action item does not exist for this question") {
+          text = " --> " + widget.questions[widget.index].text;
+        }
+
+        text = widget.questions[widget.index].actionItem + (text ?? "");
       } else {
         text = widget.questions[widget.index].optionalComment;
       }
@@ -56,8 +61,8 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
   Widget build(BuildContext context) {
     int index = widget.index;
     return AnimatedContainer(
-      height: widget.questions[index].textBoxRollOut ? 80 : 0,
-      color: Colors.white,
+      height: 80, //widget.questions[index].textBoxRollOut ? 80 : 0,
+      color: ColorDefs.colorAudit4,
       duration: Duration(milliseconds: 150),
       child: TextField(
         keyboardType:
@@ -87,9 +92,10 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
           // Provider.of<AuditData>(context, listen: false).saveAudit(thisAudit);
         },
         maxLines: null,
-        style: widget.questions[index].textBoxRollOut
-            ? ColorDefs.textBodyBlack20
-            : ColorDefs.textTransparent,
+        style: ColorDefs.textBodyBlack20,
+        //widget.questions[index].textBoxRollOut
+        // ? ColorDefs.textBodyBlack20
+        // : ColorDefs.textTransparent,
         decoration: new InputDecoration(
             suffixIcon: IconButton(
               onPressed: () => controller.clear(),

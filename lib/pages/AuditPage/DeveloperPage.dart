@@ -39,7 +39,22 @@ class DeveloperPage extends StatelessWidget {
                   question.userResponse = "Yes";
                 }
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
+                break;
+
+              case ("issuesNoIssues"):
+                print("issuesNoIssues");
+                try {
+                  String answer =
+                      question.happyPathResponse.contains("No Issues")
+                          ? "Issues"
+                          : "No Issues";
+                  question.userResponse = answer;
+                } catch (err) {
+                  question.userResponse = "No Issues";
+                }
+                question.optionalComment =
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("fillIn"):
@@ -47,7 +62,7 @@ class DeveloperPage extends StatelessWidget {
                 if (!question.text
                     .contains("If yes, how many and from where")) {
                   question.userResponse = question.text +
-                      "This, right here, is a mandatory comment";
+                      " This, right here, is a mandatory comment";
                 } else {
                   question.userResponse = "Illinois and Wisconsin";
                 }
@@ -76,7 +91,7 @@ class DeveloperPage extends StatelessWidget {
                   question.userResponse = question.dropDownMenu[1];
                 }
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("yesNoNa"):
@@ -90,7 +105,7 @@ class DeveloperPage extends StatelessWidget {
                 }
 
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("date"):
@@ -99,7 +114,7 @@ class DeveloperPage extends StatelessWidget {
                 print(DateTime.now().toString());
                 question.userResponse = DateTime.now().toString();
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
             }
           }
@@ -133,7 +148,18 @@ class DeveloperPage extends StatelessWidget {
                   question.userResponse = "No";
                 }
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
+                break;
+
+              case ("issuesNoIssues"):
+                print("issuesNoIssues");
+                try {
+                  question.userResponse = question.happyPathResponse[0];
+                } catch (err) {
+                  question.userResponse = "No Issues";
+                }
+                question.optionalComment =
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("fillIn"):
@@ -141,7 +167,7 @@ class DeveloperPage extends StatelessWidget {
                 if (!question.text
                     .contains("If yes, how many and from where")) {
                   question.userResponse = question.text +
-                      "This, right here, is a mandatory comment";
+                      " This, right here, is a mandatory comment";
                 } else {
                   question.userResponse = "Illinois and Wisconsin";
                 }
@@ -166,7 +192,7 @@ class DeveloperPage extends StatelessWidget {
                   question.userResponse = question.dropDownMenu[1];
                 }
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("yesNoNa"):
@@ -178,7 +204,7 @@ class DeveloperPage extends StatelessWidget {
                 }
 
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
 
               case ("date"):
@@ -187,7 +213,7 @@ class DeveloperPage extends StatelessWidget {
                 print(DateTime.now().toString());
                 question.userResponse = DateTime.now().toString();
                 question.optionalComment =
-                    question.text + "This, right here, is an optional comment";
+                    question.text + " This, right here, is an optional comment";
                 break;
             }
           }

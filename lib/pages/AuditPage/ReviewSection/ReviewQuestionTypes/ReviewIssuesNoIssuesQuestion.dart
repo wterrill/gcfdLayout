@@ -10,11 +10,11 @@ import 'package:provider/provider.dart';
 import 'ReviewCommentSection.dart';
 import 'commonQuestionMethods.dart';
 
-class ReviewYesNoQuestion extends StatefulWidget {
+class ReviewIssuesNoIssuesQuestion extends StatefulWidget {
   final int index;
   final List<Question> questions;
   // final AutoSizeGroup questionAutoGroup;
-  ReviewYesNoQuestion({
+  ReviewIssuesNoIssuesQuestion({
     Key key,
     this.index,
     this.questions,
@@ -22,10 +22,12 @@ class ReviewYesNoQuestion extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ReviewYesNoQuestionState createState() => _ReviewYesNoQuestionState();
+  _ReviewIssuesNoIssuesQuestionState createState() =>
+      _ReviewIssuesNoIssuesQuestionState();
 }
 
-class _ReviewYesNoQuestionState extends State<ReviewYesNoQuestion> {
+class _ReviewIssuesNoIssuesQuestionState
+    extends State<ReviewIssuesNoIssuesQuestion> {
   @override
   Widget build(BuildContext context) {
     bool happyPath(Question question) {
@@ -79,7 +81,8 @@ class _ReviewYesNoQuestionState extends State<ReviewYesNoQuestion> {
                         Expanded(
                             child: Center(
                                 child: Text(
-                                    questions[index].userResponse.toString()))),
+                                    questions[index].userResponse.toString(),
+                                    textAlign: TextAlign.center))),
 
                       // if (questions[index].typeOfQuestion.toLowerCase() == "date" &&
                       //     questions[index].userResponse != null) {
@@ -120,7 +123,8 @@ class _ReviewYesNoQuestionState extends State<ReviewYesNoQuestion> {
                 questions: questions,
                 key: UniqueKey(),
                 numKeyboard: false,
-                mandatory: false)
+                mandatory: false,
+                actionItem: false)
           ],
         ),
         // leading: new Text(question.userResponse),

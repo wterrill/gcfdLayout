@@ -2,8 +2,9 @@ import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:flutter/material.dart';
 
-import 'ReviewQuestionTypes/FillInQuestion.dart';
-import 'ReviewQuestionTypes/YesNoQuestion.dart';
+import 'ReviewQuestionTypes/ReviewFillInQuestion.dart';
+import 'ReviewQuestionTypes/ReviewIssuesNoIssuesQuestion.dart';
+import 'ReviewQuestionTypes/ReviewYesNoQuestion.dart';
 
 class ExpandableReviewContent extends StatefulWidget {
   const ExpandableReviewContent({Key key, this.sectionData}) : super(key: key);
@@ -40,6 +41,13 @@ class _ExpandableReviewContentState extends State<ExpandableReviewContent> {
                   (questions[index].typeOfQuestion == "yesNo" ||
                       questions[index].typeOfQuestion == "yesNoNa"))
                 ReviewYesNoQuestion(
+                  index: index,
+                  questions: questions,
+                ),
+              if (questions[index]?.userResponse != null &&
+                  (questions[index].typeOfQuestion == "issuesNoIssues" ||
+                      questions[index].typeOfQuestion == "issuesNoIssues"))
+                ReviewIssuesNoIssuesQuestion(
                   index: index,
                   questions: questions,
                 ),

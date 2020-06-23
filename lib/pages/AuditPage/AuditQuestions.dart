@@ -9,6 +9,7 @@ import 'QuestionTypes/Display.dart';
 import 'QuestionTypes/DropDownQuestion.dart';
 import 'QuestionTypes/FillInNumQuestion.dart';
 import 'QuestionTypes/FillInQuestion.dart';
+import 'QuestionTypes/IssuesNoIssuesQuestion.dart';
 import 'QuestionTypes/YesNoNaQuestion.dart';
 import 'QuestionTypes/YesNoQuestion.dart';
 
@@ -50,6 +51,12 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                     if (widget.activeSection.questions[index].typeOfQuestion ==
                         "yesNo")
                       YesNoQuestion(
+                        index: index,
+                        activeSection: widget.activeSection,
+                      ),
+                    if (widget.activeSection.questions[index].typeOfQuestion ==
+                        "issuesNoIssues")
+                      IssuesNoIssuesQuestion(
                         index: index,
                         activeSection: widget.activeSection,
                       ),

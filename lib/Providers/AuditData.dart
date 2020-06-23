@@ -212,6 +212,18 @@ class AuditData with ChangeNotifier {
                         incomingPantryAudit[databaseVar + "Comments"] as String;
 
                     break;
+                  case ("issuesNoIssues"):
+                    print(question.text);
+                    print('issuesNoIssues');
+                    print(incomingPantryAudit[databaseVar]);
+                    question.userResponse =
+                        incomingPantryAudit[databaseVar] as bool
+                            ? "No Issues"
+                            : "Issues";
+                    question.optionalComment =
+                        incomingPantryAudit[databaseVar + "Comments"] as String;
+
+                    break;
 
                   case ("fillIn"):
                     print(question.text);

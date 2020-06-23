@@ -48,98 +48,109 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            24.0, 0, 0, 0),
-                                        child: FlatButton(
-                                          color: ColorDefs.colorAudit2,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                              side: BorderSide(
-                                                  color: ColorDefs
-                                                      .colorDarkBackground)),
-                                          onPressed: () {
-                                            if (auditorList != null) {
-                                              Dialogs.showScheduledAudit(
-                                                  context);
-                                            } else {
-                                              Dialogs.showNotSynced(context);
-                                            }
-                                          },
-                                          child: Text("Schedule New Audit",
-                                              style: ColorDefs.textBodyWhite20),
-                                        ),
-                                      ),
-                                      // SizedBox(width: 10),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              24.0, 0, 0, 0),
                                           child: FlatButton(
-                                            color: filteredTime
-                                                ? ColorDefs.colorDarkBackground
-                                                : ColorDefs.colorAudit2,
+                                            color: ColorDefs.colorAudit2,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(18.0),
                                                 side: BorderSide(
-                                                  color: filteredTime
-                                                      ? ColorDefs.colorAudit2
-                                                      : ColorDefs
-                                                          .colorDarkBackground,
-                                                )),
+                                                    color: ColorDefs
+                                                        .colorDarkBackground)),
                                             onPressed: () {
-                                              print("Show this week pressed");
+                                              if (auditorList != null) {
+                                                Dialogs.showScheduledAudit(
+                                                    context);
+                                              } else {
+                                                Dialogs.showNotSynced(context);
+                                              }
+                                            },
+                                            child: Text("Schedule New Audit",
+                                                style:
+                                                    ColorDefs.textBodyWhite20),
+                                          ),
+                                        ),
+                                        // SizedBox(width: 10),
+                                        ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxHeight: 70,
+                                              maxWidth: 400,
+                                              minWidth: 30),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16.0),
+                                            child: FlatButton(
+                                              color: filteredTime
+                                                  ? ColorDefs
+                                                      .colorDarkBackground
+                                                  : ColorDefs.colorAudit2,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                  side: BorderSide(
+                                                    color: filteredTime
+                                                        ? ColorDefs.colorAudit2
+                                                        : ColorDefs
+                                                            .colorDarkBackground,
+                                                  )),
+                                              onPressed: () {
+                                                print("Show this week pressed");
+                                                Provider.of<ListCalendarData>(
+                                                        context,
+                                                        listen: false)
+                                                    .toggleFilterTimeToggle();
+                                              },
+                                              child: filteredTime
+                                                  ? Text("Show All",
+                                                      style: ColorDefs
+                                                          .textBodyBlue20)
+                                                  : Text(
+                                                      "Show last $dayOfWeek to next $dayOfWeek ",
+                                                      style: ColorDefs
+                                                          .textBodyWhite20),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                          width: 250,
+                                          child: TextField(
+                                            onChanged: (text) {
                                               Provider.of<ListCalendarData>(
                                                       context,
                                                       listen: false)
-                                                  .toggleFilterTimeToggle();
+                                                  .updateFilterValue(
+                                                      filterTextController
+                                                          .text);
                                             },
-                                            child: filteredTime
-                                                ? Text("Show All",
-                                                    style: ColorDefs
-                                                        .textBodyBlue20)
-                                                : Text(
-                                                    "Show last $dayOfWeek to next $dayOfWeek ",
-                                                    style: ColorDefs
-                                                        .textBodyWhite20),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                        width: 250,
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            Provider.of<ListCalendarData>(
-                                                    context,
-                                                    listen: false)
-                                                .updateFilterValue(
-                                                    filterTextController.text);
-                                          },
-                                          controller: filterTextController,
-                                          style: ColorDefs.textBodyBlack20,
-                                          decoration: InputDecoration(
-                                              hintStyle: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: Colors.grey),
-                                              filled: true,
-                                              fillColor: Colors.white,
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.teal,
+                                            controller: filterTextController,
+                                            style: ColorDefs.textBodyBlack20,
+                                            decoration: InputDecoration(
+                                                hintStyle: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey),
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                  ),
                                                 ),
-                                              ),
-                                              hintText:
-                                                  'Agency / Program Number Filter'),
-                                        ),
-                                      )
-                                    ]),
+                                                hintText:
+                                                    'Agency / Program Number Filter'),
+                                          ),
+                                        )
+                                      ]),
+                                ),
                               ),
                               ApptDataTable()
                             ],

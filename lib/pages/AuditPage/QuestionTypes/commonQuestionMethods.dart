@@ -9,11 +9,13 @@ Color buttonColorPicker(Question questionData, String buttonText) {
       questionData.userResponse != buttonText) {
     finalButtonColor = ColorDefs.colorButtonNeutral;
   }
-  if (questionData.userResponse == buttonText && buttonText == "Yes") {
+  if (questionData.userResponse == buttonText && buttonText == "Yes" ||
+      questionData.userResponse == buttonText && buttonText == "No Issues") {
     finalButtonColor = ColorDefs.colorButtonYes;
   }
 
-  if (questionData.userResponse == buttonText && buttonText == "No") {
+  if (questionData.userResponse == buttonText && buttonText == "No" ||
+      questionData.userResponse == buttonText && buttonText == "Issues") {
     finalButtonColor = ColorDefs.colorButtonNo;
   }
 

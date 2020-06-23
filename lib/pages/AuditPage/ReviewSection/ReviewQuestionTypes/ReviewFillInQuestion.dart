@@ -106,7 +106,8 @@ class _ReviewFillInQuestionState extends State<ReviewFillInQuestion> {
                   questions: questions,
                   key: UniqueKey(),
                   numKeyboard: false,
-                  mandatory: true)
+                  mandatory: true,
+                  actionItem: false)
           ],
         ),
       ),

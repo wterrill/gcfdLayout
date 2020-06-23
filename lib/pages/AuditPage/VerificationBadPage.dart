@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'ReviewSection/FollowupActionItems.dart';
+import 'ReviewSection/FollowupActionItems2.dart';
 import 'ReviewSection/FollowupCitationsSections.dart';
 
 class VerificationBadPage extends StatefulWidget {
@@ -44,6 +46,21 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                 activeAudit: widget.activeAudit,
               ),
             ),
+            Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
+            Container(
+              height: 350,
+              child: FollowupActionItems(
+                activeAudit: widget.activeAudit,
+              ),
+            ),
+            Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
+            Container(
+              height: 350,
+              child: FollowupActionItems2(
+                activeAudit: widget.activeAudit,
+              ),
+            ),
+
             Row(
               children: [
                 Text("These Compliance Requirements must be completed by: "),

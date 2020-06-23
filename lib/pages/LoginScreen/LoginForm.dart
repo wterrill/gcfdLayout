@@ -35,141 +35,143 @@ class _LoginFormState extends State<LoginForm> {
       margin: EdgeInsets.symmetric(
           horizontal: .2 * Provider.of<GeneralData>(context).mediaArea.width),
       color: ColorDefs.colorTopHeader,
-      child: Form(
-        key: _formKey,
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(height: 20),
-          AutoSizeText(
-            "Sign in to GCFD",
-            style: ColorDefs.textBodyBlack30,
-            maxLines: 1,
-            minFontSize: 5,
-          ),
-          Container(height: 70),
-          Container(
-              margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
-              width: double.infinity,
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Username", style: ColorDefs.textBodyBlack20))),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: _userController,
-              onChanged: (input) =>
-                  _onChangeField(input: input, from: "username"),
-              // validator: (input) => !input.contains('@')
-              //     ? "make sure your username has a '@'"
-              //     : null,
-              onSaved: (input) => _username = input,
-              style: ColorDefs.textBodyBlack20,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: ColorDefs.colorLoginBackground,
-                // labelText: 'Username',
-                labelStyle: ColorDefs.textBodyBlack20,
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(30.0),
-                  ),
-                ),
-              ),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Container(height: 20),
+            AutoSizeText(
+              "Sign in to GCFD",
+              style: ColorDefs.textBodyBlack30,
+              maxLines: 1,
+              minFontSize: 5,
             ),
-          ),
-          Container(height: 40),
-          Container(
-              margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
-              width: double.infinity,
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Password", style: ColorDefs.textBodyBlack20))),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: _passwordController,
-              onChanged: (input) =>
-                  _onChangeField(input: input, from: "password"),
-              validator: (input) => input.length < 1
-                  ? "your password requires at least 6 characters"
-                  : null,
-              onSaved: (input) => _password = input,
-              obscureText: _obscureText,
-              style: ColorDefs.textBodyBlack20,
-              decoration: InputDecoration(
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(30.0),
-                  ),
-                ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                    print(_obscureText);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 12.0),
-                    child: _obscureText
-                        ? Icon(Icons.visibility,
-                            color: ColorDefs.colorDarkBackground)
-                        : Icon(Icons.visibility_off,
-                            color: ColorDefs.colorDarkBackground),
-                  ),
-                ),
-                filled: true,
-                fillColor: ColorDefs.colorLoginBackground,
-                // labelText: 'Password',
-                labelStyle: ColorDefs.textBodyBlack20,
-              ),
-            ),
-          ),
-          Container(height: 3),
-          RaisedButton(
-              onPressed: () {
-                setState(() {
-                  _userController.text = "MXOTestAud1";
-                  _passwordController.text = "Password1";
-                  _enabledLoginButton = true;
-                });
-              },
-              child: Text("fast login")),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 100.0, 8.0, 10.0),
-            child: ListTile(
-              title: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 50.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: _enabledLoginButton
-                          ? ColorDefs.colorUserAccent
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(50.0),
-                      border: Border.all(
-                          width: 2.0,
-                          color: _enabledLoginButton
-                              ? Colors.transparent
-                              : Colors.grey)),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: 56.0, maxWidth: 30.0),
-                    child: FlatButton(
-                      disabledTextColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      onPressed: _enabledLoginButton ? _submit : null,
-                      child: Text('Log In',
-                          style: _enabledLoginButton
-                              ? ColorDefs.textBodyWhite30
-                              : ColorDefs.textBodyGrey20),
+            Container(height: 70),
+            Container(
+                margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
+                width: double.infinity,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Username", style: ColorDefs.textBodyBlack20))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextFormField(
+                controller: _userController,
+                onChanged: (input) =>
+                    _onChangeField(input: input, from: "username"),
+                // validator: (input) => !input.contains('@')
+                //     ? "make sure your username has a '@'"
+                //     : null,
+                onSaved: (input) => _username = input,
+                style: ColorDefs.textBodyBlack20,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: ColorDefs.colorLoginBackground,
+                  // labelText: 'Username',
+                  labelStyle: ColorDefs.textBodyBlack20,
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30.0),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Container(height: 20)
-        ]),
+            Container(height: 40),
+            Container(
+                margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
+                width: double.infinity,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Password", style: ColorDefs.textBodyBlack20))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextFormField(
+                controller: _passwordController,
+                onChanged: (input) =>
+                    _onChangeField(input: input, from: "password"),
+                validator: (input) => input.length < 1
+                    ? "your password requires at least 6 characters"
+                    : null,
+                onSaved: (input) => _password = input,
+                obscureText: _obscureText,
+                style: ColorDefs.textBodyBlack20,
+                decoration: InputDecoration(
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30.0),
+                    ),
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                      print(_obscureText);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 12.0),
+                      child: _obscureText
+                          ? Icon(Icons.visibility,
+                              color: ColorDefs.colorDarkBackground)
+                          : Icon(Icons.visibility_off,
+                              color: ColorDefs.colorDarkBackground),
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: ColorDefs.colorLoginBackground,
+                  // labelText: 'Password',
+                  labelStyle: ColorDefs.textBodyBlack20,
+                ),
+              ),
+            ),
+            Container(height: 3),
+            RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    _userController.text = "MXOTestAud1";
+                    _passwordController.text = "Password1";
+                    _enabledLoginButton = true;
+                  });
+                },
+                child: Text("fast login")),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 100.0, 8.0, 10.0),
+              child: ListTile(
+                title: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 50.0),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: _enabledLoginButton
+                            ? ColorDefs.colorUserAccent
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(50.0),
+                        border: Border.all(
+                            width: 2.0,
+                            color: _enabledLoginButton
+                                ? Colors.transparent
+                                : Colors.grey)),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: 56.0, maxWidth: 30.0),
+                      child: FlatButton(
+                        disabledTextColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
+                        onPressed: _enabledLoginButton ? _submit : null,
+                        child: Text('Log In',
+                            style: _enabledLoginButton
+                                ? ColorDefs.textBodyWhite30
+                                : ColorDefs.textBodyGrey20),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 20)
+          ]),
+        ),
       ),
     );
   }
