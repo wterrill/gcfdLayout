@@ -33,7 +33,7 @@ class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
     List<Question> citations = [];
     if (widget.activeAudit.citations.length == 0) {
       for (Section section in widget.activeAudit.sections) {
-        List<String> avoid = ["Intro", "Review", "Verification"];
+        List<String> avoid = ["Photos", "Intro", "Review", "Verification"];
         if (!avoid.contains(section.name)) {
           for (Question question in section.questions) {
             if (notHappyPath(question) && question.userResponse != null) {

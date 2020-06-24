@@ -34,6 +34,13 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
+    try {
+      finalImage = widget.activeAudit?.photoSig['badSignature1'];
+    } catch (err) {}
+    try {
+      finalImage2 = widget.activeAudit?.photoSig['badSignature2'];
+    } catch (err) {}
+
     return Container(
       child: Expanded(
           child: SingleChildScrollView(
@@ -234,6 +241,8 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage = finalImage;
+                          widget.activeAudit.photoSig['badSignature1'] =
+                              finalImage;
                         });
                         debugPrint("onPressed ");
                       },
@@ -368,6 +377,8 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage2 = finalImage2;
+                          widget.activeAudit.photoSig['badSignature2'] =
+                              finalImage2;
                         });
                         debugPrint("onPressed ");
                       },

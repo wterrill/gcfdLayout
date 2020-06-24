@@ -17,7 +17,8 @@ class DeveloperPage extends StatelessWidget {
           Provider.of<AuditData>(context, listen: false).activeAudit;
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
-        if (!(section.name == "Review" ||
+        if (!(section.name == "Photos" ||
+            section.name == "Review" ||
             section.name == "Verification" ||
             section.name == "*Developer*")) {
           for (Question question in section.questions) {
@@ -128,7 +129,8 @@ class DeveloperPage extends StatelessWidget {
           Provider.of<AuditData>(context, listen: false).activeAudit;
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
-        if (!(section.name == "Review" ||
+        if (!(section.name == "Photos" ||
+            section.name == "Review" ||
             section.name == "Verification" ||
             section.name == "*Developer*")) {
           for (Question question in section.questions) {

@@ -81,6 +81,8 @@ class ColorDefs {
 
   static TextStyle textBodyBronze20 =
       TextStyle(color: colorBigDrawerBronze, fontSize: 20.0);
+  static TextStyle textBodyBronze15 =
+      TextStyle(color: colorBigDrawerBronze, fontSize: 15.0);
 
   static TextStyle textTransparent =
       TextStyle(color: Colors.transparent, fontSize: 20.0);

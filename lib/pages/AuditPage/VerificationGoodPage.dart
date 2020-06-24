@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +11,25 @@ import 'dart:typed_data';
 import 'package:provider/provider.dart';
 
 class VerificationGoodPage extends StatefulWidget {
-  const VerificationGoodPage({Key key}) : super(key: key);
+  const VerificationGoodPage({Key key, this.activeAudit}) : super(key: key);
+  final Audit activeAudit;
 
   @override
   _VerificationGoodPageState createState() => _VerificationGoodPageState();
 }
 
 class _VerificationGoodPageState extends State<VerificationGoodPage> {
-  Uint8List finalImage = null;
+  // Uint8List finalImage = widget.activeAudit.photos['goodSignature1'];
   var color = Colors.red;
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
+  Uint8List finalImage;
+
   @override
   Widget build(BuildContext context) {
+    try {
+      finalImage = widget.activeAudit?.photoSig['goodSignature1'];
+    } catch (err) {}
     return Container(
       child: Expanded(
           child: SingleChildScrollView(
@@ -149,6 +156,8 @@ Pincode ___'''),
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage = finalImage;
+                          widget.activeAudit.photoSig['goodSignature1'] =
+                              finalImage;
                         });
                         debugPrint("onPressed ");
                       },

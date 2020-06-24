@@ -5,6 +5,7 @@ import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
+import 'package:auditor/pages/AuditPage/PhotoPage.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/material.dart';
@@ -91,9 +92,15 @@ class _AuditPageState extends State<AuditPage> {
                       ReviewPage(
                         activeAudit: activeAudit,
                       ),
+                    if (activeSection.name == "Photos")
+                      PhotoPage(
+                        activeAudit: activeAudit,
+                      ),
                     if (activeSection.name == "Verification" &&
                         activeAudit.citations.length == 0)
-                      VerificationGoodPage(),
+                      VerificationGoodPage(
+                        activeAudit: activeAudit,
+                      ),
                     if (activeSection.name == "Verification" &&
                         activeAudit.citations.length != 0)
                       VerificationBadPage(

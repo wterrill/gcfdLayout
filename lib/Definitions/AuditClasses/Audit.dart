@@ -5,6 +5,8 @@ import 'Question.dart';
 import 'Section.dart';
 
 import 'package:hive/hive.dart';
+import 'dart:typed_data';
+
 part 'Audit.g.dart';
 
 @HiveType(typeId: 6)
@@ -32,6 +34,12 @@ class Audit extends HiveObject {
 
   @HiveField(7)
   bool putProgramOnImmediateHold;
+
+  @HiveField(8)
+  Map<String, Uint8List> photoSig = {};
+
+  @HiveField(9)
+  List<Uint8List> photoList = [];
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {

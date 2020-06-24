@@ -81,7 +81,7 @@ class AuditInfoDialog extends StatelessWidget {
                         color: Colors.black,
                         child: AutoSizeText(
                             'DeviceID: ${calendarResult.deviceid}',
-                            style: ColorDefs.textBodyBronze20),
+                            style: ColorDefs.textBodyBronze15),
                       ),
                     ],
                   ),
