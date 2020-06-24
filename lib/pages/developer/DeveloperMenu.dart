@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:auditor/pages/developer/hiveTroubleshooting/hiveTroubleshooting.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 import 'package:auditor/pages/developer/scrollStuff/scrollStuff.dart';
@@ -31,6 +32,11 @@ class DeveloperMenu extends StatelessWidget {
                 child: Text("Navigate back"),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                        builder: (context) => ListSchedulingPage()),
+                  );
                 }),
           ),
 //          Container(

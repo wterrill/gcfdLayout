@@ -24,6 +24,8 @@ class GeneralData with ChangeNotifier {
 
     if (!kIsWeb) {
       deviceid = await DeviceId.getID;
+      // deviceid = await DeviceId.getIMEI;
+      // deviceid = await DeviceId.getMEID;
     } else {
       deviceid = "website";
     }

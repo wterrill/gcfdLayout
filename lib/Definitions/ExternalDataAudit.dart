@@ -525,7 +525,8 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'actionItem': 'action item does not exist for this question'
   },
   <String, dynamic>{
-    'text': "Distribution style: Cafeteria Restaurant Other",
+    'text':
+        "Distribution style: (if not client choice, indicate why in the comments",
     'type': 'dropDown',
     'menuItems': [
       'Select',
@@ -543,12 +544,12 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseOptCom': 'DistributionStyleComments'
   },
 //TODO: The below question needs to be linked to the above question
-  <String, dynamic>{
-    'text': "If not client choice, why?",
-    'type': 'fillIn',
-    'databaseVar': 'DistributionNotClientChoiceReason',
-    'databaseVarType': 'string'
-  },
+  // <String, dynamic>{
+  //   'text': "If not client choice, why?",
+  //   'type': 'fillIn',
+  //   'databaseVar': 'DistributionNotClientChoiceReason',
+  //   'databaseVarType': 'string'
+  // },
 ];
 
 List<Map<String, dynamic>> audit1Section4Questions = [
@@ -1007,38 +1008,41 @@ List<Map<String, dynamic>> audit1Section5Questions = [
 
 List<Map<String, dynamic>> audit1Section6Questions = [
   <String, dynamic>{
-    'text': 'Plumbing',
+    'text': 'Plumbing issues?',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'PlumbingComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'PlumbingIssues', // <--------
+    'databaseVarType': 'bool', // <---------
+    'databaseOptCom': 'PlumbingIssuesComments', // <--------
     'actionItem': 'Explain issues in comment field'
   },
   <String, dynamic>{
-    'text': 'Sewage',
+    'text': 'Sewage issues?',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'SewageComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'SewageIssues', // <--------
+    'databaseVarType': 'bool', // <---------
+    'databaseOptCom': 'SewageIssuesComments', // <---------
     'actionItem': 'Explain issues in comment field'
   },
   <String, dynamic>{
     'text': 'Garbage and refuse disposal',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'GarbageRefusalDisposalComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'GarbageRefusalDisposalIssues', // <--------
+    'databaseVarType': 'bool', // <--------
+    'databaseOptCom': 'GarbageRefusalDisposalIssuesComments', // <---------
     'actionItem': 'Explain issues in comment field'
   },
   <String, dynamic>{
     'text':
-        'Did you see the pest control log/exterminator’s report (provide name of company and last date serviced)',
+        'Was the site able to provide a pest control log/exterminator’s report?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PestControlReportComments',
     'databaseVarType': 'string',
     'actionItem':
-        'If yes provide name of company and date last serviced. If No, Submit a copy of current/most recent Pest Control Log/Exterminator’s Report'
+        'Please provide the name of company and date last serviced for pet control'
   },
   <String, dynamic>{
     'text':
@@ -1052,29 +1056,32 @@ List<Map<String, dynamic>> audit1Section6Questions = [
         'Repair roofs, floors, walls, ceilings, windows and doors to prevent pest entry and water damage'
   },
   <String, dynamic>{
-    'text': 'Appropriate Lighting',
+    'text': 'Appropriate Lighting issues?',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'AppropriateLightingComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'AppropriateLightingIssues', // <------
+    'databaseVarType': 'bool', // <------
+    'databaseOptCom': 'AppropriateLightingIssuesComments', // <------
     'actionItem': 'Please explain action items in comments'
   },
 
   <String, dynamic>{
-    'text': 'Ventilation',
+    'text': 'Ventilation Issues?',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'VentilationComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'VentilationIssues', // <------
+    'databaseVarType': 'bool', // <------
+    'databaseOptCom': 'VentilationIssuesComments', // <------
     'actionItem': 'Please explain action items in comments'
   },
   <String, dynamic>{
     'text':
-        'Access to all pertinent areas of food program (dry storage, cold storage, intake, distribution)',
+        'Issues with access to all pertinent areas of food program (dry storage, cold storage, intake, distribution)',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'AccessToAllPertinentAreasComments',
-    'databaseVarType': 'string',
+    'databaseVar': 'AccessToAllPertinentAreasIssues', // <------
+    'databaseVarType': 'bool', // <------
+    'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments', // <------
     'actionItem': 'Please explain action items in comments'
   },
   <String, dynamic>{
@@ -1143,7 +1150,7 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Distribution Stie Staff Comments: ',
+    'text': 'Distribution Site Staff Comments: ',
     'type': 'fillIn',
     'databaseVar': 'DistributionSiteStaffComments',
     'databaseVarType': 'string'

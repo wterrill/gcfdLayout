@@ -28,7 +28,7 @@ class ListCalendarData with ChangeNotifier {
   Box calToBeSentBox;
   Box calToBeDeletedBox;
   Box auditorsListBox;
-  String deviceid;
+  String deviceidProvider;
 
   AuditorList auditorList;
 
@@ -45,8 +45,9 @@ class ListCalendarData with ChangeNotifier {
 
 ////////////////// Data Fetch, Data Save Operations
 
-  void dataSync(BuildContext context, SiteList siteList) async {
-    deviceid = deviceid;
+  void dataSync(
+      BuildContext context, SiteList siteList, String deviceid) async {
+    deviceidProvider = deviceid;
     await getAuditors();
     await deleteFromCloud();
     // await Future.delayed(Duration(milliseconds: 3000), () => true);
@@ -88,8 +89,8 @@ class ListCalendarData with ChangeNotifier {
     if (calendarBox.keys.toList().length == 0) {
       allNotMe = 1;
     }
-    dynamic result =
-        await ScheduleAuditComms.getScheduled(allNotMe, siteList, deviceid);
+    dynamic result = await ScheduleAuditComms.getScheduled(
+        allNotMe, siteList, deviceidProvider);
     List<CalendarResult> downloadedCalendarResults =
         result as List<CalendarResult>;
     if (result != null) {
@@ -217,9 +218,9 @@ class ListCalendarData with ChangeNotifier {
             Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
                 .siteList
                 .getSiteFromAgencyNumber(agencyNumber: "A00020");
-    String deviceid =
-        Provider.of<GeneralData>(navigatorKey.currentContext, listen: false)
-            .deviceid;
+    // String deviceid = deviceidProvider;
+    // Provider.of<GeneralData>(navigatorKey.currentContext, listen: false)
+    //     .deviceid;
     //TODO this try catch needs to be taken out of here... specifically the catch
 
     CalendarResult created = CalendarResult(
@@ -232,7 +233,7 @@ class ListCalendarData with ChangeNotifier {
       auditor: result['auditor'],
       status: result['status'],
       message: result['message'],
-      deviceid: deviceid,
+      deviceid: deviceidProvider,
       siteInfo:
           Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
               .siteList
