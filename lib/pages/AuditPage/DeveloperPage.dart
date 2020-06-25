@@ -231,11 +231,15 @@ class DeveloperPage extends StatelessWidget {
         RaisedButton(
             onPressed: () {
               fillOutHappyAudit();
+              Provider.of<AuditData>(context, listen: false)
+                  .saveAudit(activeAudit);
             },
             child: Text("Fill out Audit -> Happy Path")),
         RaisedButton(
             onPressed: () {
               fillOutAngryAudit();
+              Provider.of<AuditData>(context, listen: false)
+                  .saveAudit(activeAudit);
             },
             child: Text("Fill out Audit -> Angry Path"))
       ],

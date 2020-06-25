@@ -151,7 +151,7 @@ class _AuditPageState extends State<AuditPage> {
                                   String name = question
                                       .questionMap['databaseVar'] as String;
                                   if (name != null) {
-                                    print("beer");
+                                    print(name);
                                   }
                                   String qtype = question
                                       .questionMap['databaseVarType'] as String;
@@ -225,19 +225,50 @@ class _AuditPageState extends State<AuditPage> {
                                   .calendarResult.startDateTime
                                   .toString();
 
-                              String startOfAudit = DateFormat("HH:mm").format(
-                                  activeAudit.calendarResult.startDateTime);
+                              String startOfAudit = DateFormat("HH:mm:ss.000")
+                                  .format(
+                                      activeAudit.calendarResult.startDateTime);
 
                               String endOfAudit = DateFormat("HH:mm").format(
                                   activeAudit.calendarResult.startDateTime
                                       .add(Duration(hours: 2)));
 
+                              resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
+                              resultMap["StartOfAudit"] = startOfAudit;
+                              resultMap["EndOfAudit"] = endOfAudit;
+                              resultMap["GCFDAuditorID"] =
+                                  activeAudit.calendarResult.auditor;
+                              resultMap['ProgramContact'] = activeAudit
+                                  .sections[0].questions[7].userResponse;
+                              resultMap['PersonInterviewed'] = activeAudit
+                                  .sections[0].questions[8].userResponse;
+                              resultMap['ServiceArea'] = activeAudit
+                                  .sections[0].questions[10].userResponse;
+                              String tempDateTimeString = activeAudit
+                                  .correctiveActionPlanDueDate
+                                  .toString();
+                              resultMap['CorrectiveActionPlanDueDate'] =
+                                  tempDateTimeString;
+                              //TODO logive the splits up the signature.
+
+                              resultMap['SiteRepresentativeSignature'] =
+                                  base64Encode(
+                                      activeAudit.photoSig['signature1']);
+                              resultMap['SiteRepresentativeSignature'] =
+                                  base64Encode(
+                                      activeAudit.photoSig['signature2']);
+                              bool followUpRequired = false;
+                              List<String> followUpItems = [];
+                              for (Question citation in activeAudit.citations) {
+                                if (!citation.unflagged) {
+                                  followUpRequired = true;
+                                  followUpItems.add(citation.actionItem);
+                                }
+                              }
+                              resultMap['FollowUpRequired'] = followUpRequired;
+                              resultMap['FollowUpItems'] = followUpItems;
+
                               Map<String, dynamic> mainBody = <String, dynamic>{
-                                "DateOfSiteVisit": dateOfSiteVisit,
-                                "StartOfAudit": startOfAudit,
-                                "EndOfAudit": endOfAudit,
-                                "GCFDAuditorID":
-                                    activeAudit.calendarResult.auditor,
                                 "AgencyNumber":
                                     activeAudit.calendarResult.agencyNum,
                                 "ProgramNumber":

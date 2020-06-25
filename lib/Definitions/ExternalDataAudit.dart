@@ -45,6 +45,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'GCFDEstablishedServiceAreaComments',
     'actionItem': 'action item does not exist for this question'
+    //TODO this was not in citation
   },
   <String, dynamic>{
     'text': 'Does pantry serve outside this service area?',
@@ -252,7 +253,7 @@ List<Map<String, dynamic>> audit1Section2Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'OperationHoursDaysPosted',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'EntranceClearlyMarkedComments',
+    'databaseOptCom': 'OperationHoursDaysPostedComments',
     'actionItem':
         'Post established days / hours / service areas of operation to be viewed from outside of the building'
   },
@@ -380,7 +381,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'TEFAPManualAccessibleComments',
     'actionItem':
-        'Please explain what action took place. (Ex: a copy will be emailed to program contact) in the comment',
+        'Please explain what action took place for the accessiblility TEFAP manual. (Ex: a copy will be emailed to program contact) in the comment',
   },
   <String, dynamic>{
     'text': "Are proxy forms used?",
@@ -577,7 +578,7 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PestProofContainersUsed',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'PestProofContainersUsedCommments',
+    'databaseOptCom': 'PestProofContainersUsedComments',
     'actionItem':
         'Acquire / Utilize pest-proof containers for packaged items such as pasta, cereal, rice, flour, beans, cornmeal, etc. Please submit receipt for pest-proof containers '
   },
@@ -893,40 +894,40 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Cold Storage Unit 6 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSixTempComments',
+    'databaseVar': 'ColdStorageUnitSixAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 7 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSevenTempComments',
+    'databaseVar': 'ColdStorageUnitSevenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 8 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitEightTempComments',
+    'databaseVar': 'ColdStorageUnitEightAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 9 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitNineTempComments',
+    'databaseVar': 'ColdStorageUnitNineAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Cold Storage Unit 10 ºF',
     'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTenTempComments',
+    'databaseVar': 'ColdStorageUnitTenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler'],
-    'databaseVar': 'WalkInFreezerCoolerComments',
+    'databaseVar': 'WalkInFreezerCooler',
     'databaseVarType': 'string',
-    'databaseOptCom': 'FrozenItemsCorrectTempComments'
+    'databaseOptCom': 'WalkInFreezerCoolerComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -1036,13 +1037,13 @@ List<Map<String, dynamic>> audit1Section6Questions = [
   },
   <String, dynamic>{
     'text':
-        'Was the site able to provide a pest control log/exterminator’s report?',
+        'Was the site able to provide a pest control log/exterminator’s report? (please provide the name of the company and date last serviced',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
-    'databaseVar': 'PestControlReportComments',
+    'databaseVar': 'PestControlReport',
     'databaseVarType': 'string',
-    'actionItem':
-        'Please provide the name of company and date last serviced for pet control'
+    'databaseOptCom': 'PestControlReportComments',
+    'actionItem': 'Please provide a pest control log/exterminators report'
   },
   <String, dynamic>{
     'text':
@@ -1091,7 +1092,8 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Evidence of Rodents/ Insects (Includes fruit and house flies):',
+    'text':
+        'Evidence of Rodents/ Insects (Includes fruit and house flies) Please leave specifics in comments:',
     'type': 'yesNo',
     'happyPathResponse': ['No'],
     'databaseVar': 'EvidenceOfPests',
@@ -1099,22 +1101,22 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseOptCom': 'EvidenceOfPestsComments',
     'actionItem': 'action item does not exist for this question'
   },
-  //TODO the below question should be linked to the above question
-  <String, dynamic>{
-    'text': 'If yes, details:',
-    'type': 'fillIn',
-    'databaseVar': 'EvidenceOfPestsComments',
-    'databaseVarType': 'string',
-  },
+  // //TODO the below question should be linked to the above question
+  // <String, dynamic>{
+  //   'text': 'If yes, details:',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'EvidenceOfPestsComments',
+  //   'databaseVarType': 'string',
+  // },
 ];
 
 List<Map<String, dynamic>> audit1Section7Questions = [
   <String, dynamic>{
     'text': 'Have there been any discrimination complaints in the past year?',
     'type': 'yesNo',
-    'databaseVar': 'EvidenceOfPests',
+    'databaseVar': 'DiscriminationComplaints',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'EvidenceOfPestsComments'
+    'databaseOptCom': 'DiscriminationComplaintsComments'
   },
   <String, dynamic>{
     'text':
@@ -1133,7 +1135,7 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'DiscriminationComplaintForwardedToGCFD',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComment',
+    'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComments',
     'actionItem': 'action item does not exist for this question'
   },
   <String, dynamic>{

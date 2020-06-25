@@ -36,7 +36,7 @@ class _PhotoPageState extends State<PhotoPage> {
           ),
           GridView.builder(
             shrinkWrap: true,
-            itemCount: widget.activeAudit.photoList.length ?? 0,
+            itemCount: widget.activeAudit.photoList?.length ?? 0,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount:
                     4), //(orientation == Orientation.portrait) ? 2 : 3),

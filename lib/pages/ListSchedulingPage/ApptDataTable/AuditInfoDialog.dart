@@ -15,6 +15,8 @@ class AuditInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool alreadyExist = Provider.of<AuditData>(context, listen: false)
+        .auditExists(calendarResult);
     return Material(
       child: Container(
         height: 500,
@@ -169,10 +171,6 @@ class AuditInfoDialog extends StatelessWidget {
                                   Dialogs.showNotImplemented(context);
                                   break;
                                 case "Pantry Audit":
-                                  bool alreadyExist = Provider.of<AuditData>(
-                                          context,
-                                          listen: false)
-                                      .getAudit(calendarResult);
                                   Navigator.push<dynamic>(
                                     context,
                                     MaterialPageRoute<dynamic>(
@@ -188,7 +186,8 @@ class AuditInfoDialog extends StatelessWidget {
                                   Dialogs.showNotImplemented(context);
                               }
                             },
-                            child: AutoSizeText('Begin Audit',
+                            child: AutoSizeText(
+                                alreadyExist ? 'View Audit' : 'Begin Audit',
                                 style: ColorDefs.textBodyWhite20),
                           ),
                         ),

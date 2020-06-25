@@ -58,7 +58,7 @@ class AuditData with ChangeNotifier {
     }
   }
 
-  bool getAudit(CalendarResult calendarResult) {
+  bool auditExists(CalendarResult calendarResult) {
     retrievedAudit = auditBox.get(
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as Audit;
@@ -169,8 +169,8 @@ class AuditData with ChangeNotifier {
           agencyName: siteList
               .agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
           auditType: convertNumberToAuditType(event['AuditType'] as int),
-          startTime: receivedAudit['StartTime']
-              as String, //incomingPantryAudit['DateOfSiteVisit'] as String,
+          startTime:
+              DateTime.parse(receivedAudit['StartTime'] as String).toString(),
           status: "Completed",
           auditor: event['Auditor'] as String,
           deviceid: event['DeviceId'] as String,
@@ -206,8 +206,16 @@ class AuditData with ChangeNotifier {
                     print(question.text);
                     print('yesNo');
                     print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as bool ? "Yes" : "No";
+                    try {
+                      question.userResponse =
+                          incomingPantryAudit[databaseVar] as bool
+                              ? "Yes"
+                              : "No";
+                    } catch (err) {
+                      question.userResponse =
+                          incomingPantryAudit[databaseVar] as String;
+                    }
+
                     question.optionalComment =
                         incomingPantryAudit[databaseVar + "Comments"] as String;
 

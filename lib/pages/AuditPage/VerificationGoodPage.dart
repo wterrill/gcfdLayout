@@ -28,7 +28,7 @@ class _VerificationGoodPageState extends State<VerificationGoodPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      finalImage = widget.activeAudit?.photoSig['goodSignature1'];
+      finalImage = widget.activeAudit?.photoSig['signature1'];
     } catch (err) {}
     return Container(
       child: Expanded(
@@ -156,7 +156,7 @@ Pincode ___'''),
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage = finalImage;
-                          widget.activeAudit.photoSig['goodSignature1'] =
+                          widget.activeAudit.photoSig['signature1'] =
                               finalImage;
                         });
                         debugPrint("onPressed ");

@@ -7,6 +7,7 @@ import 'package:auditor/pages/AuditPage/ReviewSection/FollowupCitationsSections.
 // import 'package:auditor/pages/AuditPage/ReviewSection/ReviewQuestionTypes/ReviewCommentSection.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ReviewPage extends StatelessWidget {
   final Audit activeAudit;
@@ -20,7 +21,8 @@ class ReviewPage extends StatelessWidget {
             height: 500,
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: activeAudit.sections.length - 4,
+              itemCount: activeAudit.sections.length -
+                  4, //TODO does this match the current setup of number of sections? (because of photo)
               itemBuilder: (context, i) {
                 return Container(
                   decoration: BoxDecoration(
@@ -28,7 +30,7 @@ class ReviewPage extends StatelessWidget {
                       border: Border.all(
                           color: ColorDefs.colorAlternateDark, width: 3)),
                   child: ExpansionTile(
-                    trailing: Icon(Icons.arrow_drop_down),
+                    trailing: Icon(Icons.flag),
                     backgroundColor: ColorDefs.colorChatSelected,
                     title: Text(activeAudit.sections[i + 1].name,
                         style: ColorDefs.textBodyBlack20),
@@ -48,7 +50,7 @@ class ReviewPage extends StatelessWidget {
           style: ColorDefs.textBodyBlack30,
         ),
         Container(
-            height: 700,
+            height: 700, //kIsWeb ? 400 : 700,
             child: FollowupCitationsSections(
               activeAudit: activeAudit,
             ))

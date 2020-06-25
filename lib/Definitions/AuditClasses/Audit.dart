@@ -39,13 +39,20 @@ class Audit extends HiveObject {
   Map<String, Uint8List> photoSig = {};
 
   @HiveField(9)
-  List<Uint8List> photoList = [];
+  List<Uint8List> photoList;
+
+  @HiveField(10)
+  bool followupRequired;
+
+  @HiveField(11)
+  DateTime correctiveActionPlanDueDate;
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));
       print(sections);
       name = convertProgramTypeToOfficial(calendarResult.programType);
+      photoList = [];
     }
   }
 

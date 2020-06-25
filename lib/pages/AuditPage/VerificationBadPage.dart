@@ -35,10 +35,10 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   @override
   Widget build(BuildContext context) {
     try {
-      finalImage = widget.activeAudit?.photoSig['badSignature1'];
+      finalImage = widget.activeAudit?.photoSig['signature1'];
     } catch (err) {}
     try {
-      finalImage2 = widget.activeAudit?.photoSig['badSignature2'];
+      finalImage2 = widget.activeAudit?.photoSig['signature2'];
     } catch (err) {}
 
     return Container(
@@ -82,6 +82,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030),
                     );
+                    widget.activeAudit.correctiveActionPlanDueDate =
+                        selectedDate;
                     setState(() {});
                   },
                 )
@@ -241,7 +243,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage = finalImage;
-                          widget.activeAudit.photoSig['badSignature1'] =
+                          widget.activeAudit.photoSig['signature1'] =
                               finalImage;
                         });
                         debugPrint("onPressed ");
@@ -377,7 +379,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
                               .finalImage2 = finalImage2;
-                          widget.activeAudit.photoSig['badSignature2'] =
+                          widget.activeAudit.photoSig['signature2'] =
                               finalImage2;
                         });
                         debugPrint("onPressed ");

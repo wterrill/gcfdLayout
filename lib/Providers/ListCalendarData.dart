@@ -76,6 +76,7 @@ class ListCalendarData with ChangeNotifier {
       // print(calToBeDeletedBox.keys);
       CalendarResult result =
           calToBeDeletedBox.get(toBeSentKeys[i]) as CalendarResult;
+      result.deviceid = deviceidProvider;
       // print(calToBeDeletedBox.keys);
       dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "D");
       // print(calToBeDeletedBox.keys);
