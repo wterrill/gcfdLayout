@@ -23,12 +23,13 @@ class _VerificationGoodPageState extends State<VerificationGoodPage> {
   var color = Colors.red;
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
-  Uint8List finalImage;
+  Uint8List siteRepresentativeSignature;
 
   @override
   Widget build(BuildContext context) {
     try {
-      finalImage = widget.activeAudit?.photoSig['signature1'];
+      siteRepresentativeSignature =
+          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
     } catch (err) {}
     return Container(
       child: Expanded(
@@ -57,13 +58,13 @@ It is the responsibility of the CHARITABLE AGENCY to keep and maintain necessary
 Said CHARITABLE AGENCY will not sell or offer for sale. Said CHARITABLE AGENCY will not request donations, services, contributions, membership or membership fees from recipients, directly or indirectly for said food. Said CHARITABLE AGENCY agrees to serve and/or distribute all goods received without monetary charge or by any medium exchange.
 If violations of the agreement above occur or non-compliance of Membership Eligibility Requirements, said CHARITABLE AGENCY may be suspended and/or terminated from membership of the Greater Chicago Food Depository.'''),
             ),
-            Text('''Address ____
-City ____
-Pincode ___'''),
+//             Text('''Address ____
+// City ____
+// Pincode ___'''),
             Image(
               image: AssetImage('assets/images/CMRI_sign.png'),
             ),
-            finalImage == null
+            siteRepresentativeSignature == null
                 ? Container()
                 : Container(
                     child: LimitedBox(
@@ -74,14 +75,16 @@ Pincode ___'''),
                               bottom: BorderSide(
                                   width: 2.0, color: Colors.lightBlue.shade900),
                             )),
-                            child:
-                                Image.memory(finalImage.buffer.asUint8List()))),
+                            child: Image.memory(siteRepresentativeSignature
+                                .buffer
+                                .asUint8List()))),
                   ),
+            Text("Agency Representative"),
 
             // : LimitedBox(
             //     maxHeight: 200.0,
             //     child: Image.memory(finalImage.buffer.asUint8List())),
-            if (finalImage == null)
+            if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -100,7 +103,7 @@ Pincode ___'''),
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (finalImage == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -150,15 +153,20 @@ Pincode ___'''),
                                 lineColor);
                           }
                         }
+
                         sign.clear();
-                        setState(() {
-                          finalImage =
-                              img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false)
-                              .finalImage = finalImage;
-                          widget.activeAudit.photoSig['signature1'] =
-                              finalImage;
-                        });
+
+                        siteRepresentativeSignature =
+                            img.encodePng(signatureImage) as Uint8List;
+                        Provider.of<AuditData>(context, listen: false)
+                                .siteRepresentativeSignature =
+                            siteRepresentativeSignature;
+                        widget.activeAudit
+                                .photoSig['siteRepresentativeSignature'] =
+                            siteRepresentativeSignature;
+                        setState(() {});
+                        Provider.of<AuditData>(context, listen: false)
+                            .notifyTheListeners();
                         debugPrint("onPressed ");
                       },
                       child: Text("Save")),
@@ -168,14 +176,14 @@ Pincode ___'''),
                         final sign = _sign.currentState;
                         sign.clear();
                         setState(() {
-                          finalImage = null;
+                          siteRepresentativeSignature = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (finalImage == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

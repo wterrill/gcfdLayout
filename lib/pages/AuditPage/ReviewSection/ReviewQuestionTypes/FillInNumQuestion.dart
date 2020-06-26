@@ -6,8 +6,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'ReviewCommentSection.dart';
-
 class ReviewFillInNumQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
@@ -31,7 +29,7 @@ class _ReviewFillInNumQuestionState extends State<ReviewFillInNumQuestion> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
-    Section activeSection = widget.activeSection;
+    // Section activeSection = widget.activeSection;
 
     return Column(
       children: [

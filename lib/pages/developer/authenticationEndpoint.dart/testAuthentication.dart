@@ -5,12 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
 import 'dart:io';
-import 'package:async/async.dart';
-import 'package:path/path.dart';
 // import 'package:image_picker_web/image_picker_web.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
-import 'package:http_parser/http_parser.dart';
 
 class TestAuthentication extends StatefulWidget {
   const TestAuthentication({Key key}) : super(key: key);

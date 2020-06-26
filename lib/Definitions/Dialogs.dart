@@ -27,6 +27,28 @@ class Dialogs {
     );
   }
 
+  static void showSuccess(BuildContext context) async {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text(
+                  "The Audit has been successfully saved and will upload during the next sync")),
+        ],
+      ),
+    );
+    await showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void timeInPast(
       BuildContext context, Function continueCallBack) async {
     AlertDialog alert = AlertDialog(

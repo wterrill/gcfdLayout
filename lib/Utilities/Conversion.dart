@@ -119,3 +119,22 @@ String convertNumberToProgramType(int number) {
   }
   return value;
 }
+
+String convertNumberToStatus(int number) {
+  String value = "None";
+  switch (number) {
+    case (-1):
+      value = "Deleted";
+      break;
+    case (0):
+      value = "Scheduled";
+      break;
+    case (1):
+      value = "Submitted";
+      break;
+    case (2):
+      value = "Follow Up";
+      break;
+  }
+  return value;
+}

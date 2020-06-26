@@ -6,7 +6,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'ReviewCommentSection.dart';
 import 'commonQuestionMethods.dart';
 
 class ReviewDropDownQuestion extends StatefulWidget {
@@ -24,7 +23,7 @@ class _ReviewDropDownQuestionState extends State<ReviewDropDownQuestion> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
-    Section activeSection = widget.activeSection;
+    // Section activeSection = widget.activeSection;
     return Column(
       children: [
         Row(

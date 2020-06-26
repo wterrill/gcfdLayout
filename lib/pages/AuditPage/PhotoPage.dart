@@ -1,7 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+// import 'dart:io';
 import 'dart:typed_data';
 
 class PhotoPage extends StatefulWidget {

@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'ReviewSection/FollowupActionItems.dart';
 import 'ReviewSection/FollowupActionItems2.dart';
 import 'ReviewSection/FollowupCitationsSections.dart';
 
@@ -29,16 +28,20 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
   final _sign2 = GlobalKey<SignatureState>();
-  Uint8List finalImage = null;
-  Uint8List finalImage2 = null;
+  Uint8List siteRepresentativeSignature = null;
+  Uint8List foodDepositoryMonitorSignature = null;
+
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
+    selectedDate = widget.activeAudit?.correctiveActionPlanDueDate;
     try {
-      finalImage = widget.activeAudit?.photoSig['signature1'];
+      foodDepositoryMonitorSignature =
+          widget.activeAudit?.photoSig['foodDepositoryMonitorSignature'];
     } catch (err) {}
     try {
-      finalImage2 = widget.activeAudit?.photoSig['signature2'];
+      siteRepresentativeSignature =
+          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
     } catch (err) {}
 
     return Container(
@@ -54,13 +57,13 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
               ),
             ),
             Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
-            Container(
-              height: 350,
-              child: FollowupActionItems(
-                activeAudit: widget.activeAudit,
-              ),
-            ),
-            Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
+            // Container(
+            //   height: 350,
+            //   child: FollowupActionItems(
+            //     activeAudit: widget.activeAudit,
+            //   ),
+            // ),
+            // Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
             Container(
               height: 350,
               child: FollowupActionItems2(
@@ -152,9 +155,11 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                 '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
  '''),
             // ),
-            if (finalImage == null) Text("Food Depository Monitor"),
 
-            finalImage == null
+            if (foodDepositoryMonitorSignature == null)
+              Text("Food Depository Monitor"),
+
+            foodDepositoryMonitorSignature == null
                 ? Container()
                 : Container(
                     child: LimitedBox(
@@ -165,10 +170,12 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                               bottom: BorderSide(
                                   width: 2.0, color: Colors.lightBlue.shade900),
                             )),
-                            child:
-                                Image.memory(finalImage.buffer.asUint8List()))),
+                            child: Image.memory(foodDepositoryMonitorSignature
+                                .buffer
+                                .asUint8List()))),
                   ),
-            if (finalImage == null)
+
+            if (foodDepositoryMonitorSignature == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -187,7 +194,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (finalImage == null)
+            if (foodDepositoryMonitorSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -237,14 +244,19 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                                 lineColor);
                           }
                         }
+
                         sign.clear();
                         setState(() {
-                          finalImage =
+                          foodDepositoryMonitorSignature =
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
-                              .finalImage = finalImage;
-                          widget.activeAudit.photoSig['signature1'] =
-                              finalImage;
+                                  .foodDepositoryMonitorSignature =
+                              foodDepositoryMonitorSignature;
+                          widget.activeAudit
+                                  .photoSig['foodDepositoryMonitorSignature'] =
+                              foodDepositoryMonitorSignature;
+                          Provider.of<AuditData>(context, listen: false)
+                              .notifyTheListeners();
                         });
                         debugPrint("onPressed ");
                       },
@@ -255,14 +267,14 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         final sign = _sign.currentState;
                         sign.clear();
                         setState(() {
-                          finalImage = null;
+                          foodDepositoryMonitorSignature = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (finalImage == null)
+            if (foodDepositoryMonitorSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -289,10 +301,12 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                 ],
               ),
 //////////////  END FIRST SIGNATURE /////////////////////////////
-            if (finalImage != null) Text("Food Depository Monitor"),
-            if (finalImage == null) Text("Agency Representative"),
+            if (foodDepositoryMonitorSignature != null)
+              Text("Food Depository Monitor"),
+            if (siteRepresentativeSignature == null)
+              Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
-            finalImage2 == null
+            siteRepresentativeSignature == null
                 ? Container()
                 : LimitedBox(
                     maxHeight: 100.0,
@@ -302,9 +316,11 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                           bottom: BorderSide(
                               width: 2.0, color: Colors.lightBlue.shade900),
                         )),
-                        child: Image.memory(finalImage2.buffer.asUint8List()))),
-            if (finalImage != null) Text("Agency Representative"),
-            if (finalImage2 == null)
+                        child: Image.memory(
+                            siteRepresentativeSignature.buffer.asUint8List()))),
+            if (siteRepresentativeSignature != null)
+              Text("Agency Representative"),
+            if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -323,7 +339,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (finalImage2 == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -375,12 +391,16 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         }
                         sign.clear();
                         setState(() {
-                          finalImage2 =
+                          siteRepresentativeSignature =
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
-                              .finalImage2 = finalImage2;
-                          widget.activeAudit.photoSig['signature2'] =
-                              finalImage2;
+                                  .siteRepresentativeSignature =
+                              siteRepresentativeSignature;
+                          widget.activeAudit
+                                  .photoSig['siteRepresentativeSignature'] =
+                              siteRepresentativeSignature;
+                          Provider.of<AuditData>(context, listen: false)
+                              .notifyTheListeners();
                         });
                         debugPrint("onPressed ");
                       },
@@ -391,14 +411,14 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         final sign = _sign2.currentState;
                         sign.clear();
                         setState(() {
-                          finalImage2 = null;
+                          siteRepresentativeSignature = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (finalImage2 == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

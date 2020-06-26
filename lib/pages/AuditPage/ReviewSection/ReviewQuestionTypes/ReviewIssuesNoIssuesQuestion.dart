@@ -1,14 +1,10 @@
-import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
-import 'package:auditor/Definitions/AuditClasses/Section.dart';
+
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/AuditData.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'ReviewCommentSection.dart';
-import 'commonQuestionMethods.dart';
 
 class ReviewIssuesNoIssuesQuestion extends StatefulWidget {
   final int index;

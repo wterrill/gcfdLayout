@@ -60,7 +60,7 @@ class Authentication {
 
 class FullAuditComms {
   //todo this needs to be future<dynamic>
-  static void sendFullAudit(Map<String, dynamic> auditToSend) {
+  static Future<dynamic> sendFullAudit(Map<String, dynamic> auditToSend) async {
     String body = jsonEncode(auditToSend);
     print(body);
 
@@ -80,11 +80,16 @@ class FullAuditComms {
           },
           body: body);
     }
-    sender.then((http.Response res) {
+    return sender.then((http.Response res) {
       print(res.body);
+      bool result = false;
+      if (res.body != null) {
+        result = true;
+      }
+      return result;
     }).catchError((Object e) {
       print(e.toString());
-    });
+    }) as Future<dynamic>;
   }
 
   static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {

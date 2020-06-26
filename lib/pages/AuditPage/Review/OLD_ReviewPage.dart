@@ -7,7 +7,7 @@ import 'package:auditor/pages/AuditPage/ReviewSection/FollowupCitationsSections.
 // import 'package:auditor/pages/AuditPage/ReviewSection/ReviewQuestionTypes/ReviewCommentSection.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+// import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ReviewPage extends StatelessWidget {
   final Audit activeAudit;
@@ -45,15 +45,17 @@ class ReviewPage extends StatelessWidget {
 
             // Text("Review Page"),
             ),
-        Text(
-          "Follow-Up / Citations",
-          style: ColorDefs.textBodyBlack30,
-        ),
-        Container(
-            height: 700, //kIsWeb ? 400 : 700,
-            child: FollowupCitationsSections(
-              activeAudit: activeAudit,
-            ))
+        if (activeAudit.citations.length != 0)
+          Text(
+            "Follow-Up / Citations",
+            style: ColorDefs.textBodyBlack30,
+          ),
+        if (activeAudit.citations.length != 0)
+          Container(
+              height: 700, //kIsWeb ? 400 : 700,
+              child: FollowupCitationsSections(
+                activeAudit: activeAudit,
+              ))
       ],
     );
   }

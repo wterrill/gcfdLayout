@@ -3,8 +3,8 @@ import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 
-import 'package:auditor/Definitions/ExternalSiteData.dart';
-import 'package:csv/csv.dart';
+// import 'package:auditor/Definitions/ExternalSiteData.dart';
+
 import 'package:hive/hive.dart';
 
 List<List<dynamic>> rowsAsListOfValues;
@@ -19,16 +19,16 @@ class SiteData with ChangeNotifier {
 
   SiteData() {
     initialize();
-    initializeFakeSiteData();
+    // initializeFakeSiteData();
   }
 
-  void initializeFakeSiteData() {
-    rowsAsListOfValues = CsvToListConverter().convert(csvDataNew);
-    headers = rowsAsListOfValues[0];
-    rowsAsListOfValues = rowsAsListOfValues.sublist(1);
-    print("headers type: ${headers.runtimeType}");
-    print("rowsAsListOfValues type: ${rowsAsListOfValues.runtimeType}");
-  }
+  // void initializeFakeSiteData() {
+  //   rowsAsListOfValues = CsvToListConverter().convert(csvDataNew);
+  //   headers = rowsAsListOfValues[0];
+  //   rowsAsListOfValues = rowsAsListOfValues.sublist(1);
+  //   print("headers type: ${headers.runtimeType}");
+  //   print("rowsAsListOfValues type: ${rowsAsListOfValues.runtimeType}");
+  // }
 
   void initialize() {
     initHive();

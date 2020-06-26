@@ -1,17 +1,19 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
-import 'package:auditor/Definitions/ExternalDataAudit.dart';
+import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
-import 'dart:typed_data';
 
-import 'GeneralData.dart';
+import 'dart:typed_data';
+import 'dart:convert';
+
+import 'package:intl/intl.dart';
+// import 'dart:typed_data';
 
 class AuditData with ChangeNotifier {
   bool auditStarted = false;
@@ -21,8 +23,10 @@ class AuditData with ChangeNotifier {
   Box auditsToSendBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
-  Uint8List finalImage;
-  Uint8List finalImage2;
+  Uint8List foodDepositoryMonitorSignature;
+  Uint8List siteRepresentativeSignature;
+  String deviceidProvider;
+  bool successfullySubmitted = false;
 
   AuditData() {
     initialize();
@@ -71,6 +75,11 @@ class AuditData with ChangeNotifier {
   }
 
 //////////////////////////// END OF HIVE STUFF ////////////////
+
+  void notifyTheListeners() {
+    notifyListeners();
+  }
+
   void updateSectionStatus(Status status) {
     print("in updateSectionStatus");
     if (status != activeSection.status) {
@@ -86,6 +95,16 @@ class AuditData with ChangeNotifier {
   void toggleStartAudit() {
     auditStarted = !auditStarted;
     notifyListeners();
+  }
+
+  void resetAudit() {
+    foodDepositoryMonitorSignature = null;
+    siteRepresentativeSignature = null;
+    activeAudit = null;
+    auditStarted = false;
+    activeSection = null;
+    activeCalendarResult = null;
+    successfullySubmitted = false;
   }
 
   void loadExisting(CalendarResult calendarResult) {
@@ -116,6 +135,7 @@ class AuditData with ChangeNotifier {
   /////////////////////// sync stuff //////////////////////////
   void dataSync(
       BuildContext context, SiteList siteList, String deviceid) async {
+    deviceidProvider = deviceid;
     await sendAuditsToCloud();
     await getAuditsFromCloud(context, siteList, deviceid);
   }
@@ -124,8 +144,8 @@ class AuditData with ChangeNotifier {
     List<dynamic> dynKeys = auditsToSendBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      CalendarResult result =
-          auditsToSendBox.get(toBeSentKeys[i]) as CalendarResult;
+      // CalendarResult result =
+      //     auditsToSendBox.get(toBeSentKeys[i]) as CalendarResult;
       // dynamic successful = await FullAuditComms.sendFullAudit(result);
       // if (successful as bool) auditsToSendBox.delete(toBeSentKeys[i]);
     }
@@ -171,7 +191,7 @@ class AuditData with ChangeNotifier {
           auditType: convertNumberToAuditType(event['AuditType'] as int),
           startTime:
               DateTime.parse(receivedAudit['StartTime'] as String).toString(),
-          status: "Completed",
+          status: convertNumberToStatus(receivedAudit['Status'] as int),
           auditor: event['Auditor'] as String,
           deviceid: event['DeviceId'] as String,
         );
@@ -180,6 +200,8 @@ class AuditData with ChangeNotifier {
         newAudit = Audit(
             calendarResult: newCalendarResult,
             questionnaire: pantryAuditSectionsQuestions);
+
+        List<String> missingDBVar = [];
 
         // Sections
         for (Section section in newAudit.sections) {
@@ -194,6 +216,7 @@ class AuditData with ChangeNotifier {
               dynamic value = incomingPantryAudit[databaseVar];
               if (value == null) {
                 print("Missing: $databaseVar");
+                missingDBVar.add(databaseVar);
               } else {
                 switch (question.typeOfQuestion) {
                   case ("display"):
@@ -258,8 +281,14 @@ class AuditData with ChangeNotifier {
                     print(question.text);
                     print('dropDown');
                     print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as String;
+                    try {
+                      question.userResponse =
+                          incomingPantryAudit[databaseVar] as String;
+                    } catch (err) {
+                      //TODO get rid of try / catches in this file
+                      question.userResponse = question.dropDownMenu[
+                          incomingPantryAudit[databaseVar] as int];
+                    }
                     question.optionalComment =
                         incomingPantryAudit[databaseVar + "Comments"] as String;
                     break;
@@ -298,7 +327,27 @@ class AuditData with ChangeNotifier {
             // 'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
 
           }
+          if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
+            newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
+                .convert(incomingPantryAudit['SiteRepresentativeSignature']
+                    as String);
+          if (incomingPantryAudit['FoodDepositoryMonitorSignature'] != null)
+            newAudit.photoSig['foodDepositoryMonitorSignature'] =
+                Base64Decoder().convert(
+                    incomingPantryAudit['FoodDepositoryMonitorSignature']
+                        as String);
+
+          if (incomingPantryAudit['CorrectiveActionPlanDueDate'] != null) {
+            newAudit.correctiveActionPlanDueDate = DateTime.parse(
+                incomingPantryAudit['CorrectiveActionPlanDueDate'] as String);
+          }
+          if (incomingPantryAudit['ImmediateHold'] != null) {
+            newAudit.putProgramOnImmediateHold =
+                incomingPantryAudit['ImmediateHold'] as bool;
+          }
         }
+
+        print(missingDBVar);
         if (incomingPantryAudit != null) {
           newAudits.add(newAudit);
         }
@@ -308,6 +357,153 @@ class AuditData with ChangeNotifier {
       // }
     }
     return newAudits;
+  }
+
+  void submitAudit() async {
+    Map<String, dynamic> resultMap = <String, dynamic>{};
+    for (Section section in activeAudit.sections) {
+      for (Question question in section.questions) {
+        if (section.name != "Photos") {
+          print('------- ${section.name} -------');
+          String name = question.questionMap['databaseVar'] as String;
+          if (name != null) {
+            print(name);
+          }
+          String qtype = question.questionMap['databaseVarType'] as String;
+          String comment = question.questionMap['databaseOptCom'] as String;
+
+          if (qtype == "int") {
+            resultMap[name] = question.userResponse as int;
+            try {
+              resultMap[comment] = question.optionalComment;
+            } catch (err) {
+              print(err);
+              print("moving on");
+            }
+          }
+
+          if (qtype == "bool") {
+            if (question.userResponse == "Yes") {
+              resultMap[name] = 1;
+            } else if (question.userResponse == "No") {
+              resultMap[name] = 0;
+            } else if (question.userResponse == "Issues") {
+              resultMap[name] = 0;
+            } else if (question.userResponse == "No Issues")
+              resultMap[name] = 1;
+            else {
+              resultMap[name] = null;
+            }
+            try {
+              resultMap[comment] = question.optionalComment;
+            } catch (err) {
+              print(err);
+              print("moving on");
+            }
+          }
+
+          if (qtype == "string") {
+            resultMap[name] = question.userResponse;
+            try {
+              resultMap[comment] = question.optionalComment;
+            } catch (err) {
+              print(err);
+              print("moving on");
+            }
+          }
+
+          if (qtype == "date") {
+            resultMap[name] = question.userResponse;
+
+            try {
+              resultMap[comment] = question.optionalComment;
+            } catch (err) {
+              print(err);
+              print("moving on");
+            }
+          }
+          print("go again");
+        }
+      }
+    }
+    resultMap.remove(null);
+    print(resultMap);
+    // Map<String, dynamic> pantryDetail =
+    //     <String, dynamic>{"PantryDetail": resultMap};
+    String deviceid = deviceidProvider; //Provider.of<GeneralData>(
+    //context,
+    //listen: false)
+    //.deviceid;
+    activeCalendarResult.status = "Submitted";
+    String dateOfSiteVisit =
+        activeAudit.calendarResult.startDateTime.toString();
+
+    String startOfAudit = DateFormat("HH:mm:ss.000")
+        .format(activeAudit.calendarResult.startDateTime);
+
+    String endOfAudit = DateFormat("HH:mm").format(
+        activeAudit.calendarResult.startDateTime.add(Duration(hours: 2)));
+
+    resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
+    resultMap["StartOfAudit"] = startOfAudit;
+    resultMap["EndOfAudit"] = endOfAudit;
+    resultMap["GCFDAuditorID"] = activeAudit.calendarResult.auditor;
+    resultMap['ProgramContact'] =
+        activeAudit.sections[0].questions[7].userResponse;
+    resultMap['PersonInterviewed'] =
+        activeAudit.sections[0].questions[8].userResponse;
+    resultMap['ServiceArea'] =
+        activeAudit.sections[0].questions[10].userResponse;
+    if (activeAudit.correctiveActionPlanDueDate != null) {
+      String tempDateTimeString =
+          activeAudit.correctiveActionPlanDueDate.toString();
+      resultMap['CorrectiveActionPlanDueDate'] = tempDateTimeString;
+    }
+    //TODO logive the splits up the signature.
+
+    resultMap['SiteRepresentativeSignature'] =
+        base64Encode(activeAudit.photoSig['siteRepresentativeSignature']);
+    /////////
+    if (activeAudit.photoSig['foodDepositoryMonitorSignature'] != null)
+      resultMap['FoodDepositoryMonitorSignature'] =
+          base64Encode(activeAudit.photoSig['foodDepositoryMonitorSignature']);
+    bool followUpRequired = false;
+    List<String> followUpItems = [];
+    for (Question citation in activeAudit.citations) {
+      if (!citation.unflagged) {
+        followUpRequired = true;
+        followUpItems.add(citation.actionItem);
+      }
+    }
+    resultMap['FollowUpRequired'] = followUpRequired;
+    resultMap['FollowUpItems'] = followUpItems;
+    resultMap['ImmediateHold'] = activeAudit.putProgramOnImmediateHold;
+
+    Map<String, dynamic> mainBody = <String, dynamic>{
+      "AgencyNumber": activeAudit.calendarResult.agencyNum,
+      "ProgramNumber": activeAudit.calendarResult.programNum,
+      "ProgramType":
+          convertProgramTypeToNumber(activeAudit.calendarResult.programType),
+      "Auditor": activeAudit.calendarResult.auditor,
+      "AuditType":
+          convertAuditTypeToNumber(activeAudit.calendarResult.auditType),
+      "StartTime": activeAudit.calendarResult.startDateTime.toString(),
+      "DeviceId": deviceid,
+      "PantryFollowUp": null,
+      "CongregateDetail": null,
+      "PPCDetail": null,
+    };
+    mainBody["PantryDetail"] = resultMap;
+    print(mainBody);
+    dynamic success = await FullAuditComms.sendFullAudit(mainBody);
+    if (success as bool) {
+      showSuccess();
+    }
+  }
+
+  void showSuccess() {
+    successfullySubmitted = true;
+    notifyListeners();
   }
 
   ////////////////////////////////////////////////////////////

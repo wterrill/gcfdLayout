@@ -16,7 +16,6 @@ class FollowupCitationsSections extends StatefulWidget {
 }
 
 class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
-  @override
   bool notHappyPath(Question question) {
     bool isHappy = true;
     if (question.happyPathResponse != null) {

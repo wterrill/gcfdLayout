@@ -20,7 +20,7 @@ class ReviewPage extends StatelessWidget {
     return Column(
       children: [
         Container(
-            height: 400,
+            height: (activeAudit.citations.length != 0) ? 400 : 800,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: activeAudit.sections.length - 4,
@@ -43,15 +43,17 @@ class ReviewPage extends StatelessWidget {
                 );
               },
             )),
-        Text(
-          "Follow-Up / Citations",
-          style: ColorDefs.textBodyBlack30,
-        ),
-        Container(
-            height: 400,
-            child: FollowupCitationsSections(
-              activeAudit: activeAudit,
-            ))
+        if (activeAudit.citations.length != 0)
+          Text(
+            "Follow-Up / Citations",
+            style: ColorDefs.textBodyBlack30,
+          ),
+        if (activeAudit.citations.length != 0)
+          Container(
+              height: 300,
+              child: FollowupCitationsSections(
+                activeAudit: activeAudit,
+              ))
       ],
     );
   }

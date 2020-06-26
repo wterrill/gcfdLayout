@@ -1,12 +1,12 @@
 import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
-import 'package:auditor/Definitions/ExternalDataCalendar.dart';
+
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
-import 'package:auditor/providers/GeneralData.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -14,6 +14,24 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 import 'SiteData.dart';
+
+List<String> auditTypes = [
+  //'Select'
+  "Annual",
+  "Food Rescue",
+  "CEDA",
+  "Bi-Annual",
+  "Complaint",
+  "Follow Up",
+  "Grant"
+];
+
+List<String> programTypes = [
+  "Healthy Student Market",
+  "Senior Adults Program",
+  "Pantry Audit",
+  "Congregate Audit"
+];
 
 class ListCalendarData with ChangeNotifier {
   String filterValue = "";
@@ -212,13 +230,13 @@ class ListCalendarData with ChangeNotifier {
     if (result['startTime'] == null) {
       print("here it is");
     }
-    Site siteInfo =
-        Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
-                .siteList
-                .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']) ??
-            Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
-                .siteList
-                .getSiteFromAgencyNumber(agencyNumber: "A00020");
+    // Site siteInfo =
+    //     Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+    //             .siteList
+    //             .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']) ??
+    //         Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
+    //             .siteList
+    //             .getSiteFromAgencyNumber(agencyNumber: "A00020");
     // String deviceid = deviceidProvider;
     // Provider.of<GeneralData>(navigatorKey.currentContext, listen: false)
     //     .deviceid;

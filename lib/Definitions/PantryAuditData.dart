@@ -386,9 +386,11 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text': "Are proxy forms used?",
     'type': 'yesNo',
+    'happyPathResponse': ['Yes', 'NA'],
     'databaseVar': 'ProxyFormsUsed',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProxyFormsUsedComments',
+    'actionItem': 'Please utilize proxy when appropriate'
   },
 //TODO The above question needs to be linked to the below question
   <String, dynamic>{
@@ -488,12 +490,24 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVar': 'VolunteerDisposition',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': "# of Intake volunteers:",
+  //   'type': 'fillInNum',
+  //   'databaseVar': 'NumberOfIntakeVolunteers',
+  //   'databaseVarType': 'int',
+  // },
+
   <String, dynamic>{
-    'text': "# of Intake volunteers:",
-    'type': 'fillInNum',
+    'text':
+        "Distribution style: (if not client choice, indicate why in the comments",
+    'type': 'dropDown',
+    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
+    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
     'databaseVar': 'NumberOfIntakeVolunteers',
-    'databaseVarType': 'int',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'NumberOfIntakeVolunteersComments'
   },
+
   <String, dynamic>{
     'text': "# of Distribution volunteers:",
     'type': 'fillInNum',
@@ -922,6 +936,36 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVarType': 'string'
   },
   <String, dynamic>{
+    'text': 'Cold Storage Unit 11 ºF',
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitElevenAndComments',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Cold Storage Unit 12 ºF',
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitTwelveAndComments',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Cold Storage Unit 13 ºF',
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitThirteenAndComments',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Cold Storage Unit 14 ºF',
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitFourteenAndComments',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Cold Storage Unit 15 ºF',
+    'type': 'fillIn',
+    'databaseVar': 'ColdStorageUnitFifteenAndComments',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler'],
@@ -993,6 +1037,24 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'text': 'Serial # ',
     'type': 'fillInNum',
     'databaseVar': 'SerialNumberFour',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Type ',
+    'type': 'fillIn',
+    'databaseVar': 'TypeFive',
+    'databaseVarType': 'string',
+  },
+  <String, dynamic>{
+    'text': 'USDA Tag # ',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberFive',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial # ',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberFive',
     'databaseVarType': 'int',
   },
   <String, dynamic>{
