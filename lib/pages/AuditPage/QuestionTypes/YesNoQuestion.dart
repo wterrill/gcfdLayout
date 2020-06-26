@@ -52,7 +52,7 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
                 Audit thisAudit =
                     Provider.of<AuditData>(context, listen: false).activeAudit;
                 Provider.of<AuditData>(context, listen: false)
-                    .saveAudit(thisAudit);
+                    .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Container(
@@ -80,7 +80,7 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
                 Audit thisAudit =
                     Provider.of<AuditData>(context, listen: false).activeAudit;
                 Provider.of<AuditData>(context, listen: false)
-                    .saveAudit(thisAudit);
+                    .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Container(

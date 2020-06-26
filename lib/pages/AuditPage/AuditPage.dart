@@ -34,7 +34,18 @@ class AuditPage extends StatefulWidget {
 }
 
 class _AuditPageState extends State<AuditPage> {
-  void paintButtons() {}
+  Audit activeAudit;
+  Section activeSection;
+  void paintButtons() {
+    for (Section section in activeAudit.sections) {
+      print(section.status);
+
+      // section.status = Status.available;
+      // activeSection.status = Status.completed;
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +56,9 @@ class _AuditPageState extends State<AuditPage> {
       Provider.of<AuditData>(context, listen: false)
           .createNewAudit(widget.calendarResult);
     }
+    activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+    activeSection =
+        Provider.of<AuditData>(context, listen: false).activeSection;
     paintButtons();
   }
 
@@ -96,50 +110,54 @@ class _AuditPageState extends State<AuditPage> {
                         thickness: 1,
                       ),
                     ),
-                    if (activeSection.name == "Review")
+                    if (activeSection?.name == "Review")
                       ReviewPage(
                         activeAudit: activeAudit,
                       ),
-                    if (activeSection.name == "Photos")
+                    if (activeSection?.name == "Photos")
                       PhotoPage(
                         activeAudit: activeAudit,
                       ),
-                    if (activeSection.name == "Verification" &&
+                    if (activeSection?.name == "Verification" &&
                         activeAudit.citations.length == 0)
                       VerificationGoodPage(
                         activeAudit: activeAudit,
                       ),
-                    if (activeSection.name == "Verification" &&
+                    if (activeSection?.name == "Verification" &&
                         activeAudit.citations.length != 0)
                       VerificationBadPage(
                         activeAudit: activeAudit,
                       ),
-                    if (activeSection.name == "*Developer*") DeveloperPage(),
-                    if (activeSection.name != "Review" &&
-                        activeSection.name != "Verification")
+                    if (activeSection?.name == "*Developer*") DeveloperPage(),
+                    if (activeSection?.name != "Review" &&
+                        activeSection?.name != "Verification")
                       Container(
                         child: AuditQuestions(
                             activeSection: activeSection,
                             activecalendarResult: activeCalendarResult),
                       ),
-                    if (activeSection.name == "Confirm Details")
+                    if (activeSection?.name == "Confirm Details" &&
+                        activeAudit.detailsConfirmed == false)
                       RaisedButton(
                         disabledColor: ColorDefs.colorButtonNeutral,
                         color: Colors.blue,
                         textColor: Colors.black,
                         child:
                             Text("Confirm", style: ColorDefs.textBodyBlack20),
-                        onPressed: (activeSection.status != Status.completed)
+                        onPressed: (false)
                             ? null
                             : () {
+                                activeAudit.detailsConfirmed = true;
                                 for (Section section in activeAudit.sections) {
                                   section.status = Status.available;
+                                  section.lastStatus = Status.available;
                                   activeSection.status = Status.completed;
+                                  activeSection.lastStatus = Status.completed;
                                   setState(() {});
                                 }
                               },
                       ),
-                    if (activeSection.name == "Verification")
+                    if (activeSection?.name == "Verification")
                       if (showSubmitButton)
                         RaisedButton(
                             disabledColor: ColorDefs.colorButtonNeutral,
@@ -152,32 +170,30 @@ class _AuditPageState extends State<AuditPage> {
                                 //   ? null
                                 //   :
                                 () async {
-                              await Provider.of<AuditData>(context,
-                                      listen: false)
-                                  .submitAudit();
-                              if (Provider.of<AuditData>(context, listen: false)
-                                  .successfullySubmitted) {
-                                await Dialogs.showSuccess(context);
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Provider.of<AuditData>(context, listen: false)
-                                    .resetAudit();
-                              }
+                              Provider.of<AuditData>(context, listen: false)
+                                  .saveAuditToSend(activeAudit);
+
+                              await Dialogs.showSuccess(context);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              Provider.of<AuditData>(context, listen: false)
+                                  .resetAudit();
                             })),
-                    FlatButton(
-                      color: Colors.blue,
-                      textColor: Colors.black,
-                      child: Text("Cancel Audit",
-                          style: ColorDefs.textBodyBlack20),
-                      onPressed: () {
-                        Provider.of<AuditData>(context, listen: false)
-                            .toggleStartAudit();
-                        Provider.of<AuditData>(context, listen: false)
-                            .resetAudit();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                    if (activeAudit?.calendarResult?.status == 0)
+                      FlatButton(
+                        color: Colors.blue,
+                        textColor: Colors.black,
+                        child: Text("Cancel Audit",
+                            style: ColorDefs.textBodyBlack20),
+                        onPressed: () {
+                          Provider.of<AuditData>(context, listen: false)
+                              .toggleStartAudit();
+                          Provider.of<AuditData>(context, listen: false)
+                              .resetAudit();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     FlatButton(
                       color: Colors.blue,
                       textColor: Colors.black,
@@ -189,7 +205,7 @@ class _AuditPageState extends State<AuditPage> {
                         Provider.of<AuditData>(context, listen: false)
                             .resetAudit();
 
-                        Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                         Navigator.of(context).pop();
                       },
                     ),

@@ -63,7 +63,7 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                       Provider.of<AuditData>(context, listen: false)
                           .activeAudit;
                   Provider.of<AuditData>(context, listen: false)
-                      .saveAudit(thisAudit);
+                      .saveAuditLocally(thisAudit);
                 });
               },
               items: widget.activeSection.questions[index].dropDownMenu

@@ -30,6 +30,9 @@ class Section extends HiveObject {
   @HiveField(3)
   var status = Status.disabled;
 
+  @HiveField(4)
+  Status lastStatus;
+
   Section({this.section}) {
     List<Map<String, dynamic>> questionsList = section.values.toList()[0];
     questions = questionsList.map<Question>((question) {

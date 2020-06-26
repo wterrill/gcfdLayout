@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Question.dart';
 // import 'package:auditor/Definitions/AuditClasses/Question.dart';
 // import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -15,16 +16,16 @@ class FollowupActionItems extends StatefulWidget {
 }
 
 class _FollowupActionItemsState extends State<FollowupActionItems> {
-  @override
-  // bool notHappyPath(Question question) {
-  //   bool isHappy = true;
-  //   if (question.happyPathResponse != null) {
-  //     if (!question.happyPathResponse.contains(question.userResponse)) {
-  //       isHappy = false;
-  //     }
-  //   }
-  //   return !isHappy;
-  // }
+  // @override
+  bool notHappyPath(Question question) {
+    bool isHappy = true;
+    if (question.happyPathResponse != null) {
+      if (!question.happyPathResponse.contains(question.userResponse)) {
+        isHappy = false;
+      }
+    }
+    return !isHappy;
+  }
 
   @override
   void initState() {

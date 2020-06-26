@@ -48,7 +48,7 @@ class _ReviewFillInNumQuestionState extends State<ReviewFillInNumQuestion> {
                 Audit thisAudit =
                     Provider.of<AuditData>(context, listen: false).activeAudit;
                 Provider.of<AuditData>(context, listen: false)
-                    .saveAudit(thisAudit);
+                    .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Padding(

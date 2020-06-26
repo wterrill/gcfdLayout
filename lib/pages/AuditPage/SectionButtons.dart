@@ -24,99 +24,104 @@ class _SectionButtonsState extends State<SectionButtons> {
   void initState() {
     super.initState();
     List<Section> buttonSections = widget.activeAudit.sections;
-    Map<String, List<Map<String, dynamic>>> photoData = {
-      "Photos": [
-        <String, dynamic>{"beer": "women"}
-      ]
-    };
-    Map<String, List<Map<String, dynamic>>> reviewData = {
-      "Review": [
-        <String, dynamic>{"beer": "women"}
-      ]
-    };
-    Map<String, List<Map<String, dynamic>>> verificationData = {
-      "Verification": [
-        <String, dynamic>{"beer": "women"}
-      ]
-    };
-    Map<String, List<Map<String, dynamic>>> developerData = {
-      "*Developer*": [
-        <String, dynamic>{"beer": "women"}
-      ]
-    };
-    Section photo = Section(section: photoData);
-    Section review = Section(section: reviewData);
-    Section verification = Section(section: verificationData);
-    Section developer = Section(section: developerData);
-    bool addThem = true;
-    for (Section section in buttonSections) {
-      if (section.name == 'Photos') {
-        addThem = false;
-      }
-    }
-    if (addThem) {
-      buttonSections.add(photo);
-      buttonSections.add(review);
-      buttonSections.add(verification);
-      buttonSections.add(developer);
-    }
+    // Map<String, List<Map<String, dynamic>>> photoData = {
+    //   "Photos": [
+    //     <String, dynamic>{"beer": "women"}
+    //   ]
+    // };
+    // Map<String, List<Map<String, dynamic>>> reviewData = {
+    //   "Review": [
+    //     <String, dynamic>{"beer": "women"}
+    //   ]
+    // };
+    // Map<String, List<Map<String, dynamic>>> verificationData = {
+    //   "Verification": [
+    //     <String, dynamic>{"beer": "women"}
+    //   ]
+    // };
+    // Map<String, List<Map<String, dynamic>>> developerData = {
+    //   "*Developer*": [
+    //     <String, dynamic>{"beer": "women"}
+    //   ]
+    // };
+    // Section photo = Section(section: photoData);
+    // Section review = Section(section: reviewData);
+    // Section verification = Section(section: verificationData);
+    // Section developer = Section(section: developerData);
+    // bool addThem = true;
+    // for (Section section in buttonSections) {
+    //   if (section.name == 'Photos') {
+    //     addThem = false;
+    //   }
+    // }
+    // if (addThem) {
+    //   buttonSections.add(photo);
+    //   buttonSections.add(review);
+    //   buttonSections.add(verification);
+    //   buttonSections.add(developer);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     print("building SectionButtons");
     AutoSizeGroup buttonAutoGroup = AutoSizeGroup();
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
+    Widget built;
+    (widget.activeAudit == null)
+        ? built = Text("")
+        : built = Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
+            child: Column(
               children: [
-                LimitedBox(
-                  maxHeight: 80,
-                  child: Image(
-                    image: AssetImage('assets/images/GCFD_Logo_vertical.png'),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      LimitedBox(
+                        maxHeight: 80,
+                        child: Image(
+                          image: AssetImage(
+                              'assets/images/GCFD_Logo_vertical.png'),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
+                        child: Text(
+                          widget.activeAudit?.name ?? "",
+                          style: ColorDefs.textBodyBlack30,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
-                  child: Text(
-                    widget.activeAudit.name,
-                    style: ColorDefs.textBodyBlack30,
+                Container(
+                  height: 100,
+                  child: ListView.separated(
+                    physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) =>
+                        Container(width: 5, color: Colors.transparent),
+                    itemCount: widget.activeAudit.sections.length,
+                    itemBuilder: (context, index) {
+                      SectionButton sectionButton = SectionButton(
+                          section: widget.activeAudit.sections[index],
+                          buttonAutoGroup: buttonAutoGroup);
+                      if (index == 0)
+                        return Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: sectionButton);
+                      if (index == widget.activeAudit.sections.length - 1)
+                        return Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: sectionButton);
+                      return sectionButton;
+                    },
                   ),
-                )
+                ),
               ],
             ),
-          ),
-          Container(
-            height: 100,
-            child: ListView.separated(
-              physics: ClampingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              separatorBuilder: (context, index) =>
-                  Container(width: 5, color: Colors.transparent),
-              itemCount: widget.activeAudit.sections.length,
-              itemBuilder: (context, index) {
-                SectionButton sectionButton = SectionButton(
-                    section: widget.activeAudit.sections[index],
-                    buttonAutoGroup: buttonAutoGroup);
-                if (index == 0)
-                  return Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: sectionButton);
-                if (index == widget.activeAudit.sections.length - 1)
-                  return Padding(
-                      padding: EdgeInsets.only(right: 10.0),
-                      child: sectionButton);
-                return sectionButton;
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+    return built;
   }
 }

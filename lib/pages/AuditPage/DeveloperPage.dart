@@ -17,6 +17,7 @@ class DeveloperPage extends StatelessWidget {
           Provider.of<AuditData>(context, listen: false).activeAudit;
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
+        section.lastStatus = Status.completed;
         if (!(section.name == "Photos" ||
             section.name == "Review" ||
             section.name == "Verification" ||
@@ -129,6 +130,7 @@ class DeveloperPage extends StatelessWidget {
           Provider.of<AuditData>(context, listen: false).activeAudit;
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
+        section.lastStatus = Status.completed;
         if (!(section.name == "Photos" ||
             section.name == "Review" ||
             section.name == "Verification" ||
@@ -232,14 +234,14 @@ class DeveloperPage extends StatelessWidget {
             onPressed: () {
               fillOutHappyAudit();
               Provider.of<AuditData>(context, listen: false)
-                  .saveAudit(activeAudit);
+                  .saveAuditLocally(activeAudit);
             },
             child: Text("Fill out Audit -> Happy Path")),
         RaisedButton(
             onPressed: () {
               fillOutAngryAudit();
               Provider.of<AuditData>(context, listen: false)
-                  .saveAudit(activeAudit);
+                  .saveAuditLocally(activeAudit);
             },
             child: Text("Fill out Audit -> Angry Path"))
       ],

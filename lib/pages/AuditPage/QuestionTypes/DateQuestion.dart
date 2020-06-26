@@ -68,7 +68,7 @@ class _DateQuestionState extends State<DateQuestion> {
                       Provider.of<AuditData>(context, listen: false)
                           .activeAudit;
                   Provider.of<AuditData>(context, listen: false)
-                      .saveAudit(thisAudit);
+                      .saveAuditLocally(thisAudit);
                   setState(() {});
                 },
                 child: Icon(Icons.calendar_today,

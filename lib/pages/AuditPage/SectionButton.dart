@@ -79,38 +79,48 @@ class _SectionButtonState extends State<SectionButton> {
         buttonColor = ColorDefs.colorChatSelected;
         buttonDisabled = false;
     }
-
-    return Column(
-      children: [
-        Container(
-          width: 110,
-          height: 70,
-          child: FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              // side: BorderSide(color: ColorDefs.colorDarkBackground),
-            ),
-            color: buttonColor,
-            onPressed: () {
-              buttonDisabled
-                  ? null
-                  : Provider.of<AuditData>(context, listen: false)
-                      .updateActiveSection(widget.section);
-            },
-            child: AutoSizeText(
-              widget.section.name,
-              group: widget.buttonAutoGroup,
-              maxLines: 2,
-              minFontSize: 14,
-              style: ColorDefs.textBodyBlack10,
-              wrapWords: false,
-              softWrap: true,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        icon
-      ],
-    );
+    Widget built;
+    (widget.section == null)
+        ? built = Text("")
+        : built = Column(
+            children: [
+              Container(
+                width: 110,
+                height: 70,
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    // side: BorderSide(color: ColorDefs.colorDarkBackground),
+                  ),
+                  color: buttonColor,
+                  onPressed: () {
+                    buttonDisabled
+                        ? null
+                        : {
+                            Provider.of<AuditData>(context, listen: false)
+                                .updateActiveSection(widget.section),
+                            Provider.of<AuditData>(context, listen: false)
+                                .saveActiveAudit(),
+                            // Provider.of<AuditData>(context, listen: false)
+                            //     .activeSection
+                            //     .status = Status.selected
+                          };
+                  },
+                  child: AutoSizeText(
+                    widget.section.name,
+                    group: widget.buttonAutoGroup,
+                    maxLines: 2,
+                    minFontSize: 14,
+                    style: ColorDefs.textBodyBlack10,
+                    wrapWords: false,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              icon
+            ],
+          );
+    return built;
   }
 }

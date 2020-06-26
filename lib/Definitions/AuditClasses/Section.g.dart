@@ -69,13 +69,14 @@ class SectionAdapter extends TypeAdapter<Section> {
     )
       ..name = fields[1] as String
       ..questions = (fields[2] as List)?.cast<Question>()
-      ..status = fields[3] as Status;
+      ..status = fields[3] as Status
+      ..lastStatus = fields[4] as Status;
   }
 
   @override
   void write(BinaryWriter writer, Section obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.section)
       ..writeByte(1)
@@ -83,6 +84,8 @@ class SectionAdapter extends TypeAdapter<Section> {
       ..writeByte(2)
       ..write(obj.questions)
       ..writeByte(3)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(4)
+      ..write(obj.lastStatus);
   }
 }

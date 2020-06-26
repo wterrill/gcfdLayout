@@ -37,14 +37,6 @@ class AuditData with ChangeNotifier {
     Future auditBoxFuture = Hive.openBox<Audit>('auditBox');
     Future auditToSendBoxFuture = Hive.openBox<Audit>('auditsToSendBox');
 
-    Future.wait<dynamic>([auditBoxFuture]).then((List<dynamic> value) {
-      print("HIVE INTIALIZED");
-      print(value);
-      print(value.runtimeType);
-      auditBox = Hive.box<Audit>('auditBox');
-      notifyListeners();
-    });
-
     Future.wait<dynamic>([auditToSendBoxFuture]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
@@ -52,14 +44,30 @@ class AuditData with ChangeNotifier {
       auditsToSendBox = Hive.box<Audit>('auditsToSendBox');
       notifyListeners();
     });
+
+    Future.wait<dynamic>([auditBoxFuture]).then((List<dynamic> value) {
+      print("HIVE INTIALIZED");
+      print(value);
+      print(value.runtimeType);
+      auditBox = Hive.box<Audit>('auditBox');
+      notifyListeners();
+    });
   }
 
-  void saveAudit(Audit incomingAudit) {
+  void saveAuditLocally(Audit incomingAudit) {
     if (incomingAudit != null) {
       auditBox.put(
           '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}',
           incomingAudit);
     }
+  }
+
+  void saveAuditToSend(Audit outgoingAudit) {
+    // auditsToSendBox.add(outgoingAudit);
+    auditsToSendBox.put(
+        '${outgoingAudit.calendarResult.startTime}-${outgoingAudit.calendarResult.agencyName}-${outgoingAudit.calendarResult.programNum}-${outgoingAudit.calendarResult.auditor}',
+        outgoingAudit);
+    print("testing");
   }
 
   bool auditExists(CalendarResult calendarResult) {
@@ -80,10 +88,17 @@ class AuditData with ChangeNotifier {
     notifyListeners();
   }
 
+  void saveLastSectionStatus() {
+    if (activeSection.status != Status.selected) {
+      activeSection.lastStatus = activeSection.status;
+    }
+  }
+
   void updateSectionStatus(Status status) {
     print("in updateSectionStatus");
     if (status != activeSection.status) {
-      activeSection.status = status;
+      // activeSection.status = status;
+      activeSection.lastStatus = status;
       notifyListeners();
     }
   }
@@ -124,8 +139,15 @@ class AuditData with ChangeNotifier {
   }
 
   void updateActiveSection(Section newSection) {
+    activeSection.status = activeSection.lastStatus;
     activeSection = newSection;
+    activeSection.lastStatus = activeSection.status;
+    activeSection.status = Status.selected;
     notifyListeners();
+  }
+
+  void saveActiveAudit() {
+    saveAuditLocally(activeAudit);
   }
 
   void createNewAudit(CalendarResult calendarResult) {
@@ -144,10 +166,10 @@ class AuditData with ChangeNotifier {
     List<dynamic> dynKeys = auditsToSendBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      // CalendarResult result =
-      //     auditsToSendBox.get(toBeSentKeys[i]) as CalendarResult;
+      Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
+      bool successful = await sendAudit(result) as bool;
       // dynamic successful = await FullAuditComms.sendFullAudit(result);
-      // if (successful as bool) auditsToSendBox.delete(toBeSentKeys[i]);
+      if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
     }
   }
 
@@ -164,7 +186,7 @@ class AuditData with ChangeNotifier {
     for (Audit audit in newAudits) {
       print(audit);
 
-      saveAudit(audit);
+      saveAuditLocally(audit);
     }
     notifyListeners();
   }
@@ -348,6 +370,9 @@ class AuditData with ChangeNotifier {
         }
 
         print(missingDBVar);
+        for (Section section in newAudit.sections) {
+          section.status = Status.completed;
+        }
         if (incomingPantryAudit != null) {
           newAudits.add(newAudit);
         }
@@ -359,9 +384,9 @@ class AuditData with ChangeNotifier {
     return newAudits;
   }
 
-  void submitAudit() async {
+  Future<dynamic> sendAudit(Audit outgoingAudit) async {
     Map<String, dynamic> resultMap = <String, dynamic>{};
-    for (Section section in activeAudit.sections) {
+    for (Section section in outgoingAudit.sections) {
       for (Question question in section.questions) {
         if (section.name != "Photos") {
           print('------- ${section.name} -------');
@@ -436,40 +461,40 @@ class AuditData with ChangeNotifier {
     //.deviceid;
     activeCalendarResult.status = "Submitted";
     String dateOfSiteVisit =
-        activeAudit.calendarResult.startDateTime.toString();
+        outgoingAudit.calendarResult.startDateTime.toString();
 
     String startOfAudit = DateFormat("HH:mm:ss.000")
-        .format(activeAudit.calendarResult.startDateTime);
+        .format(outgoingAudit.calendarResult.startDateTime);
 
     String endOfAudit = DateFormat("HH:mm").format(
-        activeAudit.calendarResult.startDateTime.add(Duration(hours: 2)));
+        outgoingAudit.calendarResult.startDateTime.add(Duration(hours: 2)));
 
     resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
     resultMap["StartOfAudit"] = startOfAudit;
     resultMap["EndOfAudit"] = endOfAudit;
-    resultMap["GCFDAuditorID"] = activeAudit.calendarResult.auditor;
+    resultMap["GCFDAuditorID"] = outgoingAudit.calendarResult.auditor;
     resultMap['ProgramContact'] =
-        activeAudit.sections[0].questions[7].userResponse;
+        outgoingAudit.sections[0].questions[7].userResponse;
     resultMap['PersonInterviewed'] =
-        activeAudit.sections[0].questions[8].userResponse;
+        outgoingAudit.sections[0].questions[8].userResponse;
     resultMap['ServiceArea'] =
-        activeAudit.sections[0].questions[10].userResponse;
-    if (activeAudit.correctiveActionPlanDueDate != null) {
+        outgoingAudit.sections[0].questions[10].userResponse;
+    if (outgoingAudit.correctiveActionPlanDueDate != null) {
       String tempDateTimeString =
-          activeAudit.correctiveActionPlanDueDate.toString();
+          outgoingAudit.correctiveActionPlanDueDate.toString();
       resultMap['CorrectiveActionPlanDueDate'] = tempDateTimeString;
     }
     //TODO logive the splits up the signature.
 
     resultMap['SiteRepresentativeSignature'] =
-        base64Encode(activeAudit.photoSig['siteRepresentativeSignature']);
+        base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
     /////////
-    if (activeAudit.photoSig['foodDepositoryMonitorSignature'] != null)
-      resultMap['FoodDepositoryMonitorSignature'] =
-          base64Encode(activeAudit.photoSig['foodDepositoryMonitorSignature']);
+    if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
+      resultMap['FoodDepositoryMonitorSignature'] = base64Encode(
+          outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
     bool followUpRequired = false;
     List<String> followUpItems = [];
-    for (Question citation in activeAudit.citations) {
+    for (Question citation in outgoingAudit.citations) {
       if (!citation.unflagged) {
         followUpRequired = true;
         followUpItems.add(citation.actionItem);
@@ -477,17 +502,17 @@ class AuditData with ChangeNotifier {
     }
     resultMap['FollowUpRequired'] = followUpRequired;
     resultMap['FollowUpItems'] = followUpItems;
-    resultMap['ImmediateHold'] = activeAudit.putProgramOnImmediateHold;
+    resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 
     Map<String, dynamic> mainBody = <String, dynamic>{
-      "AgencyNumber": activeAudit.calendarResult.agencyNum,
-      "ProgramNumber": activeAudit.calendarResult.programNum,
+      "AgencyNumber": outgoingAudit.calendarResult.agencyNum,
+      "ProgramNumber": outgoingAudit.calendarResult.programNum,
       "ProgramType":
-          convertProgramTypeToNumber(activeAudit.calendarResult.programType),
-      "Auditor": activeAudit.calendarResult.auditor,
+          convertProgramTypeToNumber(outgoingAudit.calendarResult.programType),
+      "Auditor": outgoingAudit.calendarResult.auditor,
       "AuditType":
-          convertAuditTypeToNumber(activeAudit.calendarResult.auditType),
-      "StartTime": activeAudit.calendarResult.startDateTime.toString(),
+          convertAuditTypeToNumber(outgoingAudit.calendarResult.auditType),
+      "StartTime": outgoingAudit.calendarResult.startDateTime.toString(),
       "DeviceId": deviceid,
       "PantryFollowUp": null,
       "CongregateDetail": null,
@@ -495,10 +520,10 @@ class AuditData with ChangeNotifier {
     };
     mainBody["PantryDetail"] = resultMap;
     print(mainBody);
-    dynamic success = await FullAuditComms.sendFullAudit(mainBody);
-    if (success as bool) {
-      showSuccess();
-    }
+
+    return FullAuditComms.sendFullAudit(mainBody);
+
+    // return success;
   }
 
   void showSuccess() {

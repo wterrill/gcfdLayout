@@ -48,7 +48,7 @@ class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
 
   Widget build(BuildContext context) {
     return Container(
-        height: 100,
+        height: 300,
         child: ListView.builder(
           shrinkWrap: true,
           // physics: NeverScrollableScrollPhysics(),

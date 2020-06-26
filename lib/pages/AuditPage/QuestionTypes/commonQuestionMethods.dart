@@ -45,7 +45,6 @@ Status checkSectionDone(Section activeSection) {
   Status result = Status.available;
 
   for (Question question in activeSection.questions) {
-    //TODO This needs to be completed... NOT userResponse because it has to be checked with the happypath
     if (question.userResponse == null &&
         question.typeOfQuestion.toLowerCase() != "display") {
       done = false;
@@ -56,5 +55,6 @@ Status checkSectionDone(Section activeSection) {
 
   if (!done && numComplete > 0) result = Status.inProgress;
   if (done) result = Status.completed;
+
   return result;
 }

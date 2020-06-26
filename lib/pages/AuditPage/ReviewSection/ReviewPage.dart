@@ -17,44 +17,49 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            height: (activeAudit.citations.length != 0) ? 400 : 800,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: activeAudit.sections.length - 4,
-              itemBuilder: (context, i) {
-                return Container(
-                  decoration: BoxDecoration(
-                      color: ColorDefs.colorAlternateLight,
-                      border: Border.all(
-                          color: ColorDefs.colorAlternateDark, width: 3)),
-                  child: ExpansionTile(
-                    trailing: Icon(Icons.arrow_drop_down),
-                    backgroundColor: ColorDefs.colorChatSelected,
-                    title: Text(activeAudit.sections[i + 1].name,
-                        style: ColorDefs.textBodyBlack20),
-                    children: <Widget>[
-                      ExpandableReviewContent(
-                          sectionData: activeAudit.sections[i + 1]),
-                    ],
-                  ),
-                );
-              },
-            )),
-        if (activeAudit.citations.length != 0)
-          Text(
-            "Follow-Up / Citations",
-            style: ColorDefs.textBodyBlack30,
-          ),
-        if (activeAudit.citations.length != 0)
+    return SingleChildScrollView(
+      child: Column(
+        children: [
           Container(
-              height: 300,
+              height: (activeAudit.citations.length != 0) ? 300 : 800,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: activeAudit.sections.length - 4,
+                itemBuilder: (context, i) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: ColorDefs.colorAlternateLight,
+                        border: Border.all(
+                            color: ColorDefs.colorAlternateDark, width: 3)),
+                    child: ExpansionTile(
+                      trailing: Icon(Icons.arrow_drop_down),
+                      backgroundColor: ColorDefs.colorChatSelected,
+                      title: Text(activeAudit.sections[i + 1].name,
+                          style: ColorDefs.textBodyBlack20),
+                      children: <Widget>[
+                        ExpandableReviewContent(
+                            sectionData: activeAudit.sections[i + 1]),
+                      ],
+                    ),
+                  );
+                },
+              )),
+          if (activeAudit.citations.length != 0)
+            Text(
+              "Follow-Up / Citations",
+              style: ColorDefs.textBodyBlack30,
+            ),
+          // if (activeAudit.citations.length != 0)
+          Container(
+              height: 400,
               child: FollowupCitationsSections(
                 activeAudit: activeAudit,
-              ))
-      ],
+              )),
+          // Container(
+          //   height: 800,
+          // )
+        ],
+      ),
     );
   }
 }

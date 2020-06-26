@@ -36,13 +36,15 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..photoSig = (fields[8] as Map)?.cast<String, Uint8List>()
       ..photoList = (fields[9] as List)?.cast<Uint8List>()
       ..followupRequired = fields[10] as bool
-      ..correctiveActionPlanDueDate = fields[11] as DateTime;
+      ..correctiveActionPlanDueDate = fields[11] as DateTime
+      ..detailsConfirmed = fields[12] as bool
+      ..activateConfirmDetails = fields[13] as bool;
   }
 
   @override
   void write(BinaryWriter writer, Audit obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -66,6 +68,10 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..writeByte(10)
       ..write(obj.followupRequired)
       ..writeByte(11)
-      ..write(obj.correctiveActionPlanDueDate);
+      ..write(obj.correctiveActionPlanDueDate)
+      ..writeByte(12)
+      ..write(obj.detailsConfirmed)
+      ..writeByte(13)
+      ..write(obj.activateConfirmDetails);
   }
 }

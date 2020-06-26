@@ -47,6 +47,12 @@ class Audit extends HiveObject {
   @HiveField(11)
   DateTime correctiveActionPlanDueDate;
 
+  @HiveField(12)
+  bool detailsConfirmed = false;
+
+  @HiveField(13)
+  bool activateConfirmDetails = false;
+
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));

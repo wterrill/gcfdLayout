@@ -49,7 +49,7 @@ class _FillInQuestionState extends State<FillInQuestion> {
                 Audit thisAudit =
                     Provider.of<AuditData>(context, listen: false).activeAudit;
                 Provider.of<AuditData>(context, listen: false)
-                    .saveAudit(thisAudit);
+                    .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Padding(

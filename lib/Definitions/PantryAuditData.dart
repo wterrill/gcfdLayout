@@ -498,8 +498,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   // },
 
   <String, dynamic>{
-    'text':
-        "Distribution style: (if not client choice, indicate why in the comments",
+    'text': "# of Intake Volunteers",
     'type': 'dropDown',
     'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
     'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
@@ -1264,6 +1263,22 @@ List<Map<String, dynamic>> audit1Section7Questions = [
   },
 ];
 
+List<Map<String, dynamic>> photoData = [
+  <String, dynamic>{"filler": "material"}
+];
+
+List<Map<String, dynamic>> reviewData = [
+  <String, dynamic>{"filler": "material"}
+];
+
+List<Map<String, dynamic>> verificationData = [
+  <String, dynamic>{"filler": "material"}
+];
+
+List<Map<String, dynamic>> developerData = [
+  <String, dynamic>{"filler": "material"}
+];
+
 List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{"Confirm Details": confirmDetails},
   <String, List<Map<String, dynamic>>>{"Intro": audit1Section1Questions},
@@ -1277,6 +1292,10 @@ List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{
     "Complaints & Problems": audit1Section7Questions
   },
+  <String, List<Map<String, dynamic>>>{"Photos": photoData},
+  <String, List<Map<String, dynamic>>>{"Review": reviewData},
+  <String, List<Map<String, dynamic>>>{"Verification": verificationData},
+  <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];
 
 //TODO: FollowUpRequired,  CorrectiveActionPlanDueDate,  SiteRepresentativeSignature   -> varchar 50, date, varchar(max)

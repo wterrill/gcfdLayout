@@ -20,15 +20,15 @@ class _ExpandableReviewContentState extends State<ExpandableReviewContent> {
   Widget build(BuildContext context) {
     List<Question> questions = widget.sectionData.questions;
 
-    // bool happyPath(Question question) {
-    //   bool isHappy = true;
-    //   if (question.happyPathResponse != null) {
-    //     if (!question.happyPathResponse.contains(question.userResponse)) {
-    //       isHappy = false;
-    //     }
-    //   }
-    //   return isHappy;
-    // }
+    bool happyPath(Question question) {
+      bool isHappy = true;
+      if (question.happyPathResponse != null) {
+        if (!question.happyPathResponse.contains(question.userResponse)) {
+          isHappy = false;
+        }
+      }
+      return isHappy;
+    }
 
     return ListView.builder(
         shrinkWrap: true,

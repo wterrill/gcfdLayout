@@ -70,16 +70,23 @@ class _CommentSectionState extends State<CommentSection> {
             } else {
               widget.activeSection.questions[index].userResponse = value;
             }
-            Status sectionStatus = checkSectionDone(activeSection);
-            Provider.of<AuditData>(context, listen: false)
-                .updateSectionStatus(sectionStatus);
+            if (activeSection.name != "Confirm Details") {
+              Status sectionStatus = checkSectionDone(activeSection);
+              // Provider.of<AuditData>(context, listen: false)
+              //     .updateSectionStatus(sectionStatus);
+            } else {
+              Provider.of<AuditData>(context, listen: false)
+                  .activeAudit
+                  .activateConfirmDetails = true;
+            }
           } else {
             widget.activeSection.questions[index].optionalComment = value;
           }
 
           Audit thisAudit =
               Provider.of<AuditData>(context, listen: false).activeAudit;
-          Provider.of<AuditData>(context, listen: false).saveAudit(thisAudit);
+          Provider.of<AuditData>(context, listen: false)
+              .saveAuditLocally(thisAudit);
         },
         maxLines: null,
         style: widget.activeSection.questions[index].textBoxRollOut
