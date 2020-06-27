@@ -21,12 +21,12 @@ class ReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Question> citations = Provider.of<AuditData>(context).citations;
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+    return Expanded(
+      child: ListView(
+        // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: (citations.length != 0) ? 300 : 800,
+              height: MediaQuery.of(context).size.height / 2,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: activeAudit.sections.length - 4,
@@ -52,11 +52,11 @@ class ReviewPage extends StatelessWidget {
 
           // if (activeAudit.citations.length != 0)
           Container(
-              height: 400,
+              height: MediaQuery.of(context).size.height / 2,
               child: FollowupCitationsSections(
                   // activeAudit: activeAudit,
                   )),
-          Container(height: 700),
+          Container(height: 100),
           // Container(
           //   height: 800,
           // )

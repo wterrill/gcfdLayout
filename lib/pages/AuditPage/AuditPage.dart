@@ -173,6 +173,14 @@ class _AuditPageState extends State<AuditPage> {
                               activeAudit.citations =
                                   Provider.of<AuditData>(context, listen: false)
                                       .citations;
+                              String status = "Submitted";
+                              for (Question citation in activeAudit.citations) {
+                                if (!citation.unflagged) {
+                                  status = "Follow Up";
+                                  break;
+                                }
+                              }
+                              activeAudit.calendarResult.status = status;
                               Provider.of<AuditData>(context, listen: false)
                                   .saveAuditToSend(activeAudit);
                               // List<String> actionItemList = [];

@@ -425,11 +425,13 @@ class AuditData with ChangeNotifier {
             // 'databaseVarType': 'string',
             // 'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
 
-            for (String questionText in followupItemsQuestions) {
-              int index = followupItemsQuestions.indexOf(question.text);
-              if (index != -1) {
-                question.actionItem = followupItems[index];
-                citations.add(question);
+            if (followupItemsQuestions != null) {
+              for (String questionText in followupItemsQuestions) {
+                int index = followupItemsQuestions.indexOf(question.text);
+                if (index != -1) {
+                  question.actionItem = followupItems[index];
+                  citations.add(question);
+                }
               }
             }
           }
@@ -544,7 +546,7 @@ class AuditData with ChangeNotifier {
     //context,
     //listen: false)
     //.deviceid;
-    outgoingAudit.calendarResult.status = "Submitted";
+
     String dateOfSiteVisit =
         outgoingAudit.calendarResult.startDateTime.toString();
 
