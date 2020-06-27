@@ -54,8 +54,8 @@ class ReviewPage extends StatelessWidget {
           Container(
               height: 700, //kIsWeb ? 400 : 700,
               child: FollowupCitationsSections(
-                activeAudit: activeAudit,
-              ))
+                  // activeAudit: activeAudit,
+                  ))
       ],
     );
   }

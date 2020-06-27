@@ -1,15 +1,17 @@
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:provider/provider.dart';
 
-class ReviewCommentSection2 extends StatefulWidget {
+class ActionItemsCommentSection extends StatefulWidget {
   final int index;
   final List<Question> questions;
   final bool mandatory;
   final bool numKeyboard;
   final bool actionItem;
-  ReviewCommentSection2(
+  ActionItemsCommentSection(
       {Key key,
       @required this.index,
       @required this.questions,
@@ -19,10 +21,11 @@ class ReviewCommentSection2 extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ReviewCommentSection2State createState() => _ReviewCommentSection2State();
+  _ActionItemsCommentSectionState createState() =>
+      _ActionItemsCommentSectionState();
 }
 
-class _ReviewCommentSection2State extends State<ReviewCommentSection2> {
+class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
   @override
   void initState() {
     super.initState();
@@ -54,41 +57,18 @@ class _ReviewCommentSection2State extends State<ReviewCommentSection2> {
   Widget build(BuildContext context) {
     int index = widget.index;
     return AnimatedContainer(
-      height: 80, //widget.questions[index].textBoxRollOut ? 80 : 0,
+      height: widget.questions[index].unflagged ? 0 : 80,
       color: ColorDefs.colorAudit4,
-      duration: Duration(milliseconds: 150),
+      duration: Duration(milliseconds: 300),
       child: TextField(
         keyboardType:
             widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          // if (widget.mandatory) {
-          //   if (widget.numKeyboard) {
-          //     try {
-          //       widget.questions[index].userResponse =
-          //           int.parse(value);
-          //     } catch (error) {
-          //       Dialogs.failedAuthentication(context);
-          //     }
-          //   } else {
-          //     widget.questions[index].userResponse = value;
-          //   }
-          //   // Status sectionStatus = checkSectionDone(activeSection);
-          //   // Provider.of<AuditData>(context, listen: false)
-          //   //     .updateSectionStatus(sectionStatus);
-          // } else {
           widget.questions[index].actionItemComment = value;
-          // }
-
-          // Audit thisAudit =
-          //     Provider.of<AuditData>(context, listen: false).activeAudit;
-          // Provider.of<AuditData>(context, listen: false).saveAudit(thisAudit);
         },
         maxLines: null,
         style: ColorDefs.textBodyBlack20,
-        //widget.questions[index].textBoxRollOut
-        // ? ColorDefs.textBodyBlack20
-        // : ColorDefs.textTransparent,
         decoration: new InputDecoration(
             suffixIcon: IconButton(
               onPressed: () => controller.clear(),

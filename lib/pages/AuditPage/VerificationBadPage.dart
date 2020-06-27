@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +31,23 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   final _sign2 = GlobalKey<SignatureState>();
   Uint8List siteRepresentativeSignature = null;
   Uint8List foodDepositoryMonitorSignature = null;
+  List<String> actionItems;
 
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
+    bool flaggedCitationsExist(List<Question> citations) {
+      bool exists = false;
+      for (Question citation in citations) {
+        if (!citation.unflagged) {
+          exists = true;
+          return exists;
+        }
+      }
+      return exists;
+    }
+
+    List<Question> citations = Provider.of<AuditData>(context).citations;
     selectedDate = widget.activeAudit?.correctiveActionPlanDueDate;
     try {
       foodDepositoryMonitorSignature =
@@ -53,10 +67,11 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             Container(
               height: 350,
               child: FollowupCitationsSections(
-                activeAudit: widget.activeAudit,
-              ),
+                  // activeAudit: widget.activeAudit,
+                  ),
             ),
-            Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
+            if (flaggedCitationsExist(citations))
+              Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
             // Container(
             //   height: 350,
             //   child: FollowupActionItems(
@@ -64,12 +79,13 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             //   ),
             // ),
             // Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
-            Container(
-              height: 350,
-              child: FollowupActionItems2(
-                activeAudit: widget.activeAudit,
+            if (flaggedCitationsExist(citations))
+              Container(
+                height: 350,
+                child: FollowupActionItems2(
+                    // activeAudit: widget.activeAudit,
+                    ),
               ),
-            ),
 
             Row(
               children: [

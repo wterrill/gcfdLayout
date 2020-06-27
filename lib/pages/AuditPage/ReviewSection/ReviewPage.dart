@@ -1,8 +1,11 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Question.dart';
 // import 'package:auditor/Definitions/AuditClasses/Question.dart';
 // import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:intl/intl.dart';
 
 import 'ExpandableReview.dart';
@@ -17,11 +20,13 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Question> citations = Provider.of<AuditData>(context).citations;
     return SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: (activeAudit.citations.length != 0) ? 300 : 800,
+              height: (citations.length != 0) ? 300 : 800,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: activeAudit.sections.length - 4,
@@ -44,17 +49,14 @@ class ReviewPage extends StatelessWidget {
                   );
                 },
               )),
-          if (activeAudit.citations.length != 0)
-            Text(
-              "Follow-Up / Citations",
-              style: ColorDefs.textBodyBlack30,
-            ),
+
           // if (activeAudit.citations.length != 0)
           Container(
               height: 400,
               child: FollowupCitationsSections(
-                activeAudit: activeAudit,
-              )),
+                  // activeAudit: activeAudit,
+                  )),
+          Container(height: 700),
           // Container(
           //   height: 800,
           // )

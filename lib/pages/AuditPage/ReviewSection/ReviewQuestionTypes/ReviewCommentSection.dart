@@ -51,43 +51,25 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
     return AnimatedContainer(
       height: widget.questions[index].textBoxRollOut ? 80 : 0,
       color: Colors.white,
-      duration: Duration(milliseconds: 150),
+      duration: Duration(milliseconds: 300),
       child: TextField(
         keyboardType:
             widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          // if (widget.mandatory) {
-          //   if (widget.numKeyboard) {
-          //     try {
-          //       widget.questions[index].userResponse =
-          //           int.parse(value);
-          //     } catch (error) {
-          //       Dialogs.failedAuthentication(context);
-          //     }
-          //   } else {
-          //     widget.questions[index].userResponse = value;
-          //   }
-          //   // Status sectionStatus = checkSectionDone(activeSection);
-          //   // Provider.of<AuditData>(context, listen: false)
-          //   //     .updateSectionStatus(sectionStatus);
-          // } else {
-          widget.questions[index].actionItemComment = value;
-          // }
-
-          // Audit thisAudit =
-          //     Provider.of<AuditData>(context, listen: false).activeAudit;
-          // Provider.of<AuditData>(context, listen: false).saveAudit(thisAudit);
+          widget.questions[index].optionalComment = value;
         },
         maxLines: null,
         style: widget.questions[index].textBoxRollOut
             ? ColorDefs.textBodyBlack20
             : ColorDefs.textTransparent,
         decoration: new InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () => controller.clear(),
-              icon: Icon(Icons.clear),
-            ),
+            suffixIcon: widget.questions[index].textBoxRollOut
+                ? IconButton(
+                    onPressed: () => controller.clear(),
+                    icon: Icon(Icons.clear),
+                  )
+                : null,
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,

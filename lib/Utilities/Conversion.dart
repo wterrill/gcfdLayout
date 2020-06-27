@@ -5,7 +5,7 @@ String converNumberToStatus(int number) {
       value = "Scheduled";
       break;
     case (1):
-      value = "Completed";
+      value = "Submitted";
       break;
     case (-1):
       value = "Deleted";

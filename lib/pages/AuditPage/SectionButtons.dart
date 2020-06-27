@@ -24,42 +24,6 @@ class _SectionButtonsState extends State<SectionButtons> {
   void initState() {
     super.initState();
     List<Section> buttonSections = widget.activeAudit.sections;
-    // Map<String, List<Map<String, dynamic>>> photoData = {
-    //   "Photos": [
-    //     <String, dynamic>{"beer": "women"}
-    //   ]
-    // };
-    // Map<String, List<Map<String, dynamic>>> reviewData = {
-    //   "Review": [
-    //     <String, dynamic>{"beer": "women"}
-    //   ]
-    // };
-    // Map<String, List<Map<String, dynamic>>> verificationData = {
-    //   "Verification": [
-    //     <String, dynamic>{"beer": "women"}
-    //   ]
-    // };
-    // Map<String, List<Map<String, dynamic>>> developerData = {
-    //   "*Developer*": [
-    //     <String, dynamic>{"beer": "women"}
-    //   ]
-    // };
-    // Section photo = Section(section: photoData);
-    // Section review = Section(section: reviewData);
-    // Section verification = Section(section: verificationData);
-    // Section developer = Section(section: developerData);
-    // bool addThem = true;
-    // for (Section section in buttonSections) {
-    //   if (section.name == 'Photos') {
-    //     addThem = false;
-    //   }
-    // }
-    // if (addThem) {
-    //   buttonSections.add(photo);
-    //   buttonSections.add(review);
-    //   buttonSections.add(verification);
-    //   buttonSections.add(developer);
-    // }
   }
 
   @override

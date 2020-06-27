@@ -53,6 +53,9 @@ class Audit extends HiveObject {
   @HiveField(13)
   bool activateConfirmDetails = false;
 
+  @HiveField(14)
+  List<String> actionItemList = [];
+
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));
@@ -79,5 +82,23 @@ class Audit extends HiveObject {
         break;
     }
     return value;
+  }
+
+  Audit clone() {
+    Audit clonedAudit =
+        Audit(calendarResult: calendarResult, questionnaire: questionnaire);
+    clonedAudit.name = name;
+    clonedAudit.sections = List.from(sections);
+    clonedAudit.completed = completed;
+    // clonedAudit.metadata = List.from(metadata);
+    clonedAudit.citations = List.from(citations);
+    clonedAudit.putProgramOnImmediateHold = putProgramOnImmediateHold;
+    clonedAudit.photoSig = Map.from(photoSig);
+    clonedAudit.photoList = List.from(photoList);
+    clonedAudit.followupRequired = followupRequired;
+    clonedAudit.correctiveActionPlanDueDate = correctiveActionPlanDueDate;
+    clonedAudit.detailsConfirmed = detailsConfirmed;
+    clonedAudit.activateConfirmDetails = activateConfirmDetails;
+    return clonedAudit;
   }
 }

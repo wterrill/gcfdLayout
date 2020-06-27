@@ -1,12 +1,15 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'ReviewQuestionTypes/ReviewCommentSection2.dart';
+import 'ReviewQuestionTypes/ActionItemsCommentSection.dart';
 
 class FollowupActionItems2 extends StatefulWidget {
-  FollowupActionItems2({Key key, this.activeAudit}) : super(key: key);
-  final Audit activeAudit;
+  FollowupActionItems2({Key key}) : super(key: key);
+  // final Audit activeAudit;
 
   @override
   _FollowupActionItems2State createState() => _FollowupActionItems2State();
@@ -14,28 +17,19 @@ class FollowupActionItems2 extends StatefulWidget {
 
 class _FollowupActionItems2State extends State<FollowupActionItems2> {
   @override
-  // bool notHappyPath(Question question) {
-  //   bool isHappy = true;
-  //   if (question.happyPathResponse != null) {
-  //     if (!question.happyPathResponse.contains(question.userResponse)) {
-  //       isHappy = false;
-  //     }
-  //   }
-  //   return !isHappy;
-  // }
-
   @override
   void initState() {
     super.initState();
   }
 
   Widget build(BuildContext context) {
+    List<Question> citations = Provider.of<AuditData>(context).citations;
     return Container(
         height: 100,
         child: ListView.builder(
           shrinkWrap: true,
           // physics: NeverScrollableScrollPhysics(),
-          itemCount: widget.activeAudit.citations.length,
+          itemCount: citations.length,
           itemBuilder: (context, index) {
             return Container(
               color: index.isEven
@@ -44,55 +38,10 @@ class _FollowupActionItems2State extends State<FollowupActionItems2> {
               child: Container(
                 child: Column(
                   children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Flexible(
-                    //       child: Padding(
-                    //         padding:
-                    //             const EdgeInsets.symmetric(horizontal: 16.0),
-                    //         child: Text(
-                    //           widget.activeAudit.citations[index].actionItem,
-                    //           style: TextStyle(fontSize: 15.0),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       height: 55,
-                    //       width: 80,
-                    //       child: Row(
-                    //         children: [
-                    //           Padding(
-                    //             padding:
-                    //                 const EdgeInsets.symmetric(horizontal: 4.0),
-                    //             child: GestureDetector(
-                    //               onTap: () {
-                    //                 widget.activeAudit.citations[index]
-                    //                         .textBoxRollOut =
-                    //                     !widget.activeAudit.citations[index]
-                    //                         .textBoxRollOut;
-                    //                 print(widget.activeAudit.citations[index]
-                    //                     .textBoxRollOut);
-                    //                 setState(() {});
-                    //               },
-                    //               child: Icon(Icons.feedback,
-                    //                   size: 40.0,
-                    //                   color: widget.activeAudit.citations[index]
-                    //                               .actionItemComment ==
-                    //                           null
-                    //                       ? ColorDefs.colorDarkBackground
-                    //                       : ColorDefs.colorChatSelected),
-                    //             ),
-                    //           )
-                    //         ],
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
                     Card(
-                      child: ReviewCommentSection2(
+                      child: ActionItemsCommentSection(
                           index: index,
-                          questions: widget.activeAudit.citations,
+                          questions: citations,
                           key: UniqueKey(),
                           numKeyboard: false,
                           mandatory: false,

@@ -371,7 +371,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'OriginalDHSSigDocsSubmittedComments',
     'actionItem':
-        'Ensure signature documents and surveys are submitted to the Food Depository '
+        'Ensure original DHS signature documents and surveys are submitted to the Food Depository '
   },
   <String, dynamic>{
     'text': "Is the TEFAP manual accessible to pantry staff and/or volunteers?",
@@ -381,7 +381,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'TEFAPManualAccessibleComments',
     'actionItem':
-        'Please explain what action took place for the accessiblility TEFAP manual. (Ex: a copy will be emailed to program contact) in the comment',
+        'When the TEFAP manual is not accessible to staff and volunteers, please explain what action takes place to remedy this. (Ex: a copy will be emailed to program contact)',
   },
   <String, dynamic>{
     'text': "Are proxy forms used?",
@@ -390,7 +390,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVar': 'ProxyFormsUsed',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProxyFormsUsedComments',
-    'actionItem': 'Please utilize proxy when appropriate'
+    'actionItem': 'Please utilize proxy forms when appropriate'
   },
 //TODO The above question needs to be linked to the below question
   <String, dynamic>{
@@ -612,7 +612,7 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'databaseVar': 'DryFoodRotatedFIFO',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DryFoodRotatedFIFOComments',
-    'actionItem': 'Ensure the “First in First Out” method is followed'
+    'actionItem': 'Ensure the “First in First Out” method is followed with food'
   },
   <String, dynamic>{
     'text': 'Is food 6 inches off floor?',
@@ -756,7 +756,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVar': 'UnitsClean',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnitsCleanComments',
-    'actionItem': 'Clean units. Please specify units in comments'
+    'actionItem': 'Clean units. Please specify unit number'
   },
   <String, dynamic>{
     'text': 'Are units defrosted?',
@@ -765,7 +765,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVar': 'UnitsDefrosted',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnitsDefrostedComments',
-    'actionItem': 'Defrost units. Please specify units in comments'
+    'actionItem': 'Defrost units. Please specify unit number'
   },
   <String, dynamic>{
     'text': 'Are units organized?',
@@ -774,7 +774,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVar': 'UnitsOrganized',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnitsOrganizedComments',
-    'actionItem': 'Organize units.  Please specify units in comments'
+    'actionItem': 'Organize units.  Please specify unit number'
   },
   <String, dynamic>{
     'text': 'Is food being rotated via FIFO?',
@@ -783,7 +783,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVar': 'ColdFoodRotatedFIFO',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ColdFoodRotatedFIFOComments',
-    'actionItem': 'Ensure the “First in First Out” method is followed'
+    'actionItem': 'Ensure the “First in First Out” method is followed with food'
   },
   <String, dynamic>{
     'text': 'Do units have thermometers?',
@@ -822,7 +822,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'databaseVar': 'ColdFoodAppropriatelyStocked',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ColdFoodAppropriatelyStockedComments',
-    'actionItem': 'Organize units'
+    'actionItem':
+        'Organize units and ensure they are appropriated stocked and not overstuffed. Indicate which units.'
   },
   <String, dynamic>{
     'text': 'Are units numbered?',
@@ -875,91 +876,91 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'actionItem': 'Ensure freezer temperature is maintained below zero'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 1 ºF',
+    'text': 'Cold Storage Unit 1 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitOneAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 2 ºF',
+    'text': 'Cold Storage Unit 2 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitTwoAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 3 ºF',
+    'text': 'Cold Storage Unit 3 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitThreeAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 4 ºF',
+    'text': 'Cold Storage Unit 4 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitFourAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 5 ºF',
+    'text': 'Cold Storage Unit 5 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitFiveAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 6 ºF',
+    'text': 'Cold Storage Unit 6 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitSixAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 7 ºF',
+    'text': 'Cold Storage Unit 7 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitSevenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 8 ºF',
+    'text': 'Cold Storage Unit 8 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitEightAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 9 ºF',
+    'text': 'Cold Storage Unit 9 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitNineAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 10 ºF',
+    'text': 'Cold Storage Unit 10 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitTenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 11 ºF',
+    'text': 'Cold Storage Unit 11 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitElevenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 12 ºF',
+    'text': 'Cold Storage Unit 12 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitTwelveAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 13 ºF',
+    'text': 'Cold Storage Unit 13 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitThirteenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 14 ºF',
+    'text': 'Cold Storage Unit 14 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitFourteenAndComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 15 ºF',
+    'text': 'Cold Storage Unit 15 ºF and comments',
     'type': 'fillIn',
     'databaseVar': 'ColdStorageUnitFifteenAndComments',
     'databaseVarType': 'string'
@@ -1085,7 +1086,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'SewageIssues', // <--------
     'databaseVarType': 'bool', // <---------
     'databaseOptCom': 'SewageIssuesComments', // <---------
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain issues with sewage and action items'
   },
   <String, dynamic>{
     'text': 'Garbage and refuse disposal',
@@ -1094,7 +1095,8 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'GarbageRefusalDisposalIssues', // <--------
     'databaseVarType': 'bool', // <--------
     'databaseOptCom': 'GarbageRefusalDisposalIssuesComments', // <---------
-    'actionItem': 'Explain issues in comment field'
+    'actionItem':
+        'Explain issues with Garbage and refuse disposal and action items'
   },
   <String, dynamic>{
     'text':
@@ -1124,27 +1126,29 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'AppropriateLightingIssues', // <------
     'databaseVarType': 'bool', // <------
     'databaseOptCom': 'AppropriateLightingIssuesComments', // <------
-    'actionItem': 'Please explain action items in comments'
+    'actionItem': 'Please explain lighting issues and action items:'
   },
 
   <String, dynamic>{
     'text': 'Ventilation Issues?',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'VentilationIssues', // <------
-    'databaseVarType': 'bool', // <------
-    'databaseOptCom': 'VentilationIssuesComments', // <------
-    'actionItem': 'Please explain action items in comments'
+    'databaseVar': 'VentilationIssues',
+    'databaseVarType': 'bool',
+    'databaseOptCom': 'VentilationIssuesComments',
+    'actionItem':
+        'Please explain ventilation issues and action items in comments'
   },
   <String, dynamic>{
     'text':
         'Issues with access to all pertinent areas of food program (dry storage, cold storage, intake, distribution)',
     'type': 'issuesNoIssues',
     'happyPathResponse': ['No Issues'],
-    'databaseVar': 'AccessToAllPertinentAreasIssues', // <------
-    'databaseVarType': 'bool', // <------
-    'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments', // <------
-    'actionItem': 'Please explain action items in comments'
+    'databaseVar': 'AccessToAllPertinentAreasIssues',
+    'databaseVarType': 'bool',
+    'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments',
+    'actionItem':
+        'Please explain issues with access to all pertinent areas of food program, and action items:'
   },
   <String, dynamic>{
     'text': 'Pest Control Company:',

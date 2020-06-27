@@ -295,7 +295,7 @@ class ListCalendarData with ChangeNotifier {
 
       print(auditor);
       String status =
-          randomDate.isBefore(DateTime.now()) ? "Completed" : "Scheduled";
+          randomDate.isBefore(DateTime.now()) ? "Submitted" : "Scheduled";
       print(status);
       addBoxEvent(event: {
         'startTime': startTime,

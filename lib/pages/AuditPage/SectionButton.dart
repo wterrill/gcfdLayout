@@ -101,9 +101,8 @@ class _SectionButtonState extends State<SectionButton> {
                                 .updateActiveSection(widget.section),
                             Provider.of<AuditData>(context, listen: false)
                                 .saveActiveAudit(),
-                            // Provider.of<AuditData>(context, listen: false)
-                            //     .activeSection
-                            //     .status = Status.selected
+                            Provider.of<AuditData>(context, listen: false)
+                                .makeCitations(),
                           };
                   },
                   child: AutoSizeText(

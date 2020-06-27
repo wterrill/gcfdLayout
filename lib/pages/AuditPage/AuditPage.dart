@@ -170,8 +170,19 @@ class _AuditPageState extends State<AuditPage> {
                                 //   ? null
                                 //   :
                                 () async {
+                              activeAudit.citations =
+                                  Provider.of<AuditData>(context, listen: false)
+                                      .citations;
                               Provider.of<AuditData>(context, listen: false)
                                   .saveAuditToSend(activeAudit);
+                              // List<String> actionItemList = [];
+                              // for (Question citation
+                              //     in activeAudit.citations) {
+                              //       if (!citation.unflagged)
+                              //       {
+                              //         actionItemList.add(citation.actionItemComment)
+                              //       }
+                              //     }
 
                               await Dialogs.showSuccess(context);
                               Navigator.of(context).pop();

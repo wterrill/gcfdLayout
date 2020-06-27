@@ -8,6 +8,7 @@ import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'dart:convert';
 
 import 'dart:typed_data';
 import 'dart:convert';
@@ -21,12 +22,15 @@ class AuditData with ChangeNotifier {
   Section activeSection;
   Box auditBox;
   Box auditsToSendBox;
+  Box auditOutBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
   Uint8List foodDepositoryMonitorSignature;
   Uint8List siteRepresentativeSignature;
   String deviceidProvider;
   bool successfullySubmitted = false;
+  List<Question> citations = [];
+  // List<String> actionItemList = [];
 
   AuditData() {
     initialize();
@@ -36,20 +40,19 @@ class AuditData with ChangeNotifier {
   void initHive() {
     Future auditBoxFuture = Hive.openBox<Audit>('auditBox');
     Future auditToSendBoxFuture = Hive.openBox<Audit>('auditsToSendBox');
+    Future auditOutBoxFuture = Hive.openBox<Audit>('auditOutBox');
 
-    Future.wait<dynamic>([auditToSendBoxFuture]).then((List<dynamic> value) {
-      print("HIVE INTIALIZED");
-      print(value);
-      print(value.runtimeType);
-      auditsToSendBox = Hive.box<Audit>('auditsToSendBox');
-      notifyListeners();
-    });
-
-    Future.wait<dynamic>([auditBoxFuture]).then((List<dynamic> value) {
+    Future.wait<dynamic>([
+      auditBoxFuture,
+      auditToSendBoxFuture,
+      auditOutBoxFuture,
+    ]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
       print(value.runtimeType);
       auditBox = Hive.box<Audit>('auditBox');
+      auditsToSendBox = Hive.box<Audit>('auditsToSendBox');
+      auditOutBox = Hive.box<Audit>('auditOutBox');
       notifyListeners();
     });
   }
@@ -63,10 +66,13 @@ class AuditData with ChangeNotifier {
   }
 
   void saveAuditToSend(Audit outgoingAudit) {
-    // auditsToSendBox.add(outgoingAudit);
+    Audit clonedOutgoingAudit = outgoingAudit.clone();
+
     auditsToSendBox.put(
-        '${outgoingAudit.calendarResult.startTime}-${outgoingAudit.calendarResult.agencyName}-${outgoingAudit.calendarResult.programNum}-${outgoingAudit.calendarResult.auditor}',
-        outgoingAudit);
+        '${clonedOutgoingAudit.calendarResult.startTime}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}',
+        clonedOutgoingAudit);
+
+    // auditOutBox.put("beer", outgoingAudit);
     print("testing");
   }
 
@@ -83,6 +89,70 @@ class AuditData with ChangeNotifier {
   }
 
 //////////////////////////// END OF HIVE STUFF ////////////////
+
+  void toggleFlag(int index) {
+    citations[index].unflagged = !citations[index].unflagged;
+    notifyListeners();
+  }
+
+  bool notHappyPath(Question question) {
+    bool isHappy = true;
+    if (question.happyPathResponse != null) {
+      if (!question.happyPathResponse.contains(question.userResponse)) {
+        isHappy = false;
+      }
+    }
+    return !isHappy;
+  }
+
+  void makeCitations() {
+    if (activeAudit.calendarResult.status == 0) {
+      for (Section section in activeAudit.sections) {
+        List<String> avoid =
+            []; //["Photos", "Intro", "Review", "Verification"];
+        if (!avoid.contains(section.name)) {
+          for (Question question in section.questions) {
+            if (question.userResponse != null) {
+              int indexToCitation = citationExists(question);
+              if (notHappyPath(question)) {
+                if (indexToCitation == -1) {
+                  question.fromSectionName = section.name;
+                  // question.optionalComment =
+                  //     question.questionMap['actionItem'] as String;
+                  citations.add(question);
+                }
+              } else {
+                if (indexToCitation != -1) {
+                  citations.removeAt(indexToCitation);
+                }
+              }
+            }
+          }
+        }
+      }
+      // makeActionItems();
+      activeAudit.citations = citations;
+    }
+  }
+
+  // void makeActionItems() {
+  //   for (Question citation in citations) {
+  //     if (!citation.unflagged) {
+  //       actionItems.add(citation.questionMap['actionItem'] as String);
+  //     }
+  //   }
+  // }
+
+  int citationExists(Question question) {
+    int index = -1;
+    for (Question citation in citations) {
+      index++;
+      if (citation.text == question.text) {
+        return index;
+      }
+    }
+    return -1;
+  }
 
   void notifyTheListeners() {
     notifyListeners();
@@ -120,6 +190,8 @@ class AuditData with ChangeNotifier {
     activeSection = null;
     activeCalendarResult = null;
     successfullySubmitted = false;
+    citations = [];
+    // actionItemList = [];
   }
 
   void loadExisting(CalendarResult calendarResult) {
@@ -204,7 +276,6 @@ class AuditData with ChangeNotifier {
           programType: convertNumberToProgramType(event['ProgramType'] as int),
           message: "",
           siteInfo: siteList.getSiteFromAgencyNumber(
-              //TODO handle first time spin up... siteList is null.
               agencyNumber: event['AgencyNumber'] as String),
           agencyNum: event['AgencyNumber'] as String,
           programNum: event['ProgramNumber'] as String,
@@ -224,6 +295,12 @@ class AuditData with ChangeNotifier {
             questionnaire: pantryAuditSectionsQuestions);
 
         List<String> missingDBVar = [];
+        List<String> followupItemsQuestions =
+            incomingPantryAudit["FollowUpItemsQuestions"] as List<String>;
+        List<String> followupItems =
+            incomingPantryAudit['FollowUpItems'] as List<String>;
+
+        List<Question> citations = [];
 
         // Sections
         for (Section section in newAudit.sections) {
@@ -348,7 +425,15 @@ class AuditData with ChangeNotifier {
             // 'databaseVarType': 'string',
             // 'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
 
+            for (String questionText in followupItemsQuestions) {
+              int index = followupItemsQuestions.indexOf(question.text);
+              if (index != -1) {
+                question.actionItem = followupItems[index];
+                citations.add(question);
+              }
+            }
           }
+
           if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
             newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
                 .convert(incomingPantryAudit['SiteRepresentativeSignature']
@@ -459,7 +544,7 @@ class AuditData with ChangeNotifier {
     //context,
     //listen: false)
     //.deviceid;
-    activeCalendarResult.status = "Submitted";
+    outgoingAudit.calendarResult.status = "Submitted";
     String dateOfSiteVisit =
         outgoingAudit.calendarResult.startDateTime.toString();
 
@@ -494,14 +579,18 @@ class AuditData with ChangeNotifier {
           outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
     bool followUpRequired = false;
     List<String> followUpItems = [];
+    List<String> followUpItemsQuestions = [];
     for (Question citation in outgoingAudit.citations) {
       if (!citation.unflagged) {
         followUpRequired = true;
         followUpItems.add(citation.actionItem);
+        followUpItemsQuestions.add(citation.text);
       }
     }
+
     resultMap['FollowUpRequired'] = followUpRequired;
     resultMap['FollowUpItems'] = followUpItems;
+    resultMap['FollowUpItemsQuestions'] = followUpItemsQuestions;
     resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 
     Map<String, dynamic> mainBody = <String, dynamic>{
@@ -526,10 +615,10 @@ class AuditData with ChangeNotifier {
     // return success;
   }
 
-  void showSuccess() {
-    successfullySubmitted = true;
-    notifyListeners();
-  }
+  // void showSuccess() {
+  //   successfullySubmitted = true;
+  //   notifyListeners();
+  // }
 
   ////////////////////////////////////////////////////////////
 }
