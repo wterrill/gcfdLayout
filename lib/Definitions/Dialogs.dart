@@ -49,6 +49,26 @@ class Dialogs {
     );
   }
 
+  static void showMessage(BuildContext context, String message) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(message),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void timeInPast(
       BuildContext context, Function continueCallBack) async {
     AlertDialog alert = AlertDialog(
@@ -187,6 +207,26 @@ class Dialogs {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('Username or password is not correct.  Please try again.'),
+        ],
+      ),
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void mustBeNumber(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      elevation: 6.0,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('This field requires a numeric response'),
         ],
       ),
     );
@@ -404,8 +444,8 @@ class Dialogs {
         });
   }
 
-  static void showRescheduleAudit(
-      BuildContext context, CalendarResult calendarResult) {
+  static void showRescheduleAudit(BuildContext context,
+      {CalendarResult calendarResult, bool followup}) {
     showGeneralDialog<void>(
         barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
@@ -416,8 +456,11 @@ class Dialogs {
               child: AlertDialog(
                 shape: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0)),
-                title: Text('Reschedule this Audit:'),
-                content: NewAuditDialog(calendarResult: calendarResult),
+                title: (followup)
+                    ? Text('Schedule Follow Up')
+                    : Text('Reschedule this Audit:'),
+                content: NewAuditDialog(
+                    calendarResult: calendarResult, followup: followup),
               ),
             ),
           );

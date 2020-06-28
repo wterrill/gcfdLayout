@@ -9,9 +9,17 @@ import 'package:provider/provider.dart';
 // import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
-  LookAhead({Key key, this.lookAheadCallback, this.setValue}) : super(key: key);
+  LookAhead(
+      {Key key,
+      this.lookAheadCallback,
+      this.setValue,
+      this.disable,
+      this.programNumber})
+      : super(key: key);
   final Function lookAheadCallback;
   final String setValue;
+  final bool disable;
+  final String programNumber;
 
   @override
   _LookAheadState createState() => _LookAheadState();
@@ -73,6 +81,9 @@ class _LookAheadState extends State<LookAhead> {
             return GestureDetector(
               onPanDown: (_) {
                 print(suggestion);
+                if (widget.disable) {
+                  suggestion = widget.setValue + " - " + widget.programNumber;
+                }
                 _typeAheadController.text = suggestion;
 
                 List<String> nameArray = suggestion.split(" - ");
@@ -89,6 +100,9 @@ class _LookAheadState extends State<LookAhead> {
             );
           },
           onSuggestionSelected: (suggestion) {
+            if (widget.disable) {
+              suggestion = widget.setValue + " - " + widget.programNumber;
+            }
             _typeAheadController.text = suggestion; //.titleCase;
 
             List<String> nameArray = suggestion.split(" - ");

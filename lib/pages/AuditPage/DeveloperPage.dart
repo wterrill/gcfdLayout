@@ -73,7 +73,7 @@ class DeveloperPage extends StatelessWidget {
 
               case ("fillInNum"):
                 print("fillInNum");
-                question.userResponse = 1;
+                question.userResponse = 12;
                 break;
 
               case ("dropDown"):

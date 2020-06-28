@@ -124,20 +124,29 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             setState(() {
                               startSync = true;
                             });
+                            Dialogs.showMessage(context, "Syncing Site Data");
                             String deviceid =
                                 Provider.of<GeneralData>(context, listen: false)
                                     .deviceid;
                             await Provider.of<SiteData>(context, listen: false)
                                 .siteSync();
+
                             SiteList siteList =
                                 Provider.of<SiteData>(context, listen: false)
                                     .siteList;
+                            Navigator.of(context).pop();
+                            Dialogs.showMessage(context,
+                                "Syncing Scheduling data: upload and download");
                             await Provider.of<ListCalendarData>(context,
                                     listen: false)
                                 .dataSync(context, siteList, deviceid);
+                            Navigator.of(context).pop();
+                            Dialogs.showMessage(context,
+                                "Syncing Audit data: upload and download");
 
                             await Provider.of<AuditData>(context, listen: false)
                                 .dataSync(context, siteList, deviceid);
+                            Navigator.of(context).pop();
 
                             setState(() {
                               startSync = false;

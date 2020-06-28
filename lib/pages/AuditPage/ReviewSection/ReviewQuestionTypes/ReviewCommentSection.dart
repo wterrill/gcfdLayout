@@ -77,7 +77,7 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
             disabledBorder: InputBorder.none,
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: "Enter action item comments "),
+            hintText: "Enter citation comments "),
       ),
     );
   }

@@ -106,7 +106,7 @@ class AuditData with ChangeNotifier {
   }
 
   void makeCitations() {
-    if (activeAudit.calendarResult.status == 0) {
+    if (activeAudit.calendarResult.status == "Scheduled") {
       for (Section section in activeAudit.sections) {
         List<String> avoid =
             []; //["Photos", "Intro", "Review", "Verification"];
@@ -211,7 +211,11 @@ class AuditData with ChangeNotifier {
   }
 
   void updateActiveSection(Section newSection) {
-    activeSection.status = activeSection.lastStatus;
+    if (['Photos', 'Review', 'Verification'].contains(activeSection.name)) {
+      activeSection.status = Status.completed;
+    } else {
+      activeSection.status = activeSection.lastStatus;
+    }
     activeSection = newSection;
     activeSection.lastStatus = activeSection.status;
     activeSection.status = Status.selected;

@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/pages/AuditPage/QuestionTypes/commonQuestionMethods.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,8 @@ class _FillInQuestionState extends State<FillInQuestion> {
                     Provider.of<AuditData>(context, listen: false).activeAudit;
                 Provider.of<AuditData>(context, listen: false)
                     .saveAuditLocally(thisAudit);
+                Provider.of<AuditData>(context, listen: false)
+                    .updateSectionStatus(checkSectionDone(activeSection));
                 setState(() {});
               },
               child: Padding(

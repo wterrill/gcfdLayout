@@ -15,7 +15,7 @@ class CalendarResult extends HiveObject {
   @HiveField(2)
   final String agencyNum;
   @HiveField(3)
-  final String auditType;
+  String auditType;
   @HiveField(4)
   final String programNum;
   @HiveField(5)

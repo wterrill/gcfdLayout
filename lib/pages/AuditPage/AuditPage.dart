@@ -7,8 +7,10 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/pages/AuditPage/PhotoPage.dart';
+import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -165,11 +167,18 @@ class _AuditPageState extends State<AuditPage> {
                             textColor: Colors.black,
                             child: Text("Submit Audit",
                                 style: ColorDefs.textBodyBlack20),
-                            onPressed: (
-                                // activeSection.status != Status.completed)
-                                //   ? null
-                                //   :
-                                () async {
+                            onPressed: (() async {
+                              // this is done to prevent "Verification" from showing as selected when opening again.
+                              for (var i = activeAudit.sections.length - 1;
+                                  i > -1;
+                                  i--) {
+                                if (activeAudit.sections[i].name ==
+                                    "Verification") {
+                                  activeAudit.sections[i].status =
+                                      Status.completed;
+                                  break;
+                                }
+                              }
                               activeAudit.citations =
                                   Provider.of<AuditData>(context, listen: false)
                                       .citations;
@@ -182,15 +191,14 @@ class _AuditPageState extends State<AuditPage> {
                               }
                               activeAudit.calendarResult.status = status;
                               Provider.of<AuditData>(context, listen: false)
+                                  .saveAuditLocally(activeAudit);
+                              Provider.of<ListCalendarData>(context,
+                                      listen: false)
+                                  .addCalendarItem(activeAudit.calendarResult);
+                              Provider.of<AuditData>(context, listen: false)
+                                  .notifyTheListeners();
+                              Provider.of<AuditData>(context, listen: false)
                                   .saveAuditToSend(activeAudit);
-                              // List<String> actionItemList = [];
-                              // for (Question citation
-                              //     in activeAudit.citations) {
-                              //       if (!citation.unflagged)
-                              //       {
-                              //         actionItemList.add(citation.actionItemComment)
-                              //       }
-                              //     }
 
                               await Dialogs.showSuccess(context);
                               Navigator.of(context).pop();
@@ -223,8 +231,6 @@ class _AuditPageState extends State<AuditPage> {
                             .toggleStartAudit();
                         Provider.of<AuditData>(context, listen: false)
                             .resetAudit();
-
-                        // Navigator.of(context).pop();
                         Navigator.of(context).pop();
                       },
                     ),

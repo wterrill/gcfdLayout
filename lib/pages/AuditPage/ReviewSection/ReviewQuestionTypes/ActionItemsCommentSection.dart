@@ -69,11 +69,13 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
         },
         maxLines: null,
         style: ColorDefs.textBodyBlack20,
-        decoration: new InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () => controller.clear(),
-              icon: Icon(Icons.clear),
-            ),
+        decoration: InputDecoration(
+            suffixIcon: (!widget.questions[index].unflagged)
+                ? IconButton(
+                    onPressed: () => controller.clear(),
+                    icon: Icon(Icons.clear),
+                  )
+                : null,
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,

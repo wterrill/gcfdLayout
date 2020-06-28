@@ -26,7 +26,9 @@ class ReviewPage extends StatelessWidget {
         // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: MediaQuery.of(context).size.height / 2,
+              height: (citations.length == 0)
+                  ? MediaQuery.of(context).size.height * 0.65
+                  : MediaQuery.of(context).size.height / 3,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: activeAudit.sections.length - 4,
@@ -52,11 +54,11 @@ class ReviewPage extends StatelessWidget {
 
           // if (activeAudit.citations.length != 0)
           Container(
-              height: MediaQuery.of(context).size.height / 2,
+              height: MediaQuery.of(context).size.height / 3,
               child: FollowupCitationsSections(
                   // activeAudit: activeAudit,
                   )),
-          Container(height: 100),
+          Container(height: 300),
           // Container(
           //   height: 800,
           // )

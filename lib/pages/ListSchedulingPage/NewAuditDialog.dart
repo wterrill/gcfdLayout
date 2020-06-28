@@ -12,7 +12,9 @@ import 'LookAhead.dart';
 
 class NewAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
-  NewAuditDialog({Key key, this.calendarResult}) : super(key: key);
+  final bool followup;
+  NewAuditDialog({Key key, this.calendarResult, this.followup})
+      : super(key: key);
 
   @override
   _NewAuditDialogState createState() => _NewAuditDialogState();
@@ -53,6 +55,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
     siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
 
+  List<String> auditorDropDownMenu;
+
   List<String> auditTypeDropDownMenu = [
     "Select",
     "Annual",
@@ -66,12 +70,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   SiteList siteList;
 
-  List<String> auditorDropDownMenu = [
-    "Select",
-    "Will Terrill",
-    "Abraham Jimenez",
-    "Andrei Kliuchnik",
-  ];
+  // List<String> auditorDropDownMenu = [
+  //   "Select",
+  //   "Will Terrill",
+  //   "Abraham Jimenez",
+  //   "Andrei Kliuchnik",
+  // ];
 
   List<String> programTypeDropDownMenu = [
     "Select",
@@ -137,7 +141,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             LookAhead(
+              disable: widget.followup,
               setValue: selectedSiteName,
+              programNumber: (widget.followup) ? selectedProgramNumber : null,
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
@@ -168,6 +174,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     ),
                     onChanged: (String newValue) {
                       setState(() {
+                        if (widget.followup) {
+                          newValue = "Follow Up";
+                        }
                         selectedAuditType = newValue;
                       });
                     },
@@ -194,6 +203,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
+                      if (widget.followup) {
+                        newValue = selectedProgType;
+                      }
                       selectedProgType = newValue;
                     });
                   },
@@ -394,13 +406,16 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     }
                   }
                 },
-                child: alreadyExisted
-                    ? Text("Save Audit", style: ColorDefs.textBodyBlue20)
+                child: (alreadyExisted)
+                    ? (widget.followup)
+                        ? Text("Schedule Follow-Up Audit",
+                            style: ColorDefs.textBodyBlue20)
+                        : Text("Save Audit", style: ColorDefs.textBodyBlue20)
                     : Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
               ),
             ),
 
-            if (alreadyExisted)
+            if (alreadyExisted && !widget.followup)
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                 child: FlatButton(

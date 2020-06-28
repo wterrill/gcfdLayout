@@ -194,35 +194,69 @@ class AuditInfoDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: ListTile(
-                          title: DecoratedBox(
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(50.0),
-                                border: Border.all(
-                                    width: 2.0,
-                                    color: ColorDefs.colorBigDrawerBronze)),
-                            child: FlatButton(
-                              disabledTextColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
-                              onPressed: () {
-                                Dialogs.showRescheduleAudit(
-                                    context, calendarResult);
-                              },
-                              child: AutoSizeText('Edit Audit',
-                                  style: ColorDefs.textBodyBronze20),
+                  if (!alreadyExist)
+                    Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: ListTile(
+                            title: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0,
+                                      color: ColorDefs.colorBigDrawerBronze)),
+                              child: FlatButton(
+                                disabledTextColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                onPressed: () {
+                                  Dialogs.showRescheduleAudit(context,
+                                      calendarResult: calendarResult,
+                                      followup: false);
+                                },
+                                child: AutoSizeText('Edit Audit',
+                                    style: ColorDefs.textBodyBronze20),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  if (calendarResult.status == "Follow Up")
+                    Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: ListTile(
+                            title: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  border: Border.all(
+                                      width: 2.0,
+                                      color: ColorDefs.colorBigDrawerBronze)),
+                              child: FlatButton(
+                                disabledTextColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                onPressed: () {
+                                  calendarResult.auditType = "Follow Up";
+                                  Dialogs.showRescheduleAudit(context,
+                                      calendarResult: calendarResult,
+                                      followup: true);
+                                },
+                                child: AutoSizeText('Schedule Followup Audit',
+                                    style: ColorDefs.textBodyBronze20),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

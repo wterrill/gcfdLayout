@@ -65,7 +65,7 @@ class _CommentSectionState extends State<CommentSection> {
                 widget.activeSection.questions[index].userResponse =
                     int.parse(value);
               } catch (error) {
-                Dialogs.failedAuthentication(context);
+                Dialogs.mustBeNumber(context);
               }
             } else {
               widget.activeSection.questions[index].userResponse = value;
@@ -92,11 +92,13 @@ class _CommentSectionState extends State<CommentSection> {
         style: widget.activeSection.questions[index].textBoxRollOut
             ? ColorDefs.textBodyBlack20
             : ColorDefs.textTransparent,
-        decoration: new InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () => controller.clear(),
-              icon: Icon(Icons.clear),
-            ),
+        decoration: InputDecoration(
+            suffixIcon: (widget.activeSection.questions[index].textBoxRollOut)
+                ? IconButton(
+                    onPressed: () => controller.clear(),
+                    icon: Icon(Icons.clear),
+                  )
+                : null,
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,

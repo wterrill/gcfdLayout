@@ -8,5 +8,7 @@
     "request": "launch",
     "type": "dart",
     "args": ["--web-port", "8686", "--web-enable-expression-evaluation"],
+    "flutterMode": "debug"
   }]
+  // flutter Mode can be debug, profile, release
 }
