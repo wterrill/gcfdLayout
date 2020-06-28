@@ -59,34 +59,46 @@ class _CommentSectionState extends State<CommentSection> {
             widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          if (widget.mandatory) {
-            if (widget.numKeyboard) {
-              try {
-                widget.activeSection.questions[index].userResponse =
-                    int.parse(value);
-              } catch (error) {
-                Dialogs.mustBeNumber(context);
+          if (Provider.of<AuditData>(context, listen: false)
+                  .activeAudit
+                  .calendarResult
+                  .status !=
+              "Scheduled") {
+            Dialogs.showMessage(
+                context: context,
+                message:
+                    "This audit has already been submitted, and cannot be edited",
+                dismissable: true);
+          } else {
+            if (widget.mandatory) {
+              if (widget.numKeyboard) {
+                try {
+                  widget.activeSection.questions[index].userResponse =
+                      int.parse(value);
+                } catch (error) {
+                  Dialogs.mustBeNumber(context);
+                }
+              } else {
+                widget.activeSection.questions[index].userResponse = value;
+              }
+              if (activeSection.name != "Confirm Details") {
+                Status sectionStatus = checkSectionDone(activeSection);
+                // Provider.of<AuditData>(context, listen: false)
+                //     .updateSectionStatus(sectionStatus);
+              } else {
+                Provider.of<AuditData>(context, listen: false)
+                    .activeAudit
+                    .activateConfirmDetails = true;
               }
             } else {
-              widget.activeSection.questions[index].userResponse = value;
+              widget.activeSection.questions[index].optionalComment = value;
             }
-            if (activeSection.name != "Confirm Details") {
-              Status sectionStatus = checkSectionDone(activeSection);
-              // Provider.of<AuditData>(context, listen: false)
-              //     .updateSectionStatus(sectionStatus);
-            } else {
-              Provider.of<AuditData>(context, listen: false)
-                  .activeAudit
-                  .activateConfirmDetails = true;
-            }
-          } else {
-            widget.activeSection.questions[index].optionalComment = value;
-          }
 
-          Audit thisAudit =
-              Provider.of<AuditData>(context, listen: false).activeAudit;
-          Provider.of<AuditData>(context, listen: false)
-              .saveAuditLocally(thisAudit);
+            Audit thisAudit =
+                Provider.of<AuditData>(context, listen: false).activeAudit;
+            Provider.of<AuditData>(context, listen: false)
+                .saveAuditLocally(thisAudit);
+          }
         },
         maxLines: null,
         style: widget.activeSection.questions[index].textBoxRollOut

@@ -64,14 +64,20 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
         child: Column(
           children: [
             Text("CITATIONS", style: ColorDefs.textBodyBlack30),
-            Container(
-              height: 350,
+            if (citations.length != 0)
+              Text(
+                "Follow-Up / Citations",
+                style: ColorDefs.textBodyBlack30,
+              ),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 240),
               child: FollowupCitationsSections(
                   // activeAudit: widget.activeAudit,
                   ),
             ),
             if (flaggedCitationsExist(citations))
               Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
+
             // Container(
             //   height: 350,
             //   child: FollowupActionItems(
@@ -79,9 +85,10 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             //   ),
             // ),
             // Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
+
             if (flaggedCitationsExist(citations))
-              Container(
-                height: 350,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 340),
                 child: FollowupActionItems2(
                     // activeAudit: widget.activeAudit,
                     ),
@@ -89,7 +96,11 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
 
             Row(
               children: [
-                Text("These Compliance Requirements must be completed by: "),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                      "These Compliance Requirements must be completed by: "),
+                ),
                 RaisedButton(
                   child: Text((selectedDate != null)
                       ? DateFormat('MM-dd-yyyy').format(selectedDate)
@@ -112,11 +123,21 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             // Padding(
             //   padding: const EdgeInsets.all(20.0),
             // child:
-            Text('''
-In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this matter to ensure your community does not suffer an interruption of services.'''),
+            Wrap(direction: Axis.vertical, children: [
+              Text(
+                '''
+In order to be fully certified and in good standing with the Greater Chicago Food Depository. 
+Failure to comply with the requirements listed below will result in corrective action up to, and 
+including, suspension and/or termination of membership. We appreciate your prompt attention to this 
+matter to ensure your community does not suffer an interruption of services.''',
+              ),
+            ]),
             Row(
               children: [
-                Text('Program is being placed on immediate hold:'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text('Program is being placed on immediate hold:'),
+                ),
                 if (widget.activeAudit.putProgramOnImmediateHold == null ||
                     widget.activeAudit.putProgramOnImmediateHold == true)
                   Padding(
@@ -167,9 +188,12 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                   )
               ],
             ),
-            Text(
-                '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                  '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
  '''),
+            ),
             // ),
 
             if (foodDepositoryMonitorSignature == null)
@@ -460,6 +484,9 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                       child: Text("Change stroke width")),
                 ],
               ),
+            Container(
+              height: 300,
+            )
           ],
         ),
       )),

@@ -13,7 +13,7 @@ import 'LookAhead.dart';
 class NewAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
   final bool followup;
-  NewAuditDialog({Key key, this.calendarResult, this.followup})
+  NewAuditDialog({Key key, this.calendarResult, @required this.followup})
       : super(key: key);
 
   @override

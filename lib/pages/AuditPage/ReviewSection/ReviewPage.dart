@@ -26,31 +26,33 @@ class ReviewPage extends StatelessWidget {
         // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: (citations.length == 0)
-                  ? MediaQuery.of(context).size.height * 0.65
-                  : MediaQuery.of(context).size.height / 3,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: activeAudit.sections.length - 4,
-                itemBuilder: (context, i) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: ColorDefs.colorAlternateLight,
-                        border: Border.all(
-                            color: ColorDefs.colorAlternateDark, width: 3)),
-                    child: ExpansionTile(
-                      trailing: Icon(Icons.arrow_drop_down),
-                      backgroundColor: ColorDefs.colorChatSelected,
-                      title: Text(activeAudit.sections[i + 1].name,
-                          style: ColorDefs.textBodyBlack20),
-                      children: <Widget>[
-                        ExpandableReviewContent(
-                            sectionData: activeAudit.sections[i + 1]),
-                      ],
-                    ),
-                  );
-                },
-              )),
+            height: (citations.length == 0)
+                ? MediaQuery.of(context).size.height * 0.65
+                : MediaQuery.of(context).size.height / 3,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: activeAudit.sections.length - 4,
+              itemBuilder: (context, i) {
+                return Container(
+                  decoration: BoxDecoration(
+                      color: ColorDefs.colorAlternateLight,
+                      border: Border.all(
+                          color: ColorDefs.colorAlternateDark, width: 3)),
+                  child: ExpansionTile(
+                    trailing: Icon(Icons.arrow_drop_down),
+                    backgroundColor: ColorDefs.colorChatSelected,
+                    title: Text(activeAudit.sections[i + 1].name,
+                        style: ColorDefs.textBodyBlack20),
+                    children: <Widget>[
+                      ExpandableReviewContent(
+                          sectionData: activeAudit.sections[i + 1]),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(height: 40),
 
           // if (activeAudit.citations.length != 0)
           Container(

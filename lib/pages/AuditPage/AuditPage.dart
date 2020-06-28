@@ -4,15 +4,11 @@ import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
-import 'package:auditor/Utilities/Conversion.dart';
-import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/pages/AuditPage/PhotoPage.dart';
-import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'DeveloperPage.dart';
@@ -21,7 +17,6 @@ import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
 import 'VerificationGoodPage.dart';
 import 'VerificationBadPage.dart';
-import 'dart:convert';
 import 'dart:typed_data';
 
 class AuditPage extends StatefulWidget {
@@ -61,6 +56,8 @@ class _AuditPageState extends State<AuditPage> {
     activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
     activeSection =
         Provider.of<AuditData>(context, listen: false).activeSection;
+    Provider.of<AuditData>(context, listen: false).citations =
+        activeAudit.citations;
     paintButtons();
   }
 

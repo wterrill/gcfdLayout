@@ -124,7 +124,10 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             setState(() {
                               startSync = true;
                             });
-                            Dialogs.showMessage(context, "Syncing Site Data");
+                            Dialogs.showMessage(
+                                context: context,
+                                message: "Syncing Site Data",
+                                dismissable: false);
                             String deviceid =
                                 Provider.of<GeneralData>(context, listen: false)
                                     .deviceid;
@@ -135,14 +138,20 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                                 Provider.of<SiteData>(context, listen: false)
                                     .siteList;
                             Navigator.of(context).pop();
-                            Dialogs.showMessage(context,
-                                "Syncing Scheduling data: upload and download");
+                            Dialogs.showMessage(
+                                context: context,
+                                message:
+                                    "Syncing Scheduling data: upload and download",
+                                dismissable: false);
                             await Provider.of<ListCalendarData>(context,
                                     listen: false)
                                 .dataSync(context, siteList, deviceid);
                             Navigator.of(context).pop();
-                            Dialogs.showMessage(context,
-                                "Syncing Audit data: upload and download");
+                            Dialogs.showMessage(
+                                context: context,
+                                message:
+                                    "Syncing Audit data: upload and download",
+                                dismissable: false);
 
                             await Provider.of<AuditData>(context, listen: false)
                                 .dataSync(context, siteList, deviceid);

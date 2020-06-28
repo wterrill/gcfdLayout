@@ -25,34 +25,34 @@ class _FollowupActionItems2State extends State<FollowupActionItems2> {
   Widget build(BuildContext context) {
     List<Question> citations = Provider.of<AuditData>(context).citations;
     return Container(
-        height: 100,
+        // height: 100,
         child: ListView.builder(
-          shrinkWrap: true,
-          // physics: NeverScrollableScrollPhysics(),
-          itemCount: citations.length,
-          itemBuilder: (context, index) {
-            return Container(
-              color: index.isEven
-                  ? ColorDefs.colorAlternateDark
-                  : ColorDefs.colorAlternateLight,
-              child: Container(
-                child: Column(
-                  children: [
-                    Card(
-                      child: ActionItemsCommentSection(
-                          index: index,
-                          questions: citations,
-                          key: UniqueKey(),
-                          numKeyboard: false,
-                          mandatory: false,
-                          actionItem: true),
-                    )
-                  ],
-                ),
-                // leading: new Text(question.userResponse),
-              ),
-            );
-          },
-        ));
+      shrinkWrap: true,
+      // physics: NeverScrollableScrollPhysics(),
+      itemCount: citations.length,
+      itemBuilder: (context, index) {
+        return Container(
+          color: index.isEven
+              ? ColorDefs.colorAlternateDark
+              : ColorDefs.colorAlternateLight,
+          child: Container(
+            child: Column(
+              children: [
+                Card(
+                  child: ActionItemsCommentSection(
+                      index: index,
+                      questions: citations,
+                      key: UniqueKey(),
+                      numKeyboard: false,
+                      mandatory: false,
+                      actionItem: true),
+                )
+              ],
+            ),
+            // leading: new Text(question.userResponse),
+          ),
+        );
+      },
+    ));
   }
 }

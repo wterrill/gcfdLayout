@@ -122,6 +122,7 @@ class DeveloperPage extends StatelessWidget {
           }
         }
       }
+      Provider.of<AuditData>(context, listen: false).notifyTheListeners();
     }
 
     void fillOutHappyAudit() {
@@ -223,6 +224,7 @@ class DeveloperPage extends StatelessWidget {
           }
         }
       }
+      Provider.of<AuditData>(context, listen: false).notifyTheListeners();
     }
 
     return Column(

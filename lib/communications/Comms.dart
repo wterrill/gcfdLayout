@@ -95,8 +95,7 @@ class FullAuditComms {
   static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {
     var queryParameters = {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
-      "QueryType": 1
-      //TODO replace this: allNotMe.toString(), // "1: Query All   0: Query All But Me"
+      "QueryType": 1 //allNotMe.toString()
     };
 
     if (isNtlm) {

@@ -49,7 +49,10 @@ class Dialogs {
     );
   }
 
-  static void showMessage(BuildContext context, String message) {
+  static void showMessage(
+      {@required BuildContext context,
+      @required String message,
+      @required bool dismissable}) {
     AlertDialog alert = AlertDialog(
       elevation: 6.0,
       content: Column(
@@ -61,7 +64,7 @@ class Dialogs {
       ),
     );
     showDialog<void>(
-      barrierDismissible: false,
+      barrierDismissible: dismissable,
       context: context,
       builder: (BuildContext context) {
         return alert;
@@ -430,7 +433,7 @@ class Dialogs {
                 shape: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0)),
                 title: Text('Schedule a New Audit:'),
-                content: NewAuditDialog(),
+                content: NewAuditDialog(followup: false),
               ),
             ),
           );

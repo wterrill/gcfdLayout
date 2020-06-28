@@ -1,5 +1,6 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -46,30 +47,42 @@ class _DateQuestionState extends State<DateQuestion> {
                 : Text(""),
             FlatButton(
                 onPressed: () async {
-                  DateTime selectedDate;
-                  selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime(2030),
-                    builder: (BuildContext context, Widget child) {
-                      return Theme(
-                        data: ThemeData.dark(),
-                        child: child,
-                      );
-                    },
-                  );
-                  widget.activeSection.questions[index].userResponse =
-                      selectedDate.toString();
-                  Provider.of<AuditData>(context, listen: false)
-                      .updateSectionStatus(
-                          checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
-                  setState(() {});
+                  if (Provider.of<AuditData>(context, listen: false)
+                          .activeAudit
+                          .calendarResult
+                          .status !=
+                      "Scheduled") {
+                    Dialogs.showMessage(
+                        context: context,
+                        message:
+                            "This audit has already been submitted, and cannot be edited",
+                        dismissable: true);
+                  } else {
+                    DateTime selectedDate;
+                    selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2018),
+                      lastDate: DateTime(2030),
+                      builder: (BuildContext context, Widget child) {
+                        return Theme(
+                          data: ThemeData.dark(),
+                          child: child,
+                        );
+                      },
+                    );
+                    widget.activeSection.questions[index].userResponse =
+                        selectedDate.toString();
+                    Provider.of<AuditData>(context, listen: false)
+                        .updateSectionStatus(
+                            checkSectionDone(widget.activeSection));
+                    Audit thisAudit =
+                        Provider.of<AuditData>(context, listen: false)
+                            .activeAudit;
+                    Provider.of<AuditData>(context, listen: false)
+                        .saveAuditLocally(thisAudit);
+                    setState(() {});
+                  }
                 },
                 child: Icon(Icons.calendar_today,
                     color:

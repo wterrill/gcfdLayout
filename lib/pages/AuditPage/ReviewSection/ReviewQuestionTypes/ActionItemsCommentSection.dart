@@ -57,7 +57,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
   Widget build(BuildContext context) {
     int index = widget.index;
     return AnimatedContainer(
-      height: widget.questions[index].unflagged ? 0 : 80,
+      height: widget.questions[index].unflagged ? 0 : 70,
       color: ColorDefs.colorAudit4,
       duration: Duration(milliseconds: 300),
       child: TextField(
