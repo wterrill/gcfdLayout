@@ -14,6 +14,14 @@ class ApptDataTable extends StatefulWidget {
 
 class _ApptDataTableState extends State<ApptDataTable> {
   String filterText = "";
+  @override
+  void initState() {
+    super.initState();
+
+    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+  }
 
   CalendarResultsDataSource _calendarResultsDataSource =
       CalendarResultsDataSource([]);
@@ -22,8 +30,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
   String lastFilterText = "";
   bool filterTimeToggle;
   int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
-  int _sortColumnIndex;
-  bool _sortAscending = true;
+  int _sortColumnIndex = 1;
+  bool _sortAscending = false;
 
   void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex,
       bool ascending) {

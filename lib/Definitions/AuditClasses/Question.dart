@@ -46,9 +46,6 @@ class Question extends HiveObject {
   @HiveField(13)
   String actionItem;
 
-  @HiveField(14)
-  String actionItemComment;
-
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;

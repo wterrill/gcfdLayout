@@ -15,6 +15,7 @@ class DeveloperPage extends StatelessWidget {
       print("filled");
       Audit activeAudit =
           Provider.of<AuditData>(context, listen: false).activeAudit;
+      Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
         section.lastStatus = Status.completed;
@@ -129,6 +130,7 @@ class DeveloperPage extends StatelessWidget {
       print("filled");
       Audit activeAudit =
           Provider.of<AuditData>(context, listen: false).activeAudit;
+      Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
         section.lastStatus = Status.completed;

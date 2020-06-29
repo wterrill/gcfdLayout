@@ -1,14 +1,20 @@
 String converNumberToStatus(int number) {
   String value = "NONE";
   switch (number) {
+    case (-1):
+      value = "Deleted";
+      break;
     case (0):
       value = "Scheduled";
       break;
     case (1):
       value = "Submitted";
       break;
-    case (-1):
-      value = "Deleted";
+    case (2):
+      value = "Follow Up";
+      break;
+    case (3):
+      value = "Reviewed";
       break;
   }
   return value;
@@ -134,6 +140,9 @@ String convertNumberToStatus(int number) {
       break;
     case (2):
       value = "Follow Up";
+      break;
+    case (2):
+      value = "Reviewed";
       break;
   }
   return value;

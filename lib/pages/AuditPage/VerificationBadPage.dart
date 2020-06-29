@@ -76,7 +76,10 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                   ),
             ),
             if (flaggedCitationsExist(citations))
-              Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 5.0),
+                child: Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
+              ),
 
             // Container(
             //   height: 350,

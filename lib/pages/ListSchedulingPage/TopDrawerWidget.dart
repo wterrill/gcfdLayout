@@ -61,18 +61,18 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       height: 40,
                       width: double.infinity,
                       color: ColorDefs.colorTopDrawerBackground),
-                  GestureDetector(
-                    onTap: () {
-                      Dialogs.showNotImplemented(context);
-                    },
-                    child: Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
-                        child: Center(
-                            child: Text("Schedule Audit",
-                                style: ColorDefs.textBodyBlue20))),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Dialogs.showNotImplemented(context);
+                  //   },
+                  //   // child: Container(
+                  //   //     height: 35.4,
+                  //   //     width: double.infinity,
+                  //   //     color: ColorDefs.colorTopDrawerAlternating,
+                  //   //     child: Center(
+                  //   //         child: Text("Schedule Audit",
+                  //   //             style: ColorDefs.textBodyBlue20))),
+                  // ),
                   GestureDetector(
                     onTap: () {
                       SiteList siteList =
@@ -87,100 +87,101 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                             child: Text("Sites",
                                 style: ColorDefs.textBodyBlue20))),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Dialogs.showNotImplemented(context);
-                    },
-                    child: Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
-                        child: Center(
-                            child: Text("Contacts",
-                                style: ColorDefs.textBodyBlue20))),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Dialogs.showNotImplemented(context);
-                    },
-                    child: Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        child: Center(
-                            child:
-                                Text("View", style: ColorDefs.textBodyBlue20))),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Dialogs.showNotImplemented(context);
-                    },
-                    child: Container(
-                        height: 35.4,
-                        width: double.infinity,
-                        color: ColorDefs.colorTopDrawerAlternating,
-                        child: GestureDetector(
-                          onTap: () async {
-                            // Sync all data
-                            setState(() {
-                              startSync = true;
-                            });
-                            Dialogs.showMessage(
-                                context: context,
-                                message: "Syncing Site Data",
-                                dismissable: false);
-                            String deviceid =
-                                Provider.of<GeneralData>(context, listen: false)
-                                    .deviceid;
-                            await Provider.of<SiteData>(context, listen: false)
-                                .siteSync();
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Dialogs.showNotImplemented(context);
+                  //   },
+                  //   child: Container(
+                  //       height: 35.4,
+                  //       width: double.infinity,
+                  //       color: ColorDefs.colorTopDrawerAlternating,
+                  //       child: Center(
+                  //           child: Text("Contacts",
+                  //               style: ColorDefs.textBodyBlue20))),
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Dialogs.showNotImplemented(context);
+                  //   },
+                  //   child: Container(
+                  //       height: 35.4,
+                  //       width: double.infinity,
+                  //       child: Center(
+                  //           child:
+                  //               Text("View", style: ColorDefs.textBodyBlue20))),
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Dialogs.showNotImplemented(context);
+                  //   },
+                  // child:
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: GestureDetector(
+                        onTap: () async {
+                          // Sync all data
+                          setState(() {
+                            startSync = true;
+                          });
+                          Dialogs.showMessage(
+                              context: context,
+                              message: "Syncing Site Data",
+                              dismissable: false);
+                          String deviceid =
+                              Provider.of<GeneralData>(context, listen: false)
+                                  .deviceid;
+                          await Provider.of<SiteData>(context, listen: false)
+                              .siteSync();
 
-                            SiteList siteList =
-                                Provider.of<SiteData>(context, listen: false)
-                                    .siteList;
-                            Navigator.of(context).pop();
-                            Dialogs.showMessage(
-                                context: context,
-                                message:
-                                    "Syncing Scheduling data: upload and download",
-                                dismissable: false);
-                            await Provider.of<ListCalendarData>(context,
-                                    listen: false)
-                                .dataSync(context, siteList, deviceid);
-                            Navigator.of(context).pop();
-                            Dialogs.showMessage(
-                                context: context,
-                                message:
-                                    "Syncing Audit data: upload and download",
-                                dismissable: false);
+                          SiteList siteList =
+                              Provider.of<SiteData>(context, listen: false)
+                                  .siteList;
+                          Navigator.of(context).pop();
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "Syncing Scheduling data: upload and download",
+                              dismissable: false);
+                          await Provider.of<ListCalendarData>(context,
+                                  listen: false)
+                              .dataSync(context, siteList, deviceid);
+                          Navigator.of(context).pop();
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "Syncing Audit data: upload and download",
+                              dismissable: false);
 
-                            await Provider.of<AuditData>(context, listen: false)
-                                .dataSync(context, siteList, deviceid);
-                            Navigator.of(context).pop();
+                          await Provider.of<AuditData>(context, listen: false)
+                              .dataSync(context, siteList, deviceid);
+                          Navigator.of(context).pop();
 
-                            setState(() {
-                              startSync = false;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Icon(Icons.sync, color: ColorDefs.colorAudit2),
-                              Center(
-                                  child: Text("Sync",
-                                      style: ColorDefs.textBodyBlue20)),
-                              Container(
-                                height: 20,
-                                width: 20,
-                                child: startSync
-                                    ? CircularProgressIndicator()
-                                    : Icon(Icons.sync,
-                                        color:
-                                            ColorDefs.colorTopDrawerBackground),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ),
+                          setState(() {
+                            startSync = false;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Icon(Icons.sync, color: ColorDefs.colorAudit2),
+                            Center(
+                                child: Text("Sync",
+                                    style: ColorDefs.textBodyBlue20)),
+                            Container(
+                              height: 20,
+                              width: 20,
+                              child: startSync
+                                  ? CircularProgressIndicator()
+                                  : Icon(Icons.sync,
+                                      color:
+                                          ColorDefs.colorTopDrawerBackground),
+                            ),
+                          ],
+                        ),
+                      )),
+                  //),
                 ])),
           ),
         ),

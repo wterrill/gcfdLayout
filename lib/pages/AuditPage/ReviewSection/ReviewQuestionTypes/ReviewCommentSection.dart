@@ -33,7 +33,7 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
       text = widget.questions[widget.index].userResponse?.toString();
     } else {
       if (widget.actionItem == true) {
-        text = widget.questions[widget.index].actionItemComment;
+        text = widget.questions[widget.index].actionItem;
       } else {
         text = widget.questions[widget.index].optionalComment;
       }

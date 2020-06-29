@@ -57,7 +57,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
   Widget build(BuildContext context) {
     int index = widget.index;
     return AnimatedContainer(
-      height: widget.questions[index].unflagged ? 0 : 70,
+      height: widget.questions[index].unflagged ? 0 : 67,
       color: ColorDefs.colorAudit4,
       duration: Duration(milliseconds: 300),
       child: TextField(
@@ -65,7 +65,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
             widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          widget.questions[index].actionItemComment = value;
+          widget.questions[index].actionItem = value;
         },
         maxLines: null,
         style: ColorDefs.textBodyBlack20,

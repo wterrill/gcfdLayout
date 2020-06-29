@@ -176,6 +176,7 @@ class _AuditPageState extends State<AuditPage> {
                                   break;
                                 }
                               }
+                              // Save citations, and update status
                               activeAudit.citations =
                                   Provider.of<AuditData>(context, listen: false)
                                       .citations;
@@ -186,9 +187,11 @@ class _AuditPageState extends State<AuditPage> {
                                   break;
                                 }
                               }
+
                               activeAudit.calendarResult.status = status;
                               Provider.of<AuditData>(context, listen: false)
                                   .saveAuditLocally(activeAudit);
+                              // the calendar item needs to be updated due to the status change.
                               Provider.of<ListCalendarData>(context,
                                       listen: false)
                                   .addCalendarItem(activeAudit.calendarResult);

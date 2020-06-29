@@ -25,6 +25,8 @@ class ReviewPage extends StatelessWidget {
       child: ListView(
         // mainAxisSize: MainAxisSize.min,
         children: [
+          Text("Audit Summary",
+              style: ColorDefs.textBodyBlack20, textAlign: TextAlign.center),
           Container(
             height: (citations.length == 0)
                 ? MediaQuery.of(context).size.height * 0.65
@@ -52,9 +54,13 @@ class ReviewPage extends StatelessWidget {
               },
             ),
           ),
-          Container(height: 40),
+          Container(height: 20),
 
-          // if (activeAudit.citations.length != 0)
+          Text(
+            "Generated Citations",
+            style: ColorDefs.textBodyBlack20,
+            textAlign: TextAlign.center,
+          ),
           Container(
               height: MediaQuery.of(context).size.height / 3,
               child: FollowupCitationsSections(

@@ -299,10 +299,26 @@ class AuditData with ChangeNotifier {
             questionnaire: pantryAuditSectionsQuestions);
 
         List<String> missingDBVar = [];
-        List<String> followupItemsQuestions =
-            incomingPantryAudit["FollowUpItemsQuestions"] as List<String>;
-        List<String> followupItems =
-            incomingPantryAudit['FollowUpItems'] as List<String>;
+        Map<String, dynamic> pantryCitations =
+            incomingPantryAudit["PantryCitations"] as Map<String, dynamic>;
+        // pantryCitations is a big object... we just need the data for the non-null pieces:
+        // also, let's get a list of the databaseVars
+        List<String> citationDatabaseVarsList = [];
+        if (pantryCitations != null) {
+          for (String key in pantryCitations.keys) {
+            if (pantryCitations[key] == null) {
+              pantryCitations.remove(key);
+            } else {
+              if (key.contains("Flag")) {
+                citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
+              }
+            }
+          }
+        }
+
+        // // we need to get the QuestionMap using the datavar.  ugh.
+        // for (Map<String, List<Map<String, dynamic>>> section
+        //     in pantryAuditSectionsQuestions) {}
 
         List<Question> citations = [];
 
@@ -314,6 +330,16 @@ class AuditData with ChangeNotifier {
           for (Question question in section.questions) {
             // get database variable
             String databaseVar = question.questionMap['databaseVar'] as String;
+            // see if we can snag the question into the citations
+            if (citationDatabaseVarsList.contains(databaseVar)) {
+              // found one
+              question.unflagged =
+                  pantryCitations[databaseVar + 'Flag'] as bool;
+              question.unflagged = !question.unflagged;
+              question.actionItem =
+                  pantryCitations[databaseVar + "ActionItem"] as String;
+              citations.add(question);
+            }
 
             if (databaseVar != null) {
               dynamic value = incomingPantryAudit[databaseVar];
@@ -424,21 +450,9 @@ class AuditData with ChangeNotifier {
                 }
               }
             }
-
-            //               'databaseVar': 'HowOftenGuestsReceiveFood',
-            // 'databaseVarType': 'string',
-            // 'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
-
-            if (followupItemsQuestions != null) {
-              for (String questionText in followupItemsQuestions) {
-                int index = followupItemsQuestions.indexOf(question.text);
-                if (index != -1) {
-                  question.actionItem = followupItems[index];
-                  citations.add(question);
-                }
-              }
-            }
           }
+          // finally, add the citations created above.
+          newAudit.citations = citations;
 
           if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
             newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
@@ -477,6 +491,7 @@ class AuditData with ChangeNotifier {
 
   Future<dynamic> sendAudit(Audit outgoingAudit) async {
     Map<String, dynamic> resultMap = <String, dynamic>{};
+////////// Encode all of the questions first //////////
     for (Section section in outgoingAudit.sections) {
       for (Question question in section.questions) {
         if (section.name != "Photos") {
@@ -514,7 +529,6 @@ class AuditData with ChangeNotifier {
               resultMap[comment] = question.optionalComment;
             } catch (err) {
               print(err);
-              print("moving on");
             }
           }
 
@@ -544,12 +558,8 @@ class AuditData with ChangeNotifier {
     }
     resultMap.remove(null);
     print(resultMap);
-    // Map<String, dynamic> pantryDetail =
-    //     <String, dynamic>{"PantryDetail": resultMap};
-    String deviceid = deviceidProvider; //Provider.of<GeneralData>(
-    //context,
-    //listen: false)
-    //.deviceid;
+////////// Encode main body  //////////
+    String deviceid = deviceidProvider;
 
     String dateOfSiteVisit =
         outgoingAudit.calendarResult.startDateTime.toString();
@@ -575,28 +585,33 @@ class AuditData with ChangeNotifier {
           outgoingAudit.correctiveActionPlanDueDate.toString();
       resultMap['CorrectiveActionPlanDueDate'] = tempDateTimeString;
     }
-    //TODO logive the splits up the signature.
 
+////////// Encode signatures in base 64 //////////
     resultMap['SiteRepresentativeSignature'] =
         base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
-    /////////
+
     if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
       resultMap['FoodDepositoryMonitorSignature'] = base64Encode(
           outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
     bool followUpRequired = false;
-    List<String> followUpItems = [];
-    List<String> followUpItemsQuestions = [];
+
+    Map<String, dynamic> pantryCitations = <String, dynamic>{};
+
     for (Question citation in outgoingAudit.citations) {
       if (!citation.unflagged) {
         followUpRequired = true;
-        followUpItems.add(citation.actionItem);
-        followUpItemsQuestions.add(citation.text);
+        pantryCitations[
+            (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
+        pantryCitations[(citation.questionMap['databaseVar'] as String) +
+            'ActionItem'] = citation.actionItem;
+      } else {
+        String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
+        pantryCitations[text] = 0;
       }
     }
 
     resultMap['FollowUpRequired'] = followUpRequired;
-    resultMap['FollowUpItems'] = followUpItems;
-    resultMap['FollowUpItemsQuestions'] = followUpItemsQuestions;
+    resultMap['PantryCitations'] = pantryCitations;
     resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 
     Map<String, dynamic> mainBody = <String, dynamic>{

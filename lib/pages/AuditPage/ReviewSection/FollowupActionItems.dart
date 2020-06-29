@@ -81,7 +81,7 @@ class _FollowupActionItemsState extends State<FollowupActionItems> {
                                   child: Icon(Icons.feedback,
                                       size: 40.0,
                                       color: widget.activeAudit.citations[index]
-                                                  .actionItemComment ==
+                                                  .actionItem ==
                                               null
                                           ? ColorDefs.colorDarkBackground
                                           : ColorDefs.colorChatSelected),
