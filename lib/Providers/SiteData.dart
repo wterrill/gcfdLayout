@@ -1,6 +1,8 @@
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
+import 'package:auditor/main.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:auditor/Definitions/ExternalSiteData.dart';
@@ -50,7 +52,19 @@ class SiteData with ChangeNotifier {
 
   void siteSync() async {
     print("sync");
-    dynamic result = await SiteComms.getSites();
+    dynamic result = await SiteComms.getSites().timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        Navigator.of(navigatorKey.currentContext).pop();
+        Dialogs.showMessage(
+            context: navigatorKey.currentContext,
+            message:
+                "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
+            dismissable: true);
+        return null;
+      },
+    );
+
     print(result);
     siteList = SiteList(siteList: result as List<Site>);
     print(siteList);

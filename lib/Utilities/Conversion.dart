@@ -1,4 +1,4 @@
-String converNumberToStatus(int number) {
+String convertNumberToStatus(int number) {
   String value = "NONE";
   switch (number) {
     case (-1):
@@ -8,13 +8,29 @@ String converNumberToStatus(int number) {
       value = "Scheduled";
       break;
     case (1):
-      value = "Submitted";
+      value = "Site Visit Req.";
       break;
     case (2):
-      value = "Follow Up";
+      value = "Completed";
       break;
-    case (3):
-      value = "Reviewed";
+  }
+  return value;
+}
+
+int convertStatusToNumber(String status) {
+  int value = 0;
+  switch (status) {
+    case ("Deleted"):
+      value = -1;
+      break;
+    case ("Scheduled"):
+      value = 0;
+      break;
+    case ("Site Visit Req."):
+      value = 1;
+      break;
+    case ("Completed"):
+      value = 2;
       break;
   }
   return value;
@@ -126,24 +142,4 @@ String convertNumberToProgramType(int number) {
   return value;
 }
 
-String convertNumberToStatus(int number) {
-  String value = "None";
-  switch (number) {
-    case (-1):
-      value = "Deleted";
-      break;
-    case (0):
-      value = "Scheduled";
-      break;
-    case (1):
-      value = "Submitted";
-      break;
-    case (2):
-      value = "Follow Up";
-      break;
-    case (2):
-      value = "Reviewed";
-      break;
-  }
-  return value;
-}
+// -

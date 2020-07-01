@@ -18,9 +18,9 @@ class _ApptDataTableState extends State<ApptDataTable> {
   void initState() {
     super.initState();
 
-    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
-    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
-    _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
   }
 
   CalendarResultsDataSource _calendarResultsDataSource =

@@ -1073,7 +1073,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'PlumbingIssues', // <--------
     'databaseVarType': 'bool', // <---------
     'databaseOptCom': 'PlumbingIssuesComments', // <--------
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain plumbing issues in comment field'
   },
   <String, dynamic>{
     'text': 'Sewage issues?',
@@ -1297,5 +1297,3 @@ List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{"Verification": verificationData},
   <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];
-
-//TODO: FollowUpRequired,  CorrectiveActionPlanDueDate,  SiteRepresentativeSignature   -> varchar 50, date, varchar(max)

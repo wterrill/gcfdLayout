@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
@@ -244,7 +245,6 @@ class AuditData with ChangeNotifier {
     for (var i = 0; i < toBeSentKeys.length; i++) {
       Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
       bool successful = await sendAudit(result) as bool;
-      // dynamic successful = await FullAuditComms.sendFullAudit(result);
       if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
     }
   }
@@ -257,14 +257,16 @@ class AuditData with ChangeNotifier {
     }
 
     dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
-    List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
-    print(newAudits);
-    for (Audit audit in newAudits) {
-      print(audit);
+    if (fromServer != null) {
+      List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
+      print(newAudits);
+      for (Audit audit in newAudits) {
+        print(audit);
 
-      saveAuditLocally(audit);
+        saveAuditLocally(audit);
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
@@ -300,18 +302,17 @@ class AuditData with ChangeNotifier {
 
         List<String> missingDBVar = [];
         Map<String, dynamic> pantryCitations =
-            incomingPantryAudit["PantryCitations"] as Map<String, dynamic>;
+            receivedAudit["PantryCitations"] as Map<String, dynamic>;
         // pantryCitations is a big object... we just need the data for the non-null pieces:
         // also, let's get a list of the databaseVars
         List<String> citationDatabaseVarsList = [];
         if (pantryCitations != null) {
+          pantryCitations.removeWhere(
+              (key, dynamic value) => key == null || value == null);
+
           for (String key in pantryCitations.keys) {
-            if (pantryCitations[key] == null) {
-              pantryCitations.remove(key);
-            } else {
-              if (key.contains("Flag")) {
-                citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
-              }
+            if (key.contains("Flag")) {
+              citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
             }
           }
         }
@@ -333,9 +334,14 @@ class AuditData with ChangeNotifier {
             // see if we can snag the question into the citations
             if (citationDatabaseVarsList.contains(databaseVar)) {
               // found one
-              question.unflagged =
-                  pantryCitations[databaseVar + 'Flag'] as bool;
-              question.unflagged = !question.unflagged;
+              if (pantryCitations[databaseVar + 'Flag'] as int == 0) {
+                question.unflagged = true;
+              } else if (pantryCitations[databaseVar + 'Flag'] as int == 1) {
+                question.unflagged = false;
+              }
+              question.fromSectionName = section.name;
+
+              // question.unflagged = !question.unflagged;
               question.actionItem =
                   pantryCitations[databaseVar + "ActionItem"] as String;
               citations.add(question);
@@ -451,27 +457,29 @@ class AuditData with ChangeNotifier {
               }
             }
           }
-          // finally, add the citations created above.
-          newAudit.citations = citations;
+        }
+        dynamic temp = incomingPantryAudit['FollowUpRequired'];
+        newAudit.followupRequired = temp as bool;
 
-          if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
-            newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
-                .convert(incomingPantryAudit['SiteRepresentativeSignature']
-                    as String);
-          if (incomingPantryAudit['FoodDepositoryMonitorSignature'] != null)
-            newAudit.photoSig['foodDepositoryMonitorSignature'] =
-                Base64Decoder().convert(
-                    incomingPantryAudit['FoodDepositoryMonitorSignature']
-                        as String);
+        // finally, add the citations created above.
+        newAudit.citations = citations;
 
-          if (incomingPantryAudit['CorrectiveActionPlanDueDate'] != null) {
-            newAudit.correctiveActionPlanDueDate = DateTime.parse(
-                incomingPantryAudit['CorrectiveActionPlanDueDate'] as String);
-          }
-          if (incomingPantryAudit['ImmediateHold'] != null) {
-            newAudit.putProgramOnImmediateHold =
-                incomingPantryAudit['ImmediateHold'] as bool;
-          }
+        if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
+          newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
+              .convert(
+                  incomingPantryAudit['SiteRepresentativeSignature'] as String);
+        if (incomingPantryAudit['FoodDepositoryMonitorSignature'] != null)
+          newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
+              .convert(incomingPantryAudit['FoodDepositoryMonitorSignature']
+                  as String);
+
+        if (incomingPantryAudit['CorrectiveActionPlanDueDate'] != null) {
+          newAudit.correctiveActionPlanDueDate = DateTime.parse(
+              incomingPantryAudit['CorrectiveActionPlanDueDate'] as String);
+        }
+        if (incomingPantryAudit['ImmediateHold'] != null) {
+          newAudit.putProgramOnImmediateHold =
+              incomingPantryAudit['ImmediateHold'] as bool;
         }
 
         print(missingDBVar);
@@ -489,6 +497,10 @@ class AuditData with ChangeNotifier {
     return newAudits;
   }
 
+////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
   Future<dynamic> sendAudit(Audit outgoingAudit) async {
     Map<String, dynamic> resultMap = <String, dynamic>{};
 ////////// Encode all of the questions first //////////
@@ -593,13 +605,13 @@ class AuditData with ChangeNotifier {
     if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
       resultMap['FoodDepositoryMonitorSignature'] = base64Encode(
           outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
-    bool followUpRequired = false;
+    // bool followUpRequired = false;
 
     Map<String, dynamic> pantryCitations = <String, dynamic>{};
 
     for (Question citation in outgoingAudit.citations) {
       if (!citation.unflagged) {
-        followUpRequired = true;
+        // followUpRequired = true;
         pantryCitations[
             (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
         pantryCitations[(citation.questionMap['databaseVar'] as String) +
@@ -610,8 +622,8 @@ class AuditData with ChangeNotifier {
       }
     }
 
-    resultMap['FollowUpRequired'] = followUpRequired;
-    resultMap['PantryCitations'] = pantryCitations;
+    resultMap['FollowUpRequired'] = outgoingAudit.followupRequired;
+
     resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 
     Map<String, dynamic> mainBody = <String, dynamic>{
@@ -629,9 +641,21 @@ class AuditData with ChangeNotifier {
       "PPCDetail": null,
     };
     mainBody["PantryDetail"] = resultMap;
+    mainBody['PantryCitations'] = pantryCitations;
     print(mainBody);
 
-    return FullAuditComms.sendFullAudit(mainBody);
+    return FullAuditComms.sendFullAudit(mainBody).timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        // Navigator.of(navigatorKey.currentContext).pop();
+        // Dialogs.showMessage(
+        //     context: navigatorKey.currentContext,
+        //     message:
+        //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
+        //     dismissable: true);
+        return null;
+      },
+    );
 
     // return success;
   }

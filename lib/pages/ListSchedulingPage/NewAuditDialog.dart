@@ -351,7 +351,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                     bool validated = validateEntry();
 
                     if (validated && timeInPastOK) {
-                      if (alreadyExisted) {
+                      if (alreadyExisted && !widget.followup) {
                         Provider.of<ListCalendarData>(context, listen: false)
                             .deleteCalendarItem(widget.calendarResult);
                       }

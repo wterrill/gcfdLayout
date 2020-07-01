@@ -225,7 +225,7 @@ class AuditInfoDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (calendarResult.status == "Follow Up")
+                  if (calendarResult.status == "Site Visit Req.")
                     Container(
                       color: Colors.black,
                       child: Center(

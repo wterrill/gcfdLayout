@@ -3,6 +3,7 @@ import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Display extends StatefulWidget {
   final int index;
@@ -32,10 +33,12 @@ class _DisplayState extends State<Display> {
       Widget widget = Text("");
       switch (text) {
         case ("Date of Visit:"):
-          widget = Text(activeCalendarResult.startDateTime.toString());
+          widget =
+              Text(DateFormat.yMd().format(activeCalendarResult.startDateTime));
           break;
         case ("Start Time:"):
-          widget = Text(activeCalendarResult.startTime);
+          widget =
+              Text(DateFormat.jm().format(activeCalendarResult.startDateTime));
           break;
         case ("Date of Visit:"):
           widget = Text(activeCalendarResult?.startDateTime.toString());
@@ -47,7 +50,8 @@ class _DisplayState extends State<Display> {
           widget = Text(activeCalendarResult?.agencyName);
           break;
         case ("Agency/Program Number:"):
-          widget = Text(activeCalendarResult?.programNum);
+          widget = Text(
+              '${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}');
           break;
         case ("Site address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";

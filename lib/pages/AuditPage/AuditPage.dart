@@ -180,12 +180,9 @@ class _AuditPageState extends State<AuditPage> {
                               activeAudit.citations =
                                   Provider.of<AuditData>(context, listen: false)
                                       .citations;
-                              String status = "Submitted";
-                              for (Question citation in activeAudit.citations) {
-                                if (!citation.unflagged) {
-                                  status = "Follow Up";
-                                  break;
-                                }
+                              String status = "Completed";
+                              if (activeAudit.followupRequired == true) {
+                                status = "Site Visit Req.";
                               }
 
                               activeAudit.calendarResult.status = status;

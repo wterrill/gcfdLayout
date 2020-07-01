@@ -28,9 +28,7 @@ class ReviewPage extends StatelessWidget {
           Text("Audit Summary",
               style: ColorDefs.textBodyBlack20, textAlign: TextAlign.center),
           Container(
-            height: (citations.length == 0)
-                ? MediaQuery.of(context).size.height * 0.65
-                : MediaQuery.of(context).size.height / 3,
+            height: MediaQuery.of(context).size.height * 0.65,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: activeAudit.sections.length - 4,
@@ -56,17 +54,17 @@ class ReviewPage extends StatelessWidget {
           ),
           Container(height: 20),
 
-          Text(
-            "Generated Citations",
-            style: ColorDefs.textBodyBlack20,
-            textAlign: TextAlign.center,
-          ),
-          Container(
-              height: MediaQuery.of(context).size.height / 3,
-              child: FollowupCitationsSections(
-                  // activeAudit: activeAudit,
-                  )),
-          Container(height: 300),
+          // Text(
+          //   "Generated Citations",
+          //   style: ColorDefs.textBodyBlack20,
+          //   textAlign: TextAlign.center,
+          // ),
+          // Container(
+          //     height: MediaQuery.of(context).size.height / 3,
+          //     child: FollowupCitationsSections(
+          //         // activeAudit: activeAudit,
+          //         )),
+          // Container(height: 300),
           // Container(
           //   height: 800,
           // )

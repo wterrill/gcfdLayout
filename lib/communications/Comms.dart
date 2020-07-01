@@ -95,7 +95,7 @@ class FullAuditComms {
   static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {
     var queryParameters = {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
-      "QueryType": 1 //allNotMe.toString()
+      "QueryType": allNotMe.toString()
     };
 
     if (isNtlm) {
@@ -200,7 +200,7 @@ class ScheduleAuditComms {
                 convertNumberToAuditType(event['AuditType'] as int);
             String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000')
                 .format(DateTime.parse(event['StartTime'] as String));
-            String status = converNumberToStatus(event['Status'] as int);
+            String status = convertNumberToStatus(event['Status'] as int);
             Site siteInfo = siteList.getSiteFromAgencyNumber(
                 agencyNumber: event['AgencyNumber'] as String);
             siteInfo.agencyNumber ??= event['AgencyNumber'] as String;

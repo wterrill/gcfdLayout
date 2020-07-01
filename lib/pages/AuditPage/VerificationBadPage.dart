@@ -32,10 +32,20 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   Uint8List siteRepresentativeSignature = null;
   Uint8List foodDepositoryMonitorSignature = null;
   List<String> actionItems;
+  int followupReqVal;
 
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
+    followupReqVal = 0;
+    if (widget.activeAudit.followupRequired != null) {
+      if (widget.activeAudit.followupRequired == true) {
+        followupReqVal = 1;
+      } else {
+        followupReqVal = 0;
+      }
+    }
+
     bool flaggedCitationsExist(List<Question> citations) {
       bool exists = false;
       for (Question citation in citations) {
@@ -58,6 +68,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
           widget.activeAudit?.photoSig['siteRepresentativeSignature'];
     } catch (err) {}
 
+    print("onbuild: $followupReqVal");
     return Container(
       child: Expanded(
           child: SingleChildScrollView(
@@ -123,6 +134,46 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
               ],
             ),
 
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                      "Require follow-up site visit for this establishment? "),
+                ),
+                DropdownButton<int>(
+                    value: followupReqVal,
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: ColorDefs.textBodyBlack20,
+                    underline: Container(
+                      height: 2,
+                      color: (followupReqVal == 1) ? Colors.red : Colors.green,
+                    ),
+                    onChanged: (int newValue) {
+                      setState(() {
+                        print(newValue);
+                        followupReqVal = newValue;
+                        print(followupReqVal);
+                        Provider.of<AuditData>(context, listen: false)
+                            .activeAudit
+                            .followupRequired = newValue == 0 ? false : true;
+                      });
+                    },
+                    items: [
+                      DropdownMenuItem<int>(
+                        value: 0,
+                        child: Text("No follow up site visit required"),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 1,
+                        child: Text("Follow up site visit required"),
+                      )
+                    ]),
+              ],
+            ),
+
             // Padding(
             //   padding: const EdgeInsets.all(20.0),
             // child:
@@ -148,7 +199,12 @@ matter to ensure your community does not suffer an interruption of services.''',
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          widget.activeAudit.putProgramOnImmediateHold = true;
+                          if (widget.activeAudit.putProgramOnImmediateHold ==
+                              null) {
+                            widget.activeAudit.putProgramOnImmediateHold = true;
+                          } else {
+                            widget.activeAudit.putProgramOnImmediateHold = null;
+                          }
                         });
                       },
                       child: Container(
@@ -159,7 +215,7 @@ matter to ensure your community does not suffer an interruption of services.''',
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.done,
+                              Icons.error_outline,
                               color: Colors.red,
                             ),
                             Text("Yes")
@@ -173,7 +229,12 @@ matter to ensure your community does not suffer an interruption of services.''',
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        widget.activeAudit.putProgramOnImmediateHold = false;
+                        if (widget.activeAudit.putProgramOnImmediateHold ==
+                            null) {
+                          widget.activeAudit.putProgramOnImmediateHold = false;
+                        } else {
+                          widget.activeAudit.putProgramOnImmediateHold = null;
+                        }
                       });
                     },
                     child: Container(
@@ -183,7 +244,7 @@ matter to ensure your community does not suffer an interruption of services.''',
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.clear, color: Colors.green),
+                          Icon(Icons.check_circle, color: Colors.green),
                           Text("No")
                         ],
                       ),
