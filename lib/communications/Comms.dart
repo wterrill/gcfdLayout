@@ -212,7 +212,7 @@ class ScheduleAuditComms {
                 agencyNumber: event['AgencyNumber'] as String);
             siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
             String siteidreceived = event['DeviceId'] as String;
-            Map<String, dynamic> pantryCitationsToFollowUp =
+            Map<String, dynamic> citationsToFollowUp =
                 event['retrievedAuditToSend'] as Map<String, dynamic>;
 
             if (startTime != null) {
@@ -227,7 +227,7 @@ class ScheduleAuditComms {
                   status: status,
                   siteInfo: siteInfo,
                   deviceid: siteidreceived,
-                  citationsToFollowUp: pantryCitationsToFollowUp);
+                  citationsToFollowUp: citationsToFollowUp);
               finalList.add(newResult);
             } else {
               print('$agencyName did not have a startTime associated with it');

@@ -289,7 +289,7 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
     'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
     'databaseVar': 'NumberOfIntakeVolunteers',
-    'databaseVarType': 'int',
+    'databaseVarType': 'string',
   },
   <String, dynamic>{
     'text': "# of Meal Distribution volunteers:",

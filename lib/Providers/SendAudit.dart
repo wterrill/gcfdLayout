@@ -112,18 +112,18 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
         base64Encode(outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
   // bool followUpRequired = false;
 
-  Map<String, dynamic> pantryCitations = <String, dynamic>{};
+  Map<String, dynamic> citationsMap = <String, dynamic>{};
 
   for (Question citation in outgoingAudit.citations) {
     if (!citation.unflagged) {
       // followUpRequired = true;
-      pantryCitations[
-          (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
-      pantryCitations[(citation.questionMap['databaseVar'] as String) +
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
+          1;
+      citationsMap[(citation.questionMap['databaseVar'] as String) +
           'ActionItem'] = citation.actionItem;
     } else {
       String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
-      pantryCitations[text] = 0;
+      citationsMap[text] = 0;
     }
   }
 
@@ -145,8 +145,20 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
     "CongregateDetail": null,
     "PPCDetail": null,
   };
-  mainBody["PantryDetail"] = resultMap;
-  mainBody['PantryCitations'] = pantryCitations;
+  if (outgoingAudit.calendarResult.programType == "Pantry Audit") {
+    mainBody["PantryDetail"] = resultMap;
+  } else if (outgoingAudit.calendarResult.programType == "Congregate Audit") {
+    mainBody["CongregateDetail"] = resultMap;
+  } else {
+    mainBody["PPCDetail"] = resultMap;
+  }
+  if (outgoingAudit.calendarResult.programType == "Pantry Audit") {
+    mainBody['PantryCitations'] = citationsMap;
+  }
+  if (outgoingAudit.calendarResult.programType == "Congregate Audit") {
+    mainBody['CongregateCitations'] = citationsMap;
+  }
+
   print(mainBody);
 
   return FullAuditComms.sendFullAudit(mainBody).timeout(

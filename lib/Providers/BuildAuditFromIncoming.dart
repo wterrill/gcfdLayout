@@ -35,29 +35,35 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
       );
       print(event['DeviceId']);
 
-      if (newCalendarResult == "pantry audit") {
+      if (newCalendarResult.programType == "Pantry Audit") {
         newAudit = Audit(
             calendarResult: newCalendarResult,
             questionnaire: pantryAuditSectionsQuestions);
       }
 
-      if (newCalendarResult == "congregate audit") {
+      if (newCalendarResult.programType == "Congregate Audit") {
         newAudit = Audit(
             calendarResult: newCalendarResult,
             questionnaire: congregateAuditSectionsQuestions);
       }
 
       List<String> missingDBVar = [];
-      Map<String, dynamic> pantryCitations =
-          receivedAudit["PantryCitations"] as Map<String, dynamic>;
+      Map<String, dynamic> citationsMap;
+      if (newAudit.calendarResult.programType == "Pantry Audit") {
+        citationsMap = receivedAudit["PantryCitations"] as Map<String, dynamic>;
+      }
+      if (newAudit.calendarResult.programType == "Congregate Audit") {
+        citationsMap =
+            receivedAudit["CongregateCitations"] as Map<String, dynamic>;
+      }
       // pantryCitations is a big object... we just need the data for the non-null pieces:
       // also, let's get a list of the databaseVars
       List<String> citationDatabaseVarsList = [];
-      if (pantryCitations != null) {
-        pantryCitations
+      if (citationsMap != null) {
+        citationsMap
             .removeWhere((key, dynamic value) => key == null || value == null);
 
-        for (String key in pantryCitations.keys) {
+        for (String key in citationsMap.keys) {
           if (key.contains("Flag")) {
             citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
           }
@@ -81,16 +87,16 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
           // see if we can snag the question into the citations
           if (citationDatabaseVarsList.contains(databaseVar)) {
             // found one
-            if (pantryCitations[databaseVar + 'Flag'] as int == 0) {
+            if (citationsMap[databaseVar + 'Flag'] as int == 0) {
               question.unflagged = true;
-            } else if (pantryCitations[databaseVar + 'Flag'] as int == 1) {
+            } else if (citationsMap[databaseVar + 'Flag'] as int == 1) {
               question.unflagged = false;
             }
             question.fromSectionName = section.name;
 
             // question.unflagged = !question.unflagged;
             question.actionItem =
-                pantryCitations[databaseVar + "ActionItem"] as String;
+                citationsMap[databaseVar + "ActionItem"] as String;
             citations.add(question);
           }
 

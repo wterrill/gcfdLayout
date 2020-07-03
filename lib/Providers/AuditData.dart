@@ -74,21 +74,21 @@ class AuditData with ChangeNotifier {
     Audit retrievedAudit = auditBox.get(
             '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}')
         as Audit;
-    Map<String, dynamic> pantryCitations = <String, dynamic>{};
+    Map<String, dynamic> citationsMap = <String, dynamic>{};
 
     for (Question citation in retrievedAudit.citations) {
       if (!citation.unflagged) {
         // followUpRequired = true;
-        pantryCitations[
-            (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
-        pantryCitations[(citation.questionMap['databaseVar'] as String) +
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
+            1;
+        citationsMap[(citation.questionMap['databaseVar'] as String) +
             'ActionItem'] = citation.actionItem;
       } else {
         String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
-        pantryCitations[text] = 0;
+        citationsMap[text] = 0;
       }
     }
-    return pantryCitations;
+    return citationsMap;
   }
 
   // void updateStatusOnExistingAudit(
@@ -246,14 +246,14 @@ class AuditData with ChangeNotifier {
   }
 
   void createAuditClass(CalendarResult calendarResult) {
-    if (calendarResult.programType.toLowerCase() == "pantry audit") {
+    if (calendarResult.programType == "Pantry Audit") {
       activeAudit = Audit(
           questionnaire: pantryAuditSectionsQuestions,
           calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
-    if (calendarResult.programType.toLowerCase() == "congregate audit") {
+    if (calendarResult.programType == "Congregate Audit") {
       activeAudit = Audit(
           questionnaire: congregateAuditSectionsQuestions,
           calendarResult: calendarResult);
