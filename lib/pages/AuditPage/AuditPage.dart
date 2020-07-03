@@ -199,7 +199,7 @@ class _AuditPageState extends State<AuditPage> {
 
                               await Dialogs.showSuccess(context);
                               Navigator.of(context).pop();
-                              Navigator.of(context).pop();
+                              // Navigator.of(context).pop();
                               Provider.of<AuditData>(context, listen: false)
                                   .resetAudit();
                             })),

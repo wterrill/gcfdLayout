@@ -3,18 +3,21 @@ import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/PantryAuditData.dart';
+import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
+import 'package:auditor/providers/SendAudit.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'dart:convert';
 
 import 'dart:typed_data';
-import 'dart:convert';
 
 import 'package:intl/intl.dart';
+
+import 'BuildAuditFromIncoming.dart';
 // import 'dart:typed_data';
 
 class AuditData with ChangeNotifier {
@@ -66,15 +69,56 @@ class AuditData with ChangeNotifier {
     }
   }
 
+  Map<String, dynamic> getAuditCitationsObject(
+      {CalendarResult newCalendarResult}) {
+    Audit retrievedAudit = auditBox.get(
+            '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}')
+        as Audit;
+    Map<String, dynamic> pantryCitations = <String, dynamic>{};
+
+    for (Question citation in retrievedAudit.citations) {
+      if (!citation.unflagged) {
+        // followUpRequired = true;
+        pantryCitations[
+            (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
+        pantryCitations[(citation.questionMap['databaseVar'] as String) +
+            'ActionItem'] = citation.actionItem;
+      } else {
+        String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
+        pantryCitations[text] = 0;
+      }
+    }
+    return pantryCitations;
+  }
+
+  // void updateStatusOnExistingAudit(
+  //     CalendarResult alreadyExistedCalendarResult) {
+  //   Audit retrievedAudit = auditBox.get(
+  //           '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}')
+  //       as Audit;
+  //   Audit retrievedAuditToSend = auditOutBox.get(
+  //           '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}')
+  //       as Audit;
+  //   retrievedAudit.calendarResult.status = "Completed";
+  //   try {
+  //     retrievedAuditToSend.calendarResult.status = "Completed";
+  //     auditOutBox.put(
+  //         '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}',
+  //         retrievedAuditToSend);
+  //   } catch (err) {
+  //     print("audit not waiting to be sent");
+  //   }
+  //   auditBox.put(
+  //       '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}',
+  //       retrievedAudit);
+  // }
+
   void saveAuditToSend(Audit outgoingAudit) {
     Audit clonedOutgoingAudit = outgoingAudit.clone();
 
     auditsToSendBox.put(
         '${clonedOutgoingAudit.calendarResult.startTime}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}',
         clonedOutgoingAudit);
-
-    // auditOutBox.put("beer", outgoingAudit);
-    print("testing");
   }
 
   bool auditExists(CalendarResult calendarResult) {
@@ -209,6 +253,13 @@ class AuditData with ChangeNotifier {
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
+    if (calendarResult.programType.toLowerCase() == "congregate audit") {
+      activeAudit = Audit(
+          questionnaire: congregateAuditSectionsQuestions,
+          calendarResult: calendarResult);
+      activeSection = activeAudit.sections[0];
+      activeCalendarResult = calendarResult;
+    }
   }
 
   void updateActiveSection(Section newSection) {
@@ -244,7 +295,7 @@ class AuditData with ChangeNotifier {
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
-      bool successful = await sendAudit(result) as bool;
+      bool successful = await sendAudit(result, deviceidProvider) as bool;
       if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
     }
   }
@@ -268,402 +319,4 @@ class AuditData with ChangeNotifier {
       notifyListeners();
     }
   }
-
-  List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
-    List<Audit> newAudits = [];
-    Audit newAudit;
-    for (dynamic event in fromServer) {
-      Map<String, dynamic> receivedAudit = event as Map<String, dynamic>;
-      Map<String, dynamic> incomingPantryAudit =
-          receivedAudit['PantryDetail'] as Map<String, dynamic>;
-
-      if (incomingPantryAudit != null && receivedAudit['StartTime'] != null) {
-        CalendarResult newCalendarResult = CalendarResult(
-          programType: convertNumberToProgramType(event['ProgramType'] as int),
-          message: "",
-          siteInfo: siteList.getSiteFromAgencyNumber(
-              agencyNumber: event['AgencyNumber'] as String),
-          agencyNum: event['AgencyNumber'] as String,
-          programNum: event['ProgramNumber'] as String,
-          agencyName: siteList
-              .agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
-          auditType: convertNumberToAuditType(event['AuditType'] as int),
-          startTime:
-              DateTime.parse(receivedAudit['StartTime'] as String).toString(),
-          status: convertNumberToStatus(receivedAudit['Status'] as int),
-          auditor: event['Auditor'] as String,
-          deviceid: event['DeviceId'] as String,
-        );
-        print(event['DeviceId']);
-
-        newAudit = Audit(
-            calendarResult: newCalendarResult,
-            questionnaire: pantryAuditSectionsQuestions);
-
-        List<String> missingDBVar = [];
-        Map<String, dynamic> pantryCitations =
-            receivedAudit["PantryCitations"] as Map<String, dynamic>;
-        // pantryCitations is a big object... we just need the data for the non-null pieces:
-        // also, let's get a list of the databaseVars
-        List<String> citationDatabaseVarsList = [];
-        if (pantryCitations != null) {
-          pantryCitations.removeWhere(
-              (key, dynamic value) => key == null || value == null);
-
-          for (String key in pantryCitations.keys) {
-            if (key.contains("Flag")) {
-              citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
-            }
-          }
-        }
-
-        // // we need to get the QuestionMap using the datavar.  ugh.
-        // for (Map<String, List<Map<String, dynamic>>> section
-        //     in pantryAuditSectionsQuestions) {}
-
-        List<Question> citations = [];
-
-        // Sections
-        for (Section section in newAudit.sections) {
-          print("-------------------" + section.name + "-------------------");
-
-          //Questions
-          for (Question question in section.questions) {
-            // get database variable
-            String databaseVar = question.questionMap['databaseVar'] as String;
-            // see if we can snag the question into the citations
-            if (citationDatabaseVarsList.contains(databaseVar)) {
-              // found one
-              if (pantryCitations[databaseVar + 'Flag'] as int == 0) {
-                question.unflagged = true;
-              } else if (pantryCitations[databaseVar + 'Flag'] as int == 1) {
-                question.unflagged = false;
-              }
-              question.fromSectionName = section.name;
-
-              // question.unflagged = !question.unflagged;
-              question.actionItem =
-                  pantryCitations[databaseVar + "ActionItem"] as String;
-              citations.add(question);
-            }
-
-            if (databaseVar != null) {
-              dynamic value = incomingPantryAudit[databaseVar];
-              if (value == null) {
-                print("Missing: $databaseVar");
-                missingDBVar.add(databaseVar);
-              } else {
-                switch (question.typeOfQuestion) {
-                  case ("display"):
-                    print(question.text);
-                    print('display');
-                    print(incomingPantryAudit[databaseVar]);
-                    break;
-
-                  case ("yesNo"):
-                    print(question.text);
-                    print('yesNo');
-                    print(incomingPantryAudit[databaseVar]);
-                    try {
-                      question.userResponse =
-                          incomingPantryAudit[databaseVar] as bool
-                              ? "Yes"
-                              : "No";
-                    } catch (err) {
-                      question.userResponse =
-                          incomingPantryAudit[databaseVar] as String;
-                    }
-
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-
-                    break;
-                  case ("issuesNoIssues"):
-                    print(question.text);
-                    print('issuesNoIssues');
-                    print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as bool
-                            ? "No Issues"
-                            : "Issues";
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-
-                    break;
-
-                  case ("fillIn"):
-                    print(question.text);
-                    print('fillIn');
-                    print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as String;
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-
-                    break;
-
-                  case ("fillInNum"):
-                    print(question.text);
-                    print('fillInNum');
-                    print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as int;
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-                    break;
-
-                  case ("dropDown"):
-                    print(question.text);
-                    print('dropDown');
-                    print(incomingPantryAudit[databaseVar]);
-                    try {
-                      question.userResponse =
-                          incomingPantryAudit[databaseVar] as String;
-                    } catch (err) {
-                      //TODO get rid of try / catches in this file
-                      question.userResponse = question.dropDownMenu[
-                          incomingPantryAudit[databaseVar] as int];
-                    }
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-                    break;
-
-                  case ("yesNoNa"):
-                    print(question.text);
-                    print('yesNoNa');
-                    print(incomingPantryAudit[databaseVar]);
-                    if (incomingPantryAudit[databaseVar] != null) {
-                      question.userResponse =
-                          incomingPantryAudit[databaseVar] as bool
-                              ? "Yes"
-                              : "No";
-                    } else {
-                      question.userResponse = "NA";
-                    }
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-                    break;
-
-                  case ("date"):
-                    print(question.text);
-                    print('date');
-                    print(incomingPantryAudit[databaseVar]);
-                    question.userResponse =
-                        incomingPantryAudit[databaseVar] as String;
-                    question.optionalComment =
-                        incomingPantryAudit[databaseVar + "Comments"] as String;
-                    break;
-                }
-              }
-            }
-          }
-        }
-        dynamic temp = incomingPantryAudit['FollowUpRequired'];
-        newAudit.followupRequired = temp as bool;
-
-        // finally, add the citations created above.
-        newAudit.citations = citations;
-
-        if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
-          newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
-              .convert(
-                  incomingPantryAudit['SiteRepresentativeSignature'] as String);
-        if (incomingPantryAudit['FoodDepositoryMonitorSignature'] != null)
-          newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
-              .convert(incomingPantryAudit['FoodDepositoryMonitorSignature']
-                  as String);
-
-        if (incomingPantryAudit['CorrectiveActionPlanDueDate'] != null) {
-          newAudit.correctiveActionPlanDueDate = DateTime.parse(
-              incomingPantryAudit['CorrectiveActionPlanDueDate'] as String);
-        }
-        if (incomingPantryAudit['ImmediateHold'] != null) {
-          newAudit.putProgramOnImmediateHold =
-              incomingPantryAudit['ImmediateHold'] as bool;
-        }
-
-        print(missingDBVar);
-        for (Section section in newAudit.sections) {
-          section.status = Status.completed;
-        }
-        if (incomingPantryAudit != null) {
-          newAudits.add(newAudit);
-        }
-      }
-      // if (incomingPantryAudit != null) {
-      //   newAudits.add(newAudit);
-      // }
-    }
-    return newAudits;
-  }
-
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-  Future<dynamic> sendAudit(Audit outgoingAudit) async {
-    Map<String, dynamic> resultMap = <String, dynamic>{};
-////////// Encode all of the questions first //////////
-    for (Section section in outgoingAudit.sections) {
-      for (Question question in section.questions) {
-        if (section.name != "Photos") {
-          print('------- ${section.name} -------');
-          String name = question.questionMap['databaseVar'] as String;
-          if (name != null) {
-            print(name);
-          }
-          String qtype = question.questionMap['databaseVarType'] as String;
-          String comment = question.questionMap['databaseOptCom'] as String;
-
-          if (qtype == "int") {
-            resultMap[name] = question.userResponse as int;
-            try {
-              resultMap[comment] = question.optionalComment;
-            } catch (err) {
-              print(err);
-              print("moving on");
-            }
-          }
-
-          if (qtype == "bool") {
-            if (question.userResponse == "Yes") {
-              resultMap[name] = 1;
-            } else if (question.userResponse == "No") {
-              resultMap[name] = 0;
-            } else if (question.userResponse == "Issues") {
-              resultMap[name] = 0;
-            } else if (question.userResponse == "No Issues")
-              resultMap[name] = 1;
-            else {
-              resultMap[name] = null;
-            }
-            try {
-              resultMap[comment] = question.optionalComment;
-            } catch (err) {
-              print(err);
-            }
-          }
-
-          if (qtype == "string") {
-            resultMap[name] = question.userResponse;
-            try {
-              resultMap[comment] = question.optionalComment;
-            } catch (err) {
-              print(err);
-              print("moving on");
-            }
-          }
-
-          if (qtype == "date") {
-            resultMap[name] = question.userResponse;
-
-            try {
-              resultMap[comment] = question.optionalComment;
-            } catch (err) {
-              print(err);
-              print("moving on");
-            }
-          }
-          print("go again");
-        }
-      }
-    }
-    resultMap.remove(null);
-    print(resultMap);
-////////// Encode main body  //////////
-    String deviceid = deviceidProvider;
-
-    String dateOfSiteVisit =
-        outgoingAudit.calendarResult.startDateTime.toString();
-
-    String startOfAudit = DateFormat("HH:mm:ss.000")
-        .format(outgoingAudit.calendarResult.startDateTime);
-
-    String endOfAudit = DateFormat("HH:mm").format(
-        outgoingAudit.calendarResult.startDateTime.add(Duration(hours: 2)));
-
-    resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
-    resultMap["StartOfAudit"] = startOfAudit;
-    resultMap["EndOfAudit"] = endOfAudit;
-    resultMap["GCFDAuditorID"] = outgoingAudit.calendarResult.auditor;
-    resultMap['ProgramContact'] =
-        outgoingAudit.sections[0].questions[7].userResponse;
-    resultMap['PersonInterviewed'] =
-        outgoingAudit.sections[0].questions[8].userResponse;
-    resultMap['ServiceArea'] =
-        outgoingAudit.sections[0].questions[10].userResponse;
-    if (outgoingAudit.correctiveActionPlanDueDate != null) {
-      String tempDateTimeString =
-          outgoingAudit.correctiveActionPlanDueDate.toString();
-      resultMap['CorrectiveActionPlanDueDate'] = tempDateTimeString;
-    }
-
-////////// Encode signatures in base 64 //////////
-    resultMap['SiteRepresentativeSignature'] =
-        base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
-
-    if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
-      resultMap['FoodDepositoryMonitorSignature'] = base64Encode(
-          outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
-    // bool followUpRequired = false;
-
-    Map<String, dynamic> pantryCitations = <String, dynamic>{};
-
-    for (Question citation in outgoingAudit.citations) {
-      if (!citation.unflagged) {
-        // followUpRequired = true;
-        pantryCitations[
-            (citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
-        pantryCitations[(citation.questionMap['databaseVar'] as String) +
-            'ActionItem'] = citation.actionItem;
-      } else {
-        String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
-        pantryCitations[text] = 0;
-      }
-    }
-
-    resultMap['FollowUpRequired'] = outgoingAudit.followupRequired;
-
-    resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
-
-    Map<String, dynamic> mainBody = <String, dynamic>{
-      "AgencyNumber": outgoingAudit.calendarResult.agencyNum,
-      "ProgramNumber": outgoingAudit.calendarResult.programNum,
-      "ProgramType":
-          convertProgramTypeToNumber(outgoingAudit.calendarResult.programType),
-      "Auditor": outgoingAudit.calendarResult.auditor,
-      "AuditType":
-          convertAuditTypeToNumber(outgoingAudit.calendarResult.auditType),
-      "StartTime": outgoingAudit.calendarResult.startDateTime.toString(),
-      "DeviceId": deviceid,
-      "PantryFollowUp": null,
-      "CongregateDetail": null,
-      "PPCDetail": null,
-    };
-    mainBody["PantryDetail"] = resultMap;
-    mainBody['PantryCitations'] = pantryCitations;
-    print(mainBody);
-
-    return FullAuditComms.sendFullAudit(mainBody).timeout(
-      const Duration(seconds: 10),
-      onTimeout: () {
-        // Navigator.of(navigatorKey.currentContext).pop();
-        // Dialogs.showMessage(
-        //     context: navigatorKey.currentContext,
-        //     message:
-        //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
-        //     dismissable: true);
-        return null;
-      },
-    );
-
-    // return success;
-  }
-
-  // void showSuccess() {
-  //   successfullySubmitted = true;
-  //   notifyListeners();
-  // }
-
-  ////////////////////////////////////////////////////////////
 }

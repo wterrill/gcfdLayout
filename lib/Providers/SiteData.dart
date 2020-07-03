@@ -65,11 +65,11 @@ class SiteData with ChangeNotifier {
       },
     );
 
-    print(result);
+    // print(result);
     siteList = SiteList(siteList: result as List<Site>);
-    print(siteList);
+    // print(siteList);
     siteListBox.put('siteList', siteList);
-    print(siteList);
+    // print(siteList);
     notifyListeners();
   }
 }

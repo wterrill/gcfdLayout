@@ -81,9 +81,7 @@ class ListCalendarData with ChangeNotifier {
           calToBeSentBox.get(toBeSentKeys[i]) as CalendarResult;
 
       dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "A");
-      // print(calToBeSentBox.keys);
       if (successful as bool) calToBeSentBox.delete(toBeSentKeys[i]);
-      // print(calToBeSentBox.keys);
     }
   }
 
@@ -184,22 +182,39 @@ class ListCalendarData with ChangeNotifier {
   void deleteCalendarItem(CalendarResult calendarResult) {
     calendarBox.delete(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-    // print(calendarBox.keys);
-    // print(calToBeSentBox.keys);
     calToBeSentBox.delete(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-    // print(calToBeSentBox.keys);
-    // print(calToBeDeletedBox.keys);
     calToBeDeletedBox.put(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
         calendarResult);
     newEventAdded = true;
-    // print(calToBeDeletedBox.keys);
     notifyListeners();
   }
 
   void updateFilterValue(String value) {
     filterValue = value;
+    notifyListeners();
+  }
+
+  void updateStatusOnScheduleToCompleted(CalendarResult calendarResult) {
+    CalendarResult retrievedSchedule = calendarBox.get(
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+        as CalendarResult;
+    CalendarResult retrievedScheduleToSend = calendarBox.get(
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+        as CalendarResult;
+    retrievedSchedule.status = "Completed";
+    try {
+      retrievedScheduleToSend.status = "Completed";
+      calToBeSentBox.put(
+          '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+          retrievedScheduleToSend);
+    } catch (err) {
+      print("audit not waiting to be sent");
+    }
+    calendarBox.put(
+        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+        retrievedSchedule);
     notifyListeners();
   }
 
@@ -209,54 +224,44 @@ class ListCalendarData with ChangeNotifier {
     notifyListeners();
   }
 
-  void addBoxEvent({Map<String, String> event, bool notify}) {
+  void addBoxEvent({
+    Map<String, dynamic> event,
+    bool notify,
+  }) {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
-    // print(calendarBox.keys);
     calendarBox.put(
         '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}',
         newEvent);
-    // print(calendarBox.keys);
-    // print(calToBeSentBox.keys);
     calToBeSentBox.put(
         '${anotherEvent.startTime}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}',
         anotherEvent);
-    // print(calToBeSentBox.keys);
     newEventAdded = true;
     if (notify) notifyListeners();
   }
 
-  CalendarResult convertMapToCalendarResult(Map<String, String> result) {
+  CalendarResult convertMapToCalendarResult(Map<String, dynamic> result) {
     if (result['startTime'] == null) {
       print("here it is");
     }
-    // Site siteInfo =
-    //     Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
-    //             .siteList
-    //             .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']) ??
-    //         Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
-    //             .siteList
-    //             .getSiteFromAgencyNumber(agencyNumber: "A00020");
-    // String deviceid = deviceidProvider;
-    // Provider.of<GeneralData>(navigatorKey.currentContext, listen: false)
-    //     .deviceid;
-    //TODO this try catch needs to be taken out of here... specifically the catch
 
     CalendarResult created = CalendarResult(
-      startTime: result['startTime'],
-      agencyName: result['agencyName'],
-      agencyNum: result['agencyNum'],
-      auditType: result['auditType'],
-      programNum: result['programNum'],
-      programType: result['programType'],
-      auditor: result['auditor'],
-      status: result['status'],
-      message: result['message'],
+      startTime: result['startTime'] as String,
+      agencyName: result['agencyName'] as String,
+      agencyNum: result['agencyNum'] as String,
+      auditType: result['auditType'] as String,
+      programNum: result['programNum'] as String,
+      programType: result['programType'] as String,
+      auditor: result['auditor'] as String,
+      status: result['status'] as String,
+      message: result['message'] as String,
       deviceid: deviceidProvider,
-      siteInfo:
-          Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
-              .siteList
-              .getSiteFromAgencyNumber(agencyNumber: result['agencyNum']),
+      siteInfo: Provider.of<SiteData>(navigatorKey.currentContext,
+              listen: false)
+          .siteList
+          .getSiteFromAgencyNumber(agencyNumber: result['agencyNum'] as String),
+      pantryCitationsToFollowUp:
+          result['PantryFollowUp'] as Map<String, dynamic>,
     );
     return created;
   }
@@ -297,7 +302,7 @@ class ListCalendarData with ChangeNotifier {
       String status =
           randomDate.isBefore(DateTime.now()) ? "Submitted" : "Scheduled";
       print(status);
-      addBoxEvent(event: {
+      addBoxEvent(event: <String, dynamic>{
         'startTime': startTime,
         'agencyName': agency,
         'agencyNum': agencyNum,
@@ -305,7 +310,7 @@ class ListCalendarData with ChangeNotifier {
         'programNum': programNum,
         'programType': programType,
         'auditor': auditor.toString(),
-        'status': status
+        'status': status,
       }, notify: false);
     }
     notifyListeners();

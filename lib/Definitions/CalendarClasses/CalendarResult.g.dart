@@ -17,25 +17,26 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CalendarResult(
-      startTime: fields[0] as String,
-      agencyName: fields[1] as String,
-      agencyNum: fields[2] as String,
-      auditType: fields[3] as String,
-      programNum: fields[4] as String,
-      programType: fields[5] as String,
-      auditor: fields[6] as String,
-      status: fields[7] as String,
-      message: fields[8] as String,
-      programTypeColor: fields[9] as Color,
-      siteInfo: fields[11] as Site,
-      deviceid: fields[12] as String,
-    )..startDateTime = fields[10] as DateTime;
+        startTime: fields[0] as String,
+        agencyName: fields[1] as String,
+        agencyNum: fields[2] as String,
+        auditType: fields[3] as String,
+        programNum: fields[4] as String,
+        programType: fields[5] as String,
+        auditor: fields[6] as String,
+        status: fields[7] as String,
+        message: fields[8] as String,
+        programTypeColor: fields[9] as Color,
+        siteInfo: fields[11] as Site,
+        deviceid: fields[12] as String,
+        pantryCitationsToFollowUp: (fields[13] as Map)?.cast<String, dynamic>())
+      ..startDateTime = fields[10] as DateTime;
   }
 
   @override
   void write(BinaryWriter writer, CalendarResult obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.startTime)
       ..writeByte(1)
@@ -61,6 +62,8 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       ..writeByte(11)
       ..write(obj.siteInfo)
       ..writeByte(12)
-      ..write(obj.deviceid);
+      ..write(obj.deviceid)
+      ..writeByte(13)
+      ..write(obj.pantryCitationsToFollowUp);
   }
 }

@@ -63,6 +63,7 @@ class FullAuditComms {
   static Future<dynamic> sendFullAudit(Map<String, dynamic> auditToSend) async {
     String body = jsonEncode(auditToSend);
     print(body);
+    print('sendFullAudit send ${DateTime.now()}');
 
     if (isNtlm) {
       sender = client.post('http://12.216.81.220:88/api/Audit/',
@@ -72,8 +73,7 @@ class FullAuditComms {
           },
           body: body);
     } else {
-      sender = http.post(
-          'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+      sender = http.post('http://12.216.81.220:88/api/Audit/',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
@@ -81,7 +81,8 @@ class FullAuditComms {
           body: body);
     }
     return sender.then((http.Response res) {
-      print(res.body);
+      // print(res.body);
+      print('sendFullAudit receive ${DateTime.now()}');
       bool result = false;
       if (res.body != null) {
         result = true;
@@ -97,6 +98,7 @@ class FullAuditComms {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
       "QueryType": allNotMe.toString()
     };
+    print('getFullAudit send ${DateTime.now()}');
 
     if (isNtlm) {
       sender = client.get(
@@ -109,6 +111,7 @@ class FullAuditComms {
     return sender.then(
       (http.Response res) {
         print(res.body);
+        print('getFullAudit receive ${DateTime.now()}');
         try {
           dynamic resultMap = json.decode(res.body);
           print(resultMap);
@@ -135,10 +138,11 @@ class ScheduleAuditComms {
       'Auditor': calendarResult.auditor,
       'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
       'StartTime': calendarResult.startDateTime.toString(),
-      'DeviceId': kIsWeb ? "website" : calendarResult.deviceid
-      //TODO setup device ID for the app.
+      'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
+      'PantryFollowUp': calendarResult.pantryCitationsToFollowUp
     });
-    print(calendarResult.deviceid);
+    // print(calendarResult.deviceid);
+    print('scheduleAudit send ${DateTime.now()}');
     if (isNtlm) {
       sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
           headers: <String, String>{
@@ -157,6 +161,7 @@ class ScheduleAuditComms {
 
     return sender.then((http.Response res) {
       print(res.body);
+      print('scheduleAudit receive ${DateTime.now()}');
       return true;
     }).catchError((Object e) {
       print(e);
@@ -171,18 +176,20 @@ class ScheduleAuditComms {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
       "QueryType": allNotMe.toString(), // "1: Query All   0: Query All But Me"
     };
+    print('getScheduled send ${DateTime.now()}');
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
       (http.Response res) {
         print(res.body);
+        print('getScheduled receive ${DateTime.now()}');
         try {
           dynamic resultMap = json.decode(res.body);
           print(resultMap);
@@ -205,6 +212,8 @@ class ScheduleAuditComms {
                 agencyNumber: event['AgencyNumber'] as String);
             siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
             String siteidreceived = event['DeviceId'] as String;
+            Map<String, dynamic> pantryCitationsToFollowUp =
+                event['retrievedAuditToSend'] as Map<String, dynamic>;
 
             if (startTime != null) {
               CalendarResult newResult = CalendarResult(
@@ -217,7 +226,8 @@ class ScheduleAuditComms {
                   startTime: startTime,
                   status: status,
                   siteInfo: siteInfo,
-                  deviceid: siteidreceived);
+                  deviceid: siteidreceived,
+                  pantryCitationsToFollowUp: pantryCitationsToFollowUp);
               finalList.add(newResult);
             } else {
               print('$agencyName did not have a startTime associated with it');
@@ -240,9 +250,11 @@ class ScheduleAuditComms {
     } else {
       sender = http.get("http://12.216.81.220:88/api/GetAuditors");
     }
+    print('getAuditors send ${DateTime.now()}');
 
     return sender.then(
       (http.Response res) {
+        print('getAuditors receive ${DateTime.now()}');
         print(res.body);
         try {
           dynamic resultMap = json.decode(res.body);
@@ -273,16 +285,18 @@ class SiteComms {
     } else {
       sender = http.get("http://12.216.81.220:88/api/SiteInfo");
     }
+    print('getSites send ${DateTime.now()}');
     return sender.then(
       (http.Response res) {
-        print(res.body);
+        // print(res.body);
+        print('getSites Receive ${DateTime.now()}');
         try {
           dynamic parsed =
               json.decode(res.body)['Result'].cast<Map<String, dynamic>>();
           List<Site> oneliner = parsed
               .map<Site>((Map<String, dynamic> json) => Site.fromJson(json))
               .toList() as List<Site>;
-          print(oneliner);
+          // print(oneliner);
           return oneliner;
         } catch (error) {
           print(error);

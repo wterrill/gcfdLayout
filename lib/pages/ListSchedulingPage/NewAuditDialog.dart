@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auditor/providers/SiteData.dart';
@@ -31,13 +32,18 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   String selectedAgencyNum;
   String selectedAuditor = "Select";
   bool alreadyExisted = false;
-  // String auditor;
+  CalendarResult alreadyExistedCalendarResult;
 
   @override
   void initState() {
     super.initState();
     if (widget.calendarResult != null) {
-      this.selectedAuditType = widget.calendarResult.auditType;
+      alreadyExistedCalendarResult = widget.calendarResult;
+      if (widget.followup) {
+        this.selectedAuditType = "Follow Up";
+      } else {
+        this.selectedAuditType = widget.calendarResult.auditType;
+      }
       this.selectedProgType = widget.calendarResult.programType;
       this.selectedDate = widget.calendarResult.startDateTime;
       this.selectedTime =
@@ -46,6 +52,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
       this.selectedAgencyNum = widget.calendarResult.agencyNum;
+
       alreadyExisted = true;
     }
 
@@ -356,8 +363,6 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                             .deleteCalendarItem(widget.calendarResult);
                       }
 
-                      // TimeOfDay t;
-                      // final now = new DateTime.now();
                       DateTime selectedDateTime = DateTime(
                           selectedDate.year,
                           selectedDate.month,
@@ -368,34 +373,38 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       print(selectedSiteName);
                       print(selectedProgramNumber);
 
-                      // Provider.of<ListCalendarData>(context, listen: false)
-                      //     .addEvent({
-                      //   'startTime': selectedDateTime.toString(),
-                      //   'message': '',
-                      //   'agency': selectedSiteName,
-                      //   'auditType': selectedAuditType,
-                      //   'programNum': selectedProgramNumber,
-                      //   'programType': selectedProgType,
-                      //   'auditor': selectedAuditor,
-                      //   'status': "scheduled"
-                      // });
+                      Map<String, dynamic> oldAuditCitationsObject;
                       String deviceid =
                           Provider.of<GeneralData>(context, listen: false)
                               .deviceid;
+                      if (widget.followup) {
+                        oldAuditCitationsObject =
+                            Provider.of<AuditData>(context, listen: false)
+                                .getAuditCitationsObject(
+                                    newCalendarResult: widget.calendarResult);
+
+                        Provider.of<ListCalendarData>(context, listen: false)
+                            .updateStatusOnScheduleToCompleted(
+                                alreadyExistedCalendarResult);
+                      }
 
                       Provider.of<ListCalendarData>(context, listen: false)
-                          .addBoxEvent(event: {
-                        'startTime': selectedDateTime.toString(),
-                        'message': '',
-                        'agencyName': selectedSiteName,
-                        'agencyNum': selectedAgencyNum,
-                        'auditType': selectedAuditType,
-                        'programNum': selectedProgramNumber,
-                        'programType': selectedProgType,
-                        'auditor': selectedAuditor,
-                        'status': "Scheduled",
-                        'deviceid': deviceid,
-                      }, notify: true);
+                          .addBoxEvent(
+                        event: <String, dynamic>{
+                          'startTime': selectedDateTime.toString(),
+                          'message': '',
+                          'agencyName': selectedSiteName,
+                          'agencyNum': selectedAgencyNum,
+                          'auditType': selectedAuditType,
+                          'programNum': selectedProgramNumber,
+                          'programType': selectedProgType,
+                          'auditor': selectedAuditor,
+                          'status': "Scheduled",
+                          'deviceid': deviceid,
+                          'PantryFollowUp': oldAuditCitationsObject
+                        },
+                        notify: true,
+                      );
 
                       Navigator.of(context).pop();
                       if (alreadyExisted) {

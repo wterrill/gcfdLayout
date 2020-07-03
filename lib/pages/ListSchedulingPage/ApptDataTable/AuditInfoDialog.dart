@@ -171,16 +171,27 @@ class AuditInfoDialog extends StatelessWidget {
                                   Dialogs.showNotImplemented(context);
                                   break;
                                 case "Pantry Audit":
+                                  Navigator.of(context).pop();
                                   Navigator.push<dynamic>(
                                     context,
                                     MaterialPageRoute<dynamic>(
-                                        builder: (context) => AuditPage(
-                                            calendarResult: calendarResult,
-                                            alreadyExist: alreadyExist)),
+                                      builder: (context) => AuditPage(
+                                          calendarResult: calendarResult,
+                                          alreadyExist: alreadyExist),
+                                    ),
                                   );
+
                                   break;
                                 case "Congregate Audit":
-                                  Dialogs.showNotImplemented(context);
+                                  Navigator.of(context).pop();
+                                  Navigator.push<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (context) => AuditPage(
+                                          calendarResult: calendarResult,
+                                          alreadyExist: alreadyExist),
+                                    ),
+                                  );
                                   break;
                                 default:
                                   Dialogs.showNotImplemented(context);
@@ -244,7 +255,6 @@ class AuditInfoDialog extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50.0)),
                                 onPressed: () {
-                                  calendarResult.auditType = "Follow Up";
                                   Dialogs.showRescheduleAudit(context,
                                       calendarResult: calendarResult,
                                       followup: true);

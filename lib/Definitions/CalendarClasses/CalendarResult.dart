@@ -34,6 +34,8 @@ class CalendarResult extends HiveObject {
   Site siteInfo;
   @HiveField(12)
   String deviceid;
+  @HiveField(13)
+  Map<String, dynamic> pantryCitationsToFollowUp;
 
   // String date;
 
@@ -49,7 +51,8 @@ class CalendarResult extends HiveObject {
       this.message,
       this.programTypeColor,
       @required this.siteInfo,
-      @required this.deviceid}) {
+      @required this.deviceid,
+      this.pantryCitationsToFollowUp}) {
     startDateTime = DateTime.parse(startTime);
     var lookup = programTypeTextAndColorLookup(programType);
     programTypeColor = lookup["color"] as Color;
@@ -69,14 +72,4 @@ class CalendarResult extends HiveObject {
   }
 
   bool selected = false;
-
-  // factory CalendarResult.fromJson(Map<String, dynamic> json) {
-  //   return CalendarResult(
-  //     date: json['date'] as String,
-  //     startTime: json['startTime'] as String,
-  //     endTime: json['endTime'] as String,
-  //     siteName: json['siteName'] as String,
-  //     auditType: json['auditType'] as String,
-  //   );
-  // }
 }
