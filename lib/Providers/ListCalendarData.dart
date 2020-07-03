@@ -260,8 +260,7 @@ class ListCalendarData with ChangeNotifier {
               listen: false)
           .siteList
           .getSiteFromAgencyNumber(agencyNumber: result['agencyNum'] as String),
-      pantryCitationsToFollowUp:
-          result['PantryFollowUp'] as Map<String, dynamic>,
+      citationsToFollowUp: result['PantryFollowUp'] as Map<String, dynamic>,
     );
     return created;
   }

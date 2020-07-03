@@ -29,7 +29,7 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
         programTypeColor: fields[9] as Color,
         siteInfo: fields[11] as Site,
         deviceid: fields[12] as String,
-        pantryCitationsToFollowUp: (fields[13] as Map)?.cast<String, dynamic>())
+        citationsToFollowUp: (fields[13] as Map)?.cast<String, dynamic>())
       ..startDateTime = fields[10] as DateTime;
   }
 
@@ -64,6 +64,6 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       ..writeByte(12)
       ..write(obj.deviceid)
       ..writeByte(13)
-      ..write(obj.pantryCitationsToFollowUp);
+      ..write(obj.citationsToFollowUp);
   }
 }

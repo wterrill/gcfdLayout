@@ -35,7 +35,7 @@ class CalendarResult extends HiveObject {
   @HiveField(12)
   String deviceid;
   @HiveField(13)
-  Map<String, dynamic> pantryCitationsToFollowUp;
+  Map<String, dynamic> citationsToFollowUp;
 
   // String date;
 
@@ -52,7 +52,7 @@ class CalendarResult extends HiveObject {
       this.programTypeColor,
       @required this.siteInfo,
       @required this.deviceid,
-      this.pantryCitationsToFollowUp}) {
+      this.citationsToFollowUp}) {
     startDateTime = DateTime.parse(startTime);
     var lookup = programTypeTextAndColorLookup(programType);
     programTypeColor = lookup["color"] as Color;

@@ -139,7 +139,7 @@ class ScheduleAuditComms {
       'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
       'StartTime': calendarResult.startDateTime.toString(),
       'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
-      'PantryFollowUp': calendarResult.pantryCitationsToFollowUp
+      'PantryFollowUp': calendarResult.citationsToFollowUp
     });
     // print(calendarResult.deviceid);
     print('scheduleAudit send ${DateTime.now()}');
@@ -227,7 +227,7 @@ class ScheduleAuditComms {
                   status: status,
                   siteInfo: siteInfo,
                   deviceid: siteidreceived,
-                  pantryCitationsToFollowUp: pantryCitationsToFollowUp);
+                  citationsToFollowUp: pantryCitationsToFollowUp);
               finalList.add(newResult);
             } else {
               print('$agencyName did not have a startTime associated with it');
