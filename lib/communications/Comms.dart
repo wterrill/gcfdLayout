@@ -130,6 +130,28 @@ class FullAuditComms {
 class ScheduleAuditComms {
   static Future<dynamic> scheduleAudit(
       CalendarResult calendarResult, String addDelete) async {
+    String key;
+    if (calendarResult.programType == "Pantry Audit") {
+      key = "PantryFollowUp";
+    }
+    if (calendarResult.programType == "Congregate Audit") {
+      key = "CongregateFollowUp";
+    }
+    if (calendarResult.citationsToFollowUp != null) {
+      Map<String, dynamic> temp =
+          calendarResult.citationsToFollowUp; //.cast<String, dynamic>();
+      dynamic previousEventConverted = temp['PreviousEvent'];
+
+      // Map<String, dynamic> previousEventConverted =
+      //     temp2 as Map<String, dynamic>;
+      previousEventConverted['ProgramType'] = convertProgramTypeToNumber(
+          previousEventConverted['ProgramType'] as String);
+      previousEventConverted['AuditType'] = convertProgramTypeToNumber(
+          previousEventConverted['AuditType'] as String);
+      calendarResult.citationsToFollowUp['PreviousEvent'] =
+          previousEventConverted;
+    }
+
     String body = jsonEncode(<String, dynamic>{
       'AED': addDelete,
       'AgencyNumber': calendarResult.agencyNum,
@@ -139,7 +161,7 @@ class ScheduleAuditComms {
       'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
       'StartTime': calendarResult.startDateTime.toString(),
       'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
-      'PantryFollowUp': calendarResult.citationsToFollowUp
+      key: calendarResult.citationsToFollowUp
     });
     // print(calendarResult.deviceid);
     print('scheduleAudit send ${DateTime.now()}');

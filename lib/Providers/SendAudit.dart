@@ -121,9 +121,20 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
           1;
       citationsMap[(citation.questionMap['databaseVar'] as String) +
           'ActionItem'] = citation.actionItem;
+
+      citationsMap[(citation.questionMap['databaseVar'] as String) +
+          'OriginalAnswer'] = citation.userResponse;
+
+      citationsMap[(citation.questionMap['databaseVar'] as String) +
+          'OriginalComment'] = citation.optionalComment;
     } else {
       String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
       citationsMap[text] = 0;
+      citationsMap[(citation.questionMap['databaseVar'] as String) +
+          'OriginalAnswer'] = citation.userResponse;
+
+      citationsMap[(citation.questionMap['databaseVar'] as String) +
+          'OriginalComment'] = citation.optionalComment;
     }
   }
 

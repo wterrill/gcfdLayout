@@ -67,19 +67,17 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'type': 'dropDown',
     'menuItems': [
       'Select',
-      // 'Daily',
       '1x per week',
       '2x per Month',
       '1x per Month',
       'Other'
     ],
-    // 'happyPathResponse': [
-    //   // 'Daily',
-    //   '1x per week',
-    //   '2x per Month',
-    //   '1x per Month',
-    //   'Other'
-    // ],
+    'happyPathResponse': [
+      '1x per week',
+      '2x per Month',
+      '1x per Month',
+      'Other'
+    ],
     'databaseVar': 'HowOftenGuestsReceiveFood',
     'databaseVarType': 'string',
     'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'

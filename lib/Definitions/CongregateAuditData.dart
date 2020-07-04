@@ -1119,7 +1119,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'PlumbingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PlumbingIssuesComments',
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain action item for plumbing issues: '
   },
   <String, dynamic>{
     'text': 'Sewage issues?',
@@ -1128,7 +1128,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'SewageIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SewageIssuesComments',
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain action item for Sewage issues: '
   },
   <String, dynamic>{
     'text': 'Garbage and refuse disposal',
@@ -1137,7 +1137,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'GarbageRefusalDisposalIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'GarbageRefusalDisposalIssuesComments',
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain action item for garbage and refuse disposal issues: '
   },
   <String, dynamic>{
     'text':
@@ -1156,7 +1156,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'CurrentFireExt', //<-----
     'databaseVarType': 'bool',
     'databaseOptCom': 'CurrentFireExtComments', //<-----
-    'actionItem': 'Explain issues in comment field'
+    'actionItem': 'Explain action items for the fire extinguisher: '
   },
   <String, dynamic>{
     'text':

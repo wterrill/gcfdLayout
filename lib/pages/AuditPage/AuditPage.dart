@@ -52,6 +52,10 @@ class _AuditPageState extends State<AuditPage> {
     } else {
       Provider.of<AuditData>(context, listen: false)
           .createNewAudit(widget.calendarResult);
+      if (widget.calendarResult.citationsToFollowUp != null) {
+        Provider.of<AuditData>(context, listen: false)
+            .buildQuestionFromCitation(widget.calendarResult);
+      }
     }
     activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
     activeSection =

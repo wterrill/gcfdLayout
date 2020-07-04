@@ -71,8 +71,18 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
     "CEDA",
     "Bi-Annual",
     "Complaint",
-    "Follow Up",
+    // "Follow Up",
     "Grant"
+  ];
+  List<String> auditTypeDropDownMenuFollowUp = [
+    // "Select",
+    // "Annual",
+    // "Food Rescue",
+    // "CEDA",
+    // "Bi-Annual",
+    // "Complaint",
+    "Follow Up",
+    // "Grant"
   ];
 
   SiteList siteList;
@@ -187,7 +197,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         selectedAuditType = newValue;
                       });
                     },
-                    items: dropdown(auditTypeDropDownMenu),
+                    items: widget.followup
+                        ? dropdown(auditTypeDropDownMenuFollowUp)
+                        : dropdown(auditTypeDropDownMenu),
                   ),
                 ),
               ],
@@ -216,7 +228,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                       selectedProgType = newValue;
                     });
                   },
-                  items: dropdown(programTypeDropDownMenu),
+                  items: widget.followup
+                      ? dropdown([selectedProgType])
+                      : dropdown(programTypeDropDownMenu),
                 ),
               ],
             ),
@@ -387,6 +401,20 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                             .updateStatusOnScheduleToCompleted(
                                 alreadyExistedCalendarResult);
                       }
+                      if (oldAuditCitationsObject != null) {
+                        oldAuditCitationsObject['PreviousEvent'] = {
+                          'StartTime': alreadyExistedCalendarResult.startTime,
+                          'AgencyName': alreadyExistedCalendarResult.agencyName,
+                          'AgencyNum': alreadyExistedCalendarResult.agencyNum,
+                          'ProgramNumber':
+                              alreadyExistedCalendarResult.programNum,
+                          'AuditType': alreadyExistedCalendarResult.auditType,
+                          'ProgramType': alreadyExistedCalendarResult
+                              .programType
+                              .toString(),
+                          'Auditor': alreadyExistedCalendarResult.auditor
+                        };
+                      }
 
                       Provider.of<ListCalendarData>(context, listen: false)
                           .addBoxEvent(
@@ -401,7 +429,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                           'auditor': selectedAuditor,
                           'status': "Scheduled",
                           'deviceid': deviceid,
-                          'PantryFollowUp': oldAuditCitationsObject
+                          'citationsToFollowUp': oldAuditCitationsObject
                         },
                         notify: true,
                       );

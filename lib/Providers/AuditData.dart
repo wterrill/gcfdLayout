@@ -34,7 +34,7 @@ class AuditData with ChangeNotifier {
   String deviceidProvider;
   bool successfullySubmitted = false;
   List<Question> citations = [];
-  // List<String> actionItemList = [];
+  List<Question> previousCitations = [];
 
   AuditData() {
     initialize();
@@ -69,6 +69,13 @@ class AuditData with ChangeNotifier {
     }
   }
 
+  Audit getAuditFromBox(CalendarResult calendarResult) {
+    Audit retrievedAudit = auditBox.get(
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+        as Audit;
+    return retrievedAudit;
+  }
+
   Map<String, dynamic> getAuditCitationsObject(
       {CalendarResult newCalendarResult}) {
     Audit retrievedAudit = auditBox.get(
@@ -90,28 +97,6 @@ class AuditData with ChangeNotifier {
     }
     return citationsMap;
   }
-
-  // void updateStatusOnExistingAudit(
-  //     CalendarResult alreadyExistedCalendarResult) {
-  //   Audit retrievedAudit = auditBox.get(
-  //           '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}')
-  //       as Audit;
-  //   Audit retrievedAuditToSend = auditOutBox.get(
-  //           '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}')
-  //       as Audit;
-  //   retrievedAudit.calendarResult.status = "Completed";
-  //   try {
-  //     retrievedAuditToSend.calendarResult.status = "Completed";
-  //     auditOutBox.put(
-  //         '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}',
-  //         retrievedAuditToSend);
-  //   } catch (err) {
-  //     print("audit not waiting to be sent");
-  //   }
-  //   auditBox.put(
-  //       '${alreadyExistedCalendarResult.startTime}-${alreadyExistedCalendarResult.agencyName}-${alreadyExistedCalendarResult.programNum}-${alreadyExistedCalendarResult.auditor}',
-  //       retrievedAudit);
-  // }
 
   void saveAuditToSend(Audit outgoingAudit) {
     Audit clonedOutgoingAudit = outgoingAudit.clone();
@@ -180,14 +165,6 @@ class AuditData with ChangeNotifier {
     }
   }
 
-  // void makeActionItems() {
-  //   for (Question citation in citations) {
-  //     if (!citation.unflagged) {
-  //       actionItems.add(citation.questionMap['actionItem'] as String);
-  //     }
-  //   }
-  // }
-
   int citationExists(Question question) {
     int index = -1;
     for (Question citation in citations) {
@@ -197,6 +174,113 @@ class AuditData with ChangeNotifier {
       }
     }
     return -1;
+  }
+
+  CalendarResult convertToThrowawayCalendarResult(Map<String, String> result) {
+    CalendarResult created = CalendarResult(
+      startTime: result['startTime'] as String,
+      agencyName: result['agencyName'] as String,
+      agencyNum: result['agencyNum'] as String,
+      auditType: result['auditType'] as String,
+      programNum: result['programNum'] as String,
+      programType: result['programType'] as String,
+      auditor: result['auditor'] as String,
+      status: result['status'] as String,
+      message: result['message'] as String,
+      deviceid: deviceidProvider,
+      siteInfo: null,
+      citationsToFollowUp:
+          result['citationsToFollowUp'] as Map<String, dynamic>,
+    );
+    return created;
+  }
+
+  void buildQuestionFromCitation(CalendarResult calendarResult) {
+    Map<String, dynamic> previousCitationsTemp =
+        calendarResult.citationsToFollowUp;
+    List<String> citationDatabaseVarsList = [];
+
+    for (String key in previousCitationsTemp.keys) {
+      if (key.contains("Flag")) {
+        citationDatabaseVarsList.add(key.replaceFirst("Flag", ""));
+      }
+    }
+
+    dynamic temp = calendarResult.citationsToFollowUp['PreviousEvent']
+        .cast<String, String>();
+    CalendarResult temp2 =
+        convertToThrowawayCalendarResult(temp as Map<String, String>);
+    Audit retrievedAudit = getAuditFromBox(temp2);
+    if (retrievedAudit == null) {
+      // First, method that uses what we were sent by the database.  Currently, this has some problems:
+      // 1. I don't have access to what the user answered, so I have to guess using the happyPath
+      // 2. For dropdown answers, this means that there can only be one "angry path".. otherwise I'll guess wrong
+      // 3. I don't have access to the comments made on the question.
+      for (Section section in activeAudit.sections) {
+        for (Question question in section.questions) {
+          String databaseVar = question.questionMap['databaseVar'] as String;
+          if (citationDatabaseVarsList.contains(databaseVar)) {
+            // found one
+            if (previousCitationsTemp[databaseVar + 'Flag'] as int == 0) {
+              question.unflagged = true;
+            } else if (previousCitationsTemp[databaseVar + 'Flag'] as int ==
+                1) {
+              question.unflagged = false;
+            }
+            question.fromSectionName = section.name;
+
+            // question.unflagged = !question.unflagged;
+
+            question.actionItem =
+                previousCitationsTemp[databaseVar + "ActionItem"] as String;
+
+            List<String> happyPath =
+                question.questionMap['happyPathResponse'] as List<String>;
+
+            if (question.typeOfQuestion == "yesNo") {
+              question.userResponse = happyPath.contains("Yes") ? "No" : "Yes";
+            }
+            if (question.typeOfQuestion == "issuesNoIssues") {
+              List<String> happyPath =
+                  question.questionMap['happyPathResponse'] as List<String>;
+              question.userResponse =
+                  happyPath.contains("Issues") ? "No Issues" : "Issues";
+            }
+            if (question.typeOfQuestion == "dropDown") {
+              List<String> happyPath =
+                  question.questionMap['happyPathResponse'] as List<String>;
+              List<String> menu =
+                  question.questionMap['menuItems'] as List<String>;
+              List<String> difference =
+                  happyPath.toSet().difference(menu.toSet()).toList();
+              if (difference.length >= 3) {
+                print("oh crap");
+              }
+              difference.removeWhere((item) => item == 'Select');
+              question.userResponse = difference[0];
+            }
+
+            citations.add(question);
+          }
+        }
+      }
+    } else {
+      // this means that we found the audit in question.  Let's copy the questions directly
+      for (var i = 0; i < activeAudit.sections.length; i++) {
+        for (var j = 0; i < activeAudit.sections[i].questions.length; j++) {
+          String databaseVar = activeAudit
+              .sections[i].questions[j].questionMap['databaseVar'] as String;
+          if (citationDatabaseVarsList.contains(databaseVar)) {
+            // found one. copy the question over
+            activeAudit.sections[i].questions[j] =
+                retrievedAudit.sections[i].questions[j];
+            citations.add(activeAudit.sections[i].questions[j]);
+          }
+        }
+      }
+    }
+
+    previousCitations = citations;
   }
 
   void notifyTheListeners() {

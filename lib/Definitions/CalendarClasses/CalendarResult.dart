@@ -71,5 +71,21 @@ class CalendarResult extends HiveObject {
     return DateFormat('dd-MM-yyyy HH:mm').format(startDateTime).toString();
   }
 
+  CalendarResult clone() {
+    return CalendarResult(
+        startTime: startTime,
+        agencyName: agencyName,
+        agencyNum: agencyNum,
+        auditType: auditType,
+        programNum: programNum,
+        programType: programType,
+        auditor: auditor,
+        status: status,
+        message: message,
+        siteInfo: siteInfo,
+        deviceid: deviceid,
+        citationsToFollowUp: citationsToFollowUp);
+  }
+
   bool selected = false;
 }

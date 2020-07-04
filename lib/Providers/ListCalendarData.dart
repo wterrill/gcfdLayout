@@ -200,7 +200,8 @@ class ListCalendarData with ChangeNotifier {
     CalendarResult retrievedSchedule = calendarBox.get(
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as CalendarResult;
-    CalendarResult retrievedScheduleToSend = calendarBox.get(
+    // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
+    CalendarResult retrievedScheduleToSend = calToBeSentBox.get(
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as CalendarResult;
     retrievedSchedule.status = "Completed";
@@ -230,6 +231,7 @@ class ListCalendarData with ChangeNotifier {
   }) {
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
+    // Map<String,dynamic> anotherEvent = JSON.decode(JSON.encode(newEvent));
     calendarBox.put(
         '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}',
         newEvent);
@@ -244,6 +246,10 @@ class ListCalendarData with ChangeNotifier {
     if (result['startTime'] == null) {
       print("here it is");
     }
+    String key;
+    // if (result['auditType'] == "Pantry Audit") {
+    //   key = "PantryFollowUp";
+    // }
 
     CalendarResult created = CalendarResult(
       startTime: result['startTime'] as String,
@@ -260,7 +266,8 @@ class ListCalendarData with ChangeNotifier {
               listen: false)
           .siteList
           .getSiteFromAgencyNumber(agencyNumber: result['agencyNum'] as String),
-      citationsToFollowUp: result['PantryFollowUp'] as Map<String, dynamic>,
+      citationsToFollowUp:
+          result['citationsToFollowUp'] as Map<String, dynamic>,
     );
     return created;
   }
