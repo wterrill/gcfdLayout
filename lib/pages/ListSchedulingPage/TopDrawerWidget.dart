@@ -52,11 +52,12 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
           child: Transform.translate(
             offset: Offset((animation.value * (175 / 150)), 0.0),
             child: Container(
-                // top drawer container
-                height: 325,
-                width: 175,
-                color: ColorDefs.colorTopDrawerBackground,
-                child: Column(children: [
+              // top drawer container
+              height: 325,
+              width: 175,
+              color: ColorDefs.colorTopDrawerBackground,
+              child: Column(
+                children: [
                   Container(
                       height: 40,
                       width: double.infinity,
@@ -121,6 +122,24 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       setState(() {
                         startSync = true;
                       });
+                      // List<dynamic> auditKeysToSend =
+                      //     Provider.of<AuditData>(context, listen: false)
+                      //         .auditOutBox
+                      //         .keys
+                      //         .toList();
+                      // List<dynamic> scheduleKeysToSend =
+                      //     Provider.of<ListCalendarData>(context, listen: false)
+                      //         .calendarOutBox
+                      //         .keys
+                      //         .toList();
+                      // List<dynamic> inBoth = auditKeysToSend
+                      //     .toSet()
+                      //     .union(scheduleKeysToSend.toSet())
+                      //     .toList();
+                      // if (inBoth.length > 0) {
+                      //   print("schedule before Audit");
+                      // }
+
                       //// Site Data /////
                       Dialogs.showMessage(
                           context: context,
@@ -137,6 +156,17 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                               .siteList;
                       Navigator.of(context).pop();
 
+                      /// Schedule data ///
+                      Dialogs.showMessage(
+                          context: context,
+                          message:
+                              "Syncing Scheduling data: upload and download",
+                          dismissable: false);
+                      await Provider.of<ListCalendarData>(context,
+                              listen: false)
+                          .dataSync(context, siteList, deviceid);
+                      Navigator.of(context).pop();
+
                       /// Audit Data ///
                       // Navigator.of(context).pop();
                       Dialogs.showMessage(
@@ -149,22 +179,10 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           .dataSync(context, siteList, deviceid);
                       Navigator.of(context).pop();
 
+                      /// Done with sync
                       setState(() {
                         startSync = false;
                       });
-
-                      /// Schedule data ///
-                      Dialogs.showMessage(
-                          context: context,
-                          message:
-                              "Syncing Scheduling data: upload and download",
-                          dismissable: false);
-                      await Provider.of<ListCalendarData>(context,
-                              listen: false)
-                          .dataSync(context, siteList, deviceid);
-                      Navigator.of(context).pop();
-
-                      /// Done with sync
                     },
                     child: Container(
                       height: 35.4,
@@ -190,7 +208,9 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                     ),
                   ),
                   //),
-                ])),
+                ],
+              ),
+            ),
           ),
         ),
         Positioned(

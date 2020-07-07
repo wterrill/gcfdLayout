@@ -4,6 +4,7 @@ import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:clay_containers/clay_containers.dart';
 
 class SectionButton extends StatefulWidget {
   final Section section;
@@ -84,15 +85,26 @@ class _SectionButtonState extends State<SectionButton> {
         ? built = Text("")
         : built = Column(
             children: [
+              //       child: Center(
+              //   child: ClayContainer(
+              //     color: baseColor,
+              //     height: 200,
+              //     width: 200,
+              //   ),
+              // ),
+
+              //Clay
+              //Clay
               Container(
                 width: 110,
                 height: 70,
                 child: FlatButton(
+                  color: buttonColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     // side: BorderSide(color: ColorDefs.colorDarkBackground),
                   ),
-                  color: buttonColor,
+                  // color: buttonColor,
                   onPressed: () {
                     buttonDisabled
                         ? null
@@ -111,7 +123,7 @@ class _SectionButtonState extends State<SectionButton> {
                     maxLines: 2,
                     minFontSize: 14,
                     style: ColorDefs.textBodyBlack10,
-                    wrapWords: false,
+                    wrapWords: true,
                     softWrap: true,
                     textAlign: TextAlign.center,
                   ),

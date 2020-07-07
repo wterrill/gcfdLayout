@@ -42,7 +42,7 @@ class Audit extends HiveObject {
   List<Uint8List> photoList;
 
   @HiveField(10)
-  bool followupRequired;
+  bool siteVisitRequired;
 
   @HiveField(11)
   DateTime correctiveActionPlanDueDate;
@@ -55,6 +55,9 @@ class Audit extends HiveObject {
 
   @HiveField(14)
   List<String> actionItemList = [];
+
+  @HiveField(15)
+  List<Question> previousCitations = [];
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
@@ -95,10 +98,11 @@ class Audit extends HiveObject {
     clonedAudit.putProgramOnImmediateHold = putProgramOnImmediateHold;
     clonedAudit.photoSig = Map.from(photoSig);
     clonedAudit.photoList = List.from(photoList);
-    clonedAudit.followupRequired = followupRequired;
+    clonedAudit.siteVisitRequired = siteVisitRequired;
     clonedAudit.correctiveActionPlanDueDate = correctiveActionPlanDueDate;
     clonedAudit.detailsConfirmed = detailsConfirmed;
     clonedAudit.activateConfirmDetails = activateConfirmDetails;
+    clonedAudit.previousCitations = List.from(previousCitations);
     return clonedAudit;
   }
 }

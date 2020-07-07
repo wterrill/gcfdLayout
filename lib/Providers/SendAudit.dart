@@ -17,6 +17,9 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
         if (name != null) {
           print(name);
         }
+        if (name == "PestControlReport") {
+          print("gotch!");
+        }
         String qtype = question.questionMap['databaseVarType'] as String;
         String comment = question.questionMap['databaseOptCom'] as String;
 
@@ -110,13 +113,13 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
   if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
     resultMap['FoodDepositoryMonitorSignature'] =
         base64Encode(outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
-  // bool followUpRequired = false;
+  // bool siteVisitRequired = false;
 
   Map<String, dynamic> citationsMap = <String, dynamic>{};
 
   for (Question citation in outgoingAudit.citations) {
     if (!citation.unflagged) {
-      // followUpRequired = true;
+      // siteVisitRequired = true;
       citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
           1;
       citationsMap[(citation.questionMap['databaseVar'] as String) +
@@ -138,7 +141,7 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
     }
   }
 
-  resultMap['FollowUpRequired'] = outgoingAudit.followupRequired;
+  resultMap['SiteVisitRequired'] = outgoingAudit.siteVisitRequired;
 
   resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 

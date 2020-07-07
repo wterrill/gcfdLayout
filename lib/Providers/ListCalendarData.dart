@@ -43,8 +43,8 @@ class ListCalendarData with ChangeNotifier {
   Box box;
   bool initializedx = false;
   Box calendarBox;
-  Box calToBeSentBox;
-  Box calToBeDeletedBox;
+  Box calendarOutBox;
+  Box calendarDeleteBox;
   Box auditorsListBox;
   String deviceidProvider;
 
@@ -74,29 +74,29 @@ class ListCalendarData with ChangeNotifier {
   }
 
   void sendScheduledToCloud() async {
-    List<dynamic> dynKeys = calToBeSentBox.keys.toList();
+    List<dynamic> dynKeys = calendarOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       CalendarResult result =
-          calToBeSentBox.get(toBeSentKeys[i]) as CalendarResult;
+          calendarOutBox.get(toBeSentKeys[i]) as CalendarResult;
 
       dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "A");
-      if (successful as bool) calToBeSentBox.delete(toBeSentKeys[i]);
+      if (successful as bool) calendarOutBox.delete(toBeSentKeys[i]);
     }
   }
 
   void deleteFromCloud() async {
-    List<dynamic> dynKeys = calToBeDeletedBox.keys.toList();
+    List<dynamic> dynKeys = calendarDeleteBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       // print(calToBeDeletedBox.keys);
       CalendarResult result =
-          calToBeDeletedBox.get(toBeSentKeys[i]) as CalendarResult;
+          calendarDeleteBox.get(toBeSentKeys[i]) as CalendarResult;
       result.deviceid = deviceidProvider;
       // print(calToBeDeletedBox.keys);
       dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "D");
       // print(calToBeDeletedBox.keys);
-      if (successful as bool) calToBeDeletedBox.delete(toBeSentKeys[i]);
+      if (successful as bool) calendarDeleteBox.delete(toBeSentKeys[i]);
       // print(calToBeDeletedBox.keys);
     }
   }
@@ -149,8 +149,8 @@ class ListCalendarData with ChangeNotifier {
       print(value);
       print(value.runtimeType);
       calendarBox = Hive.box<CalendarResult>('calendarBox');
-      calToBeSentBox = Hive.box<CalendarResult>('calToBeSentBox');
-      calToBeDeletedBox = Hive.box<CalendarResult>('calToBeDeletedBox');
+      calendarOutBox = Hive.box<CalendarResult>('calToBeSentBox');
+      calendarDeleteBox = Hive.box<CalendarResult>('calToBeDeletedBox');
       auditorsListBox = Hive.box<AuditorList>('auditorsListBox');
       loadAuditorsFromBox();
       initializedx = true;
@@ -182,9 +182,9 @@ class ListCalendarData with ChangeNotifier {
   void deleteCalendarItem(CalendarResult calendarResult) {
     calendarBox.delete(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-    calToBeSentBox.delete(
+    calendarOutBox.delete(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}');
-    calToBeDeletedBox.put(
+    calendarDeleteBox.put(
         '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
         calendarResult);
     newEventAdded = true;
@@ -201,13 +201,13 @@ class ListCalendarData with ChangeNotifier {
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as CalendarResult;
     // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
-    CalendarResult retrievedScheduleToSend = calToBeSentBox.get(
+    CalendarResult retrievedScheduleToSend = calendarOutBox.get(
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as CalendarResult;
     retrievedSchedule.status = "Completed";
     try {
       retrievedScheduleToSend.status = "Completed";
-      calToBeSentBox.put(
+      calendarOutBox.put(
           '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
           retrievedScheduleToSend);
     } catch (err) {
@@ -235,7 +235,7 @@ class ListCalendarData with ChangeNotifier {
     calendarBox.put(
         '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}',
         newEvent);
-    calToBeSentBox.put(
+    calendarOutBox.put(
         '${anotherEvent.startTime}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}',
         anotherEvent);
     newEventAdded = true;
@@ -246,10 +246,6 @@ class ListCalendarData with ChangeNotifier {
     if (result['startTime'] == null) {
       print("here it is");
     }
-    String key;
-    // if (result['auditType'] == "Pantry Audit") {
-    //   key = "PantryFollowUp";
-    // }
 
     CalendarResult created = CalendarResult(
       startTime: result['startTime'] as String,

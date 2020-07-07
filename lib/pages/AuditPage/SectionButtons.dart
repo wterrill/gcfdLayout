@@ -23,7 +23,14 @@ class _SectionButtonsState extends State<SectionButtons> {
   @override
   void initState() {
     super.initState();
-    List<Section> buttonSections = widget.activeAudit.sections;
+    // List<Section> buttonSections = widget.activeAudit.sections;
+    if (widget.activeAudit.calendarResult.auditType == "Follow Up") {
+      for (Section section in widget.activeAudit.sections) {
+        if (section.name == "Review") {
+          section.name = "Follow Up Review";
+        }
+      }
+    }
   }
 
   @override

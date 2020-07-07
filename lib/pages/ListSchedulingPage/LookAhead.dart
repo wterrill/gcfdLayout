@@ -29,7 +29,7 @@ class _LookAheadState extends State<LookAhead> {
   @override
   void initState() {
     super.initState();
-    // TODO: implement initState
+
     _typeAheadController.text = widget.setValue;
   }
 

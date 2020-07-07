@@ -43,7 +43,7 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
             child: Text("calendar toSendKeys"),
             onPressed: () {
               result = Provider.of<ListCalendarData>(context, listen: false)
-                  .calToBeSentBox
+                  .calendarOutBox
                   .keys
                   .toList();
               setState(() {});
@@ -53,7 +53,7 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
             child: Text("calendar toDeleteKeys"),
             onPressed: () {
               result = Provider.of<ListCalendarData>(context, listen: false)
-                  .calToBeDeletedBox
+                  .calendarDeleteBox
                   .keys
                   .toList();
               setState(() {});

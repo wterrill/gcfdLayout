@@ -38,8 +38,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   @override
   Widget build(BuildContext context) {
     followupReqVal = 0;
-    if (widget.activeAudit.followupRequired != null) {
-      if (widget.activeAudit.followupRequired == true) {
+    if (widget.activeAudit.siteVisitRequired != null) {
+      if (widget.activeAudit.siteVisitRequired == true) {
         followupReqVal = 1;
       } else {
         followupReqVal = 0;
@@ -158,7 +158,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         print(followupReqVal);
                         Provider.of<AuditData>(context, listen: false)
                             .activeAudit
-                            .followupRequired = newValue == 0 ? false : true;
+                            .siteVisitRequired = newValue == 0 ? false : true;
                       });
                     },
                     items: [

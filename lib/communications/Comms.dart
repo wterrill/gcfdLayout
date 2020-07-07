@@ -138,18 +138,24 @@ class ScheduleAuditComms {
       key = "CongregateFollowUp";
     }
     if (calendarResult.citationsToFollowUp != null) {
-      Map<String, dynamic> temp =
-          calendarResult.citationsToFollowUp; //.cast<String, dynamic>();
-      dynamic previousEventConverted = temp['PreviousEvent'];
+      Map<String, dynamic> finalObject = <String, dynamic>{};
 
-      // Map<String, dynamic> previousEventConverted =
-      //     temp2 as Map<String, dynamic>;
-      previousEventConverted['ProgramType'] = convertProgramTypeToNumber(
-          previousEventConverted['ProgramType'] as String);
-      previousEventConverted['AuditType'] = convertProgramTypeToNumber(
-          previousEventConverted['AuditType'] as String);
-      calendarResult.citationsToFollowUp['PreviousEvent'] =
-          previousEventConverted;
+      Map<String, dynamic> temp = calendarResult.citationsToFollowUp;
+      dynamic initialObject = temp['PreviousEvent'];
+      dynamic keys2 = initialObject.keys.toList();
+      List<String> keys3 = keys2.cast<String>().toList() as List<String>;
+      for (String key in keys3) {
+        if (key == "ProgramType") {
+          finalObject[key] =
+              convertProgramTypeToNumber(initialObject[key] as String);
+        } else if (key == "AuditType") {
+          finalObject[key] =
+              convertAuditTypeToNumber(initialObject[key] as String);
+        } else {
+          finalObject[key] = initialObject[key];
+        }
+      }
+      calendarResult.citationsToFollowUp['PreviousEvent'] = finalObject;
     }
 
     String body = jsonEncode(<String, dynamic>{

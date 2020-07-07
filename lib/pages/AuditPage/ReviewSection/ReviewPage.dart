@@ -1,18 +1,8 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
-import 'package:auditor/Definitions/AuditClasses/Question.dart';
-// import 'package:auditor/Definitions/AuditClasses/Question.dart';
-// import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-// import 'package:intl/intl.dart';
 
 import 'ExpandableReview.dart';
-import 'FollowupCitationsSections.dart';
-// import 'ReviewQuestionTypes/FillInQuestion.dart';
-// import 'ReviewQuestionTypes/ReviewCommentSection.dart';
-// import 'ReviewQuestionTypes/YesNoQuestion.dart';
 
 class ReviewPage extends StatelessWidget {
   final Audit activeAudit;
@@ -20,7 +10,7 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Question> citations = Provider.of<AuditData>(context).citations;
+    // List<Question> citations = Provider.of<AuditData>(context).citations;
     return Expanded(
       child: ListView(
         // mainAxisSize: MainAxisSize.min,

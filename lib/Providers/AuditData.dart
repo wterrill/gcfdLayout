@@ -1,21 +1,15 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
-import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
-import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/providers/SendAudit.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'dart:convert';
-
 import 'dart:typed_data';
-
-import 'package:intl/intl.dart';
 
 import 'BuildAuditFromIncoming.dart';
 // import 'dart:typed_data';
@@ -77,6 +71,8 @@ class AuditData with ChangeNotifier {
   }
 
   Map<String, dynamic> getAuditCitationsObject(
+      // this uses the questions in the citations object to create the outgoing citations object.
+      // also called '
       {CalendarResult newCalendarResult}) {
     Audit retrievedAudit = auditBox.get(
             '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}')
@@ -85,14 +81,21 @@ class AuditData with ChangeNotifier {
 
     for (Question citation in retrievedAudit.citations) {
       if (!citation.unflagged) {
-        // followUpRequired = true;
         citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
             1;
         citationsMap[(citation.questionMap['databaseVar'] as String) +
             'ActionItem'] = citation.actionItem;
+        citationsMap[(citation.questionMap['databaseVar'] as String) +
+            'OriginalAnswer'] = citation.userResponse;
+        citationsMap[(citation.questionMap['databaseVar'] as String) +
+            'OriginalComments'] = citation.optionalComment;
       } else {
         String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
         citationsMap[text] = 0;
+        citationsMap[(citation.questionMap['databaseVar'] as String) +
+            'OriginalAnswer'] = citation.userResponse;
+        citationsMap[(citation.questionMap['databaseVar'] as String) +
+            'OriginalComments'] = citation.optionalComment;
       }
     }
     return citationsMap;
@@ -178,15 +181,15 @@ class AuditData with ChangeNotifier {
 
   CalendarResult convertToThrowawayCalendarResult(Map<String, String> result) {
     CalendarResult created = CalendarResult(
-      startTime: result['startTime'] as String,
-      agencyName: result['agencyName'] as String,
-      agencyNum: result['agencyNum'] as String,
-      auditType: result['auditType'] as String,
-      programNum: result['programNum'] as String,
-      programType: result['programType'] as String,
-      auditor: result['auditor'] as String,
-      status: result['status'] as String,
-      message: result['message'] as String,
+      startTime: result['StartTime'],
+      agencyName: result['AgencyName'],
+      agencyNum: result['AgencyNum'],
+      auditType: result['AuditType'],
+      programNum: result['ProgramNumber'],
+      programType: result['ProgramType'],
+      auditor: result['Auditor'],
+      status: null,
+      message: null,
       deviceid: deviceidProvider,
       siteInfo: null,
       citationsToFollowUp:
@@ -229,8 +232,6 @@ class AuditData with ChangeNotifier {
             }
             question.fromSectionName = section.name;
 
-            // question.unflagged = !question.unflagged;
-
             question.actionItem =
                 previousCitationsTemp[databaseVar + "ActionItem"] as String;
 
@@ -267,7 +268,7 @@ class AuditData with ChangeNotifier {
     } else {
       // this means that we found the audit in question.  Let's copy the questions directly
       for (var i = 0; i < activeAudit.sections.length; i++) {
-        for (var j = 0; i < activeAudit.sections[i].questions.length; j++) {
+        for (var j = 0; j < activeAudit.sections[i].questions.length; j++) {
           String databaseVar = activeAudit
               .sections[i].questions[j].questionMap['databaseVar'] as String;
           if (citationDatabaseVarsList.contains(databaseVar)) {
@@ -278,9 +279,11 @@ class AuditData with ChangeNotifier {
           }
         }
       }
+      previousCitations = citations;
+      activeAudit.citations = citations;
+      activeAudit.previousCitations = citations;
+      // citations = citations;
     }
-
-    previousCitations = citations;
   }
 
   void notifyTheListeners() {

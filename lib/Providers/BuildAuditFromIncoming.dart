@@ -207,8 +207,8 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
           }
         }
       }
-      dynamic temp = incomingPantryAudit['FollowUpRequired'];
-      newAudit.followupRequired = temp as bool;
+      dynamic temp = incomingPantryAudit['SiteVisitRequired'];
+      newAudit.siteVisitRequired = temp as bool;
 
       // finally, add the citations created above.
       newAudit.citations = citations;

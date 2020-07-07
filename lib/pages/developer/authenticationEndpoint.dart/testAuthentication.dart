@@ -17,7 +17,6 @@ class TestAuthentication extends StatefulWidget {
 }
 
 class _TestAuthenticationState extends State<TestAuthentication> {
-  @override
   String result = "Awaiting results...";
   bool isNtlm = true;
   dynamic sender;
@@ -442,7 +441,6 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                   children: [
                     RaisedButton(
                       onPressed: () async {
-                        //TODO: need to turn of CORS headers in the server
                         client
                             // http
                             .get(
@@ -803,7 +801,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       "FindingsFound": "",
       "CorrectiveActionPlanDueDate": "2020/6/30",
       "SiteRepresentativeSignature": "2020/6/6",
-      "FollowUpRequired": "false",
+      "SiteVisitRequired": "false",
       "FollowUpItems": "",
     }
   };
@@ -1063,7 +1061,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 // 		FindingsFound:"""",
 // 		CorrectiveActionPlanDueDate:""2020/6/30"",
 // 		SiteRepresentativeSignature:""2020/6/6"",
-// 		FollowUpRequired:""false"",
+// 		SiteVisitRequired:""false"",
 // 		FollowUpItems:"""",
 
 // 	},

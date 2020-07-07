@@ -54,8 +54,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryServesOutsideServiceAreaComments'
   },
-
-  // TODO this needs to somehow be linked to the question above so that it can be blank, but still show up as completed, if the question above is "no"
   <String, dynamic>{
     'text': 'If yes, how many and from where do guests travel?',
     'type': 'fillIn',
@@ -100,7 +98,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'ReferralsRequiredComments',
     'actionItem': 'action item does not exist for this question'
-//TODO This needs to be linked to the question before
   },
   <String, dynamic>{
     'text': 'Are appointments required to receive food?',
@@ -143,7 +140,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'HasSoupKitchenComments'
   },
-  //TODO: this below question needs to be linked to the above question
   <String, dynamic>{
     'text':
         'If yes, is the food properly separated and tracked for two programs?',
@@ -154,12 +150,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseOptCom': 'FoodProperlySeperatedAndTrackedComments',
     'actionItem': 'action item does not exist for this question'
   },
-  // <String, dynamic>{
-  //   'text':
-  //       'If yes, is the food properly separated and tracked for two programs?',
-  //   'type': 'yesNo'
-  // },
-
   <String, dynamic>{
     'text': 'Is Program on Food Rescue/Agency Enabled?',
     'type': 'yesNo',
@@ -181,7 +171,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVar': 'RemoveField',
     'databaseVarType': 'string',
   },
-
   <String, dynamic>{
     'text': 'Last Order Date:',
     'type': 'date',
@@ -189,7 +178,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseVarType': 'date',
     'databaseOptCom': 'LastOrderDateComments'
   },
-
   <String, dynamic>{
     'text': 'What is the number of deliveries per month?',
     'type': 'dropDown',
@@ -198,7 +186,6 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'databaseOptCom': 'NumberOfDeliveriesPerMonthComments',
     'databaseVarType': 'string',
   },
-
   <String, dynamic>{
     'text': 'Has an order been placed from the menu in the past month?',
     'type': 'yesNo',
@@ -284,7 +271,7 @@ List<Map<String, dynamic>> audit1Section2Questions = [
   },
   <String, dynamic>{
     'text':
-        "Are TEFAP posters accessible to guests?(Ex: Income Eligibility, Notice to Program Participants, Prohibited Activities, /“And Justice for All/”)",
+        "Are TEFAP posters accessible to guests?(Ex: Income Eligibility, Prohibited Activities, 'And Justice for All')",
     'type': 'yesNoNa',
     'happyPathResponse': ['Yes', 'NA'],
     'databaseVar': 'TEFAPPostersAccessible',
@@ -390,7 +377,6 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseOptCom': 'ProxyFormsUsedComments',
     'actionItem': 'Please utilize proxy forms when appropriate'
   },
-//TODO The above question needs to be linked to the below question
   <String, dynamic>{
     'text':
         "If yes, do they contain the original signature of the recipient getting food?",
@@ -429,8 +415,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'TANFCommoditiesDistributedComments'
   },
-  //TODO the answer from the above question should be linked to the below question,
-  //if yes above, it should be yes below
+
   <String, dynamic>{
     'text': "If yes, do guests complete the required TANF information?",
     'type': 'yesNoNa',
@@ -551,7 +536,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVarType': 'string',
     'databaseOptCom': 'DistributionStyleComments'
   },
-//TODO: The below question needs to be linked to the above question
+
   // <String, dynamic>{
   //   'text': "If not client choice, why?",
   //   'type': 'fillIn',
@@ -618,7 +603,6 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'actionItem':
         'Remove all boxes of food (cardboard /paper) from the floor or at least 6” above the floor'
   },
-
   <String, dynamic>{
     'text':
         'Is food kept far enough away from walls and floor to permit good air circulation and to allow for pest control?',
@@ -640,7 +624,6 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'actionItem':
         'Acquire or Utilize Heater or AC to maintain proper temperature in dry storage area to maintain temperature between 50F and 70F. Please submit receipt for Heater or AC '
   },
-  //TODO: Make comment mandatory
   <String, dynamic>{
     'text':
         'Is the food stored in a secure location with adequate space? If no, explain:',
@@ -1094,7 +1077,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
   },
   <String, dynamic>{
     'text':
-        'Was the site able to provide a pest control log/exterminator’s report? (please provide the name of the company and date last serviced',
+        'Was the site able to provide a pest control/exterminator’s report? (please provide the name of the company and date last serviced)',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PestControlReport',
@@ -1160,7 +1143,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseOptCom': 'EvidenceOfPestsComments',
     'actionItem': 'action item does not exist for this question'
   },
-  // //TODO the below question should be linked to the above question
+
   // <String, dynamic>{
   //   'text': 'If yes, details:',
   //   'type': 'fillIn',

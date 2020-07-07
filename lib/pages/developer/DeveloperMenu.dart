@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'authenticationEndpoint.dart/testAuthentication.dart';
+import 'clayContainer/ClayContainerEx.dart';
 import 'fingerSign/fingerSign.dart';
 import 'hiveTest/Contact.dart';
 import 'hiveTest/HiveTest.dart';
@@ -205,7 +206,16 @@ class DeveloperMenu extends StatelessWidget {
                       builder: (context) => ProductDetails()),
                 );
               },
-              child: Text("Scroll changes testing"))
+              child: Text("Scroll changes testing")),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => ClayContainerEx()),
+                );
+              },
+              child: Text("Clay Container testing")),
         ],
       ),
     );

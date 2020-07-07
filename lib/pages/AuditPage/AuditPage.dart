@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'DeveloperPage.dart';
+import 'FollowUpReviewSection/FollowUpReview.dart';
 import 'ReviewSection/ReviewPage.dart';
 import 'SectionButtons.dart';
 import 'AuditQuestions.dart';
@@ -55,6 +56,8 @@ class _AuditPageState extends State<AuditPage> {
       if (widget.calendarResult.citationsToFollowUp != null) {
         Provider.of<AuditData>(context, listen: false)
             .buildQuestionFromCitation(widget.calendarResult);
+        // List<Question> beer = Provider.of<AuditData>(context).previousCitations;
+        // print(beer);
       }
     }
     activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
@@ -62,6 +65,8 @@ class _AuditPageState extends State<AuditPage> {
         Provider.of<AuditData>(context, listen: false).activeSection;
     Provider.of<AuditData>(context, listen: false).citations =
         activeAudit.citations;
+    Provider.of<AuditData>(context, listen: false).previousCitations =
+        activeAudit.previousCitations;
     paintButtons();
   }
 
@@ -117,6 +122,10 @@ class _AuditPageState extends State<AuditPage> {
                       ReviewPage(
                         activeAudit: activeAudit,
                       ),
+                    if (activeSection?.name == "Follow Up Review")
+                      FollowUpReviewPage(
+                        activeAudit: activeAudit,
+                      ),
                     if (activeSection?.name == "Photos")
                       PhotoPage(
                         activeAudit: activeAudit,
@@ -133,7 +142,8 @@ class _AuditPageState extends State<AuditPage> {
                       ),
                     if (activeSection?.name == "*Developer*") DeveloperPage(),
                     if (activeSection?.name != "Review" &&
-                        activeSection?.name != "Verification")
+                        activeSection?.name != "Verification" &&
+                        activeSection?.name != "Follow Up Review")
                       Container(
                         child: AuditQuestions(
                             activeSection: activeSection,
@@ -184,8 +194,11 @@ class _AuditPageState extends State<AuditPage> {
                               activeAudit.citations =
                                   Provider.of<AuditData>(context, listen: false)
                                       .citations;
+                              activeAudit.previousCitations =
+                                  Provider.of<AuditData>(context, listen: false)
+                                      .citations;
                               String status = "Completed";
-                              if (activeAudit.followupRequired == true) {
+                              if (activeAudit.siteVisitRequired == true) {
                                 status = "Site Visit Req.";
                               }
 
