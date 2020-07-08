@@ -6,7 +6,7 @@ import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
-import 'package:auditor/providers/SendAudit.dart';
+import 'package:auditor/providers/BuildAuditToSend.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'dart:typed_data';
@@ -382,7 +382,20 @@ class AuditData with ChangeNotifier {
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
-      bool successful = await sendAudit(result, deviceidProvider) as bool;
+      Map<String, dynamic> mainBody =
+          buildAuditToSend(result, deviceidProvider);
+      bool successful = await FullAuditComms.sendFullAudit(mainBody).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          // Navigator.of(navigatorKey.currentContext).pop();
+          // Dialogs.showMessage(
+          //     context: navigatorKey.currentContext,
+          //     message:
+          //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
+          //     dismissable: true);
+          return null;
+        },
+      ) as bool;
       if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
     }
   }

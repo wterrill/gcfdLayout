@@ -128,47 +128,46 @@ class FullAuditComms {
 }
 
 class ScheduleAuditComms {
-  static Future<dynamic> scheduleAudit(
-      CalendarResult calendarResult, String addDelete) async {
-    String key;
-    if (calendarResult.programType == "Pantry Audit") {
-      key = "PantryFollowUp";
-    }
-    if (calendarResult.programType == "Congregate Audit") {
-      key = "CongregateFollowUp";
-    }
-    if (calendarResult.citationsToFollowUp != null) {
-      Map<String, dynamic> finalObject = <String, dynamic>{};
+  static Future<dynamic> scheduleAudit(String body) async {
+    // String key;
+    // if (calendarResult.programType == "Pantry Audit") {
+    //   key = "PantryFollowUp";
+    // }
+    // if (calendarResult.programType == "Congregate Audit") {
+    //   key = "CongregateFollowUp";
+    // }
+    // if (calendarResult.citationsToFollowUp != null) {
+    //   Map<String, dynamic> finalObject = <String, dynamic>{};
 
-      Map<String, dynamic> temp = calendarResult.citationsToFollowUp;
-      dynamic initialObject = temp['PreviousEvent'];
-      dynamic keys2 = initialObject.keys.toList();
-      List<String> keys3 = keys2.cast<String>().toList() as List<String>;
-      for (String key in keys3) {
-        if (key == "ProgramType") {
-          finalObject[key] =
-              convertProgramTypeToNumber(initialObject[key] as String);
-        } else if (key == "AuditType") {
-          finalObject[key] =
-              convertAuditTypeToNumber(initialObject[key] as String);
-        } else {
-          finalObject[key] = initialObject[key];
-        }
-      }
-      calendarResult.citationsToFollowUp['PreviousEvent'] = finalObject;
-    }
+    //   Map<String, dynamic> temp = calendarResult.citationsToFollowUp;
+    //   dynamic initialObject = temp['PreviousEvent'];
+    //   dynamic keys2 = initialObject.keys.toList();
+    //   List<String> keys3 = keys2.cast<String>().toList() as List<String>;
+    //   for (String key in keys3) {
+    //     if (key == "ProgramType") {
+    //       finalObject[key] =
+    //           convertProgramTypeToNumber(initialObject[key] as String);
+    //     } else if (key == "AuditType") {
+    //       finalObject[key] =
+    //           convertAuditTypeToNumber(initialObject[key] as String);
+    //     } else {
+    //       finalObject[key] = initialObject[key];
+    //     }
+    //   }
+    //   calendarResult.citationsToFollowUp['PreviousEvent'] = finalObject;
+    // }
 
-    String body = jsonEncode(<String, dynamic>{
-      'AED': addDelete,
-      'AgencyNumber': calendarResult.agencyNum,
-      'ProgramNumber': calendarResult.programNum,
-      'ProgramType': convertProgramTypeToNumber(calendarResult.programType),
-      'Auditor': calendarResult.auditor,
-      'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
-      'StartTime': calendarResult.startDateTime.toString(),
-      'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
-      key: calendarResult.citationsToFollowUp
-    });
+    // String body = jsonEncode(<String, dynamic>{
+    //   'AED': addDelete,
+    //   'AgencyNumber': calendarResult.agencyNum,
+    //   'ProgramNumber': calendarResult.programNum,
+    //   'ProgramType': convertProgramTypeToNumber(calendarResult.programType),
+    //   'Auditor': calendarResult.auditor,
+    //   'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
+    //   'StartTime': calendarResult.startDateTime.toString(),
+    //   'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
+    //   key: calendarResult.citationsToFollowUp
+    // });
     // print(calendarResult.deviceid);
     print('scheduleAudit send ${DateTime.now()}');
     if (isNtlm) {
@@ -197,8 +196,7 @@ class ScheduleAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> getScheduled(
-      int allNotMe, SiteList siteList, String deviceid) async {
+  static Future<dynamic> getScheduled(int allNotMe, String deviceid) async {
     // allNotMe = 1;
     var queryParameters = {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
@@ -208,10 +206,10 @@ class ScheduleAuditComms {
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
@@ -222,47 +220,7 @@ class ScheduleAuditComms {
           dynamic resultMap = json.decode(res.body);
           print(resultMap);
           List<dynamic> listEvents = resultMap["Result"] as List<dynamic>;
-          List<CalendarResult> finalList = [];
-          for (dynamic event in listEvents) {
-            String agencyName = siteList
-                .agencyNameFromAgencyNumber(event['AgencyNumber'] as String);
-            String agencyNum = event['AgencyNumber'] as String;
-            String programNum = event['ProgramNumber'] as String;
-            String programType =
-                convertNumberToProgramType(event['ProgramType'] as int);
-            String auditor = event['Auditor'] as String;
-            String auditType =
-                convertNumberToAuditType(event['AuditType'] as int);
-            String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000')
-                .format(DateTime.parse(event['StartTime'] as String));
-            String status = convertNumberToStatus(event['Status'] as int);
-            Site siteInfo = siteList.getSiteFromAgencyNumber(
-                agencyNumber: event['AgencyNumber'] as String);
-            siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
-            String siteidreceived = event['DeviceId'] as String;
-            Map<String, dynamic> citationsToFollowUp =
-                event['retrievedAuditToSend'] as Map<String, dynamic>;
-
-            if (startTime != null) {
-              CalendarResult newResult = CalendarResult(
-                  agencyName: agencyName,
-                  agencyNum: agencyNum,
-                  programNum: programNum,
-                  programType: programType,
-                  auditor: auditor,
-                  auditType: auditType,
-                  startTime: startTime,
-                  status: status,
-                  siteInfo: siteInfo,
-                  deviceid: siteidreceived,
-                  citationsToFollowUp: citationsToFollowUp);
-              finalList.add(newResult);
-            } else {
-              print('$agencyName did not have a startTime associated with it');
-            }
-          }
-
-          return finalList;
+          return listEvents;
         } catch (error) {
           print(error);
         }

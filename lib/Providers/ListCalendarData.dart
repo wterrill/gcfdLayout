@@ -3,6 +3,7 @@ import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
+import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
@@ -13,7 +14,10 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
+import 'BuildScheduledFromIncoming.dart';
+import 'BuildScheduledToSend.dart';
 import 'SiteData.dart';
+import 'package:collection/collection.dart';
 
 List<String> auditTypes = [
   //'Select'
@@ -77,10 +81,10 @@ class ListCalendarData with ChangeNotifier {
     List<dynamic> dynKeys = calendarOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      CalendarResult result =
+      CalendarResult preResult =
           calendarOutBox.get(toBeSentKeys[i]) as CalendarResult;
-
-      dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "A");
+      String jsonResult = buildScheduledToSend(preResult, "A");
+      dynamic successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
       if (successful as bool) calendarOutBox.delete(toBeSentKeys[i]);
     }
   }
@@ -93,8 +97,8 @@ class ListCalendarData with ChangeNotifier {
       CalendarResult result =
           calendarDeleteBox.get(toBeSentKeys[i]) as CalendarResult;
       result.deviceid = deviceidProvider;
-      // print(calToBeDeletedBox.keys);
-      dynamic successful = await ScheduleAuditComms.scheduleAudit(result, "D");
+      String jsonResult = buildScheduledToSend(result, "D");
+      dynamic successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
       // print(calToBeDeletedBox.keys);
       if (successful as bool) calendarDeleteBox.delete(toBeSentKeys[i]);
       // print(calToBeDeletedBox.keys);
@@ -106,11 +110,58 @@ class ListCalendarData with ChangeNotifier {
     if (calendarBox.keys.toList().length == 0) {
       allNotMe = 1;
     }
-    dynamic result = await ScheduleAuditComms.getScheduled(
-        allNotMe, siteList, deviceidProvider);
+
+    dynamic dynResult =
+        await ScheduleAuditComms.getScheduled(allNotMe, deviceidProvider);
+
     List<CalendarResult> downloadedCalendarResults =
-        result as List<CalendarResult>;
-    if (result != null) {
+        buildScheduledFromIncoming(dynResult, siteList);
+    // TODO update old followup to Complete, if followup scheduled.
+    for (CalendarResult result in downloadedCalendarResults) {
+      if (result.auditType == "Follow Up") {
+        Map<String, dynamic> pastEvent =
+            result.citationsToFollowUp['PreviousEvent'] as Map<String, dynamic>;
+        List<String> oldEvent = [
+          pastEvent["AgencyNumber"] as String,
+          pastEvent['ProgramNumber'] as String,
+          DateTime.parse(pastEvent['StartTime'] as String).toString()
+        ];
+        for (CalendarResult result in downloadedCalendarResults) {
+          List<String> newEvent = [
+            result.agencyNum,
+            result.programNum,
+            result.startDateTime.toString()
+          ];
+          if (newEvent.toString().compareTo(oldEvent.toString()) == 0) {
+            // we found a match, update status to complete
+            result.status = "Completed";
+            print("complete");
+            // break;
+          }
+        }
+        CalendarResult junkCalendarResult = CalendarResult(
+          startTime: pastEvent['StartTime'] as String,
+          agencyName: pastEvent['AgencyName'] as String,
+          agencyNum: pastEvent['AgencyNumber'] as String,
+          auditType: convertNumberToAuditType(
+              int.parse(pastEvent['AuditType'] as String)),
+          programNum: pastEvent['ProgramNumber'] as String,
+          programType: convertNumberToProgramType(
+              int.parse(pastEvent['ProgramType'] as String)),
+          auditor: pastEvent['Auditor'] as String,
+          status: null,
+          message: null,
+          deviceid: null,
+          siteInfo: null,
+          citationsToFollowUp: null,
+        );
+        updateStatusOnScheduleToCompleted(junkCalendarResult);
+
+        print(pastEvent);
+      }
+    }
+
+    if (dynResult != null) {
       for (CalendarResult result in downloadedCalendarResults) {
         // TODO handle if result == null
         if (result.status != -1 && result.status != "Deleted") {

@@ -6,7 +6,8 @@ import 'package:auditor/communications/Comms.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
-Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
+Map<String, dynamic> buildAuditToSend(
+    Audit outgoingAudit, String deviceidProvider) {
   Map<String, dynamic> resultMap = <String, dynamic>{};
 ////////// Encode all of the questions first //////////
   for (Section section in outgoingAudit.sections) {
@@ -174,17 +175,18 @@ Future<dynamic> sendAudit(Audit outgoingAudit, String deviceidProvider) async {
   }
 
   print(mainBody);
+  return mainBody;
 
-  return FullAuditComms.sendFullAudit(mainBody).timeout(
-    const Duration(seconds: 10),
-    onTimeout: () {
-      // Navigator.of(navigatorKey.currentContext).pop();
-      // Dialogs.showMessage(
-      //     context: navigatorKey.currentContext,
-      //     message:
-      //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
-      //     dismissable: true);
-      return null;
-    },
-  );
+  // return FullAuditComms.sendFullAudit(mainBody).timeout(
+  //   const Duration(seconds: 10),
+  //   onTimeout: () {
+  //     // Navigator.of(navigatorKey.currentContext).pop();
+  //     // Dialogs.showMessage(
+  //     //     context: navigatorKey.currentContext,
+  //     //     message:
+  //     //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
+  //     //     dismissable: true);
+  //     return null;
+  //   },
+  // );
 }

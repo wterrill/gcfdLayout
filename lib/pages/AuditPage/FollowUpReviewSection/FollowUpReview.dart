@@ -2,6 +2,7 @@ import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:flutter/material.dart';
 
+import 'FollowUpQuestionList.dart';
 import 'FollowupCitationsSections.dart';
 
 class FollowUpReviewPage extends StatelessWidget {
@@ -32,14 +33,14 @@ class FollowUpReviewPage extends StatelessWidget {
             color: ColorDefs.colorAudit2,
             child: Center(
               child: Text(
-                "Previous Citations",
+                "Cited Questions",
                 style: ColorDefs.textBodyBlack30,
               ),
             ),
           ),
           Expanded(
             flex: 1,
-            child: FollowupCitationsSections(followup: true),
+            child: FollowupQuestionList(),
           ),
         ],
       ),
