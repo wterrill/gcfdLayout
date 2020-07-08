@@ -2,7 +2,6 @@ import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Utilities/Conversion.dart';
-import 'package:auditor/communications/Comms.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 

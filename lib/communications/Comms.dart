@@ -2,15 +2,11 @@
 import 'dart:convert';
 
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
-import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
-import 'package:auditor/Utilities/Conversion.dart';
-import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
-import 'package:intl/intl.dart';
 
 bool isNtlm = true;
 dynamic sender;

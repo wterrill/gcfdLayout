@@ -1,7 +1,5 @@
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:auditor/pages/AuditPage/QuestionTypes/YesNoNaQuestion.dart';
-import 'package:auditor/pages/AuditPage/QuestionTypes/YesNoQuestion.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +8,6 @@ import 'FollowUpQuestionTypes/FollowUpDropDownQuestion.dart';
 import 'FollowUpQuestionTypes/FollowUpIssuesNoIssuesQuestion.dart';
 import 'FollowUpQuestionTypes/FollowUpYesNoNaQuestion.dart';
 import 'FollowUpQuestionTypes/FollowUpYesNoQuestion.dart';
-import 'ReviewCommentSection.dart';
 
 // import 'ReviewQuestionTypes/ReviewCommentSection.dart';
 
@@ -27,11 +24,7 @@ class _FollowupQuestionListState extends State<FollowupQuestionList> {
   List<Question> citations;
 
   Widget build(BuildContext context) {
-    // if (widget.followup == true) {
     citations = Provider.of<AuditData>(context).previousCitations;
-    // } else {
-    //   citations = Provider.of<AuditData>(context).citations;
-    // }
     return ListView.builder(
       shrinkWrap: true,
       // physics: NeverScrollableScrollPhysics(),

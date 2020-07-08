@@ -49,7 +49,7 @@ class _CommentSectionState extends State<CommentSection> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
-    Section activeSection = widget.activeSection;
+    // Section activeSection = widget.activeSection;
     return AnimatedContainer(
       height: widget.activeSection.questions[index].textBoxRollOut ? 80 : 0,
       color: Colors.white,
@@ -81,15 +81,15 @@ class _CommentSectionState extends State<CommentSection> {
               } else {
                 widget.activeSection.questions[index].userResponse = value;
               }
-              if (activeSection.name != "Confirm Details") {
-                Status sectionStatus = checkSectionDone(activeSection);
-                // Provider.of<AuditData>(context, listen: false)
-                //     .updateSectionStatus(sectionStatus);
-              } else {
-                Provider.of<AuditData>(context, listen: false)
-                    .activeAudit
-                    .activateConfirmDetails = true;
-              }
+              // if (activeSection.name != "Confirm Details") {
+              //   Status sectionStatus = checkSectionDone(activeSection);
+              //   // Provider.of<AuditData>(context, listen: false)
+              //   //     .updateSectionStatus(sectionStatus);
+              // } else {
+              //   Provider.of<AuditData>(context, listen: false)
+              //       .activeAudit
+              //       .activateConfirmDetails = true;
+              // }
             } else {
               widget.activeSection.questions[index].optionalComment = value;
             }

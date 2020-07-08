@@ -1,9 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
-import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auditor/Definitions/colorDefs.dart';
-import 'package:provider/provider.dart';
 
 class ActionItemsCommentSection extends StatefulWidget {
   final int index;

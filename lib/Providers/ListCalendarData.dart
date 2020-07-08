@@ -17,7 +17,6 @@ import 'dart:math';
 import 'BuildScheduledFromIncoming.dart';
 import 'BuildScheduledToSend.dart';
 import 'SiteData.dart';
-import 'package:collection/collection.dart';
 
 List<String> auditTypes = [
   //'Select'
