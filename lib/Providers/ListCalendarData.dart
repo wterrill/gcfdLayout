@@ -69,11 +69,16 @@ class ListCalendarData with ChangeNotifier {
   void dataSync(
       BuildContext context, SiteList siteList, String deviceid) async {
     deviceidProvider = deviceid;
+    print("beer11");
     await getAuditors();
+    print("beer12");
     await deleteFromCloud();
     // await Future.delayed(Duration(milliseconds: 3000), () => true);
+    print("beer13");
     await sendScheduledToCloud();
+    print("beer14");
     await getScheduledFromCloud(context, siteList);
+    print("beer15");
   }
 
   void sendScheduledToCloud() async {
@@ -89,8 +94,11 @@ class ListCalendarData with ChangeNotifier {
   }
 
   void deleteFromCloud() async {
+    print("beer21");
     List<dynamic> dynKeys = calendarDeleteBox.keys.toList();
+    print("beer22");
     List<String> toBeSentKeys = List<String>.from(dynKeys);
+    print("beer23");
     for (var i = 0; i < toBeSentKeys.length; i++) {
       // print(calToBeDeletedBox.keys);
       CalendarResult result =
@@ -157,6 +165,7 @@ class ListCalendarData with ChangeNotifier {
         updateStatusOnScheduleToCompleted(junkCalendarResult);
 
         print(pastEvent);
+        notifyListeners();
       }
     }
 
@@ -170,8 +179,10 @@ class ListCalendarData with ChangeNotifier {
         }
       }
     }
-    newEventAdded = true;
-    notifyListeners();
+    if (downloadedCalendarResults.length != 0) {
+      newEventAdded = true;
+      notifyListeners();
+    }
   }
 
   void getAuditors() async {
@@ -251,22 +262,24 @@ class ListCalendarData with ChangeNotifier {
             '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
         as CalendarResult;
     // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
-    CalendarResult retrievedScheduleToSend = calendarOutBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
-        as CalendarResult;
-    retrievedSchedule.status = "Completed";
-    try {
-      retrievedScheduleToSend.status = "Completed";
-      calendarOutBox.put(
+    if (retrievedSchedule != null) {
+      CalendarResult retrievedScheduleToSend = calendarOutBox.get(
+              '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+          as CalendarResult;
+      retrievedSchedule?.status = "Completed";
+      try {
+        retrievedScheduleToSend.status = "Completed";
+        calendarOutBox.put(
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+            retrievedScheduleToSend);
+      } catch (err) {
+        print("audit not waiting to be sent");
+      }
+      calendarBox.put(
           '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
-          retrievedScheduleToSend);
-    } catch (err) {
-      print("audit not waiting to be sent");
+          retrievedSchedule);
+      notifyListeners();
     }
-    calendarBox.put(
-        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
-        retrievedSchedule);
-    notifyListeners();
   }
 
   void toggleFilterTimeToggle() {

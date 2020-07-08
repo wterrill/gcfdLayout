@@ -405,7 +405,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         oldAuditCitationsObject['PreviousEvent'] = {
                           'StartTime': alreadyExistedCalendarResult.startTime,
                           'AgencyName': alreadyExistedCalendarResult.agencyName,
-                          'AgencyNum': alreadyExistedCalendarResult.agencyNum,
+                          'AgencyNumber':
+                              alreadyExistedCalendarResult.agencyNum,
                           'ProgramNumber':
                               alreadyExistedCalendarResult.programNum,
                           'AuditType': alreadyExistedCalendarResult.auditType,

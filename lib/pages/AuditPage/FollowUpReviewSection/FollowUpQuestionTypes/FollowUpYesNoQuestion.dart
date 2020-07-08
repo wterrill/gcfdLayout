@@ -47,10 +47,10 @@ class _FollowUpYesNoQuestionState extends State<FollowUpYesNoQuestion> {
                     widget.citations[index].userResponse as String, "Yes");
                 widget.citations[index].userResponse = result;
 
-                Audit thisAudit =
-                    Provider.of<AuditData>(context, listen: false).activeAudit;
-                Provider.of<AuditData>(context, listen: false)
-                    .saveAuditLocally(thisAudit);
+                // Audit thisAudit =
+                //     Provider.of<AuditData>(context, listen: false).activeAudit;
+                // Provider.of<AuditData>(context, listen: false)
+                //     .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Container(
@@ -69,10 +69,10 @@ class _FollowUpYesNoQuestionState extends State<FollowUpYesNoQuestion> {
                 String result = setQuestionValue(
                     widget.citations[index].userResponse as String, "No");
                 widget.citations[index].userResponse = result;
-                Audit thisAudit =
-                    Provider.of<AuditData>(context, listen: false).activeAudit;
-                Provider.of<AuditData>(context, listen: false)
-                    .saveAuditLocally(thisAudit);
+                // Audit thisAudit =
+                //     Provider.of<AuditData>(context, listen: false).activeAudit;
+                // Provider.of<AuditData>(context, listen: false)
+                //     .saveAuditLocally(thisAudit);
                 setState(() {});
               },
               child: Container(

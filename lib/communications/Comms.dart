@@ -125,46 +125,6 @@ class FullAuditComms {
 
 class ScheduleAuditComms {
   static Future<dynamic> scheduleAudit(String body) async {
-    // String key;
-    // if (calendarResult.programType == "Pantry Audit") {
-    //   key = "PantryFollowUp";
-    // }
-    // if (calendarResult.programType == "Congregate Audit") {
-    //   key = "CongregateFollowUp";
-    // }
-    // if (calendarResult.citationsToFollowUp != null) {
-    //   Map<String, dynamic> finalObject = <String, dynamic>{};
-
-    //   Map<String, dynamic> temp = calendarResult.citationsToFollowUp;
-    //   dynamic initialObject = temp['PreviousEvent'];
-    //   dynamic keys2 = initialObject.keys.toList();
-    //   List<String> keys3 = keys2.cast<String>().toList() as List<String>;
-    //   for (String key in keys3) {
-    //     if (key == "ProgramType") {
-    //       finalObject[key] =
-    //           convertProgramTypeToNumber(initialObject[key] as String);
-    //     } else if (key == "AuditType") {
-    //       finalObject[key] =
-    //           convertAuditTypeToNumber(initialObject[key] as String);
-    //     } else {
-    //       finalObject[key] = initialObject[key];
-    //     }
-    //   }
-    //   calendarResult.citationsToFollowUp['PreviousEvent'] = finalObject;
-    // }
-
-    // String body = jsonEncode(<String, dynamic>{
-    //   'AED': addDelete,
-    //   'AgencyNumber': calendarResult.agencyNum,
-    //   'ProgramNumber': calendarResult.programNum,
-    //   'ProgramType': convertProgramTypeToNumber(calendarResult.programType),
-    //   'Auditor': calendarResult.auditor,
-    //   'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
-    //   'StartTime': calendarResult.startDateTime.toString(),
-    //   'DeviceId': kIsWeb ? "website" : calendarResult.deviceid,
-    //   key: calendarResult.citationsToFollowUp
-    // });
-    // print(calendarResult.deviceid);
     print('scheduleAudit send ${DateTime.now()}');
     if (isNtlm) {
       sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',

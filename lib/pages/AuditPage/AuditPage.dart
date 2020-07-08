@@ -167,6 +167,18 @@ class _AuditPageState extends State<AuditPage> {
                                   activeSection.lastStatus = Status.completed;
                                   setState(() {});
                                 }
+                                if (activeAudit.calendarResult.auditType ==
+                                    "Follow Up") {
+                                  Section goToSection;
+                                  for (Section section
+                                      in activeAudit.sections) {
+                                    if (section.name == "Follow Up Review") {
+                                      goToSection = section;
+                                    }
+                                  }
+                                  Provider.of<AuditData>(context, listen: false)
+                                      .updateActiveSection(goToSection);
+                                }
                               },
                       ),
                     if (activeSection?.name == "Verification")

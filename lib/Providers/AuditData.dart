@@ -183,7 +183,7 @@ class AuditData with ChangeNotifier {
     CalendarResult created = CalendarResult(
       startTime: result['StartTime'],
       agencyName: result['AgencyName'],
-      agencyNum: result['AgencyNum'],
+      agencyNum: result['AgencyNumber'],
       auditType: result['AuditType'],
       programNum: result['ProgramNumber'],
       programType: result['ProgramType'],

@@ -60,11 +60,11 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
                   //         checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
+                  // Audit thisAudit =
+                  //     Provider.of<AuditData>(context, listen: false)
+                  //         .activeAudit;
+                  // Provider.of<AuditData>(context, listen: false)
+                  //     .saveAuditLocally(thisAudit);
                   setState(() {});
                 }
               },
@@ -98,11 +98,11 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
                   //         checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
+                  // Audit thisAudit =
+                  //     Provider.of<AuditData>(context, listen: false)
+                  //         .activeAudit;
+                  // Provider.of<AuditData>(context, listen: false)
+                  //     .saveAuditLocally(thisAudit);
                   setState(() {});
                 }
               },
@@ -138,11 +138,11 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
                   //         checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
+                  // Audit thisAudit =
+                  //     Provider.of<AuditData>(context, listen: false)
+                  //         .activeAudit;
+                  // Provider.of<AuditData>(context, listen: false)
+                  //     .saveAuditLocally(thisAudit);
                   setState(() {});
                 }
               },
