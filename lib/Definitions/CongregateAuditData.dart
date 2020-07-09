@@ -291,12 +291,23 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVar': 'NumberOfIntakeVolunteers',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': "# of Meal Distribution volunteers:",
+  //   'type': 'fillInNum',
+  //   'databaseVar': 'NumberOfDistributionVolunteers',
+  //   'databaseVarType': 'int',
+  // },
+
   <String, dynamic>{
     'text': "# of Meal Distribution volunteers:",
-    'type': 'fillInNum',
+    'type': 'dropDown',
+    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
+    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
     'databaseVar': 'NumberOfDistributionVolunteers',
-    'databaseVarType': 'int',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'NumberOfDistributionVolunteersComments'
   },
+
   <String, dynamic>{
     'text': "Today's meal",
     'type': 'fillIn',

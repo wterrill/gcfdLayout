@@ -279,11 +279,14 @@ class AuditData with ChangeNotifier {
           }
         }
       }
-      previousCitations = citations;
-      activeAudit.citations = citations;
-      activeAudit.previousCitations = citations;
+      // previousCitations = citations;
+      // activeAudit.citations = citations;
+      // activeAudit.previousCitations = citations;
       // citations = citations;
     }
+    previousCitations = citations;
+    activeAudit.citations = citations;
+    activeAudit.previousCitations = citations;
   }
 
   void notifyTheListeners() {

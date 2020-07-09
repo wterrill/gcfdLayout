@@ -49,6 +49,7 @@ class ListCalendarData with ChangeNotifier {
   Box calendarOutBox;
   Box calendarDeleteBox;
   Box auditorsListBox;
+  Box calendarEditOutBox;
   String deviceidProvider;
 
   AuditorList auditorList;
@@ -69,16 +70,16 @@ class ListCalendarData with ChangeNotifier {
   void dataSync(
       BuildContext context, SiteList siteList, String deviceid) async {
     deviceidProvider = deviceid;
-    print("beer11");
+
     await getAuditors();
-    print("beer12");
+
     await deleteFromCloud();
-    // await Future.delayed(Duration(milliseconds: 3000), () => true);
-    print("beer13");
+
+    await sendEditedScheduledToCloud();
+
     await sendScheduledToCloud();
-    print("beer14");
+
     await getScheduledFromCloud(context, siteList);
-    print("beer15");
   }
 
   void sendScheduledToCloud() async {
@@ -90,6 +91,18 @@ class ListCalendarData with ChangeNotifier {
       String jsonResult = buildScheduledToSend(preResult, "A");
       dynamic successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
       if (successful as bool) calendarOutBox.delete(toBeSentKeys[i]);
+    }
+  }
+
+  void sendEditedScheduledToCloud() async {
+    List<dynamic> dynKeys = calendarEditOutBox.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      CalendarResult preResult =
+          calendarEditOutBox.get(toBeSentKeys[i]) as CalendarResult;
+      String jsonResult = buildScheduledToSend(preResult, "E");
+      dynamic successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
+      if (successful as bool) calendarEditOutBox.delete(toBeSentKeys[i]);
     }
   }
 
@@ -146,15 +159,27 @@ class ListCalendarData with ChangeNotifier {
             // break;
           }
         }
+
+        String programTypeString;
+        String auditTypeString;
+        try {
+          int number = int.parse(pastEvent['AuditType'] as String);
+          int number2 = int.parse(pastEvent['ProgramType'] as String);
+          // it's a number as a string
+          programTypeString = convertNumberToProgramType(number2);
+          auditTypeString = convertNumberToAuditType(number);
+        } catch (err) {
+          // it's a string;
+          programTypeString = pastEvent['ProgramType'] as String;
+          auditTypeString = pastEvent['AuditType'] as String;
+        }
         CalendarResult junkCalendarResult = CalendarResult(
           startTime: pastEvent['StartTime'] as String,
           agencyName: pastEvent['AgencyName'] as String,
           agencyNum: pastEvent['AgencyNumber'] as String,
-          auditType: convertNumberToAuditType(
-              int.parse(pastEvent['AuditType'] as String)),
+          auditType: auditTypeString,
           programNum: pastEvent['ProgramNumber'] as String,
-          programType: convertNumberToProgramType(
-              int.parse(pastEvent['ProgramType'] as String)),
+          programType: programTypeString,
           auditor: pastEvent['Auditor'] as String,
           status: null,
           message: null,
@@ -200,11 +225,14 @@ class ListCalendarData with ChangeNotifier {
     Future calEventToBeDeletedFuture =
         Hive.openBox<CalendarResult>('calToBeDeletedBox');
     Future auditorsListBoxFuture = Hive.openBox<AuditorList>('auditorsListBox');
+    Future calendarEditOutBoxFuture =
+        Hive.openBox<CalendarResult>('calendarEditOutBox');
     Future.wait<dynamic>([
       calendarFuture,
       calToBeSentBoxFuture,
       calEventToBeDeletedFuture,
-      auditorsListBoxFuture
+      auditorsListBoxFuture,
+      calendarEditOutBoxFuture
     ]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
@@ -213,6 +241,7 @@ class ListCalendarData with ChangeNotifier {
       calendarOutBox = Hive.box<CalendarResult>('calToBeSentBox');
       calendarDeleteBox = Hive.box<CalendarResult>('calToBeDeletedBox');
       auditorsListBox = Hive.box<AuditorList>('auditorsListBox');
+      calendarEditOutBox = Hive.box<CalendarResult>('calendarEditOutBox');
       loadAuditorsFromBox();
       initializedx = true;
       notifyListeners();
@@ -227,6 +256,13 @@ class ListCalendarData with ChangeNotifier {
     // print(calendarBox.keys);
     newEventAdded = true;
     notifyListeners();
+  }
+
+  void addCalendarEditItem(CalendarResult calendarItem) {
+    CalendarResult calendarResult = calendarItem.clone();
+    calendarEditOutBox.put(
+        '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}',
+        calendarResult);
   }
 
   void saveAuditors(AuditorList auditorsList) {
@@ -266,7 +302,14 @@ class ListCalendarData with ChangeNotifier {
       CalendarResult retrievedScheduleToSend = calendarOutBox.get(
               '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
           as CalendarResult;
-      retrievedSchedule?.status = "Completed";
+      if (retrievedSchedule.status != "Completed") {
+        retrievedSchedule.status = "Completed";
+        addCalendarEditItem(retrievedSchedule);
+        calendarBox.put(
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
+            retrievedSchedule);
+        notifyListeners();
+      }
       try {
         retrievedScheduleToSend.status = "Completed";
         calendarOutBox.put(
@@ -275,10 +318,6 @@ class ListCalendarData with ChangeNotifier {
       } catch (err) {
         print("audit not waiting to be sent");
       }
-      calendarBox.put(
-          '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}',
-          retrievedSchedule);
-      notifyListeners();
     }
   }
 
