@@ -374,10 +374,17 @@ class AuditData with ChangeNotifier {
 
   /////////////////////// sync stuff //////////////////////////
   void dataSync(
-      BuildContext context, SiteList siteList, String deviceid) async {
+      {BuildContext context,
+      SiteList siteList,
+      String deviceid,
+      bool fullSync}) async {
     deviceidProvider = deviceid;
     await sendAuditsToCloud();
-    await getAuditsFromCloud(context, siteList, deviceid);
+    await getAuditsFromCloud(
+        context: context,
+        siteList: siteList,
+        deviceid: deviceid,
+        fullSync: fullSync);
   }
 
   void sendAuditsToCloud() async {
@@ -404,9 +411,12 @@ class AuditData with ChangeNotifier {
   }
 
   void getAuditsFromCloud(
-      BuildContext context, SiteList siteList, String deviceid) async {
+      {BuildContext context,
+      SiteList siteList,
+      String deviceid,
+      bool fullSync}) async {
     int allNotMe = 0; // "1: Query All   0: Query All But Me"
-    if (auditBox.keys.toList().length == 0) {
+    if (auditBox.keys.toList().length == 0 || fullSync == true) {
       allNotMe = 1;
     }
 

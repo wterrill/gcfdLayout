@@ -13,10 +13,18 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
   Audit newAudit;
   for (dynamic event in fromServer) {
     Map<String, dynamic> receivedAudit = event as Map<String, dynamic>;
-    Map<String, dynamic> incomingPantryAudit =
-        receivedAudit['PantryDetail'] as Map<String, dynamic>;
+    String auditTypeKey;
+    if (convertNumberToProgramType(event['ProgramType'] as int) ==
+        "Pantry Audit") {
+      auditTypeKey = "PantryDetail";
+    } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
+        "Congregate Audit") {
+      auditTypeKey = "CongregateDetail";
+    }
+    Map<String, dynamic> incomingAudit =
+        receivedAudit[auditTypeKey] as Map<String, dynamic>;
 
-    if (incomingPantryAudit != null && receivedAudit['StartTime'] != null) {
+    if (incomingAudit != null && receivedAudit['StartTime'] != null) {
       CalendarResult newCalendarResult = CalendarResult(
         programType: convertNumberToProgramType(event['ProgramType'] as int),
         message: "",
@@ -101,7 +109,7 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
           }
 
           if (databaseVar != null) {
-            dynamic value = incomingPantryAudit[databaseVar];
+            dynamic value = incomingAudit[databaseVar];
             if (value == null) {
               print("Missing: $databaseVar");
               missingDBVar.add(databaseVar);
@@ -110,132 +118,126 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
                 case ("display"):
                   print(question.text);
                   print('display');
-                  print(incomingPantryAudit[databaseVar]);
+                  print(incomingAudit[databaseVar]);
                   break;
 
                 case ("yesNo"):
                   print(question.text);
                   print('yesNo');
-                  print(incomingPantryAudit[databaseVar]);
+                  print(incomingAudit[databaseVar]);
                   try {
                     question.userResponse =
-                        incomingPantryAudit[databaseVar] as bool ? "Yes" : "No";
+                        incomingAudit[databaseVar] as bool ? "Yes" : "No";
                   } catch (err) {
                     question.userResponse =
-                        incomingPantryAudit[databaseVar] as String;
+                        incomingAudit[databaseVar] as String;
                   }
 
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
                 case ("issuesNoIssues"):
                   print(question.text);
                   print('issuesNoIssues');
-                  print(incomingPantryAudit[databaseVar]);
-                  question.userResponse =
-                      incomingPantryAudit[databaseVar] as bool
-                          ? "No Issues"
-                          : "Issues";
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as bool
+                      ? "No Issues"
+                      : "Issues";
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
 
                 case ("fillIn"):
                   print(question.text);
                   print('fillIn');
-                  print(incomingPantryAudit[databaseVar]);
-                  question.userResponse =
-                      incomingPantryAudit[databaseVar] as String;
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as String;
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
 
                 case ("fillInNum"):
                   print(question.text);
                   print('fillInNum');
-                  print(incomingPantryAudit[databaseVar]);
-                  question.userResponse =
-                      incomingPantryAudit[databaseVar] as int;
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as int;
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("dropDown"):
                   print(question.text);
                   print('dropDown');
-                  print(incomingPantryAudit[databaseVar]);
+                  print(incomingAudit[databaseVar]);
                   try {
                     question.userResponse =
-                        incomingPantryAudit[databaseVar] as String;
+                        incomingAudit[databaseVar] as String;
                   } catch (err) {
                     //TODO get rid of try / catches in this file
                     question.userResponse = question
-                        .dropDownMenu[incomingPantryAudit[databaseVar] as int];
+                        .dropDownMenu[incomingAudit[databaseVar] as int];
                   }
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("yesNoNa"):
                   print(question.text);
                   print('yesNoNa');
-                  print(incomingPantryAudit[databaseVar]);
-                  if (incomingPantryAudit[databaseVar] != null) {
+                  print(incomingAudit[databaseVar]);
+                  if (incomingAudit[databaseVar] != null) {
                     question.userResponse =
-                        incomingPantryAudit[databaseVar] as bool ? "Yes" : "No";
+                        incomingAudit[databaseVar] as bool ? "Yes" : "No";
                   } else {
                     question.userResponse = "NA";
                   }
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("date"):
                   print(question.text);
                   print('date');
-                  print(incomingPantryAudit[databaseVar]);
-                  question.userResponse =
-                      incomingPantryAudit[databaseVar] as String;
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as String;
                   question.optionalComment =
-                      incomingPantryAudit[databaseVar + "Comments"] as String;
+                      incomingAudit[databaseVar + "Comments"] as String;
                   break;
               }
             }
           }
         }
       }
-      dynamic temp = incomingPantryAudit['SiteVisitRequired'];
+      dynamic temp = incomingAudit['SiteVisitRequired'];
       newAudit.siteVisitRequired = temp as bool;
 
       // finally, add the citations created above.
       newAudit.citations = citations;
 
-      if (incomingPantryAudit['SiteRepresentativeSignature'] != null)
+      if (incomingAudit['SiteRepresentativeSignature'] != null)
         newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
-            .convert(
-                incomingPantryAudit['SiteRepresentativeSignature'] as String);
-      if (incomingPantryAudit['FoodDepositoryMonitorSignature'] != null)
+            .convert(incomingAudit['SiteRepresentativeSignature'] as String);
+      if (incomingAudit['FoodDepositoryMonitorSignature'] != null)
         newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
-            .convert(incomingPantryAudit['FoodDepositoryMonitorSignature']
-                as String);
+            .convert(incomingAudit['FoodDepositoryMonitorSignature'] as String);
 
-      if (incomingPantryAudit['CorrectiveActionPlanDueDate'] != null) {
+      if (incomingAudit['CorrectiveActionPlanDueDate'] != null) {
         newAudit.correctiveActionPlanDueDate = DateTime.parse(
-            incomingPantryAudit['CorrectiveActionPlanDueDate'] as String);
+            incomingAudit['CorrectiveActionPlanDueDate'] as String);
       }
-      if (incomingPantryAudit['ImmediateHold'] != null) {
+      if (incomingAudit['ImmediateHold'] != null) {
         newAudit.putProgramOnImmediateHold =
-            incomingPantryAudit['ImmediateHold'] as bool;
+            incomingAudit['ImmediateHold'] as bool;
       }
 
       print(missingDBVar);
       for (Section section in newAudit.sections) {
         section.status = Status.completed;
       }
-      if (incomingPantryAudit != null) {
+      if (incomingAudit != null) {
         newAudits.add(newAudit);
       }
     }

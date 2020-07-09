@@ -46,6 +46,9 @@ class Question extends HiveObject {
   @HiveField(13)
   String actionItem;
 
+  @HiveField(14)
+  bool hideFollowUpActionItem = false;
+
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;

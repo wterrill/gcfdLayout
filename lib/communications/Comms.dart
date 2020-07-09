@@ -77,7 +77,7 @@ class FullAuditComms {
           body: body);
     }
     return sender.then((http.Response res) {
-      // print(res.body);
+      print(res.body);
       print('sendFullAudit receive ${DateTime.now()}');
       bool result = false;
       if (res.body != null) {

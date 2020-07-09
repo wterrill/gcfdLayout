@@ -82,64 +82,24 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       Dialogs.showSites(context, siteList.siteList);
                     },
                     child: Container(
+                        color: ColorDefs.colorTopDrawerAlternating,
                         height: 35.4,
                         width: double.infinity,
                         child: Center(
                             child: Text("Sites",
                                 style: ColorDefs.textBodyBlue20))),
                   ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Dialogs.showNotImplemented(context);
-                  //   },
-                  //   child: Container(
-                  //       height: 35.4,
-                  //       width: double.infinity,
-                  //       color: ColorDefs.colorTopDrawerAlternating,
-                  //       child: Center(
-                  //           child: Text("Contacts",
-                  //               style: ColorDefs.textBodyBlue20))),
-                  // ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Dialogs.showNotImplemented(context);
-                  //   },
-                  //   child: Container(
-                  //       height: 35.4,
-                  //       width: double.infinity,
-                  //       child: Center(
-                  //           child:
-                  //               Text("View", style: ColorDefs.textBodyBlue20))),
-                  // ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Dialogs.showNotImplemented(context);
-                  //   },
-                  // child:
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(
+                          child: Text("", style: ColorDefs.textBodyBlue20))),
                   GestureDetector(
                     onTap: () async {
                       // Sync all data
                       setState(() {
                         startSync = true;
                       });
-                      // List<dynamic> auditKeysToSend =
-                      //     Provider.of<AuditData>(context, listen: false)
-                      //         .auditOutBox
-                      //         .keys
-                      //         .toList();
-                      // List<dynamic> scheduleKeysToSend =
-                      //     Provider.of<ListCalendarData>(context, listen: false)
-                      //         .calendarOutBox
-                      //         .keys
-                      //         .toList();
-                      // List<dynamic> inBoth = auditKeysToSend
-                      //     .toSet()
-                      //     .union(scheduleKeysToSend.toSet())
-                      //     .toList();
-                      // if (inBoth.length > 0) {
-                      //   print("schedule before Audit");
-                      // }
-
                       //// Site Data /////
                       Dialogs.showMessage(
                           context: context,
@@ -164,7 +124,10 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           dismissable: false);
                       await Provider.of<ListCalendarData>(context,
                               listen: false)
-                          .dataSync(context, siteList, deviceid);
+                          .dataSync(
+                              context: context,
+                              siteList: siteList,
+                              deviceid: deviceid);
                       Navigator.of(context).pop();
 
                       /// Audit Data ///
@@ -176,7 +139,10 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           dismissable: false);
 
                       await Provider.of<AuditData>(context, listen: false)
-                          .dataSync(context, siteList, deviceid);
+                          .dataSync(
+                              context: context,
+                              siteList: siteList,
+                              deviceid: deviceid);
                       Navigator.of(context).pop();
 
                       /// Done with sync
@@ -194,6 +160,92 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           Icon(Icons.sync, color: ColorDefs.colorAudit2),
                           Center(
                               child: Text("Sync",
+                                  style: ColorDefs.textBodyBlue20)),
+                          Container(
+                            height: 20,
+                            width: 20,
+                            child: startSync
+                                ? CircularProgressIndicator()
+                                : Icon(Icons.sync,
+                                    color: ColorDefs.colorTopDrawerBackground),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(
+                          child: Text("", style: ColorDefs.textBodyBlue20))),
+                  GestureDetector(
+                    onTap: () async {
+                      // Sync all data
+                      setState(() {
+                        startSync = true;
+                      });
+                      //// Site Data /////
+                      Dialogs.showMessage(
+                          context: context,
+                          message: "Syncing Site Data",
+                          dismissable: false);
+                      String deviceid =
+                          Provider.of<GeneralData>(context, listen: false)
+                              .deviceid;
+                      await Provider.of<SiteData>(context, listen: false)
+                          .siteSync();
+
+                      SiteList siteList =
+                          Provider.of<SiteData>(context, listen: false)
+                              .siteList;
+                      Navigator.of(context).pop();
+
+                      /// Schedule data ///
+                      Dialogs.showMessage(
+                          context: context,
+                          message:
+                              "Syncing Scheduling data: upload and download",
+                          dismissable: false);
+                      await Provider.of<ListCalendarData>(context,
+                              listen: false)
+                          .dataSync(
+                              context: context,
+                              siteList: siteList,
+                              deviceid: deviceid,
+                              fullSync: true);
+                      Navigator.of(context).pop();
+
+                      /// Audit Data ///
+                      // Navigator.of(context).pop();
+                      Dialogs.showMessage(
+                          context: context,
+                          message:
+                              "Syncing Audit calendar data: upload and download",
+                          dismissable: false);
+
+                      await Provider.of<AuditData>(context, listen: false)
+                          .dataSync(
+                              context: context,
+                              siteList: siteList,
+                              deviceid: deviceid,
+                              fullSync: true);
+                      Navigator.of(context).pop();
+
+                      /// Done with sync
+                      setState(() {
+                        startSync = false;
+                      });
+                    },
+                    child: Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.sync, color: ColorDefs.colorAudit2),
+                          Center(
+                              child: Text("Full Sync",
                                   style: ColorDefs.textBodyBlue20)),
                           Container(
                             height: 20,

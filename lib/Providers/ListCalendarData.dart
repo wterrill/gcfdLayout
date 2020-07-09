@@ -68,7 +68,10 @@ class ListCalendarData with ChangeNotifier {
 ////////////////// Data Fetch, Data Save Operations
 
   void dataSync(
-      BuildContext context, SiteList siteList, String deviceid) async {
+      {BuildContext context,
+      SiteList siteList,
+      String deviceid,
+      bool fullSync}) async {
     deviceidProvider = deviceid;
 
     await getAuditors();
@@ -79,7 +82,8 @@ class ListCalendarData with ChangeNotifier {
 
     await sendScheduledToCloud();
 
-    await getScheduledFromCloud(context, siteList);
+    await getScheduledFromCloud(
+        context: context, siteList: siteList, fullSync: true);
   }
 
   void sendScheduledToCloud() async {
@@ -125,9 +129,10 @@ class ListCalendarData with ChangeNotifier {
     }
   }
 
-  void getScheduledFromCloud(BuildContext context, SiteList siteList) async {
+  void getScheduledFromCloud(
+      {BuildContext context, SiteList siteList, bool fullSync}) async {
     int allNotMe = 0; // "1: Query All   0: Query All But Me"
-    if (calendarBox.keys.toList().length == 0) {
+    if (calendarBox.keys.toList().length == 0 || fullSync == true) {
       allNotMe = 1;
     }
 

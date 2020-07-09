@@ -37,15 +37,13 @@ class _FollowupActionItems2State extends State<FollowupActionItems2> {
           child: Container(
             child: Column(
               children: [
-                Card(
-                  child: ActionItemsCommentSection(
-                      index: index,
-                      questions: citations,
-                      key: UniqueKey(),
-                      numKeyboard: false,
-                      mandatory: false,
-                      actionItem: true),
-                )
+                ActionItemsCommentSection(
+                    index: index,
+                    questions: citations,
+                    key: UniqueKey(),
+                    numKeyboard: false,
+                    mandatory: false,
+                    actionItem: true),
               ],
             ),
             // leading: new Text(question.userResponse),

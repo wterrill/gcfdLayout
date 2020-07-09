@@ -54,35 +54,43 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
-    return AnimatedContainer(
-      height: widget.questions[index].unflagged ? 0 : 67,
-      color: ColorDefs.colorAudit4,
-      duration: Duration(milliseconds: 300),
-      child: TextField(
-        keyboardType:
-            widget.numKeyboard ? TextInputType.number : TextInputType.text,
-        controller: controller,
-        onChanged: (value) {
-          widget.questions[index].actionItem = value;
-        },
-        maxLines: null,
-        style: ColorDefs.textBodyBlack20,
-        decoration: InputDecoration(
-            suffixIcon: (!widget.questions[index].unflagged)
-                ? IconButton(
-                    onPressed: () => controller.clear(),
-                    icon: Icon(Icons.clear),
-                  )
-                : null,
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: "Enter action item comments "),
-      ),
-    );
+    return widget.questions[index].unflagged
+        ? Container()
+        : Card(
+            child: AnimatedContainer(
+              padding: widget.questions[index].unflagged
+                  ? EdgeInsets.all(0.0)
+                  : EdgeInsets.all(8.0),
+              height: widget.questions[index].unflagged ? 0 : 67,
+              color: ColorDefs.colorAudit4,
+              duration: Duration(milliseconds: 300),
+              child: TextField(
+                keyboardType: widget.numKeyboard
+                    ? TextInputType.number
+                    : TextInputType.text,
+                controller: controller,
+                onChanged: (value) {
+                  widget.questions[index].actionItem = value;
+                },
+                maxLines: null,
+                style: ColorDefs.textBodyBlack20,
+                decoration: InputDecoration(
+                    suffixIcon: (!widget.questions[index].unflagged)
+                        ? IconButton(
+                            onPressed: () => controller.clear(),
+                            icon: Icon(Icons.clear),
+                          )
+                        : null,
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    hintText: "Enter action item comments "),
+              ),
+            ),
+          );
   }
 }
