@@ -40,11 +40,9 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Did the Food Depository establish the service area?',
     'type': 'yesNo',
-    'happyPathResponse': ['No'],
     'databaseVar': 'GCFDEstablishedServiceArea',
     'databaseVarType': 'bool',
     'databaseOptCom': 'GCFDEstablishedServiceAreaComments',
-    'actionItem': 'No action required'
     //TODO this was not in citation
   },
   <String, dynamic>{
@@ -84,38 +82,30 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'text':
         'Does the pantry allow guests to receive food at least once every 30 days?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'PantryAllowsFoodAtLeast30Days',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryAllowsFoodAtLeast30DaysComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': 'Are referrals from an outside agency required to receive food?',
     'type': 'yesNo',
-    'happyPathResponse': ['No'],
     'databaseVar': 'ReferralsRequired',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ReferralsRequiredComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': 'Are appointments required to receive food?',
     'type': 'yesNo',
-    'happyPathResponse': ['No'],
     'databaseVar': 'AppointmentsRequired',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppointmentsRequiredComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': 'Does the pantry require any documentation?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'DocumentationRequired',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DocumentationRequiredComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -127,11 +117,9 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Does this pantry operate under the rural exemption?',
     'type': 'yesNo',
-    'happyPathResponse': ['No'],
     'databaseVar': 'UnderRuralExemption',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnderRuralExemptionComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': 'Does this food pantry also operate a soup kitchen?',
@@ -154,11 +142,9 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Is Program on Food Rescue/Agency Enabled?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes', 'NA'],
     'databaseVar': 'OnFoodRescueAgencyEnabled',
     'databaseVarType': 'bool',
     'databaseOptCom': 'OnFoodRescueAgencyEnabledComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': 'Food Service Sanitation Manager Certificates',
@@ -394,21 +380,17 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'text':
         "Does the proxy sign the proxy form in the presence of pantry personnel?",
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'NA'],
     'databaseVar': 'ProxySignedInPresenceOfPantryPersonnel',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProxySignedInPresenceOfPantryPersonnelComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
         "Do pantry personnel sign the proxy form at the time of distribution?",
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'NA'],
     'databaseVar': 'ProxyFormSignedAtTimeOfDistribution',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProxyFormSignedAtTimeOfDistributionComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text': "Are TANF commodities being distributed?",
@@ -1169,7 +1151,6 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'databaseVar': 'DiscriminationComplaints',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintsComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -1179,17 +1160,14 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'databaseVar': 'PantryKnowsResolutionDiscriminationComplaint',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryKnowsResolutionDiscriminationComplaintComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
         'If there have been any discrimination complaints, have they been forwarded to the Food Depository?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'DiscriminationComplaintForwardedToGCFD',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':

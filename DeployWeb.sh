@@ -33,4 +33,4 @@ git commit -m "AutoCommit $now"
 git push
 cd ..
 
-# flutter build ios --release
+flutter build ios --release

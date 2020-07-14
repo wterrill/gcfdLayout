@@ -95,11 +95,9 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'Is Program on Food Rescue/Agency Enabled?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes', 'Na'],
     'databaseVar': 'OnFoodRescueAgencyEnabled',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProgramOnFoodRescue',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -1271,31 +1269,25 @@ List<Map<String, dynamic>> audit2Section8Questions = [
   <String, dynamic>{
     'text': 'Have there been any discrimination complaints in the past year?',
     'type': 'yesNo',
-    'happyPathResponse': ['No'],
     'databaseVar': 'DiscriminationComplaints',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintsComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
         'Does the program know what to do if there is a discrimination complaint?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'PantryKnowsResolutionDiscriminationComplaint',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryKnowsResolutionDiscriminationComplaintComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
         'If there have been any discrimination complaints, have they been forwarded to the Food Depository?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'DiscriminationComplaintForwardedToGCFD',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComments',
-    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
