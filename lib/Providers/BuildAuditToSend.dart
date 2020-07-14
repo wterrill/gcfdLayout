@@ -129,7 +129,7 @@ Map<String, dynamic> buildAuditToSend(
           'OriginalAnswer'] = citation.userResponse;
 
       citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalComment'] = citation.optionalComment;
+          'OriginalComments'] = citation.optionalComment;
     } else {
       String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
       citationsMap[text] = 0;
@@ -137,7 +137,7 @@ Map<String, dynamic> buildAuditToSend(
           'OriginalAnswer'] = citation.userResponse;
 
       citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalComment'] = citation.optionalComment;
+          'OriginalComments'] = citation.optionalComment;
     }
   }
 

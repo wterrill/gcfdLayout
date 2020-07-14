@@ -5,6 +5,7 @@ import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
+import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/providers/BuildAuditToSend.dart';
 import 'package:flutter/material.dart';
@@ -57,15 +58,28 @@ class AuditData with ChangeNotifier {
 
   void saveAuditLocally(Audit incomingAudit) {
     if (incomingAudit != null) {
-      auditBox.put(
-          '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}',
-          incomingAudit);
+      Audit retrievedAudit = auditBox.get(
+              '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}')
+          as Audit;
+      if (retrievedAudit != null) {
+        // only the put if the status is higher than what we already have:
+        if (convertStatusToNumber(retrievedAudit.calendarResult.status) <=
+            convertStatusToNumber(incomingAudit.calendarResult.status)) {
+          auditBox.put(
+              '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+              incomingAudit);
+        }
+      } else {
+        auditBox.put(
+            '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+            incomingAudit);
+      }
     }
   }
 
   Audit getAuditFromBox(CalendarResult calendarResult) {
     Audit retrievedAudit = auditBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Audit;
     return retrievedAudit;
   }
@@ -74,9 +88,17 @@ class AuditData with ChangeNotifier {
       // this uses the questions in the citations object to create the outgoing citations object.
       // also called '
       {CalendarResult newCalendarResult}) {
-    Audit retrievedAudit = auditBox.get(
-            '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}')
-        as Audit;
+    Audit retrievedAudit;
+    // check to see if it's a reschedule of a followup audit
+    if (newCalendarResult.auditType == "Follow Up") {
+      retrievedAudit = auditBox.get(
+              '${newCalendarResult.citationsToFollowUp['PreviousEvent']['StartTime']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AgencyName']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['ProgramNumber']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['Auditor']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AuditType']}')
+          as Audit;
+    } else {
+      retrievedAudit = auditBox.get(
+              '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}-${newCalendarResult.auditType}')
+          as Audit;
+    }
     Map<String, dynamic> citationsMap = <String, dynamic>{};
 
     for (Question citation in retrievedAudit.citations) {
@@ -105,13 +127,13 @@ class AuditData with ChangeNotifier {
     Audit clonedOutgoingAudit = outgoingAudit.clone();
 
     auditsToSendBox.put(
-        '${clonedOutgoingAudit.calendarResult.startTime}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}',
+        '${clonedOutgoingAudit.calendarResult.startTime}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
         clonedOutgoingAudit);
   }
 
   bool auditExists(CalendarResult calendarResult) {
     retrievedAudit = auditBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}')
+            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Audit;
     print(retrievedAudit);
     if (retrievedAudit == null) {

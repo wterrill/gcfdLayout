@@ -241,9 +241,6 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
         newAudits.add(newAudit);
       }
     }
-    // if (incomingPantryAudit != null) {
-    //   newAudits.add(newAudit);
-    // }
   }
   return newAudits;
 }

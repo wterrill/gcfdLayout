@@ -105,7 +105,14 @@ class _FollowUpCommentSectionState extends State<FollowUpCommentSection> {
         decoration: InputDecoration(
             suffixIcon: (widget.citations[index].textBoxRollOut)
                 ? IconButton(
-                    onPressed: () => controller.clear(),
+                    onPressed: () {
+                      controller.clear();
+                      if (widget.mandatory) {
+                        widget.citations[widget.index].userResponse = "";
+                      } else {
+                        widget.citations[widget.index].optionalComment = "";
+                      }
+                    },
                     icon: Icon(Icons.clear),
                   )
                 : null,

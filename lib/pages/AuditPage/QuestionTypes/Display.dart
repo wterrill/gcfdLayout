@@ -4,6 +4,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:recase/recase.dart';
 
 class Display extends StatefulWidget {
   final int index;
@@ -47,7 +48,7 @@ class _DisplayState extends State<Display> {
           widget = Text(activeCalendarResult?.programType);
           break;
         case ("Agency Name:"):
-          widget = Text(activeCalendarResult?.agencyName);
+          widget = Text(activeCalendarResult?.agencyName?.titleCase);
           break;
         case ("Agency/Program Number:"):
           widget = Text(
@@ -55,10 +56,11 @@ class _DisplayState extends State<Display> {
           break;
         case ("Site address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";
-          string = string + (activeCalendarResult.siteInfo?.address2 ?? " ");
-          string = string + (activeCalendarResult.siteInfo?.city ?? " ");
-          string = string + (activeCalendarResult.siteInfo?.state ?? " ");
-          string = string + (activeCalendarResult.siteInfo?.zip ?? "");
+          string =
+              string + " " + (activeCalendarResult.siteInfo?.address2 ?? " ");
+          string = string + " " + (activeCalendarResult.siteInfo?.city ?? " ");
+          string = string + " " + (activeCalendarResult.siteInfo?.state ?? " ");
+          string = string + " " + (activeCalendarResult.siteInfo?.zip ?? "");
 
           widget = Text(string ?? "");
           break;
@@ -70,8 +72,9 @@ class _DisplayState extends State<Display> {
               Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
           break;
         case ("Program Operating Hours:"):
-          widget = Text(
-              activeCalendarResult.siteInfo?.operateHours ?? "None Defined");
+          widget = Text(activeCalendarResult.siteInfo?.operateHours
+                  ?.replaceAll("\\r\\n", "\n") ??
+              "None Defined");
           break;
         case ("Service Area:"):
           widget = Text(
@@ -86,12 +89,14 @@ class _DisplayState extends State<Display> {
         Row(
           children: [
             Expanded(
+              flex: 2,
               child: AutoSizeText(widget.activeSection.questions[index].text,
                   maxLines: 3,
                   group: widget.questionAutoGroup,
                   style: ColorDefs.textBodyBlack20),
             ),
             Expanded(
+              flex: 3,
               child:
                   getWidgetFromText(widget.activeSection.questions[index].text),
             )

@@ -86,4 +86,7 @@ class ColorDefs {
 
   static TextStyle textTransparent =
       TextStyle(color: Colors.transparent, fontSize: 20.0);
+
+  static TextStyle textWhiteTerminal =
+      TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
 }

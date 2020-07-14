@@ -11,20 +11,20 @@ import 'package:provider/provider.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'LookAhead.dart';
 
-class NewAuditDialog extends StatefulWidget {
+class RescheduleFollowUpAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
-  final bool followup;
-  NewAuditDialog({
+  RescheduleFollowUpAuditDialog({
     Key key,
-    this.calendarResult,
-    @required this.followup,
+    @required this.calendarResult,
   }) : super(key: key);
 
   @override
-  _NewAuditDialogState createState() => _NewAuditDialogState();
+  _RescheduleFollowUpAuditDialogState createState() =>
+      _RescheduleFollowUpAuditDialogState();
 }
 
-class _NewAuditDialogState extends State<NewAuditDialog> {
+class _RescheduleFollowUpAuditDialogState
+    extends State<RescheduleFollowUpAuditDialog> {
   final _formKey = GlobalKey<FormState>();
   String selectedAuditType = "Select";
   String selectedProgType = "Select";
@@ -42,11 +42,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
     super.initState();
     if (widget.calendarResult != null) {
       alreadyExistedCalendarResult = widget.calendarResult;
-      if (widget.followup) {
-        this.selectedAuditType = "Follow Up";
-      } else {
-        this.selectedAuditType = widget.calendarResult.auditType;
-      }
+
+      this.selectedAuditType = "Follow Up";
+
       this.selectedProgType = widget.calendarResult.programType;
       this.selectedDate = widget.calendarResult.startDateTime;
       this.selectedTime =
@@ -67,16 +65,16 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
   List<String> auditorDropDownMenu;
 
-  List<String> auditTypeDropDownMenu = [
-    "Select",
-    "Annual",
-    "Food Rescue",
-    "CEDA",
-    "Bi-Annual",
-    "Complaint",
-    // "Follow Up",
-    "Grant"
-  ];
+  // List<String> auditTypeDropDownMenu = [
+  //   "Select",
+  //   "Annual",
+  //   "Food Rescue",
+  //   "CEDA",
+  //   "Bi-Annual",
+  //   "Complaint",
+  //   // "Follow Up",
+  //   "Grant"
+  // ];
   List<String> auditTypeDropDownMenuFollowUp = [
     // "Select",
     // "Annual",
@@ -97,13 +95,13 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   //   "Andrei Kliuchnik",
   // ];
 
-  List<String> programTypeDropDownMenu = [
-    "Select",
-    "Healthy Student Market",
-    "Senior Adults Program",
-    "Pantry Audit",
-    "Congregate Audit"
-  ];
+  // List<String> programTypeDropDownMenu = [
+  //   "Select",
+  //   "Healthy Student Market",
+  //   "Senior Adults Program",
+  //   "Pantry Audit",
+  //   "Congregate Audit"
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -161,9 +159,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             LookAhead(
-              disable: widget.followup,
+              disable: true,
               setValue: selectedSiteName,
-              programNumber: (widget.followup) ? selectedProgramNumber : null,
+              programNumber: selectedProgramNumber,
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
@@ -181,29 +179,26 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 ),
                 Container(
                   child: DropdownButton<String>(
-                    isExpanded: false,
-                    value: selectedAuditType ?? "Select",
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: ColorDefs.textBodyBlack20,
-                    underline: Container(
-                      height: 2,
-                      color:
-                          (selectedAuditType == "") ? Colors.red : Colors.green,
-                    ),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        if (widget.followup) {
+                      isExpanded: false,
+                      value: selectedAuditType ?? "Select",
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: ColorDefs.textBodyBlack20,
+                      underline: Container(
+                        height: 2,
+                        color: (selectedAuditType == "")
+                            ? Colors.red
+                            : Colors.green,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
                           newValue = "Follow Up";
-                        }
-                        selectedAuditType = newValue;
-                      });
-                    },
-                    items: widget.followup
-                        ? dropdown(auditTypeDropDownMenuFollowUp)
-                        : dropdown(auditTypeDropDownMenu),
-                  ),
+
+                          selectedAuditType = newValue;
+                        });
+                      },
+                      items: dropdown(auditTypeDropDownMenuFollowUp)),
                 ),
               ],
             ),
@@ -225,15 +220,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
-                      if (widget.followup) {
-                        newValue = selectedProgType;
-                      }
+                      newValue = selectedProgType;
+
                       selectedProgType = newValue;
                     });
                   },
-                  items: widget.followup
-                      ? dropdown([selectedProgType])
-                      : dropdown(programTypeDropDownMenu),
+                  items: dropdown([widget.calendarResult.programType]),
                 ),
               ],
             ),
@@ -353,192 +345,124 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
               child: FlatButton(
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: ColorDefs.colorAudit2)),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    print(selectedDate);
-                    print(selectedTime.format(context).toString());
-                    bool validateDateTime = pastTimeWarning();
-                    if (validateDateTime) {
-                      Function callBack = () {
+                  color: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: ColorDefs.colorAudit2)),
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      print(selectedDate);
+                      print(selectedTime.format(context).toString());
+                      bool validateDateTime = pastTimeWarning();
+                      if (validateDateTime) {
+                        Function callBack = () {
+                          timeInPastOK = true;
+                        };
+                        await Dialogs.timeInPast(context, callBack);
+                      } else {
                         timeInPastOK = true;
-                      };
-                      await Dialogs.timeInPast(context, callBack);
-                    } else {
-                      timeInPastOK = true;
-                    }
+                      }
 
-                    bool validated = validateEntry();
+                      bool validated = validateEntry();
 
-                    if (validated && timeInPastOK) {
-                      if (alreadyExisted && !widget.followup) {
+                      Map<String, dynamic> oldAuditCitationsObject =
+                          widget.calendarResult.citationsToFollowUp;
+
+                      if (validated && timeInPastOK) {
                         Provider.of<ListCalendarData>(context, listen: false)
                             .deleteCalendarItem(widget.calendarResult);
-                      }
 
-                      DateTime selectedDateTime = DateTime(
-                          selectedDate.year,
-                          selectedDate.month,
-                          selectedDate.day,
-                          selectedTime.hour,
-                          selectedTime.minute);
-                      print(selectedDateTime.toString());
-                      print(selectedSiteName);
-                      print(selectedProgramNumber);
+                        DateTime selectedDateTime = DateTime(
+                            selectedDate.year,
+                            selectedDate.month,
+                            selectedDate.day,
+                            selectedTime.hour,
+                            selectedTime.minute);
+                        print(selectedDateTime.toString());
+                        print(selectedSiteName);
+                        print(selectedProgramNumber);
 
-                      Map<String, dynamic> oldAuditCitationsObject;
-                      String deviceid =
-                          Provider.of<GeneralData>(context, listen: false)
-                              .deviceid;
-                      if (widget.followup) {
-                        oldAuditCitationsObject =
-                            Provider.of<AuditData>(context, listen: false)
-                                .getAuditCitationsObject(
-                                    newCalendarResult: widget.calendarResult);
+                        // Map<String, dynamic> oldAuditCitationsObject;
+                        String deviceid =
+                            Provider.of<GeneralData>(context, listen: false)
+                                .deviceid;
+                        // if (widget.followup) {
+                        //   oldAuditCitationsObject =
+                        //       Provider.of<AuditData>(context, listen: false)
+                        //           .getAuditCitationsObject(
+                        //               newCalendarResult: widget.calendarResult);
 
-                        Provider.of<ListCalendarData>(context, listen: false)
-                            .updateStatusOnScheduleToCompleted(
-                                alreadyExistedCalendarResult);
-                      }
+                        //   Provider.of<ListCalendarData>(context, listen: false)
+                        //       .updateStatusOnScheduleToCompleted(
+                        //           alreadyExistedCalendarResult);
+                        // }
 
-                      if (oldAuditCitationsObject != null) {
-                        oldAuditCitationsObject['PreviousEvent'] = {
-                          'StartTime': alreadyExistedCalendarResult.startTime,
-                          'AgencyName': alreadyExistedCalendarResult.agencyName,
-                          'AgencyNumber':
-                              alreadyExistedCalendarResult.agencyNum,
-                          'ProgramNumber':
-                              alreadyExistedCalendarResult.programNum,
-                          'AuditType': alreadyExistedCalendarResult.auditType,
-                          'ProgramType': alreadyExistedCalendarResult
-                              .programType
-                              .toString(),
-                          'Auditor': alreadyExistedCalendarResult.auditor
+                        if (oldAuditCitationsObject != null) {
+                          oldAuditCitationsObject['PreviousEvent'] = {
+                            'StartTime': alreadyExistedCalendarResult.startTime,
+                            'AgencyName':
+                                alreadyExistedCalendarResult.agencyName,
+                            'AgencyNumber':
+                                alreadyExistedCalendarResult.agencyNum,
+                            'ProgramNumber':
+                                alreadyExistedCalendarResult.programNum,
+                            'AuditType': alreadyExistedCalendarResult.auditType,
+                            'ProgramType': alreadyExistedCalendarResult
+                                .programType
+                                .toString(),
+                            'Auditor': alreadyExistedCalendarResult.auditor
+                          };
+                        }
+
+                        Map<String, dynamic> newEvent = <String, dynamic>{
+                          'startTime': selectedDateTime.toString(),
+                          'message': '',
+                          'agencyName': selectedSiteName,
+                          'agencyNum': selectedAgencyNum,
+                          'auditType': selectedAuditType,
+                          'programNum': selectedProgramNumber,
+                          'programType': selectedProgType,
+                          'auditor': selectedAuditor,
+                          'status': "Scheduled",
+                          'deviceid': deviceid,
+                          'citationsToFollowUp': oldAuditCitationsObject
                         };
-                      }
 
-                      Map<String, dynamic> newEvent = <String, dynamic>{
-                        'startTime': selectedDateTime.toString(),
-                        'message': '',
-                        'agencyName': selectedSiteName,
-                        'agencyNum': selectedAgencyNum,
-                        'auditType': selectedAuditType,
-                        'programNum': selectedProgramNumber,
-                        'programType': selectedProgType,
-                        'auditor': selectedAuditor,
-                        'status': "Scheduled",
-                        'deviceid': deviceid,
-                        'citationsToFollowUp': oldAuditCitationsObject
-                      };
-
-                      bool exists =
-                          Provider.of<ListCalendarData>(context, listen: false)
-                              .checkBoxEvent(
-                        event: newEvent,
-                      );
-
-                      if (!exists) {
-                        Provider.of<ListCalendarData>(context, listen: false)
-                            .addBoxEvent(
+                        bool exists = Provider.of<ListCalendarData>(context,
+                                listen: false)
+                            .checkBoxEvent(
                           event: newEvent,
-                          notify: true,
                         );
-                      } else {
-                        Dialogs.showMessage(
-                            context: context,
-                            dismissable: true,
-                            message:
-                                "An audit exists at this location for the same time and same auditor. \nPlease check your entry and try again.");
-                      }
 
-                      if (!exists) {
-                        Navigator.of(context).pop();
-                      }
-                      if (alreadyExisted) {
-                        Navigator.of(context).pop();
-                      }
-                    } else {
-                      Dialogs.showBadSchedule(context);
-                    }
-                  }
-                },
-                child: (alreadyExisted)
-                    ? (widget.followup)
-                        ? Text("Schedule Follow-Up Audit",
-                            style: ColorDefs.textBodyBlue20)
-                        : Text("Save Audit", style: ColorDefs.textBodyBlue20)
-                    : Text("Schedule Audit", style: ColorDefs.textBodyBlue20),
-              ),
-            ),
-
-            if (alreadyExisted && !widget.followup)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
-                child: FlatButton(
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: ColorDefs.colorAudit5)),
-                    onPressed: () async {
-                      bool result = await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Confirmation'),
-                            content: Text(
-                                'Do you want to delete this Scheduled Audit?'),
-                            actions: <Widget>[
-                              new FlatButton(
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true).pop(
-                                      false); // dismisses only the dialog and returns false
-                                },
-                                child: Text('Cancel'),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop(true);
-                                  Provider.of<ListCalendarData>(context,
-                                          listen: false)
-                                      .deleteCalendarItem(
-                                          widget.calendarResult);
-                                  setState(
-                                      () {}); // dismisses only the dialog and returns true
-                                },
-                                child: Text('Yes'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-
-                      if (result) {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          print(selectedDate);
-                          print(selectedTime.format(context).toString());
-
+                        if (!exists) {
                           Provider.of<ListCalendarData>(context, listen: false)
-                              .deleteCalendarItem(widget.calendarResult);
+                              .addBoxEvent(
+                            event: newEvent,
+                            notify: true,
+                          );
+                        } else {
+                          Dialogs.showMessage(
+                              context: context,
+                              dismissable: true,
+                              message:
+                                  "An audit exists at this location for the same time and same auditor. \nPlease check your entry and try again.");
+                        }
 
+                        if (!exists) {
                           Navigator.of(context).pop();
-                          if (alreadyExisted) {
-                            Navigator.of(context).pop();
-                          }
+                        }
+                        if (alreadyExisted) {
+                          Navigator.of(context).pop();
                         }
                       } else {
-                        Navigator.of(context)
-                            .pop(); // dismisses the entire widget
+                        Dialogs.showBadSchedule(context);
                       }
-                    },
-                    child:
-                        Text("Delete Audit", style: ColorDefs.textBodyBlue20)),
-              ),
+                    }
+                  },
+                  child: Text("Reschedule Follow-Up Audit",
+                      style: ColorDefs.textBodyBlue20)),
+            ),
           ],
         ),
       ),

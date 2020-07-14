@@ -47,10 +47,11 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'text':
         'If yes, is the food properly separated and tracked for the two programs?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['YesNa'],
+    'happyPathResponse': ['Yes', 'Na'],
     'databaseVar': 'FoodSeparatedForTwoPrograms',
     'databaseVarType': 'bool',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure food is properly separated and tracked by each program '
   },
   <String, dynamic>{
     'text': 'How long do guests remain in the shelter?',
@@ -94,9 +95,11 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'Is Program on Food Rescue/Agency Enabled?',
     'type': 'yesNo',
+    'happyPathResponse': ['Yes', 'Na'],
     'databaseVar': 'OnFoodRescueAgencyEnabled',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProgramOnFoodRescue',
+    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -135,7 +138,8 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom':
         'OrderHasBeenPlacedInLastMonthComments', //not finding a comment field on the Congregate Audit data def but format is same as Pantry which does have this on the configuration file
-    'actionItem': 'action item does not exist for this question'
+    'actionItem':
+        'Ensure an order is placed at least once a month. Please provide an explanation why an order has not been placed within the past month'
   },
   <String, dynamic>{
     'text': 'Is information on our Agency Locator accurate?',
@@ -150,7 +154,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'databaseVar': 'AgencyLocatorAccurate',
     'databaseVarType': 'string',
     'databaseOptCom': 'AgencyLocatorAccurateComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem': 'No action item needed'
   },
 ];
 
@@ -221,7 +225,8 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVar': 'AreFeesRequired',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AreFeesRequiredComments',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure no fees / donations / memberships are collected / asked for during distribution'
   },
   <String, dynamic>{
     'text':
@@ -241,7 +246,8 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVar': 'ActivitiesOtherThanTEFAPDisrupting',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ActivitiesOtherThanTEFAPDisruptingComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem':
+        'Ensure no other activities unrelated to TEFAP are conducted during distribution '
   },
   <String, dynamic>{
     'text': "Do all distribution activities appear to be appropriate?",
@@ -250,7 +256,8 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVar': 'DistributionActivitiesAreAppropriate',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DistributionActivitiesAreAppropriateComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem':
+        'Ensure activities pertaining to distribution are conducted only'
   },
   <String, dynamic>{
     'text': "Guest disposition",
@@ -264,13 +271,26 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVar': 'GuestServedDuringVisit',
     'databaseVarType': 'int',
   },
-  // <String, dynamic>{
-  //   'text':
-  //       "Is an approved meal count tally used? What is it?", // GCFD is splitting this in two questions (waiting for Abraham's feedback on options)
-  //   'type': 'fillIn',
-  //   'databaseVar': 'Waiting on GCFD', //needs update based on above answer
-  //   'databaseVarType': 'string',
-  // },
+  <String, dynamic>{
+    'text': "Is an approved meal count tally used? What is it?",
+    'type': 'yesNo',
+    'databaseVar': 'ApprovedMealCountTally',
+    'databaseVarType': 'bool',
+    'happyPathResponse': ['Yes'],
+    'databaseOptCom': 'ApprovedMealCountTallyComments',
+    'actionItem':
+        'Ensure approved meal count tally is utilized to keep track of meals served'
+  },
+
+  <String, dynamic>{
+    'text': "What meal count tally is used?",
+    'type': 'dropDown',
+    'menuItems': ['Select', 'Sign in Sheets', 'Tally Sheets', 'Plate count'],
+    'happyPathResponse': ['Sign in Sheets', 'Tally Sheets', 'Plate count'],
+    'databaseVar': 'MealCountTallyUsed',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'MealCountTallyUsedComments'
+  },
   <String, dynamic>{
     'text': "Guests served each month:",
     'type': 'fillInNum',
@@ -365,13 +385,14 @@ List<Map<String, dynamic>> audit2Section4Questions = [
         'Separate cleaning agents and other chemicals from stored food / contact surfaces'
   },
   <String, dynamic>{
-    'text': 'Is food being rotated via FIFO?',
+    'text': 'Is dry food being rotated via FIFO?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'DryFoodRotatedFIFO',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DryFoodRotatedFIFOComments',
-    'actionItem': 'Ensure the “First in First Out” method is followed'
+    'actionItem':
+        'Ensure the “First in First Out” method is followed for dry food'
   },
   <String, dynamic>{
     'text': 'Is food 6 inches off floor?',
@@ -441,7 +462,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
     'databaseVar': 'DryEquipmentWellMaintained',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DryEquipmentWellMaintainedComments',
-    'actionItem': 'Ensure equipment is maintained and working properly'
+    'actionItem': 'Ensure dry food equipment is maintained and working properly'
   },
   <String, dynamic>{
     'text': 'Appropriate amount of food in inventory?',
@@ -450,7 +471,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
     'databaseVar': 'AppropriateAmountOfFood',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateAmountOfFoodComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem': 'No action item required'
   },
   <String, dynamic>{
     'text': '# of cases of dry food currently in inventory:',
@@ -514,7 +535,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'UnitsDefrosted',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnitsDefrostedComments',
-    'actionItem': 'Defrost units. Please specify units in comments'
+    'actionItem': 'Defrost units. Please specify unit number in comments'
   },
   <String, dynamic>{
     'text': 'Are units organized?',
@@ -523,16 +544,17 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'UnitsOrganized',
     'databaseVarType': 'bool',
     'databaseOptCom': 'UnitsOrganizedComments',
-    'actionItem': 'Organize units.  Please specify units in comments'
+    'actionItem': 'Organize units.  Please specify unit number in comments'
   },
   <String, dynamic>{
-    'text': 'Is food being rotated via FIFO?',
+    'text': 'Is cold food being rotated via FIFO?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'ColdFoodRotatedFIFO',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ColdFoodRotatedFIFOComments',
-    'actionItem': 'Ensure the “First in First Out” method is followed'
+    'actionItem':
+        'Ensure the “First in First Out” method is followed for cold food'
   },
   <String, dynamic>{
     'text': 'Do units have thermometers?',
@@ -570,7 +592,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'ColdFoodAppropriatelyStocked',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ColdFoodAppropriatelyStockedComments',
-    'actionItem': 'Organize units'
+    'actionItem':
+        'Organize units and ensure they are not overstuffed. Indicate units: '
   },
   <String, dynamic>{
     'text': 'Are units numbered?',
@@ -589,7 +612,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'ColdEquipmentWellMaintained',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ColdEquipmentWellMaintainedComments',
-    'actionItem': 'Ensure equipment is maintained and working properly'
+    'actionItem':
+        'Ensure cold food equipment is maintained and working properly'
   },
   <String, dynamic>{
     'text': 'Are cold storage units secured?',
@@ -876,6 +900,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'MealsPreparedByStaff',
     'databaseVarType': 'bool',
     'databaseOptCom': 'MealsPreparedByStaffComments',
+    'actionItem':
+        'Ensure only Food Service Sanitation Managers are preparing meals'
   },
   <String, dynamic>{
     'text': 'Is there a 3 Step dishwashing sink or dishwasher in the kitchen?',
@@ -894,8 +920,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'ThreeStepDishwashingSignPosted', //<--------
     'databaseVarType': 'bool',
     'databaseOptCom': 'ThreeStepDishwashingSignPostedComments', //<--------
-    'actionItem':
-        'Acquire a 3-Tiered Deep Sink or Industrial Dishwasher and submit receipt. '
+    'actionItem': 'Post a 3-step dish washing sign'
   },
   <String, dynamic>{
     'text': 'Are dial-stem thermometer(s) on hand?',
@@ -924,7 +949,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'AppropriateTemperatureMaintained',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateTemperatureMaintainedComment',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure proper temperatures are maintained during the preparation of food'
   },
   <String, dynamic>{
     'text': 'Is food being thawed appropriately?',
@@ -933,7 +959,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'FoodThawedAppropriately',
     'databaseVarType': 'bool',
     'databaseOptCom': 'FoodThawedAppropriatelyComment',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure food is thawed out correctly, safely and appropriately'
   },
   <String, dynamic>{
     'text':
@@ -943,7 +970,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'PrepAreaClean',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PrepAreaCleanComment',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure preparation area is maintained clean and free of any type of insect, dust or other foreign matter that could contaminate the food'
   },
   <String, dynamic>{
     'text': 'Is cross contamination avoided during preparation? ',
@@ -952,7 +980,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'CrossContaminationAvoided',
     'databaseVarType': 'bool',
     'databaseOptCom': 'CrossContaminationAvoidedComment',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure cross contamination is avoided during the preparation of meals'
   },
   <String, dynamic>{
     'text': 'Is smoking prohibited in the food preparation area? ',
@@ -961,7 +990,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'SmokingProhibited',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SmokingProhibitedComment',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure smoking is not practiced in the food preparation area'
   },
   <String, dynamic>{
     'text':
@@ -971,7 +1000,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'StaffEmptiesShirtPocketAndJewelry',
     'databaseVarType': 'bool',
     'databaseOptCom': 'StaffEmptiesShirtPocketAndJewelryComments',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure staff and volunteers empty their shirt pockets and remove any jewelry to prevent objects from falling in to the food'
   },
   <String, dynamic>{
     'text': 'Is the serving area clean? ',
@@ -980,7 +1010,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'ServingAreaClean',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ServingAreaCleanComments',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure serving area is maintained clean'
   },
   <String, dynamic>{
     'text': 'Are appropriate food temperatures maintained during serving? ',
@@ -989,7 +1019,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'ProperTempMaintainedDuringServing',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProperTempMaintaintedDuringServingComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure proper food temperatures are maintained during the serving of meals'
   },
   <String, dynamic>{
     'text': 'Is food being served immediately? ',
@@ -998,7 +1029,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'FoodServedImmediately',
     'databaseVarType': 'bool',
     'databaseOptCom': 'FoodServedImmediatelyComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure food/meals are being served immediately'
   },
   <String, dynamic>{
     'text': 'Is the eating area clean and well maintained? ',
@@ -1007,7 +1038,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'EatingAreaClean',
     'databaseVarType': 'bool',
     'databaseOptCom': 'EatingAreaCleanComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': ' Ensure eating area is kept clean and well maintained'
   },
   <String, dynamic>{
     'text': 'Does the program use non-porous countertops? ',
@@ -1016,7 +1047,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'NonPorousCountertopsUsed',
     'databaseVarType': 'bool',
     'databaseOptCom': 'NonPorousCountertopsUsedComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure non-porous countertops are obtained and utilized'
   },
   <String, dynamic>{
     'text': 'Does the program disinfect all counter tops and utensils? ',
@@ -1025,7 +1056,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'CounterTopsDisinfected',
     'databaseVarType': 'bool',
     'databaseOptCom': 'CounterTopsDisinfectedComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure all countertops and utensils are disinfected immediately'
   },
   <String, dynamic>{
     'text': 'Is their cookware clean and stored appropriately? ',
@@ -1034,7 +1066,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'CookwareCleanedAndStored',
     'databaseVarType': 'bool',
     'databaseOptCom': 'CookwareCleanedAndStoredComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure cookware is maintained clean and stored properly'
   },
   <String, dynamic>{
     'text': 'Are there clean wiping cloths, hair nets, and gloves available? ',
@@ -1043,7 +1075,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'CleanClothsHairNetsGloves',
     'databaseVarType': 'bool',
     'databaseOptCom': 'CleanClothsHairNetsGlovesComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure the use of hairnets/ disposable gloves during preparing, cooking, and serving of meals'
   },
   <String, dynamic>{
     'text':
@@ -1053,7 +1086,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'NewOrSanitizedFoodStorageContainers',
     'databaseVarType': 'bool',
     'databaseOptCom': 'NewOrSanitizedFoodStorageContainersComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure only New or properly sanitized reusable food storage containers are utilized (Plastic bags may not be reused)'
   },
   <String, dynamic>{
     'text':
@@ -1063,7 +1097,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'SingleServiceItemsDiscarded',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SingleServiceItemsDiscardedComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure single service items are used only once and then discarded'
   },
   <String, dynamic>{
     'text': 'Are staff and volunteers wearing clean clothes/aprons? ',
@@ -1072,7 +1107,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'StaffWearingCleanClothes',
     'databaseVarType': 'bool',
     'databaseOptCom': 'StaffWearingCleanClothesComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure the use of clean clothes/aprons '
   },
   <String, dynamic>{
     'text': 'Are staff and volunteers restricted if ill? ',
@@ -1081,7 +1116,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'StaffRestrictedIfIll',
     'databaseVarType': 'bool',
     'databaseOptCom': 'StaffRestrictedIfIllComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure volunteers/staff are restricted if ill'
   },
   <String, dynamic>{
     'text':
@@ -1091,7 +1126,8 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'StaffRequiredToWashHands',
     'databaseVarType': 'bool',
     'databaseOptCom': 'StaffRequiredToWashHandsComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem':
+        'Ensure staff and volunteers wash their hands after returning from the bathroom or a smoke break'
   },
   <String, dynamic>{
     'text': 'Are hands being washed properly? ',
@@ -1100,7 +1136,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'HandsAreAppropriatelyWashed',
     'databaseVarType': 'bool',
     'databaseOptCom': 'HandsAreAppropriatelyWashedComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Ensure hands are washed properly'
   },
   <String, dynamic>{
     'text': 'Is there a Handwashing sign posted? ',
@@ -1109,7 +1145,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'HandwashingSignPosted',
     'databaseVarType': 'bool',
     'databaseOptCom': 'HandwashingSignPosted ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Post Hand Washing sign'
   },
   <String, dynamic>{
     'text': 'Is all equipment in good condition? ',
@@ -1118,7 +1154,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'EquipmentInGoodCondition',
     'databaseVarType': 'bool',
     'databaseOptCom': 'EquipmentInGoodConditionComments ',
-    'actionItem': 'GCFD needs to provide action item! '
+    'actionItem': 'Indicate equipment that is not in good condition:'
   },
 ];
 
@@ -1130,7 +1166,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'PlumbingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PlumbingIssuesComments',
-    'actionItem': 'Explain action item for plumbing issues: '
+    'actionItem': 'Explain issue and action item for plumbing issues: '
   },
   <String, dynamic>{
     'text': 'Sewage issues?',
@@ -1139,7 +1175,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'SewageIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SewageIssuesComments',
-    'actionItem': 'Explain action item for Sewage issues: '
+    'actionItem': 'Explain issue and action item for Sewage issues: '
   },
   <String, dynamic>{
     'text': 'Garbage and refuse disposal',
@@ -1148,7 +1184,8 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'GarbageRefusalDisposalIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'GarbageRefusalDisposalIssuesComments',
-    'actionItem': 'Explain action item for garbage and refuse disposal issues: '
+    'actionItem':
+        'Explain issue and action item for garbage and refuse disposal issues: '
   },
   <String, dynamic>{
     'text':
@@ -1156,9 +1193,10 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PestControlReport',
-    'databaseVarType': 'string',
+    'databaseVarType': 'bool',
     'databaseOptCom': 'PestControlReportComments',
-    'actionItem': 'Please provide a pest control log/exterminators report'
+    'actionItem':
+        'Submit a copy of current/most recent Pest Control Log/Exterminator’s Report'
   },
   <String, dynamic>{
     'text': 'Current fire extinguisher',
@@ -1187,7 +1225,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'AppropriateLightingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateLightingIssuesComments',
-    'actionItem': 'Please explain action items in comments'
+    'actionItem': 'Please explain lighting issues and action items:'
   },
   <String, dynamic>{
     'text': 'Ventilation Issues?',
@@ -1196,7 +1234,8 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'VentilationIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'VentilationIssuesComments',
-    'actionItem': 'Please explain action items in comments'
+    'actionItem':
+        'Please explain ventilatin issues and action items in comments'
   },
   <String, dynamic>{
     'text':
@@ -1206,7 +1245,8 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'AccessToAllPertinentAreasIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments',
-    'actionItem': 'Please explain action items in comments'
+    'actionItem':
+        'Please explain issues with access to all pertinent areas of food program action items:'
   },
   <String, dynamic>{
     'text': 'Pest Control Company:',
@@ -1222,7 +1262,8 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'EvidenceOfPests',
     'databaseVarType': 'bool',
     'databaseOptCom': 'EvidenceOfPestsComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem':
+        'Clean and disinfect area where evidence of rodents/insects were seen'
   },
 ];
 
@@ -1230,9 +1271,11 @@ List<Map<String, dynamic>> audit2Section8Questions = [
   <String, dynamic>{
     'text': 'Have there been any discrimination complaints in the past year?',
     'type': 'yesNo',
+    'happyPathResponse': ['No'],
     'databaseVar': 'DiscriminationComplaints',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'DiscriminationComplaintsComments'
+    'databaseOptCom': 'DiscriminationComplaintsComments',
+    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -1242,7 +1285,7 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVar': 'PantryKnowsResolutionDiscriminationComplaint',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryKnowsResolutionDiscriminationComplaintComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':
@@ -1252,7 +1295,7 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVar': 'DiscriminationComplaintForwardedToGCFD',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComments',
-    'actionItem': 'action item does not exist for this question'
+    'actionItem': 'No action required'
   },
   <String, dynamic>{
     'text':

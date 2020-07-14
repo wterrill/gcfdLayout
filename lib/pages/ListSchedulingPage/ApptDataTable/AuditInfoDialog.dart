@@ -124,18 +124,29 @@ class AuditInfoDialog extends StatelessWidget {
                     ),
                   if (calendarResult.siteInfo?.operateHours != null)
                     Container(
-                        child: AutoSizeText.rich(
-                      TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'Open: ', style: ColorDefs.textBodyBlue20),
-                          TextSpan(
-                              text: ' ${calendarResult.siteInfo.operateHours}',
-                              style: ColorDefs.textBodyWhite20),
-                        ],
-                      ),
-                      minFontSize: 5,
-                    )),
+                        child: RaisedButton(
+                            onPressed: () {
+                              Dialogs.showMessage(
+                                  context: context,
+                                  message: calendarResult.siteInfo.operateHours
+                                      .replaceAll("\\r\\n", "\r\n"),
+                                  //.replaceAll(" - ", "\t"),
+                                  dismissable: true);
+                            },
+                            child: Text("Show operating hours"))
+                        //     AutoSizeText.rich(
+                        //   TextSpan(
+                        //     children: <TextSpan>[("")
+                        //       TextSpan(
+                        //           text: 'Open: ', style: ColorDefs.textBodyBlue20),
+                        //       TextSpan(
+                        //           text: ' ${calendarResult.siteInfo.operateHours}',
+                        //           style: ColorDefs.textBodyWhite20),
+                        //     ],
+                        //   ),
+                        //   minFontSize: 5,
+                        // ),
+                        ),
                 ],
               ),
             ),
@@ -224,9 +235,13 @@ class AuditInfoDialog extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50.0)),
                                 onPressed: () {
+                                  bool followup = false;
+                                  if (calendarResult.auditType == "Follow Up") {
+                                    followup = true;
+                                  }
                                   Dialogs.showRescheduleAudit(context,
                                       calendarResult: calendarResult,
-                                      followup: false);
+                                      followup: followup);
                                 },
                                 child: AutoSizeText('Edit Audit',
                                     style: ColorDefs.textBodyBronze20),

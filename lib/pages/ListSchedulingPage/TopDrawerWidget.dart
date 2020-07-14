@@ -127,7 +127,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           .dataSync(
                               context: context,
                               siteList: siteList,
-                              deviceid: deviceid);
+                              deviceid: deviceid,
+                              fullSync: false);
                       Navigator.of(context).pop();
 
                       /// Audit Data ///
@@ -142,7 +143,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                           .dataSync(
                               context: context,
                               siteList: siteList,
-                              deviceid: deviceid);
+                              deviceid: deviceid,
+                              fullSync: false);
                       Navigator.of(context).pop();
 
                       /// Done with sync

@@ -86,7 +86,24 @@ class _LookAheadState extends State<LookAhead> {
                 }
                 _typeAheadController.text = suggestion;
 
-                List<String> nameArray = suggestion.split(" - ");
+                List<String> nameArray = [];
+                List<String> tempArray = suggestion.split(" - ");
+                if (tempArray.length == 2) {
+                  nameArray = tempArray;
+                }
+                if (tempArray.length > 2) {
+                  String biggerName = "";
+                  for (int i = 0; i < tempArray.length - 1; i++) {
+                    if (i == 0) {
+                      biggerName = biggerName + tempArray[i];
+                    } else {
+                      biggerName = biggerName + " - " + tempArray[i];
+                    }
+                  }
+                  nameArray.add(biggerName);
+                  nameArray.add(tempArray[tempArray.length - 1]);
+                }
+
                 print("name: ${nameArray[0]} program number: ${nameArray[1]}");
                 widget.lookAheadCallback(nameArray);
               },

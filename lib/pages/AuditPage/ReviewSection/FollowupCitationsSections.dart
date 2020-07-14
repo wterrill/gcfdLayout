@@ -41,7 +41,7 @@ class _FollowupCitationsSectionsState extends State<FollowupCitationsSections> {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
                           citations[index].text,
-                          style: TextStyle(fontSize: 15.0),
+                          style: TextStyle(fontSize: 20.0),
                         ),
                       ),
                     ),

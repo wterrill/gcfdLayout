@@ -16,11 +16,21 @@ printf  "\";" >> lib/buildTime/flutterDate.dart
 echo "Continuing flutter build"
 
 flutter build web --release
-cd build/web/ 
+# cd build/web/ 
+# git add .
+
+# now=$(printf '%s' "$(date)")
+# git commit -m "AutoCommit $now"
+# git push
+# cd ../..
+# firebase deploy
+
+mv ./build/web/* ./websiteTesting/
+cd websiteTesting
 git add .
 now=$(printf '%s' "$(date)")
 git commit -m "AutoCommit $now"
 git push
-cd ../..
-# firebase deploy
-flutter build ios --release
+cd ..
+
+# flutter build ios --release

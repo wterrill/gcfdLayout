@@ -77,7 +77,21 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
                 decoration: InputDecoration(
                     suffixIcon: (!widget.questions[index].unflagged)
                         ? IconButton(
-                            onPressed: () => controller.clear(),
+                            onPressed: () {
+                              controller.clear();
+                              if (widget.mandatory) {
+                                widget.questions[widget.index].userResponse =
+                                    "";
+                              } else {
+                                if (widget.actionItem == true) {
+                                  widget.questions[widget.index].actionItem =
+                                      "";
+                                } else {
+                                  widget.questions[widget.index]
+                                      .optionalComment = "";
+                                }
+                              }
+                            },
                             icon: Icon(Icons.clear),
                           )
                         : null,

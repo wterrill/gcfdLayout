@@ -2,10 +2,13 @@ import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
+import 'package:auditor/pages/ListSchedulingPage/RescheduleFollowUpAuditDialog.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
+
+import 'colorDefs.dart';
 
 class Dialogs {
   static void showAlertDialog(BuildContext context) {
@@ -59,7 +62,7 @@ class Dialogs {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(message),
+          Text(message, style: ColorDefs.textWhiteTerminal),
         ],
       ),
     );
@@ -449,6 +452,8 @@ class Dialogs {
 
   static void showRescheduleAudit(BuildContext context,
       {CalendarResult calendarResult, bool followup}) {
+    bool rescheduleFollowUp =
+        (followup == true && calendarResult.auditType == "Follow Up");
     showGeneralDialog<void>(
         barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
@@ -459,11 +464,17 @@ class Dialogs {
               child: AlertDialog(
                 shape: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0)),
-                title: (followup)
+                title: (followup && calendarResult.auditType == "Follow Up")
                     ? Text('Schedule Follow Up')
                     : Text('Reschedule this Audit:'),
-                content: NewAuditDialog(
-                    calendarResult: calendarResult, followup: followup),
+                content: rescheduleFollowUp
+                    ? RescheduleFollowUpAuditDialog(
+                        calendarResult: calendarResult,
+                      )
+                    : NewAuditDialog(
+                        calendarResult: calendarResult,
+                        followup: followup,
+                      ),
               ),
             ),
           );

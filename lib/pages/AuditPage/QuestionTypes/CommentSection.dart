@@ -107,7 +107,16 @@ class _CommentSectionState extends State<CommentSection> {
         decoration: InputDecoration(
             suffixIcon: (widget.activeSection.questions[index].textBoxRollOut)
                 ? IconButton(
-                    onPressed: () => controller.clear(),
+                    onPressed: () {
+                      controller.clear();
+                      if (widget.mandatory) {
+                        widget.activeSection.questions[widget.index]
+                            .userResponse = "";
+                      } else {
+                        widget.activeSection.questions[widget.index]
+                            .optionalComment = "";
+                      }
+                    },
                     icon: Icon(Icons.clear),
                   )
                 : null,
