@@ -148,11 +148,10 @@ List<Map<String, dynamic>> audit2Section1Questions = [
       'No',
       'Closed Program',
     ],
-    'happyPathResponse': ['Yes', 'Closed Program'],
+    'happyPathResponse': ['Yes', 'No', 'Closed Program'],
     'databaseVar': 'AgencyLocatorAccurate',
     'databaseVarType': 'string',
     'databaseOptCom': 'AgencyLocatorAccurateComments',
-    'actionItem': 'No action item needed'
   },
 ];
 
@@ -465,11 +464,9 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   <String, dynamic>{
     'text': 'Appropriate amount of food in inventory?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
     'databaseVar': 'AppropriateAmountOfFood',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'AppropriateAmountOfFoodComments',
-    'actionItem': 'No action item required'
+    'databaseOptCom': 'AppropriateAmountOfFoodComments'
   },
   <String, dynamic>{
     'text': '# of cases of dry food currently in inventory:',

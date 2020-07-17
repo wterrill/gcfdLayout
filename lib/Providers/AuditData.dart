@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
+import 'package:auditor/Definitions/PPCAuditData.dart';
 import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
@@ -25,11 +26,13 @@ class AuditData with ChangeNotifier {
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
   Uint8List foodDepositoryMonitorSignature;
-  Uint8List siteRepresentativeSignature;
+  Uint8List siteRepresentativeSignatureCertificate;
+  Uint8List siteRepresentativeSignatureCitation;
   String deviceidProvider;
   bool successfullySubmitted = false;
   List<Question> citations = [];
   List<Question> previousCitations = [];
+  bool goToVerificationGoodPage = false;
 
   AuditData() {
     initialize();
@@ -144,6 +147,11 @@ class AuditData with ChangeNotifier {
   }
 
 //////////////////////////// END OF HIVE STUFF ////////////////
+
+  void updateGoToVerificationGoodPage(bool newValue) {
+    goToVerificationGoodPage = newValue;
+    notifyListeners();
+  }
 
   void toggleFlag(int index) {
     citations[index].unflagged = !citations[index].unflagged;
@@ -341,13 +349,15 @@ class AuditData with ChangeNotifier {
 
   void resetAudit() {
     foodDepositoryMonitorSignature = null;
-    siteRepresentativeSignature = null;
+    siteRepresentativeSignatureCertificate = null;
+    siteRepresentativeSignatureCitation = null;
     activeAudit = null;
     auditStarted = false;
     activeSection = null;
     activeCalendarResult = null;
     successfullySubmitted = false;
     citations = [];
+    goToVerificationGoodPage = false;
     // actionItemList = [];
   }
 
@@ -368,6 +378,15 @@ class AuditData with ChangeNotifier {
     if (calendarResult.programType == "Congregate Audit") {
       activeAudit = Audit(
           questionnaire: congregateAuditSectionsQuestions,
+          calendarResult: calendarResult);
+      activeSection = activeAudit.sections[0];
+      activeCalendarResult = calendarResult;
+    }
+
+    if (calendarResult.programType == "Senior Adults Program" ||
+        calendarResult.programType == "Healthy Student Market") {
+      activeAudit = Audit(
+          questionnaire: pPCAuditSectionsQuestions,
           calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;

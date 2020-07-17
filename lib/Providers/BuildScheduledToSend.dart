@@ -14,6 +14,13 @@ String buildScheduledToSend(
     key = "CongregateFollowUp";
   }
 
+  if (calendarResult.programType == "Healthy Student Market") {
+    key = "PPCFollowUp";
+  }
+  if (calendarResult.programType == "Senior Adults Program") {
+    key = "PPCFollowUp";
+  }
+
   if (calendarResult.citationsToFollowUp != null) {
     Map<String, dynamic> finalObject = <String, dynamic>{};
 
@@ -51,7 +58,8 @@ String buildScheduledToSend(
     'AuditType': convertAuditTypeToNumber(calendarResult.auditType),
     'StartTime': calendarResult.startDateTime.toString(),
     'DeviceId': kIsWeb ? "website" : deviceid,
-    key: calendarResult.citationsToFollowUp
+    key: calendarResult.citationsToFollowUp,
+    if (addDelete == "E") 'Status': convertStatusToNumber(calendarResult.status)
   });
 
   return body;

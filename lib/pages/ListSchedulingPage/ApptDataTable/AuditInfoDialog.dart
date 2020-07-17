@@ -129,8 +129,10 @@ class AuditInfoDialog extends StatelessWidget {
                               Dialogs.showMessage(
                                   context: context,
                                   message: calendarResult.siteInfo.operateHours
-                                      .replaceAll("\\r\\n", "\r\n"),
-                                  //.replaceAll(" - ", "\t"),
+                                      .replaceAll("\$", "")
+                                      .replaceAll("||", "    ")
+                                      .replaceAll("\\n", "\n\n")
+                                      .replaceAll("|", "   "),
                                   dismissable: true);
                             },
                             child: Text("Show operating hours"))
@@ -173,40 +175,40 @@ class AuditInfoDialog extends StatelessWidget {
                               Provider.of<AuditData>(context, listen: false)
                                   .toggleStartAudit();
 
-                              switch (calendarResult.programType) {
-                                case "Healthy Student Market":
-                                  Dialogs.showNotImplemented(context);
-                                  break;
+                              // switch (calendarResult.programType) {
+                              //   case "Healthy Student Market":
+                              //     Dialogs.showNotImplemented(context);
+                              //     break;
 
-                                case "Senior Adults Program":
-                                  Dialogs.showNotImplemented(context);
-                                  break;
-                                case "Pantry Audit":
-                                  Navigator.of(context).pop();
-                                  Navigator.push<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (context) => AuditPage(
-                                          calendarResult: calendarResult,
-                                          alreadyExist: alreadyExist),
-                                    ),
-                                  );
+                              //   case "Senior Adults Program":
+                              //     Dialogs.showNotImplemented(context);
+                              //     break;
+                              //   case "Pantry Audit":
+                              Navigator.of(context).pop();
+                              Navigator.push<dynamic>(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (context) => AuditPage(
+                                      calendarResult: calendarResult,
+                                      alreadyExist: alreadyExist),
+                                ),
+                              );
 
-                                  break;
-                                case "Congregate Audit":
-                                  Navigator.of(context).pop();
-                                  Navigator.push<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (context) => AuditPage(
-                                          calendarResult: calendarResult,
-                                          alreadyExist: alreadyExist),
-                                    ),
-                                  );
-                                  break;
-                                default:
-                                  Dialogs.showNotImplemented(context);
-                              }
+                              //     break;
+                              //   case "Congregate Audit":
+                              //     Navigator.of(context).pop();
+                              //     Navigator.push<dynamic>(
+                              //       context,
+                              //       MaterialPageRoute<dynamic>(
+                              //         builder: (context) => AuditPage(
+                              //             calendarResult: calendarResult,
+                              //             alreadyExist: alreadyExist),
+                              //       ),
+                              //     );
+                              //     break;
+                              //   default:
+                              //     Dialogs.showNotImplemented(context);
+                              // }
                             },
                             child: AutoSizeText(
                                 alreadyExist ? 'View Audit' : 'Begin Audit',

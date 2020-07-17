@@ -33,6 +33,10 @@ List<CalendarResult> buildScheduledFromIncoming(
           key = "PantryFollowUp";
         } else if (programType == "Congregate Audit") {
           key = "CongregateFollowUp";
+        } else if (programType == "Healthy Student Market") {
+          key = "PPCFollowUp";
+        } else if (programType == "Senior Adults Program") {
+          key = "PPCFollowUp";
         }
       }
       Map<String, dynamic> citationsToFollowUp =

@@ -7,6 +7,8 @@ import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
+import 'package:photo_view/photo_view.dart';
+import 'dart:typed_data';
 
 import 'colorDefs.dart';
 
@@ -72,6 +74,38 @@ class Dialogs {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  static void showPicture(
+      {BuildContext context, Uint8List image, bool dismissable}) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: dismissable,
+      builder: (_) => new AlertDialog(
+        contentPadding: EdgeInsets.all(2.0),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0))),
+        content: Builder(
+          builder: (context) {
+            // Get available height and width of the build area of this widget. Make a choice depending on the size.
+            var height = MediaQuery.of(context).size.height;
+            var width = MediaQuery.of(context).size.width;
+
+            return Container(
+              height: height,
+              width: width,
+              child: PhotoView(
+                // customSize: MediaQuery.of(context).size * 0.8,
+                // minScale: PhotoViewComputedScale.contained * 0.3,
+                // maxScale: PhotoViewComputedScale.covered * 0.9,
+                // initialScale: PhotoViewComputedScale.contained * 0.6,
+                imageProvider: MemoryImage(image),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 

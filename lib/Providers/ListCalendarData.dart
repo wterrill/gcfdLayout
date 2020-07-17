@@ -262,7 +262,7 @@ class ListCalendarData with ChangeNotifier {
       if (convertStatusToNumber(retrievedCalendarItem.status) <=
           convertStatusToNumber(calendarItem.status)) {
         calendarBox.put(
-            '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditor}-${calendarItem.auditType}',
+            '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
             calendarItem);
         // print(calendarBox.keys);
         newEventAdded = true;

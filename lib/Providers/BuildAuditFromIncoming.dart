@@ -20,7 +20,13 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
     } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
         "Congregate Audit") {
       auditTypeKey = "CongregateDetail";
+    } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
+            "Healthy Student Market" ||
+        convertNumberToProgramType(event['ProgramType'] as int) ==
+            "Senior Adults Program") {
+      auditTypeKey = "PPCDetail";
     }
+
     Map<String, dynamic> incomingAudit =
         receivedAudit[auditTypeKey] as Map<String, dynamic>;
 
@@ -55,6 +61,13 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
             questionnaire: congregateAuditSectionsQuestions);
       }
 
+      if (newCalendarResult.programType == "Healthy Student Market" ||
+          newCalendarResult.programType == "Senior Adults Program") {
+        newAudit = Audit(
+            calendarResult: newCalendarResult,
+            questionnaire: congregateAuditSectionsQuestions);
+      }
+
       List<String> missingDBVar = [];
       Map<String, dynamic> citationsMap;
       if (newAudit.calendarResult.programType == "Pantry Audit") {
@@ -64,6 +77,12 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
         citationsMap =
             receivedAudit["CongregateCitations"] as Map<String, dynamic>;
       }
+
+      if (newAudit.calendarResult.programType == "Healthy Student Market" ||
+          newAudit.calendarResult.programType == "Senior Adults Program") {
+        citationsMap = receivedAudit["PPCCitations"] as Map<String, dynamic>;
+      }
+
       // pantryCitations is a big object... we just need the data for the non-null pieces:
       // also, let's get a list of the databaseVars
       List<String> citationDatabaseVarsList = [];
@@ -189,10 +208,22 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
                   print('yesNoNa');
                   print(incomingAudit[databaseVar]);
                   if (incomingAudit[databaseVar] != null) {
-                    question.userResponse =
-                        incomingAudit[databaseVar] as bool ? "Yes" : "No";
+                    if (incomingAudit[databaseVar] as int == 1) {
+                      question.userResponse = "Yes";
+                    }
+                    if (incomingAudit[databaseVar] as int == 0) {
+                      question.userResponse = "No";
+                    }
+                    if (incomingAudit[databaseVar] as int == -1) {
+                      question.userResponse = "NA";
+                    }
+
+                    (question.userResponse =
+                            incomingAudit[databaseVar] as int == 1)
+                        ? "Yes"
+                        : "No";
                   } else {
-                    question.userResponse = "NA";
+                    question.userResponse = null;
                   }
                   question.optionalComment =
                       incomingAudit[databaseVar + "Comments"] as String;

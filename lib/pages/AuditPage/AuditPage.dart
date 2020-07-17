@@ -79,14 +79,19 @@ class _AuditPageState extends State<AuditPage> {
     double mediaHeight = Provider.of<GeneralData>(context).mediaArea.height;
     CalendarResult activeCalendarResult =
         Provider.of<AuditData>(context).activeCalendarResult;
-    Uint8List siteRepresentativeSignature =
-        Provider.of<AuditData>(context).siteRepresentativeSignature;
+    Uint8List siteRepresentativeSignatureCertificate =
+        Provider.of<AuditData>(context).siteRepresentativeSignatureCertificate;
+    Uint8List siteRepresentativeSignatureCitation =
+        Provider.of<AuditData>(context).siteRepresentativeSignatureCitation;
     Uint8List foodDepositoryMonitorSignature =
         Provider.of<AuditData>(context).foodDepositoryMonitorSignature;
-    bool showSubmitButton = (siteRepresentativeSignature != null &&
+    bool showSubmitButton = (siteRepresentativeSignatureCertificate != null &&
             activeAudit.citations.length == 0 ||
-        siteRepresentativeSignature != null &&
-            foodDepositoryMonitorSignature != null);
+        siteRepresentativeSignatureCertificate != null &&
+            siteRepresentativeSignatureCitation != null &&
+            foodDepositoryMonitorSignature != null &&
+            Provider.of<AuditData>(context, listen: false)
+                .goToVerificationGoodPage);
 
     return MaterialApp(
       theme: ThemeData(
@@ -132,12 +137,16 @@ class _AuditPageState extends State<AuditPage> {
                           activeAudit: activeAudit,
                         ),
                       if (activeSection?.name == "Verification" &&
-                          activeAudit.citations.length == 0)
+                              activeAudit.citations.length == 0 ||
+                          Provider.of<AuditData>(context)
+                              .goToVerificationGoodPage)
                         VerificationGoodPage(
                           activeAudit: activeAudit,
                         ),
                       if (activeSection?.name == "Verification" &&
-                          activeAudit.citations.length != 0)
+                          activeAudit.citations.length != 0 &&
+                          !Provider.of<AuditData>(context)
+                              .goToVerificationGoodPage)
                         VerificationBadPage(
                           activeAudit: activeAudit,
                         ),
@@ -145,11 +154,12 @@ class _AuditPageState extends State<AuditPage> {
                       if (activeSection?.name != "Review" &&
                           activeSection?.name != "Verification" &&
                           activeSection?.name != "Follow Up Review")
-                        Container(
-                          child: AuditQuestions(
-                              activeSection: activeSection,
-                              activecalendarResult: activeCalendarResult),
-                        ),
+                        if (activeSection?.name != "Photos")
+                          Container(
+                            child: AuditQuestions(
+                                activeSection: activeSection,
+                                activecalendarResult: activeCalendarResult),
+                          ),
                       if (activeSection?.name == "Confirm Details" &&
                           activeAudit.detailsConfirmed == false)
                         RaisedButton(

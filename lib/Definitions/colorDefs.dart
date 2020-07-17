@@ -89,4 +89,6 @@ class ColorDefs {
 
   static TextStyle textWhiteTerminal =
       TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
+  static TextStyle textBlackTerminal =
+      TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
 }

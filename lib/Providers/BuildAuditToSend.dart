@@ -42,7 +42,9 @@ Map<String, dynamic> buildAuditToSend(
             resultMap[name] = 0;
           } else if (question.userResponse == "No Issues")
             resultMap[name] = 1;
-          else {
+          else if (question.userResponse == "NA") {
+            resultMap[name] = -1;
+          } else {
             resultMap[name] = null;
           }
           try {
@@ -98,8 +100,12 @@ Map<String, dynamic> buildAuditToSend(
       outgoingAudit.sections[0].questions[7].userResponse;
   resultMap['PersonInterviewed'] =
       outgoingAudit.sections[0].questions[8].userResponse;
-  resultMap['ServiceArea'] =
-      outgoingAudit.sections[0].questions[10].userResponse;
+  try {
+    resultMap['ServiceArea'] =
+        outgoingAudit.sections[0].questions[10].userResponse;
+  } catch (err) {
+    print(err);
+  }
   if (outgoingAudit.correctiveActionPlanDueDate != null) {
     String tempDateTimeString =
         outgoingAudit.correctiveActionPlanDueDate.toString();
@@ -107,12 +113,16 @@ Map<String, dynamic> buildAuditToSend(
   }
 
 ////////// Encode signatures in base 64 //////////
-  resultMap['SiteRepresentativeSignature'] =
-      base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
+  if (outgoingAudit.photoSig['siteRepresentativeSignatureCertificate'] != null)
+    resultMap['CertRepresentativeSignature'] = base64Encode(
+        outgoingAudit.photoSig['siteRepresentativeSignatureCertificate']);
 
-  if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null)
+  if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null) {
     resultMap['FoodDepositoryMonitorSignature'] =
         base64Encode(outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
+    resultMap['SiteRepresentativeSignature'] = base64Encode(
+        outgoingAudit.photoSig['siteRepresentativeSignatureCitation']);
+  }
   // bool siteVisitRequired = false;
 
   Map<String, dynamic> citationsMap = <String, dynamic>{};
@@ -171,6 +181,10 @@ Map<String, dynamic> buildAuditToSend(
   }
   if (outgoingAudit.calendarResult.programType == "Congregate Audit") {
     mainBody['CongregateCitations'] = citationsMap;
+  }
+  if (outgoingAudit.calendarResult.programType == "Healthy Student Market" ||
+      outgoingAudit.calendarResult.programType == "Senior Adults Program") {
+    mainBody['PPCCitations'] = citationsMap;
   }
 
   print(mainBody);

@@ -72,9 +72,14 @@ class _DisplayState extends State<Display> {
               Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
           break;
         case ("Program Operating Hours:"):
-          widget = Text(activeCalendarResult.siteInfo?.operateHours
-                  ?.replaceAll("\\r\\n", "\n") ??
-              "None Defined");
+          widget = Text(
+            activeCalendarResult.siteInfo?.operateHours
+                    ?.replaceAll("\\n", "\n\n")
+                    ?.replaceAll("||", " ")
+                    ?.replaceAll("|", " ") ??
+                "None Defined",
+            style: ColorDefs.textBlackTerminal,
+          );
           break;
         case ("Service Area:"):
           widget = Text(

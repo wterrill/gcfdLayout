@@ -23,13 +23,13 @@ class _VerificationGoodPageState extends State<VerificationGoodPage> {
   var color = Colors.red;
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
-  Uint8List siteRepresentativeSignature;
+  Uint8List siteRepresentativeSignatureCertificate;
 
   @override
   Widget build(BuildContext context) {
     try {
-      siteRepresentativeSignature =
-          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
+      siteRepresentativeSignatureCertificate = widget
+          .activeAudit?.photoSig['siteRepresentativeSignatureCertificate'];
     } catch (err) {}
     return Container(
       child: Expanded(
@@ -64,7 +64,7 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
             Image(
               image: AssetImage('assets/images/CMRI_sign.png'),
             ),
-            siteRepresentativeSignature == null
+            siteRepresentativeSignatureCertificate == null
                 ? Container()
                 : Container(
                     child: LimitedBox(
@@ -75,16 +75,16 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                               bottom: BorderSide(
                                   width: 2.0, color: Colors.lightBlue.shade900),
                             )),
-                            child: Image.memory(siteRepresentativeSignature
-                                .buffer
-                                .asUint8List()))),
+                            child: Image.memory(
+                                siteRepresentativeSignatureCertificate.buffer
+                                    .asUint8List()))),
                   ),
             Text("Agency Representative"),
 
             // : LimitedBox(
             //     maxHeight: 200.0,
             //     child: Image.memory(finalImage.buffer.asUint8List())),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCertificate == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -103,7 +103,7 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCertificate == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -156,14 +156,14 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
 
                         sign.clear();
 
-                        siteRepresentativeSignature =
+                        siteRepresentativeSignatureCertificate =
                             img.encodePng(signatureImage) as Uint8List;
                         Provider.of<AuditData>(context, listen: false)
-                                .siteRepresentativeSignature =
-                            siteRepresentativeSignature;
-                        widget.activeAudit
-                                .photoSig['siteRepresentativeSignature'] =
-                            siteRepresentativeSignature;
+                                .siteRepresentativeSignatureCertificate =
+                            siteRepresentativeSignatureCertificate;
+                        widget.activeAudit.photoSig[
+                                'siteRepresentativeSignatureCertificate'] =
+                            siteRepresentativeSignatureCertificate;
                         setState(() {});
                         Provider.of<AuditData>(context, listen: false)
                             .notifyTheListeners();
@@ -176,14 +176,14 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                         final sign = _sign.currentState;
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature = null;
+                          siteRepresentativeSignatureCertificate = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCertificate == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

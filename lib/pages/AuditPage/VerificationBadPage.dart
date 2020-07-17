@@ -29,7 +29,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
   final _sign2 = GlobalKey<SignatureState>();
-  Uint8List siteRepresentativeSignature = null;
+  Uint8List siteRepresentativeSignatureCitation = null;
   Uint8List foodDepositoryMonitorSignature = null;
   List<String> actionItems;
   int followupReqVal;
@@ -64,8 +64,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
           widget.activeAudit?.photoSig['foodDepositoryMonitorSignature'];
     } catch (err) {}
     try {
-      siteRepresentativeSignature =
-          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
+      siteRepresentativeSignatureCitation =
+          widget.activeAudit?.photoSig['siteRepresentativeSignatureCitation'];
     } catch (err) {}
 
     print("onbuild: $followupReqVal");
@@ -180,10 +180,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             Wrap(direction: Axis.vertical, children: [
               Text(
                 '''
-In order to be fully certified and in good standing with the Greater Chicago Food Depository. 
-Failure to comply with the requirements listed below will result in corrective action up to, and 
-including, suspension and/or termination of membership. We appreciate your prompt attention to this 
-matter to ensure your community does not suffer an interruption of services.''',
+In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in a breach of program agreement, being placed on HOLD status, corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this
+matter to ensure your community does not suffer an interruption of services.  If the agency does not adhere to the corrective action plan and/or receives additional violations during the probation period of three (3) months, the program may be permanently removed as determined by the Greater Chicago Food Depository.''',
               ),
             ]),
             Row(
@@ -407,10 +405,10 @@ matter to ensure your community does not suffer an interruption of services.''',
 //////////////  END FIRST SIGNATURE /////////////////////////////
             if (foodDepositoryMonitorSignature != null)
               Text("Food Depository Monitor"),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCitation == null)
               Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
-            siteRepresentativeSignature == null
+            siteRepresentativeSignatureCitation == null
                 ? Container()
                 : LimitedBox(
                     maxHeight: 100.0,
@@ -420,11 +418,12 @@ matter to ensure your community does not suffer an interruption of services.''',
                           bottom: BorderSide(
                               width: 2.0, color: Colors.lightBlue.shade900),
                         )),
-                        child: Image.memory(
-                            siteRepresentativeSignature.buffer.asUint8List()))),
-            if (siteRepresentativeSignature != null)
+                        child: Image.memory(siteRepresentativeSignatureCitation
+                            .buffer
+                            .asUint8List()))),
+            if (siteRepresentativeSignatureCitation != null)
               Text("Agency Representative"),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCitation == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -443,7 +442,7 @@ matter to ensure your community does not suffer an interruption of services.''',
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCitation == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -495,14 +494,14 @@ matter to ensure your community does not suffer an interruption of services.''',
                         }
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature =
+                          siteRepresentativeSignatureCitation =
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
-                                  .siteRepresentativeSignature =
-                              siteRepresentativeSignature;
-                          widget.activeAudit
-                                  .photoSig['siteRepresentativeSignature'] =
-                              siteRepresentativeSignature;
+                                  .siteRepresentativeSignatureCitation =
+                              siteRepresentativeSignatureCitation;
+                          widget.activeAudit.photoSig[
+                                  'siteRepresentativeSignatureCitation'] =
+                              siteRepresentativeSignatureCitation;
                           Provider.of<AuditData>(context, listen: false)
                               .notifyTheListeners();
                         });
@@ -515,14 +514,14 @@ matter to ensure your community does not suffer an interruption of services.''',
                         final sign = _sign2.currentState;
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature = null;
+                          siteRepresentativeSignatureCitation = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignatureCitation == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -548,6 +547,19 @@ matter to ensure your community does not suffer an interruption of services.''',
                       child: Text("Change stroke width")),
                 ],
               ),
+            if (foodDepositoryMonitorSignature != null &&
+                siteRepresentativeSignatureCitation != null)
+              RaisedButton(
+                  color: Colors.green,
+                  onPressed: () {
+                    Provider.of<AuditData>(context, listen: false)
+                        .updateGoToVerificationGoodPage(true);
+                  },
+                  child: Text(
+                    "Success! Go to the Inspection Certificate",
+                    style: ColorDefs.textBodyWhite30,
+                  )),
+
             Container(
               height: 300,
             )
