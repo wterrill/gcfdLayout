@@ -169,17 +169,17 @@ Map<String, dynamic> buildAuditToSend(
     "CongregateDetail": null,
     "PPCDetail": null,
   };
-  if (outgoingAudit.calendarResult.programType == "Pantry Audit") {
+  if (outgoingAudit.calendarResult.programType == "Pantry") {
     mainBody["PantryDetail"] = resultMap;
-  } else if (outgoingAudit.calendarResult.programType == "Congregate Audit") {
+  } else if (outgoingAudit.calendarResult.programType == "Congregate") {
     mainBody["CongregateDetail"] = resultMap;
   } else {
     mainBody["PPCDetail"] = resultMap;
   }
-  if (outgoingAudit.calendarResult.programType == "Pantry Audit") {
+  if (outgoingAudit.calendarResult.programType == "Pantry") {
     mainBody['PantryCitations'] = citationsMap;
   }
-  if (outgoingAudit.calendarResult.programType == "Congregate Audit") {
+  if (outgoingAudit.calendarResult.programType == "Congregate") {
     mainBody['CongregateCitations'] = citationsMap;
   }
   if (outgoingAudit.calendarResult.programType == "Healthy Student Market" ||

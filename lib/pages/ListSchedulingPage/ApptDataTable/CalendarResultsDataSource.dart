@@ -38,10 +38,10 @@ class CalendarResultsDataSource extends DataTableSource {
       if (programType == "Senior Adults Program") {
         color = ColorDefs.colorAudit2;
       }
-      if (programType == "Pantry Audit") {
+      if (programType == "Pantry") {
         color = ColorDefs.colorAudit3;
       }
-      if (programType == "Congregate Audit") {
+      if (programType == "Congregate") {
         color = ColorDefs.colorAudit4;
       }
       return color;

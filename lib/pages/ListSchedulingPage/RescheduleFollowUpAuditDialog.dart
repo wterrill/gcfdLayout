@@ -99,8 +99,8 @@ class _RescheduleFollowUpAuditDialogState
   //   "Select",
   //   "Healthy Student Market",
   //   "Senior Adults Program",
-  //   "Pantry Audit",
-  //   "Congregate Audit"
+  //   "Pantry",
+  //   "Congregate"
   // ];
 
   @override

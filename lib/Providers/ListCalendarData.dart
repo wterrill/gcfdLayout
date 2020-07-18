@@ -33,8 +33,8 @@ List<String> auditTypes = [
 List<String> programTypes = [
   "Healthy Student Market",
   "Senior Adults Program",
-  "Pantry Audit",
-  "Congregate Audit"
+  "Pantry",
+  "Congregate"
 ];
 
 class ListCalendarData with ChangeNotifier {

@@ -183,7 +183,7 @@ class AuditInfoDialog extends StatelessWidget {
                               //   case "Senior Adults Program":
                               //     Dialogs.showNotImplemented(context);
                               //     break;
-                              //   case "Pantry Audit":
+                              //   case "Pantry":
                               Navigator.of(context).pop();
                               Navigator.push<dynamic>(
                                 context,
@@ -195,7 +195,7 @@ class AuditInfoDialog extends StatelessWidget {
                               );
 
                               //     break;
-                              //   case "Congregate Audit":
+                              //   case "Congregate":
                               //     Navigator.of(context).pop();
                               //     Navigator.push<dynamic>(
                               //       context,

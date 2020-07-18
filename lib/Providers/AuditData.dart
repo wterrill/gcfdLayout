@@ -12,6 +12,7 @@ import 'package:auditor/providers/BuildAuditToSend.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'dart:typed_data';
+import 'dart:convert';
 
 import 'BuildAuditFromIncoming.dart';
 // import 'dart:typed_data';
@@ -368,14 +369,14 @@ class AuditData with ChangeNotifier {
   }
 
   void createAuditClass(CalendarResult calendarResult) {
-    if (calendarResult.programType == "Pantry Audit") {
+    if (calendarResult.programType == "Pantry") {
       activeAudit = Audit(
           questionnaire: pantryAuditSectionsQuestions,
           calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
-    if (calendarResult.programType == "Congregate Audit") {
+    if (calendarResult.programType == "Congregate") {
       activeAudit = Audit(
           questionnaire: congregateAuditSectionsQuestions,
           calendarResult: calendarResult);
@@ -420,19 +421,58 @@ class AuditData with ChangeNotifier {
       String deviceid,
       bool fullSync}) async {
     deviceidProvider = deviceid;
-    await sendAuditsToCloud();
+    await sendAuditsToCloud(deviceid);
     await getAuditsFromCloud(
         context: context,
         siteList: siteList,
         deviceid: deviceid,
         fullSync: fullSync);
   }
+  // // // // // // // // // // //
 
-  void sendAuditsToCloud() async {
+  List<dynamic> getPicList(List<Uint8List> photoList) {
+    List<dynamic> files = <dynamic>[];
+    int i = 0;
+    for (Uint8List picture in photoList) {
+      String base64Image = base64Encode(picture);
+      Map<String, String> file = {
+        "Filename": i.toString(),
+        "FileExtension": ".png",
+        "FileContent": base64Image
+      };
+      files.add(file);
+      i++;
+    }
+    return files;
+  }
+
+  String getPicListBody(Audit audit, String deviceid) {
+    List<Uint8List> photoList = audit.photoList;
+    List<dynamic> files = getPicList(photoList);
+
+    String json = jsonEncode(<String, dynamic>{
+      "AgencyNumber": audit.calendarResult.agencyNum,
+      "ProgramNumber": audit.calendarResult.programNum,
+      "ProgramType":
+          convertProgramTypeToNumber(audit.calendarResult.programType),
+      "Auditor": audit.calendarResult.auditor,
+      "AuditType": convertAuditTypeToNumber(audit.calendarResult.auditType),
+      "StartTime": audit.calendarResult.startDateTime.toString(),
+      "DeviceId": deviceid,
+      "Files": files
+    });
+
+    return json;
+  }
+
+  // // // // // // // // // // //
+
+  void sendAuditsToCloud(String deviceid) async {
     List<dynamic> dynKeys = auditsToSendBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
+
       Map<String, dynamic> mainBody =
           buildAuditToSend(result, deviceidProvider);
       bool successful = await FullAuditComms.sendFullAudit(mainBody).timeout(
@@ -447,6 +487,8 @@ class AuditData with ChangeNotifier {
           return null;
         },
       ) as bool;
+      String picJson = getPicListBody(result, deviceid);
+      bool successfulpic = await FullAuditComms.uploadPicList(picJson) as bool;
       if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
     }
   }
@@ -463,7 +505,8 @@ class AuditData with ChangeNotifier {
 
     dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
     if (fromServer != null) {
-      List<Audit> newAudits = buildAuditFromIncoming(fromServer, siteList);
+      List<Audit> newAudits =
+          await buildAuditFromIncoming(fromServer, siteList) as List<Audit>;
       print(newAudits);
       for (Audit audit in newAudits) {
         print(audit);

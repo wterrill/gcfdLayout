@@ -107,10 +107,10 @@ String convertNumberToAuditType(int number) {
 int convertProgramTypeToNumber(String programType) {
   int value = 0;
   switch (programType) {
-    case ("Pantry Audit"):
+    case ("Pantry"):
       value = 1;
       break;
-    case ("Congregate Audit"):
+    case ("Congregate"):
       value = 2;
       break;
     case ("Senior Adults Program"):
@@ -127,10 +127,10 @@ String convertNumberToProgramType(int number) {
   String value = "None";
   switch (number) {
     case (1):
-      value = "Pantry Audit";
+      value = "Pantry";
       break;
     case (2):
-      value = "Congregate Audit";
+      value = "Congregate";
       break;
     case (3):
       value = "Senior Adults Program";

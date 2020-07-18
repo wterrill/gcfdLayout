@@ -7,6 +7,7 @@ import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
+import 'dart:typed_data';
 
 bool isNtlm = true;
 dynamic sender;
@@ -124,6 +125,32 @@ class FullAuditComms {
       },
     ).catchError((Object e) {
       print(e);
+    }) as Future<dynamic>;
+  }
+
+  static Future<dynamic> uploadPicList(String json) {
+    print(json);
+    if (isNtlm) {
+      sender = client.post('http://12.216.81.220:90/api/Audit/FileUpload',
+          body: json,
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+          });
+    } else {
+      sender = http.post('http://12.216.81.220:90/api/Audit/FileUpload',
+          body: json,
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+          });
+    }
+    return sender.then((http.Response res) {
+      print(res.statusCode);
+      print(res.body);
+      return true;
+    }).catchError((dynamic err) {
+      print(err);
     }) as Future<dynamic>;
   }
 }

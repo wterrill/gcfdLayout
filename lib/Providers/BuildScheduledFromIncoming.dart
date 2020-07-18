@@ -29,9 +29,9 @@ List<CalendarResult> buildScheduledFromIncoming(
       String siteidreceived = event['DeviceId'] as String;
       String key;
       if (auditType == "Follow Up") {
-        if (programType == "Pantry Audit") {
+        if (programType == "Pantry") {
           key = "PantryFollowUp";
-        } else if (programType == "Congregate Audit") {
+        } else if (programType == "Congregate") {
           key = "CongregateFollowUp";
         } else if (programType == "Healthy Student Market") {
           key = "PPCFollowUp";

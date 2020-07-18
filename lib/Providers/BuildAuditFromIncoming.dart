@@ -7,18 +7,21 @@ import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'dart:convert';
+import 'package:http/http.dart' show Response, get;
+import 'dart:typed_data';
+import 'dart:io';
 
-List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
+Future<dynamic> buildAuditFromIncoming(
+    dynamic fromServer, SiteList siteList) async {
   List<Audit> newAudits = [];
   Audit newAudit;
   for (dynamic event in fromServer) {
     Map<String, dynamic> receivedAudit = event as Map<String, dynamic>;
     String auditTypeKey;
-    if (convertNumberToProgramType(event['ProgramType'] as int) ==
-        "Pantry Audit") {
+    if (convertNumberToProgramType(event['ProgramType'] as int) == "Pantry") {
       auditTypeKey = "PantryDetail";
     } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
-        "Congregate Audit") {
+        "Congregate") {
       auditTypeKey = "CongregateDetail";
     } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
             "Healthy Student Market" ||
@@ -49,13 +52,13 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
       );
       print(event['DeviceId']);
 
-      if (newCalendarResult.programType == "Pantry Audit") {
+      if (newCalendarResult.programType == "Pantry") {
         newAudit = Audit(
             calendarResult: newCalendarResult,
             questionnaire: pantryAuditSectionsQuestions);
       }
 
-      if (newCalendarResult.programType == "Congregate Audit") {
+      if (newCalendarResult.programType == "Congregate") {
         newAudit = Audit(
             calendarResult: newCalendarResult,
             questionnaire: congregateAuditSectionsQuestions);
@@ -70,10 +73,10 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
 
       List<String> missingDBVar = [];
       Map<String, dynamic> citationsMap;
-      if (newAudit.calendarResult.programType == "Pantry Audit") {
+      if (newAudit.calendarResult.programType == "Pantry") {
         citationsMap = receivedAudit["PantryCitations"] as Map<String, dynamic>;
       }
-      if (newAudit.calendarResult.programType == "Congregate Audit") {
+      if (newAudit.calendarResult.programType == "Congregate") {
         citationsMap =
             receivedAudit["CongregateCitations"] as Map<String, dynamic>;
       }
@@ -268,10 +271,26 @@ List<Audit> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) {
       for (Section section in newAudit.sections) {
         section.status = Status.completed;
       }
-      if (incomingAudit != null) {
-        newAudits.add(newAudit);
-      }
     }
+    List<Uint8List> photoListx = [];
+    try {
+      List<dynamic> picUrls = event['PictureUrls'] as List<dynamic>;
+
+      for (dynamic url in picUrls) {
+        Response response = await get(url);
+        photoListx.add(response.bodyBytes);
+      }
+      newAudit.photoList = photoListx;
+    } catch (err) {
+      print(err);
+      print("no pics");
+    }
+
+    // if (incomingAudit != null) {
+    newAudits.add(newAudit);
+    // }
+
   }
+
   return newAudits;
 }

@@ -7,10 +7,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 String buildScheduledToSend(
     CalendarResult calendarResult, String addDelete, String deviceid) {
   String key;
-  if (calendarResult.programType == "Pantry Audit") {
+  if (calendarResult.programType == "Pantry") {
     key = "PantryFollowUp";
   }
-  if (calendarResult.programType == "Congregate Audit") {
+  if (calendarResult.programType == "Congregate") {
     key = "CongregateFollowUp";
   }
 

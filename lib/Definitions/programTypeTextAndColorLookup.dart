@@ -3,7 +3,7 @@ import 'colorDefs.dart';
 Map<String, dynamic> programTypeTextAndColorLookup(String site) {
   Map<String, dynamic> endColorText;
   switch (site) {
-    case ("Pantry Audit"):
+    case ("Pantry"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit3,
         'text': ColorDefs.textBodyWhite20
@@ -24,7 +24,7 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
       };
       break;
 
-    case ("Congregate Audit"):
+    case ("Congregate"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit4,
         'text': ColorDefs.textBodyWhite20

@@ -71,10 +71,10 @@ class Audit extends HiveObject {
   String convertProgramTypeToOfficial(String programType) {
     String value = "Error in Name";
     switch (programType) {
-      case ("Pantry Audit"):
+      case ("Pantry"):
         value = "Pantry Policy / Procedures Checklist";
         break;
-      case ("Congregate Audit"):
+      case ("Congregate"):
         value = "Congregate Policy Checklist";
         break;
       case ("Senior Adults Program"):
