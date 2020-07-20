@@ -1,11 +1,11 @@
 const Map<String,String> version = 
 {
-  "frameworkVersion": "1.21.0-1.0.pre",
+  "frameworkVersion": "1.21.0-2.0.pre.66",
   "channel": "master",
   "repositoryUrl": "https://github.com/flutter/flutter.git",
-  "frameworkRevision": "a1097ea53f7db634e567f476cb4bb2ee7873a5c9",
-  "frameworkCommitDate": "2020-07-13 17:11:02 -0400",
-  "engineRevision": "f10f17257300b232d0b16c95c63a641a3e158207",
-  "dartSdkVersion": "2.9.0 (build 2.9.0-20.0.dev 06cb010247)"
+  "frameworkRevision": "54c9441723ec61baaeb0fbf71fdcf4e415116e6e",
+  "frameworkCommitDate": "2020-07-17 18:56:12 -0400",
+  "engineRevision": "d32782863249a3d7492eb7a550d492b8fa0f6f74",
+  "dartSdkVersion": "2.9.0 (build 2.9.0-21.0.dev 9dca49e71e)"
 }
 ;

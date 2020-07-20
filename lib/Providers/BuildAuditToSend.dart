@@ -113,15 +113,15 @@ Map<String, dynamic> buildAuditToSend(
   }
 
 ////////// Encode signatures in base 64 //////////
-  if (outgoingAudit.photoSig['siteRepresentativeSignatureCertificate'] != null)
-    resultMap['CertRepresentativeSignature'] = base64Encode(
-        outgoingAudit.photoSig['siteRepresentativeSignatureCertificate']);
+  if (outgoingAudit.photoSig['certRepresentativeSignature'] != null)
+    resultMap['CertRepresentativeSignature'] =
+        base64Encode(outgoingAudit.photoSig['certRepresentativeSignature']);
 
   if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null) {
     resultMap['FoodDepositoryMonitorSignature'] =
         base64Encode(outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
-    resultMap['SiteRepresentativeSignature'] = base64Encode(
-        outgoingAudit.photoSig['siteRepresentativeSignatureCitation']);
+    resultMap['SiteRepresentativeSignature'] =
+        base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
   }
   // bool siteVisitRequired = false;
 

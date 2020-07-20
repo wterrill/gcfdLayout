@@ -29,7 +29,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   var strokeWidth = 5.0;
   final _sign = GlobalKey<SignatureState>();
   final _sign2 = GlobalKey<SignatureState>();
-  Uint8List siteRepresentativeSignatureCitation = null;
+  Uint8List siteRepresentativeSignature = null;
   Uint8List foodDepositoryMonitorSignature = null;
   List<String> actionItems;
   int followupReqVal;
@@ -64,8 +64,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
           widget.activeAudit?.photoSig['foodDepositoryMonitorSignature'];
     } catch (err) {}
     try {
-      siteRepresentativeSignatureCitation =
-          widget.activeAudit?.photoSig['siteRepresentativeSignatureCitation'];
+      siteRepresentativeSignature =
+          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
     } catch (err) {}
 
     print("onbuild: $followupReqVal");
@@ -405,10 +405,10 @@ matter to ensure your community does not suffer an interruption of services.  If
 //////////////  END FIRST SIGNATURE /////////////////////////////
             if (foodDepositoryMonitorSignature != null)
               Text("Food Depository Monitor"),
-            if (siteRepresentativeSignatureCitation == null)
+            if (siteRepresentativeSignature == null)
               Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
-            siteRepresentativeSignatureCitation == null
+            siteRepresentativeSignature == null
                 ? Container()
                 : LimitedBox(
                     maxHeight: 100.0,
@@ -418,12 +418,11 @@ matter to ensure your community does not suffer an interruption of services.  If
                           bottom: BorderSide(
                               width: 2.0, color: Colors.lightBlue.shade900),
                         )),
-                        child: Image.memory(siteRepresentativeSignatureCitation
-                            .buffer
-                            .asUint8List()))),
-            if (siteRepresentativeSignatureCitation != null)
+                        child: Image.memory(
+                            siteRepresentativeSignature.buffer.asUint8List()))),
+            if (siteRepresentativeSignature != null)
               Text("Agency Representative"),
-            if (siteRepresentativeSignatureCitation == null)
+            if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,
                 height: 200,
@@ -442,7 +441,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                   strokeWidth: strokeWidth,
                 ),
               ),
-            if (siteRepresentativeSignatureCitation == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -494,14 +493,14 @@ matter to ensure your community does not suffer an interruption of services.  If
                         }
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignatureCitation =
+                          siteRepresentativeSignature =
                               img.encodePng(signatureImage) as Uint8List;
                           Provider.of<AuditData>(context, listen: false)
-                                  .siteRepresentativeSignatureCitation =
-                              siteRepresentativeSignatureCitation;
-                          widget.activeAudit.photoSig[
-                                  'siteRepresentativeSignatureCitation'] =
-                              siteRepresentativeSignatureCitation;
+                                  .siteRepresentativeSignature =
+                              siteRepresentativeSignature;
+                          widget.activeAudit
+                                  .photoSig['siteRepresentativeSignature'] =
+                              siteRepresentativeSignature;
                           Provider.of<AuditData>(context, listen: false)
                               .notifyTheListeners();
                         });
@@ -514,14 +513,14 @@ matter to ensure your community does not suffer an interruption of services.  If
                         final sign = _sign2.currentState;
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignatureCitation = null;
+                          siteRepresentativeSignature = null;
                         });
                         debugPrint("cleared");
                       },
                       child: Text("Clear")),
                 ],
               ),
-            if (siteRepresentativeSignatureCitation == null)
+            if (siteRepresentativeSignature == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -548,7 +547,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                 ],
               ),
             if (foodDepositoryMonitorSignature != null &&
-                siteRepresentativeSignatureCitation != null)
+                siteRepresentativeSignature != null)
               RaisedButton(
                   color: Colors.green,
                   onPressed: () {

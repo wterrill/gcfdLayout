@@ -2,6 +2,7 @@ import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
+import 'package:auditor/Definitions/PPCAuditData.dart';
 import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
@@ -68,7 +69,7 @@ Future<dynamic> buildAuditFromIncoming(
           newCalendarResult.programType == "Senior Adults Program") {
         newAudit = Audit(
             calendarResult: newCalendarResult,
-            questionnaire: congregateAuditSectionsQuestions);
+            questionnaire: pPCAuditSectionsQuestions);
       }
 
       List<String> missingDBVar = [];
@@ -251,12 +252,19 @@ Future<dynamic> buildAuditFromIncoming(
       // finally, add the citations created above.
       newAudit.citations = citations;
 
-      if (incomingAudit['SiteRepresentativeSignature'] != null)
+      if (incomingAudit['CertRepresentativeSignature'] != "" &&
+          incomingAudit['CertRepresentativeSignature'] != null)
+        newAudit.photoSig['certRepresentativeSignature'] = Base64Decoder()
+            .convert(incomingAudit['CertRepresentativeSignature'] as String);
+      if (incomingAudit['FoodDepositoryMonitorSignature'] != "" &&
+          incomingAudit['FoodDepositoryMonitorSignature'] != null)
+        newAudit.photoSig['foodDepositoryMonitorSignatureCitation'] =
+            Base64Decoder().convert(
+                incomingAudit['FoodDepositoryMonitorSignature'] as String);
+      if (incomingAudit['SiteRepresentativeSignature'] != "" &&
+          incomingAudit['SiteRepresentativeSignature'] != null)
         newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
             .convert(incomingAudit['SiteRepresentativeSignature'] as String);
-      if (incomingAudit['FoodDepositoryMonitorSignature'] != null)
-        newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
-            .convert(incomingAudit['FoodDepositoryMonitorSignature'] as String);
 
       if (incomingAudit['CorrectiveActionPlanDueDate'] != null) {
         newAudit.correctiveActionPlanDueDate = DateTime.parse(

@@ -79,16 +79,16 @@ class _AuditPageState extends State<AuditPage> {
     double mediaHeight = Provider.of<GeneralData>(context).mediaArea.height;
     CalendarResult activeCalendarResult =
         Provider.of<AuditData>(context).activeCalendarResult;
-    Uint8List siteRepresentativeSignatureCertificate =
-        Provider.of<AuditData>(context).siteRepresentativeSignatureCertificate;
-    Uint8List siteRepresentativeSignatureCitation =
-        Provider.of<AuditData>(context).siteRepresentativeSignatureCitation;
+    Uint8List certRepresentativeSignature =
+        Provider.of<AuditData>(context).certRepresentativeSignature;
+    Uint8List siteRepresentativeSignature =
+        Provider.of<AuditData>(context).siteRepresentativeSignature;
     Uint8List foodDepositoryMonitorSignature =
         Provider.of<AuditData>(context).foodDepositoryMonitorSignature;
-    bool showSubmitButton = (siteRepresentativeSignatureCertificate != null &&
+    bool showSubmitButton = (certRepresentativeSignature != null &&
             activeAudit.citations.length == 0 ||
-        siteRepresentativeSignatureCertificate != null &&
-            siteRepresentativeSignatureCitation != null &&
+        certRepresentativeSignature != null &&
+            siteRepresentativeSignature != null &&
             foodDepositoryMonitorSignature != null &&
             Provider.of<AuditData>(context, listen: false)
                 .goToVerificationGoodPage);

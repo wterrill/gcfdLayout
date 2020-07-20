@@ -27,8 +27,8 @@ class AuditData with ChangeNotifier {
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
   Uint8List foodDepositoryMonitorSignature;
-  Uint8List siteRepresentativeSignatureCertificate;
-  Uint8List siteRepresentativeSignatureCitation;
+  Uint8List certRepresentativeSignature;
+  Uint8List siteRepresentativeSignature;
   String deviceidProvider;
   bool successfullySubmitted = false;
   List<Question> citations = [];
@@ -350,8 +350,8 @@ class AuditData with ChangeNotifier {
 
   void resetAudit() {
     foodDepositoryMonitorSignature = null;
-    siteRepresentativeSignatureCertificate = null;
-    siteRepresentativeSignatureCitation = null;
+    certRepresentativeSignature = null;
+    siteRepresentativeSignature = null;
     activeAudit = null;
     auditStarted = false;
     activeSection = null;

@@ -34,25 +34,31 @@ class _DisplayState extends State<Display> {
       Widget widget = Text("");
       switch (text) {
         case ("Date of Visit:"):
-          widget =
-              Text(DateFormat.yMd().format(activeCalendarResult.startDateTime));
+          widget = Text(
+              DateFormat.yMd().format(activeCalendarResult.startDateTime),
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Start Time:"):
-          widget =
-              Text(DateFormat.jm().format(activeCalendarResult.startDateTime));
+          widget = Text(
+              DateFormat.jm().format(activeCalendarResult.startDateTime),
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Date of Visit:"):
-          widget = Text(activeCalendarResult?.startDateTime.toString());
+          widget = Text(activeCalendarResult?.startDateTime.toString(),
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Type of Visit:"):
-          widget = Text(activeCalendarResult?.programType);
+          widget = Text(activeCalendarResult?.programType,
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency Name:"):
-          widget = Text(activeCalendarResult?.agencyName?.titleCase);
+          widget = Text(activeCalendarResult?.agencyName?.titleCase,
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency/Program Number:"):
           widget = Text(
-              '${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}');
+              '${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}',
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Site address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";
@@ -62,14 +68,16 @@ class _DisplayState extends State<Display> {
           string = string + " " + (activeCalendarResult.siteInfo?.state ?? " ");
           string = string + " " + (activeCalendarResult.siteInfo?.zip ?? "");
 
-          widget = Text(string ?? "");
+          widget = Text(string ?? "", style: ColorDefs.textBodyBlack20);
           break;
         case ("GCFD Monitor:"):
-          widget = Text(activeCalendarResult.auditor);
+          widget = Text(activeCalendarResult.auditor,
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Contact:"):
-          widget =
-              Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
+          widget = Text(
+              activeCalendarResult.siteInfo?.contact ?? "None Defined",
+              style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Operating Hours:"):
           widget = Text(
@@ -83,7 +91,8 @@ class _DisplayState extends State<Display> {
           break;
         case ("Service Area:"):
           widget = Text(
-              activeCalendarResult.siteInfo?.serviceArea ?? "None Defined");
+              activeCalendarResult.siteInfo?.serviceArea ?? "None Defined",
+              style: ColorDefs.textBodyBlack20);
           break;
       }
       return widget;
