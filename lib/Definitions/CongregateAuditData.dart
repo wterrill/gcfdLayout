@@ -22,7 +22,7 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
   <String, dynamic>{
     'text': 'Person Interviewed:',
-    'type': 'fillIn',
+    'type': 'fillInInterview',
     'databaseVar': 'PersonInterviewed',
     'databaseVarType': 'string'
   },
@@ -921,9 +921,9 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'text': 'Are dial-stem thermometer(s) on hand?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
-    'databaseVar': 'DialStemThermometersOnHandComment',
+    'databaseVar': 'DialStemThermometersOnHand',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'DialStemThermometersOnHandComment',
+    'databaseOptCom': 'DialStemThermometersOnHandComments',
     'actionItem':
         ' Acquire / Utilize a dial-stem thermometer for testing food temperature while preparing & serving and submit receipt for thermometers.'
   },
@@ -933,7 +933,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'TemperatureChartPosted',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'TemperatureChartPostedComment',
+    'databaseOptCom': 'TemperatureChartPostedComments',
     'actionItem': ' Post Temperature Chart'
   },
   <String, dynamic>{
@@ -943,7 +943,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'AppropriateTemperatureMaintained',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'AppropriateTemperatureMaintainedComment',
+    'databaseOptCom': 'AppropriateTemperatureMaintainedComments',
     'actionItem':
         'Ensure proper temperatures are maintained during the preparation of food'
   },
@@ -953,7 +953,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'FoodThawedAppropriately',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'FoodThawedAppropriatelyComment',
+    'databaseOptCom': 'FoodThawedAppropriatelyComments',
     'actionItem':
         'Ensure food is thawed out correctly, safely and appropriately'
   },
@@ -964,7 +964,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PrepAreaClean',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'PrepAreaCleanComment',
+    'databaseOptCom': 'PrepAreaCleanComments',
     'actionItem':
         'Ensure preparation area is maintained clean and free of any type of insect, dust or other foreign matter that could contaminate the food'
   },
@@ -974,7 +974,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'CrossContaminationAvoided',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'CrossContaminationAvoidedComment',
+    'databaseOptCom': 'CrossContaminationAvoidedComments',
     'actionItem':
         'Ensure cross contamination is avoided during the preparation of meals'
   },
@@ -984,7 +984,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'SmokingProhibited',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'SmokingProhibitedComment',
+    'databaseOptCom': 'SmokingProhibitedComments',
     'actionItem': 'Ensure smoking is not practiced in the food preparation area'
   },
   <String, dynamic>{
@@ -1013,7 +1013,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'happyPathResponse': ['Yes'],
     'databaseVar': 'ProperTempMaintainedDuringServing',
     'databaseVarType': 'bool',
-    'databaseOptCom': 'ProperTempMaintaintedDuringServingComments ',
+    'databaseOptCom': 'ProperTempMaintainedDuringServingComments ',
     'actionItem':
         'Ensure proper food temperatures are maintained during the serving of meals'
   },

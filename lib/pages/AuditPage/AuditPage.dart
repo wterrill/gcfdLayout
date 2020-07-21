@@ -168,7 +168,8 @@ class _AuditPageState extends State<AuditPage> {
                           textColor: Colors.black,
                           child:
                               Text("Confirm", style: ColorDefs.textBodyBlack20),
-                          onPressed: (false)
+                          onPressed: (!Provider.of<GeneralData>(context)
+                                  .confirmButtonEnabled)
                               ? null
                               : () {
                                   activeAudit.detailsConfirmed = true;

@@ -219,6 +219,7 @@ class ListCalendarData with ChangeNotifier {
     dynamic temp = await ScheduleAuditComms.getAuditors();
     auditorList = temp as AuditorList;
     saveAuditors(auditorList);
+    notifyListeners();
   }
 
 ////////////////// Hive operations

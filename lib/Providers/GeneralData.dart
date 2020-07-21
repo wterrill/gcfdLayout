@@ -10,6 +10,8 @@ class GeneralData with ChangeNotifier {
   Size mediaArea;
   int numberOfDaysShown;
   String deviceid;
+  bool confirmButtonEnabled = false;
+  String personInterviewed;
 
   //SchedulingPage
   bool backgroundDisable;
@@ -36,4 +38,17 @@ class GeneralData with ChangeNotifier {
     numberOfDaysShown = number;
     notifyListeners();
   }
+
+  void enableConfirmButton() {
+    confirmButtonEnabled = true;
+    notifyListeners();
+  }
+
+  void disableConfirmButton() {
+    confirmButtonEnabled = false;
+    notifyListeners();
+  }
+
+  // confirmButtonEnabled = false;
+
 }

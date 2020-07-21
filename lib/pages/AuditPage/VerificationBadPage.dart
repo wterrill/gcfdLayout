@@ -2,6 +2,8 @@ import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'dart:ui' as ui;
@@ -259,7 +261,11 @@ matter to ensure your community does not suffer an interruption of services.  If
             // ),
 
             if (foodDepositoryMonitorSignature == null)
-              Text("Food Depository Monitor"),
+              Text("Food Depository Monitor: " +
+                  Provider.of<ListCalendarData>(context, listen: false)
+                      .auditorList
+                      .getFirstAndLastFromUser(
+                          widget.activeAudit.calendarResult.auditor)),
 
             foodDepositoryMonitorSignature == null
                 ? Container()
@@ -404,9 +410,15 @@ matter to ensure your community does not suffer an interruption of services.  If
               ),
 //////////////  END FIRST SIGNATURE /////////////////////////////
             if (foodDepositoryMonitorSignature != null)
-              Text("Food Depository Monitor"),
+              Text("Food Depository Monitor: " +
+                  Provider.of<ListCalendarData>(context, listen: false)
+                      .auditorList
+                      .getFirstAndLastFromUser(
+                          widget.activeAudit.calendarResult.auditor)),
             if (siteRepresentativeSignature == null)
-              Text("Agency Representative"),
+              Text("Agency Representative: " +
+                  Provider.of<GeneralData>(context, listen: false)
+                      .personInterviewed),
 //////////////  SECOND SIGNATURE /////////////////////////////
             siteRepresentativeSignature == null
                 ? Container()
@@ -421,7 +433,9 @@ matter to ensure your community does not suffer an interruption of services.  If
                         child: Image.memory(
                             siteRepresentativeSignature.buffer.asUint8List()))),
             if (siteRepresentativeSignature != null)
-              Text("Agency Representative"),
+              Text("Agency Representative: " +
+                  Provider.of<GeneralData>(context, listen: false)
+                      .personInterviewed),
             if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,

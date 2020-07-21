@@ -7,6 +7,7 @@ import 'package:auditor/Definitions/colorDefs.dart';
 import 'QuestionTypes/DateQuestion.dart';
 import 'QuestionTypes/Display.dart';
 import 'QuestionTypes/DropDownQuestion.dart';
+import 'QuestionTypes/FillInInterview.dart';
 import 'QuestionTypes/FillInNumQuestion.dart';
 import 'QuestionTypes/FillInQuestion.dart';
 import 'QuestionTypes/IssuesNoIssuesQuestion.dart';
@@ -70,6 +71,13 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                                   .typeOfQuestion ==
                               "fillIn")
                             FillInQuestion(
+                                index: index,
+                                activeSection: widget.activeSection,
+                                questionAutoGroup: questionAutoGroup),
+                          if (widget.activeSection?.questions[index]
+                                  .typeOfQuestion ==
+                              "fillInInterview")
+                            FillInInterview(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),

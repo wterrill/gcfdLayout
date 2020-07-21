@@ -22,7 +22,7 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
   <String, dynamic>{
     'text': 'Person Interviewed:',
-    'type': 'fillIn',
+    'type': 'fillInInterview',
     'databaseVar': 'PersonInterviewed',
     'databaseVarType': 'string'
   },

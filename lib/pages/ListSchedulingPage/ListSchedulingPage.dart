@@ -31,7 +31,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
         Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
     String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
     AuditorList auditorList =
-        Provider.of<ListCalendarData>(context, listen: false).auditorList;
+        Provider.of<ListCalendarData>(context).auditorList;
     return SafeArea(
       child: Scaffold(
         body: Stack(

@@ -20,8 +20,19 @@ class AuditorList extends HiveObject {
   List<String> getAuditorDropDown() {
     List<String> dropdown = ["Select"];
     for (Auditor auditor in auditorList) {
-      dropdown.add(auditor.toString());
+      dropdown.add(auditor.username);
     }
     return dropdown;
+  }
+
+  String getFirstAndLastFromUser(String username) {
+    String name;
+    for (Auditor auditor in auditorList) {
+      if (auditor.username == username) {
+        name = auditor.firstName + " " + auditor.lastName;
+        break;
+      }
+    }
+    return name;
   }
 }

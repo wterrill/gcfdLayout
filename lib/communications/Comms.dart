@@ -241,8 +241,9 @@ class ScheduleAuditComms {
           print(resultMap);
           List<dynamic> auditors = resultMap["Result"] as List<dynamic>;
           List<Auditor> auditorsList = [];
-          for (dynamic auditorDyn in auditors) {
-            Auditor auditor = Auditor(auditorName: auditorDyn as String);
+          for (int i = 0; i < auditors.length; i++) {
+            Auditor auditor =
+                Auditor(auditorMap: auditors[i] as Map<String, dynamic>);
             auditorsList.add(auditor);
           }
           AuditorList auditorList = AuditorList(auditorList: auditorsList);
