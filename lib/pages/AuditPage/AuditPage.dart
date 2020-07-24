@@ -205,6 +205,9 @@ class _AuditPageState extends State<AuditPage> {
                               child: Text("Submit Audit",
                                   style: ColorDefs.textBodyBlack20),
                               onPressed: (() async {
+                                // Save Date time
+                                activeAudit.calendarResult.endDateTime =
+                                    DateTime.now();
                                 // this is done to prevent "Verification" from showing as selected when opening again.
                                 for (var i = activeAudit.sections.length - 1;
                                     i > -1;

@@ -36,6 +36,8 @@ class CalendarResult extends HiveObject {
   String deviceid;
   @HiveField(13)
   Map<String, dynamic> citationsToFollowUp;
+  @HiveField(14)
+  DateTime endDateTime;
 
   // String date;
 

@@ -468,12 +468,23 @@ List<Map<String, dynamic>> audit2Section4Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateAmountOfFoodComments'
   },
+  // <String, dynamic>{
+  //   'text': '# of cases of dry food currently in inventory:',
+  //   'type': 'fillInNum',
+  //   'databaseVar': 'NumCasesOfDryFood',
+  //   'databaseVarType': 'int',
+  // },
+
   <String, dynamic>{
-    'text': '# of cases of dry food currently in inventory:',
-    'type': 'fillInNum',
+    'text': "# of cases of dry food currently in inventory:",
+    'type': 'dropDown',
+    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
+    'happyPathResponse': ['1-300', '300-500', '500-1000'],
     'databaseVar': 'NumCasesOfDryFood',
-    'databaseVarType': 'int',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'NumCasesOfDryFoodComments'
   },
+
   <String, dynamic>{
     'text': '# of cases of meat currently in inventory: ',
     'type': 'fillInNum',
@@ -641,95 +652,399 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'FrozenItemsCorrectTempComments',
     'actionItem': 'Ensure freezer temperature is maintained below zero'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 1 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitOneAndComments',
+  //   'databaseVarType': 'string'
+  // },
+
   <String, dynamic>{
-    'text': 'Cold Storage Unit 1 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitOneAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 1 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitOne',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitOneComments'
   },
+
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 2 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitTwoAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 2 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTwoAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 2 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitTwo',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitTwoComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 3 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitThreeAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 3 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitThreeAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 3 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitThree',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitThreeComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 4 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitFourAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 4 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFourAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 4 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitFour',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitFourComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 5 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitFiveAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 5 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFiveAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 5 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitFive',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitFiveComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 6 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitSixAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 6 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSixAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 6 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitSix',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitSixComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 7 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitSevenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 7 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitSevenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 7 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitSeven',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitSevenComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 8 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitEightAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 8 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitEightAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 8 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitEight',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitEightComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 9 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitNineAndComments',
+  //   'databaseVarType': 'string'
+  // },
+
   <String, dynamic>{
-    'text': 'Cold Storage Unit 9 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitNineAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 9 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitNine',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitNineComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 10 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitTenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 10 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 10 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitTen',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitTenComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 11 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitElevenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 11 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitElevenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 11 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitEleven',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitElevenComments'
   },
+
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 12 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitTwelveAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 12 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitTwelveAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 12 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitTwelve',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitTwelveComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 13 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitThirteenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 13 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitThirteenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 13 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitThirteen',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitThirteenComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 14 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitFourteenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 14 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFourteenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 14 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitFourteen',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitFourteenComments'
   },
+  // <String, dynamic>{
+  //   'text': 'Cold Storage Unit 15 ºF',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'ColdStorageUnitFifteenAndComments',
+  //   'databaseVarType': 'string'
+  // },
   <String, dynamic>{
-    'text': 'Cold Storage Unit 15 ºF',
-    'type': 'fillIn',
-    'databaseVar': 'ColdStorageUnitFifteenAndComments',
-    'databaseVarType': 'string'
+    'text': "Cold Storage Unit 15 ºF",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
+    'databaseVar': 'ColdStorageUnitFifteen',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'ColdStorageUnitFifteenComments'
   },
   <String, dynamic>{
     'text': 'Walk in:',
@@ -757,11 +1072,31 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TypeOne',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': 'Temperature for Cooler/Freezer ',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'TempOne',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
-    'text': 'Temperature for Cooler/Freezer ',
-    'type': 'fillIn',
+    'text': "Walk in #1 Cooler/Freezer ",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
     'databaseVar': 'TempOne',
     'databaseVarType': 'string',
+    'databaseOptCom': 'TempOneComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -781,11 +1116,31 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TypeTwo',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': 'Temperature for Cooler/Freezer ',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'TempTwo',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
-    'text': 'Temperature for Cooler/Freezer ',
-    'type': 'fillIn',
+    'text': "Walk in #2 Cooler/Freezer ",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
     'databaseVar': 'TempTwo',
     'databaseVarType': 'string',
+    'databaseOptCom': 'TempTwoComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -805,11 +1160,31 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TypeThree',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': 'Temperature for Cooler/Freezer ',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'TempThree',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
-    'text': 'Temperature for Cooler/Freezer ',
-    'type': 'fillIn',
+    'text': "Walk in #3 Cooler/Freezer ",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
     'databaseVar': 'TempThree',
     'databaseVarType': 'string',
+    'databaseOptCom': 'TempThreeComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -829,11 +1204,31 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TypeFour',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': 'Temperature for Cooler/Freezer ',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'TempFour',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
-    'text': 'Temperature for Cooler/Freezer ',
-    'type': 'fillIn',
+    'text': "Walk in #4 Cooler/Freezer ",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
     'databaseVar': 'TempFour',
     'databaseVarType': 'string',
+    'databaseOptCom': 'TempFourComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -853,11 +1248,31 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TypeFive',
     'databaseVarType': 'string',
   },
+  // <String, dynamic>{
+  //   'text': 'Temperature for Cooler/Freezer ',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'TempFive',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
-    'text': 'Temperature for Cooler/Freezer ',
-    'type': 'fillIn',
+    'text': "Walk in #5 Cooler/Freezer ",
+    'type': 'dropDown',
+    'menuItems': [
+      'Select',
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'Over 41 (Danger zone)',
+      "Temperature Unacceptable",
+      "NA"
+    ],
+    'happyPathResponse': [
+      'Under 0 (acceptable for freezer)',
+      '0 – 41 (acceptable for cooler)',
+      'NA'
+    ],
     'databaseVar': 'TempFive',
     'databaseVarType': 'string',
+    'databaseOptCom': 'TempFiveComments'
   },
   <String, dynamic>{
     'text': '*Units should not be shared with other programs ',
@@ -1184,7 +1599,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
   },
   <String, dynamic>{
     'text':
-        'Was the site able to provide a pest control log/exterminator’s report? (please provide the name of the company and date last serviced',
+        'Was the site able to provide a pest control log/exterminator’s report?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'PestControlReport',
@@ -1192,6 +1607,19 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseOptCom': 'PestControlReportComments',
     'actionItem':
         'Submit a copy of current/most recent Pest Control Log/Exterminator’s Report'
+  },
+  <String, dynamic>{
+    'text': 'Name of Pest Control Company:',
+    'type': 'fillIn',
+    'databaseVar': 'PestControlCompany',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Last Pest Control Service Date:',
+    'type': 'date',
+    'databaseVar': 'PestControlServiceDate',
+    'databaseVarType': 'date',
+    'databaseOptCom': 'PestControlServiceDateComments'
   },
   <String, dynamic>{
     'text': 'Current fire extinguisher',
@@ -1244,12 +1672,6 @@ List<Map<String, dynamic>> audit2Section7Questions = [
         'Please explain issues with access to all pertinent areas of food program action items:'
   },
   <String, dynamic>{
-    'text': 'Pest Control Company:',
-    'type': 'fillIn',
-    'databaseVar': 'PestControlCompany',
-    'databaseVarType': 'string'
-  },
-  <String, dynamic>{
     'text':
         'Evidence of Rodents/ Insects (Includes fruit and house flies) Please leave specifics in comments:',
     'type': 'yesNo',
@@ -1281,7 +1703,7 @@ List<Map<String, dynamic>> audit2Section8Questions = [
   <String, dynamic>{
     'text':
         'If there have been any discrimination complaints, have they been forwarded to the Food Depository?',
-    'type': 'yesNo',
+    'type': 'yesNoNa',
     'databaseVar': 'DiscriminationComplaintForwardedToGCFD',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscriminationComplaintForwardedToGCFDComments',
@@ -1290,6 +1712,7 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'text':
         'If the pantry has questions or problems, what is the name and phone number of their Food Depository contact person?',
     'type': 'fillIn',
+    'hideNa': 'true',
     'databaseVar': 'PantryHasFoodDepositoryContactInfoComments',
     'databaseVarType': 'string',
   },

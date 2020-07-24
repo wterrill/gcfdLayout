@@ -32,13 +32,14 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..displayVariable = fields[11] as String
       ..fromSectionName = fields[12] as String
       ..actionItem = fields[13] as String
-      ..hideFollowUpActionItem = fields[14] as bool;
+      ..hideFollowUpActionItem = fields[14] as bool
+      ..hideNa = fields[15] as bool;
   }
 
   @override
   void write(BinaryWriter writer, Question obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
@@ -68,6 +69,8 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..writeByte(13)
       ..write(obj.actionItem)
       ..writeByte(14)
-      ..write(obj.hideFollowUpActionItem);
+      ..write(obj.hideFollowUpActionItem)
+      ..writeByte(15)
+      ..write(obj.hideNa);
   }
 }

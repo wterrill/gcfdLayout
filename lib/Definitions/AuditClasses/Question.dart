@@ -49,6 +49,9 @@ class Question extends HiveObject {
   @HiveField(14)
   bool hideFollowUpActionItem = false;
 
+  @HiveField(15)
+  bool hideNa = false;
+
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;
@@ -62,5 +65,8 @@ class Question extends HiveObject {
     }
     happyPathResponse = questionMap['happyPathResponse'] as List<String>;
     actionItem = questionMap['actionItem'] as String;
+    if (questionMap['hideNa'] == 'true') {
+      hideNa = true;
+    }
   }
 }
