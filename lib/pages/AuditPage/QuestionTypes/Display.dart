@@ -1,9 +1,11 @@
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
+import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
 
 class Display extends StatefulWidget {
@@ -71,7 +73,10 @@ class _DisplayState extends State<Display> {
           widget = Text(string ?? "", style: ColorDefs.textBodyBlack20);
           break;
         case ("GCFD Monitor:"):
-          widget = Text(activeCalendarResult.auditor,
+          widget = Text(
+              Provider.of<ListCalendarData>(context, listen: false)
+                  .auditorList
+                  .getFirstAndLastFromUser(activeCalendarResult.auditor),
               style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Contact:"):

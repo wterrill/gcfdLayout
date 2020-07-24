@@ -493,6 +493,11 @@ class AuditData with ChangeNotifier {
     }
   }
 
+  void removePicAtIndex(int index) {
+    activeAudit.photoList.removeAt(index);
+    notifyListeners();
+  }
+
   void getAuditsFromCloud(
       {BuildContext context,
       SiteList siteList,

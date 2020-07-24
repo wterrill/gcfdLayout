@@ -4,10 +4,12 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
 import 'package:auditor/pages/ListSchedulingPage/RescheduleFollowUpAuditDialog.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
+import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
 import 'dart:typed_data';
 
 import 'colorDefs.dart';
@@ -423,6 +425,37 @@ class Dialogs {
               context,
               MaterialPageRoute<dynamic>(builder: (context) => DeveloperMenu()),
             );
+          },
+        )
+      ],
+    );
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void showDeletePic(BuildContext context, int index) {
+    AlertDialog alert = AlertDialog(
+      title: Text('Delete Pic?'),
+      content:
+          const Text('Would you like to delete this picture from the audit?'),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CANCEL'),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        ),
+        FlatButton(
+          child: const Text('YES'),
+          onPressed: () {
+            Provider.of<AuditData>(context, listen: false)
+                .removePicAtIndex(index);
+            Navigator.of(context, rootNavigator: true).pop();
           },
         )
       ],

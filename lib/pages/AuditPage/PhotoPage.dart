@@ -73,6 +73,9 @@ class _PhotoPageState extends State<PhotoPage> {
                                       .asUint8List(),
                                   dismissable: true);
                             },
+                            onLongPress: () {
+                              Dialogs.showDeletePic(context, index);
+                            },
                             child: Image.memory(widget
                                 .activeAudit.photoList[index].buffer
                                 .asUint8List()),
