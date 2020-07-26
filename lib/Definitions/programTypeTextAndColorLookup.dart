@@ -10,6 +10,13 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
       };
       break;
 
+    case ("Pantry Audit"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit3,
+        'text': ColorDefs.textBodyWhite20
+      };
+      break;
+
     case ("Senior Adults Program"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit2,
@@ -25,6 +32,12 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
       break;
 
     case ("Congregate"):
+      endColorText = <String, dynamic>{
+        'color': ColorDefs.colorAudit4,
+        'text': ColorDefs.textBodyWhite20
+      };
+      break;
+    case ("Congregate Audit"):
       endColorText = <String, dynamic>{
         'color': ColorDefs.colorAudit4,
         'text': ColorDefs.textBodyWhite20

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/Utilities/SyncCode.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -18,6 +19,14 @@ class ListSchedulingPage extends StatefulWidget {
 class _ListSchedulingPageState extends State<ListSchedulingPage> {
   bool backgroundDisable = false;
   final filterTextController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // ,,,,,,
+    totalDataSync(context);
+    print("ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ& STARTUP!!!!");
+  }
 
   void dispose() {
     // Clean up the controller when the widget is disposed.

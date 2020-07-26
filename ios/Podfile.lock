@@ -1,4 +1,6 @@
 PODS:
+  - background_fetch (0.5.6):
+    - Flutter
   - device_id (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -16,6 +18,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - background_fetch (from `.symlinks/plugins/background_fetch/ios`)
   - device_id (from `.symlinks/plugins/device_id/ios`)
   - Flutter (from `Flutter`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
@@ -26,6 +29,8 @@ DEPENDENCIES:
   - plugin_scaffold (from `.symlinks/plugins/plugin_scaffold/ios`)
 
 EXTERNAL SOURCES:
+  background_fetch:
+    :path: ".symlinks/plugins/background_fetch/ios"
   device_id:
     :path: ".symlinks/plugins/device_id/ios"
   Flutter:
@@ -44,6 +49,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/plugin_scaffold/ios"
 
 SPEC CHECKSUMS:
+  background_fetch: 9e1c6c010f2bafe94108358405b7f2a08d6b5ab1
   device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
