@@ -1,0 +1,5 @@
+version: "Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+options: "4710e0445fdb5939f608792e54d16bbe"
+build_time: [1595885706, 835885000]
+inputs:
+  "/Users/williamterrill/git/flutter/activeProjects/gcfdLayout/ios/Runner/AppDelegate.swift": [9223372036, 854775807]

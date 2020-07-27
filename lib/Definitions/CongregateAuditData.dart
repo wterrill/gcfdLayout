@@ -71,6 +71,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'type': 'yesNo',
     'databaseVar': 'FacilityForSpecificPopulations',
     'databaseVarType': 'bool',
+    'databaseOptCom': 'FacilityForSpecificPopulationsComments',
   },
   <String, dynamic>{
     'text': 'If yes, describe the population served:',

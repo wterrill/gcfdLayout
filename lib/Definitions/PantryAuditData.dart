@@ -688,12 +688,12 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfMeatComments'
   },
-  <String, dynamic>{
-    'text': '# of cases of perishable items in inventory: ',
-    'type': 'fillInNum',
-    'databaseVar': 'NumCasesOfPerishableItems',
-    'databaseVarType': 'int',
-  },
+  // <String, dynamic>{
+  //   'text': '# of cases of perishable items in inventory: ',
+  //   'type': 'fillInNum',
+  //   'databaseVar': 'NumCasesOfPerishableItems',
+  //   'databaseVarType': 'int',
+  // },
 
   <String, dynamic>{
     'text': "# of cases of perishable items in inventory:",

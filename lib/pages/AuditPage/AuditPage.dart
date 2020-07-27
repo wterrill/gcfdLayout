@@ -139,7 +139,8 @@ class _AuditPageState extends State<AuditPage> {
                       if (activeSection?.name == "Verification" &&
                               activeAudit.citations.length == 0 ||
                           Provider.of<AuditData>(context)
-                              .goToVerificationGoodPage)
+                                  .goToVerificationGoodPage &&
+                              activeSection?.name == "Verification")
                         VerificationGoodPage(
                           activeAudit: activeAudit,
                         ),

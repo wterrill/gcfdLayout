@@ -366,6 +366,12 @@ class AuditData with ChangeNotifier {
     activeAudit = retrievedAudit;
     activeSection = activeAudit.sections[0];
     activeCalendarResult = calendarResult;
+    certRepresentativeSignature =
+        activeAudit.photoSig['certRepresentativeSignature'];
+    siteRepresentativeSignature =
+        activeAudit.photoSig['siteRepresentativeSignature'];
+    foodDepositoryMonitorSignature =
+        activeAudit.photoSig['foodDepositoryMonitorSignature'];
   }
 
   void createAuditClass(CalendarResult calendarResult) {
