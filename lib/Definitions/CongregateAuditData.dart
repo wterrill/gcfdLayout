@@ -1099,9 +1099,9 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'text': 'Walk in:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler'],
-    'databaseVar': 'WalkInFreezerCooler',
+    'databaseVar': 'WalkInFreezerCoolerOne',
     'databaseVarType': 'string',
-    'databaseOptCom': 'WalkInFreezerCoolerComments'
+    'databaseOptCom': 'WalkInFreezerCoolerOneComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -1148,6 +1148,14 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempOneComments'
   },
   <String, dynamic>{
+    'text': 'Walk in:',
+    'type': 'dropDown',
+    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'databaseVar': 'WalkInFreezerCoolerTwo',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'WalkInFreezerCoolerTwoComments'
+  },
+  <String, dynamic>{
     'text': 'USDA Tag # ',
     'type': 'fillInNum',
     'databaseVar': 'USDATagNumberTwo',
@@ -1190,6 +1198,14 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempTwo',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempTwoComments'
+  },
+  <String, dynamic>{
+    'text': 'Walk in:',
+    'type': 'dropDown',
+    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'databaseVar': 'WalkInFreezerCoolerThree',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'WalkInFreezerCoolerThreeComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
@@ -1236,6 +1252,14 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempThreeComments'
   },
   <String, dynamic>{
+    'text': 'Walk in:',
+    'type': 'dropDown',
+    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'databaseVar': 'WalkInFreezerCoolerFour',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'WalkInFreezerCoolerFourComments'
+  },
+  <String, dynamic>{
     'text': 'USDA Tag # ',
     'type': 'fillInNum',
     'databaseVar': 'USDATagNumberFour',
@@ -1278,6 +1302,14 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempFour',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempFourComments'
+  },
+  <String, dynamic>{
+    'text': 'Walk in:',
+    'type': 'dropDown',
+    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'databaseVar': 'WalkInFreezerCoolerFive',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'WalkInFreezerCoolerFiveComments'
   },
   <String, dynamic>{
     'text': 'USDA Tag # ',
