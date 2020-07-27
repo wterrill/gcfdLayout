@@ -672,17 +672,37 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'databaseOptCom': 'NumCasesOfDryFoodComments'
   },
 
+  // <String, dynamic>{
+  //   'text': '# of cases of meat currently in inventory: ',
+  //   'type': 'fillInNum',
+  //   'databaseVar': 'NumCasesOfMeat',
+  //   'databaseVarType': 'int',
+  // },
+
   <String, dynamic>{
-    'text': '# of cases of meat currently in inventory: ',
-    'type': 'fillInNum',
+    'text': "# of cases of meat currently in inventory:",
+    'type': 'dropDown',
+    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
+    'happyPathResponse': ['1-300', '300-500', '500-1000'],
     'databaseVar': 'NumCasesOfMeat',
-    'databaseVarType': 'int',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'NumCasesOfMeatComments'
   },
   <String, dynamic>{
     'text': '# of cases of perishable items in inventory: ',
     'type': 'fillInNum',
     'databaseVar': 'NumCasesOfPerishableItems',
     'databaseVarType': 'int',
+  },
+
+  <String, dynamic>{
+    'text': "# of cases of perishable items in inventory:",
+    'type': 'dropDown',
+    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
+    'happyPathResponse': ['1-300', '300-500', '500-1000'],
+    'databaseVar': 'NumCasesOfPerishableItems',
+    'databaseVarType': 'string',
+    'databaseOptCom': 'NumCasesOfPerishableItemsComments'
   },
   <String, dynamic>{
     'text':
@@ -872,7 +892,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitOne',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitOneComments'
+    'databaseOptCom': 'ColdStorageUnitOneComments',
+    'actionItem':
+        'For Cold Storage Unit 1: Maintain temperature in the correct range'
   },
 
   // <String, dynamic>{
@@ -899,7 +921,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitTwo',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitTwoComments'
+    'databaseOptCom': 'ColdStorageUnitTwoComments',
+    'actionItem':
+        'For Cold Storage Unit 2: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 3 ºF',
@@ -925,7 +949,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitThree',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitThreeComments'
+    'databaseOptCom': 'ColdStorageUnitThreeComments',
+    'actionItem':
+        'For Cold Storage Unit 3: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 4 ºF',
@@ -951,7 +977,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitFour',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitFourComments'
+    'databaseOptCom': 'ColdStorageUnitFourComments',
+    'actionItem':
+        'For Cold Storage Unit 4: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 5 ºF',
@@ -977,7 +1005,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitFive',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitFiveComments'
+    'databaseOptCom': 'ColdStorageUnitFiveComments',
+    'actionItem':
+        'For Cold Storage Unit 5: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 6 ºF',
@@ -1003,7 +1033,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitSix',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitSixComments'
+    'databaseOptCom': 'ColdStorageUnitSixComments',
+    'actionItem':
+        'For Cold Storage Unit 6: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 7 ºF',
@@ -1029,7 +1061,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitSeven',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitSevenComments'
+    'databaseOptCom': 'ColdStorageUnitSevenComments',
+    'actionItem':
+        'For Cold Storage Unit 7: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 8 ºF',
@@ -1055,7 +1089,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitEight',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitEightComments'
+    'databaseOptCom': 'ColdStorageUnitEightComments',
+    'actionItem':
+        'For Cold Storage Unit 8: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 9 ºF',
@@ -1082,7 +1118,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitNine',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitNineComments'
+    'databaseOptCom': 'ColdStorageUnitNineComments',
+    'actionItem':
+        'For Cold Storage Unit 9: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 10 ºF',
@@ -1108,7 +1146,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitTen',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitTenComments'
+    'databaseOptCom': 'ColdStorageUnitTenComments',
+    'actionItem':
+        'For Cold Storage Unit 10: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 11 ºF',
@@ -1134,7 +1174,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitEleven',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitElevenComments'
+    'databaseOptCom': 'ColdStorageUnitElevenComments',
+    'actionItem':
+        'For Cold Storage Unit 11: Maintain temperature in the correct range'
   },
 
   // <String, dynamic>{
@@ -1161,7 +1203,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitTwelve',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitTwelveComments'
+    'databaseOptCom': 'ColdStorageUnitTwelveComments',
+    'actionItem':
+        'For Cold Storage Unit 12: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 13 ºF',
@@ -1187,7 +1231,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitThirteen',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitThirteenComments'
+    'databaseOptCom': 'ColdStorageUnitThirteenComments',
+    'actionItem':
+        'For Cold Storage Unit 13: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 14 ºF',
@@ -1213,7 +1259,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitFourteen',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitFourteenComments'
+    'databaseOptCom': 'ColdStorageUnitFourteenComments',
+    'actionItem':
+        'For Cold Storage Unit 14: Maintain temperature in the correct range'
   },
   // <String, dynamic>{
   //   'text': 'Cold Storage Unit 15 ºF',
@@ -1239,7 +1287,9 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     ],
     'databaseVar': 'ColdStorageUnitFifteen',
     'databaseVarType': 'string',
-    'databaseOptCom': 'ColdStorageUnitFifteenComments'
+    'databaseOptCom': 'ColdStorageUnitFifteenComments',
+    'actionItem':
+        'For Cold Storage Unit 15: Maintain temperature in the correct range'
   },
   <String, dynamic>{
     'text': 'Walk in:',

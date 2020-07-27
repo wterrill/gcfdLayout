@@ -24,7 +24,7 @@ import 'Definitions/AuditorClasses/AuditorList.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:flutter/services.dart';
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
