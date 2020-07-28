@@ -69,13 +69,18 @@ class AuditData with ChangeNotifier {
         // only the put if the status is higher than what we already have:
         if (convertStatusToNumber(retrievedAudit.calendarResult.status) <=
             convertStatusToNumber(incomingAudit.calendarResult.status)) {
+          DateTime temp =
+              DateTime.parse(incomingAudit.calendarResult.startTime);
+
           auditBox.put(
-              '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+              '${temp.toString()}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
               incomingAudit);
         }
       } else {
+        //this gets rid of the "T"
+        DateTime temp = DateTime.parse(incomingAudit.calendarResult.startTime);
         auditBox.put(
-            '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+            '${temp.toString()}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
             incomingAudit);
       }
     }
@@ -95,8 +100,10 @@ class AuditData with ChangeNotifier {
     Audit retrievedAudit;
     // check to see if it's a reschedule of a followup audit
     if (newCalendarResult.auditType == "Follow Up") {
+      DateTime translate = DateTime.parse(newCalendarResult
+          .citationsToFollowUp['PreviousEvent']['StartTime'] as String);
       retrievedAudit = auditBox.get(
-              '${newCalendarResult.citationsToFollowUp['PreviousEvent']['StartTime']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AgencyName']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['ProgramNumber']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['Auditor']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AuditType']}')
+              '${translate.toString()}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AgencyName']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['ProgramNumber']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['Auditor']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AuditType']}')
           as Audit;
     } else {
       retrievedAudit = auditBox.get(
@@ -129,9 +136,11 @@ class AuditData with ChangeNotifier {
 
   void saveAuditToSend(Audit outgoingAudit) {
     Audit clonedOutgoingAudit = outgoingAudit.clone();
+    //this gets rid of the "T"
+    DateTime temp = DateTime.parse(outgoingAudit.calendarResult.startTime);
 
     auditsToSendBox.put(
-        '${clonedOutgoingAudit.calendarResult.startTime}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
+        '${temp.toString()}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
         clonedOutgoingAudit);
   }
 

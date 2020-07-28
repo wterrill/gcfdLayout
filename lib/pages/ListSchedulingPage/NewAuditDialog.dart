@@ -55,8 +55,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
       this.selectedAgencyNum = widget.calendarResult.agencyNum;
-
-      alreadyExisted = true;
+      if (widget.calendarResult.status != "Site Visit Req.") {
+        alreadyExisted = true;
+      }
     }
 
     auditorDropDownMenu = Provider.of<ListCalendarData>(context, listen: false)

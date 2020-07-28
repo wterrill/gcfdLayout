@@ -30,6 +30,8 @@
 .pub/
 /build/
 /websiteTesting/
+/wterrill.github.io/
+/ios/
 
 # Web related
 lib/generated_plugin_registrant.dart

@@ -519,8 +519,9 @@ class Dialogs {
 
   static void showRescheduleAudit(BuildContext context,
       {CalendarResult calendarResult, bool followup}) {
-    bool rescheduleFollowUp =
-        (followup == true && calendarResult.auditType == "Follow Up");
+    bool rescheduleFollowUp = (followup == true &&
+        calendarResult.auditType == "Follow Up" &&
+        calendarResult.status == "Scheduled");
     showGeneralDialog<void>(
         barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {

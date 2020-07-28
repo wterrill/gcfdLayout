@@ -184,6 +184,9 @@ class _AuditPageState extends State<AuditPage> {
                                   }
                                   if (activeAudit.calendarResult.auditType ==
                                       "Follow Up") {
+                                    Provider.of<AuditData>(context,
+                                            listen: false)
+                                        .makeCitations();
                                     Section goToSection;
                                     for (Section section
                                         in activeAudit.sections) {

@@ -262,16 +262,20 @@ class ListCalendarData with ChangeNotifier {
     if (retrievedCalendarItem != null) {
       if (convertStatusToNumber(retrievedCalendarItem.status) <=
           convertStatusToNumber(calendarItem.status)) {
+        //this gets rid of the "T"
+        DateTime temp = DateTime.parse(calendarItem.startTime);
         calendarBox.put(
-            '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
+            '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
             calendarItem);
         // print(calendarBox.keys);
         newEventAdded = true;
         notifyListeners();
       }
     } else {
+      //temp gets rid of the "T"
+      DateTime temp = DateTime.parse(calendarItem.startTime);
       calendarBox.put(
-          '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
+          '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
           calendarItem);
       // print(calendarBox.keys);
       newEventAdded = true;
@@ -281,8 +285,10 @@ class ListCalendarData with ChangeNotifier {
 
   void addCalendarEditItem(CalendarResult calendarItem) {
     CalendarResult calendarResult = calendarItem.clone();
+    //temp gets rid of the "T"
+    DateTime temp = DateTime.parse(calendarItem.startTime);
     calendarEditOutBox.put(
-        '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
+        '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
         calendarResult);
   }
 
@@ -298,12 +304,14 @@ class ListCalendarData with ChangeNotifier {
 ////////////////// Calendar Operations
 
   void deleteCalendarItem(CalendarResult calendarResult) {
+    //temp gets rid of the "T"
+    DateTime temp = DateTime.parse(calendarResult.startTime);
     calendarBox.delete(
-        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
     calendarOutBox.delete(
-        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
     calendarDeleteBox.put(
-        '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
+        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
         calendarResult);
     newEventAdded = true;
     notifyListeners();
@@ -326,15 +334,23 @@ class ListCalendarData with ChangeNotifier {
       if (retrievedSchedule.status != "Completed") {
         retrievedSchedule.status = "Completed";
         addCalendarEditItem(retrievedSchedule);
+
+        //temp gets rid of the "T"
+        DateTime temp = DateTime.parse(calendarResult.startTime);
+
         calendarBox.put(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
+            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
             retrievedSchedule);
         notifyListeners();
       }
       try {
         retrievedScheduleToSend.status = "Completed";
+
+        //temp gets rid of the "T"
+        DateTime temp = DateTime.parse(calendarResult.startTime);
+
         calendarOutBox.put(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
+            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
             retrievedScheduleToSend);
       } catch (err) {
         print("audit not waiting to be sent");
@@ -374,11 +390,14 @@ class ListCalendarData with ChangeNotifier {
             '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}')
         as CalendarResult;
     if (retrievedEvent == null) {
+      //temp gets rid of the "T"
+      DateTime temp = DateTime.parse(newEvent.startTime);
+
       calendarBox.put(
-          '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}',
+          '${temp.toString()}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}',
           newEvent);
       calendarOutBox.put(
-          '${anotherEvent.startTime}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}-${anotherEvent.auditType}',
+          '${temp.toString()}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}-${anotherEvent.auditType}',
           anotherEvent);
       newEventAdded = true;
       if (notify) notifyListeners();
