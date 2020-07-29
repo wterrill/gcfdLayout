@@ -482,6 +482,21 @@ class AuditData with ChangeNotifier {
 
   // // // // // // // // // // //
 
+  void forceAuditDataUpload({String deviceid}) {
+    List<dynamic> dynKeys = auditBox.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      Audit preResult = auditBox.get(toBeSentKeys[i]) as Audit;
+      Audit anotherEvent = preResult.clone();
+
+      DateTime temp = DateTime.parse(anotherEvent.calendarResult.startTime);
+      auditOutBox.put(
+          '${temp.toString()}-${anotherEvent.calendarResult.agencyName}-${anotherEvent.calendarResult.programNum}-${anotherEvent.calendarResult.auditor}-${anotherEvent.calendarResult.auditType}',
+          anotherEvent);
+    }
+    sendAuditsToCloud(deviceid);
+  }
+
   void sendAuditsToCloud(String deviceid) async {
     List<dynamic> dynKeys = auditsToSendBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);

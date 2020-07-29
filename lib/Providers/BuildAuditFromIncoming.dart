@@ -195,13 +195,16 @@ Future<dynamic> buildAuditFromIncoming(
                   print(question.text);
                   print('dropDown');
                   print(incomingAudit[databaseVar]);
-                  try {
-                    question.userResponse =
-                        incomingAudit[databaseVar] as String;
-                  } catch (err) {
-                    //TODO get rid of try / catches in this file
-                    question.userResponse = question
-                        .dropDownMenu[incomingAudit[databaseVar] as int];
+                  if (incomingAudit[databaseVar] != null) {
+                    try {
+                      question.userResponse =
+                          incomingAudit[databaseVar] as String;
+                    } catch (err) {
+                      question.userResponse = question
+                          .dropDownMenu[incomingAudit[databaseVar] as int];
+                    }
+                  } else {
+                    question.userResponse = 'Select';
                   }
                   question.optionalComment =
                       incomingAudit[databaseVar + "Comments"] as String;
@@ -258,9 +261,8 @@ Future<dynamic> buildAuditFromIncoming(
             .convert(incomingAudit['CertRepresentativeSignature'] as String);
       if (incomingAudit['FoodDepositoryMonitorSignature'] != "" &&
           incomingAudit['FoodDepositoryMonitorSignature'] != null)
-        newAudit.photoSig['foodDepositoryMonitorSignatureCitation'] =
-            Base64Decoder().convert(
-                incomingAudit['FoodDepositoryMonitorSignature'] as String);
+        newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
+            .convert(incomingAudit['FoodDepositoryMonitorSignature'] as String);
       if (incomingAudit['SiteRepresentativeSignature'] != "" &&
           incomingAudit['SiteRepresentativeSignature'] != null)
         newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
@@ -294,10 +296,9 @@ Future<dynamic> buildAuditFromIncoming(
       print("no pics");
     }
 
-    // if (incomingAudit != null) {
-    newAudits.add(newAudit);
-    // }
-
+    if (newAudit != null) {
+      newAudits.add(newAudit);
+    }
   }
 
   return newAudits;

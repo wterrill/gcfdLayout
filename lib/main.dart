@@ -187,13 +187,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     bool startSync = false;
     if (state == AppLifecycleState.resumed) {
       print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  RESUMED!!!!");
-      await totalDataSync(context);
+      if (!kIsWeb) {
+        await totalDataSync(context);
+      }
+
       print("sync done");
     }
 
     if (state == AppLifecycleState.paused) {
       print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  PAUSED!!!!");
-      await totalDataSync(context);
+      // await totalDataSync(context);
     }
   }
 

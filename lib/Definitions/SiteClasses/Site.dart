@@ -30,21 +30,25 @@ class Site extends HiveObject {
   final String operateHours; // "",
   @HiveField(12)
   final String serviceArea; // null
+  // @HiveField(13)
+  // final String contactEmail;
 
-  Site(
-      {this.programNumber,
-      this.programName,
-      this.programDisplayName,
-      this.agencyNumber,
-      this.agencyName,
-      this.address1,
-      this.address2,
-      this.city,
-      this.state,
-      this.zip,
-      this.contact,
-      this.operateHours,
-      this.serviceArea}) {}
+  Site({
+    this.programNumber,
+    this.programName,
+    this.programDisplayName,
+    this.agencyNumber,
+    this.agencyName,
+    this.address1,
+    this.address2,
+    this.city,
+    this.state,
+    this.zip,
+    this.contact,
+    this.operateHours,
+    this.serviceArea,
+    // this.contactEmail
+  }) {}
 
   factory Site.fromJson(Map<String, dynamic> json) {
     return Site(
@@ -61,6 +65,7 @@ class Site extends HiveObject {
       contact: json['Contact'] as String,
       operateHours: json['OperateHours'] as String,
       serviceArea: json['ServiceArea'] as String,
+      // contactEmail: json['ContactEmail'] as String
     );
   }
 }

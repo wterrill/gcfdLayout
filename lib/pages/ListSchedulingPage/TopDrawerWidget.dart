@@ -108,12 +108,14 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       String deviceid =
                           Provider.of<GeneralData>(context, listen: false)
                               .deviceid;
+                      print("before siteSync");
                       await Provider.of<SiteData>(context, listen: false)
                           .siteSync();
-
+                      print("After siteSync");
                       SiteList siteList =
                           Provider.of<SiteData>(context, listen: false)
                               .siteList;
+                      print("after siteList load");
                       Navigator.of(context).pop();
 
                       /// Schedule data ///
@@ -247,7 +249,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                         children: <Widget>[
                           Icon(Icons.sync, color: ColorDefs.colorAudit2),
                           Center(
-                              child: Text("Full Sync",
+                              child: Text("Full Download",
                                   style: ColorDefs.textBodyBlue20)),
                           Container(
                             height: 20,
@@ -261,6 +263,84 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       ),
                     ),
                   ),
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(
+                          child: Text("", style: ColorDefs.textBodyBlue20))),
+                  // GestureDetector(
+                  //   onTap: () async {
+                  //     // Sync all data
+                  //     setState(() {
+                  //       startSync = true;
+                  //     });
+                  //     //// Site Data /////
+                  //     // Dialogs.showMessage(
+                  //     //     context: context,
+                  //     //     message: "Uploading Scheduled Data:",
+                  //     //     dismissable: false);
+                  //     String deviceid =
+                  //         Provider.of<GeneralData>(context, listen: false)
+                  //             .deviceid;
+
+                  //     // SiteList siteList =
+                  //     //     Provider.of<SiteData>(context, listen: false)
+                  //     //         .siteList;
+                  //     // Navigator.of(context).pop();
+
+                  //     /// Schedule data ///
+                  //     Dialogs.showMessage(
+                  //         context: context,
+                  //         message: "Force Uploading Scheduled Data:",
+                  //         dismissable: false);
+                  //     await Provider.of<ListCalendarData>(context,
+                  //             listen: false)
+                  //         .forceScheduleDataUpload(
+                  //       deviceid: deviceid,
+                  //     );
+                  //     Navigator.of(context).pop();
+
+                  //     /// Audit Data ///
+                  //     // Navigator.of(context).pop();
+                  //     Dialogs.showMessage(
+                  //         context: context,
+                  //         message: "Force Uploading Audit Data:",
+                  //         dismissable: false);
+
+                  //     await Provider.of<AuditData>(context, listen: false)
+                  //         .forceAuditDataUpload(
+                  //       deviceid: deviceid,
+                  //     );
+                  //     Navigator.of(context).pop();
+
+                  //     /// Done with sync
+                  //     setState(() {
+                  //       startSync = false;
+                  //     });
+                  //   },
+                  //   child: Container(
+                  //     height: 35.4,
+                  //     width: double.infinity,
+                  //     color: ColorDefs.colorTopDrawerAlternating,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //       children: <Widget>[
+                  //         Icon(Icons.sync, color: ColorDefs.colorAudit2),
+                  //         Center(
+                  //             child: Text("Full Upload",
+                  //                 style: ColorDefs.textBodyBlue20)),
+                  //         Container(
+                  //           height: 20,
+                  //           width: 20,
+                  //           child: startSync
+                  //               ? CircularProgressIndicator()
+                  //               : Icon(Icons.sync,
+                  //                   color: ColorDefs.colorTopDrawerBackground),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   //),
                 ],
               ),

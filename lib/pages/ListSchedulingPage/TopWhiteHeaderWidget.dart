@@ -17,6 +17,7 @@ class TopWhiteHeaderWidget extends StatelessWidget {
       child: Container(
         // Top header (white)
         height: 50,
+        width: MediaQuery.of(context).size.width,
         color: ColorDefs.colorTopHeader,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,29 +31,36 @@ class TopWhiteHeaderWidget extends StatelessWidget {
                 ),
               ),
             ),
-            RaisedButton(
-              color: Colors.yellow,
-              child: Text("Generate 10 random Appointments",
-                  style: ColorDefs.textBodyBlack10),
-              onPressed: () {
-                Provider.of<ListCalendarData>(context, listen: false)
-                    .generateAppointments(10);
-              },
-            ),
-            RaisedButton(
-              color: Colors.red,
-              child: Text("DELETE ALL", style: ColorDefs.textBodyBlack10),
-              onPressed: () {
-                Provider.of<ListCalendarData>(context, listen: false)
-                    .deleteAllAppointments();
-              },
-            ),
+            // RaisedButton(
+            //   color: Colors.yellow,
+            //   child: Text("Generate 10 random Appointments",
+            //       style: ColorDefs.textBodyBlack10),
+            //   onPressed: () {
+            //     Provider.of<ListCalendarData>(context, listen: false)
+            //         .generateAppointments(10);
+            //   },
+            // ),
+            // RaisedButton(
+            //   color: Colors.red,
+            //   child: Text("DELETE ALL", style: ColorDefs.textBodyBlack10),
+            //   onPressed: () {
+            //     Provider.of<ListCalendarData>(context, listen: false)
+            //         .deleteAllAppointments();
+            //   },
+            // ),
             RaisedButton(
                 color: Colors.blue,
                 child: Text("Version"),
                 onPressed: () {
                   Dialogs.showVersionDialog(context);
                 }),
+            if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
+              CircularProgressIndicator(),
+            if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
+              Text(
+                Provider.of<GeneralData>(context).syncMessage,
+                style: ColorDefs.textBodyBlack10,
+              ),
             RaisedButton(
                 color: Colors.blue,
                 child: Text("Developer"),

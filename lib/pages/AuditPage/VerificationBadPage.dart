@@ -434,8 +434,9 @@ matter to ensure your community does not suffer an interruption of services.  If
                             siteRepresentativeSignature.buffer.asUint8List()))),
             if (siteRepresentativeSignature != null)
               Text("Agency Representative: " +
-                  Provider.of<GeneralData>(context, listen: false)
-                      .personInterviewed),
+                  (Provider.of<GeneralData>(context, listen: false)
+                          .personInterviewed ??
+                      "")),
             if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,

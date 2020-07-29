@@ -30,13 +30,14 @@ class SiteAdapter extends TypeAdapter<Site> {
       contact: fields[10] as String,
       operateHours: fields[11] as String,
       serviceArea: fields[12] as String,
+      // contactEmail: fields[13] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Site obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.programNumber)
       ..writeByte(1)
@@ -63,5 +64,7 @@ class SiteAdapter extends TypeAdapter<Site> {
       ..write(obj.operateHours)
       ..writeByte(12)
       ..write(obj.serviceArea);
+    // ..writeByte(13)
+    // ..write(obj.contactEmail);
   }
 }

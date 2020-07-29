@@ -66,8 +66,12 @@ class SiteData with ChangeNotifier {
     );
 
     siteList = SiteList(siteList: result as List<Site>);
+    print("beflore siteList downloaded length");
     print("Sitelist downloaded length =  ${siteList.siteList.length}");
+    print("after siteList downloaded length before put");
+    print(siteList);
     siteListBox.put('siteList', siteList);
+    print("after siteList put");
     notifyListeners();
   }
 }

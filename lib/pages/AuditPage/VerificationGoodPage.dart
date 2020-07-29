@@ -81,8 +81,9 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                                 .asUint8List()))),
                   ),
             Text("Agency Representative: " +
-                Provider.of<GeneralData>(context, listen: false)
-                    .personInterviewed),
+                (Provider.of<GeneralData>(context, listen: false)
+                        .personInterviewed ??
+                    "")),
 
             // : LimitedBox(
             //     maxHeight: 200.0,

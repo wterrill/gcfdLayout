@@ -11,19 +11,18 @@ import 'package:provider/provider.dart';
 
 import 'CommentSection.dart';
 
-class FillInInterview extends StatefulWidget {
+class FillInEmail extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInInterview(
-      {Key key, this.index, this.activeSection, this.questionAutoGroup})
+  FillInEmail({Key key, this.index, this.activeSection, this.questionAutoGroup})
       : super(key: key);
 
   @override
-  _FillInInterviewState createState() => _FillInInterviewState();
+  _FillInEmailState createState() => _FillInEmailState();
 }
 
-class _FillInInterviewState extends State<FillInInterview> {
+class _FillInEmailState extends State<FillInEmail> {
   // @override
   // void initState() {
   //   super.initState();

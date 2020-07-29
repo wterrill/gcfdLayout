@@ -85,13 +85,15 @@ class _AuditPageState extends State<AuditPage> {
         Provider.of<AuditData>(context).siteRepresentativeSignature;
     Uint8List foodDepositoryMonitorSignature =
         Provider.of<AuditData>(context).foodDepositoryMonitorSignature;
-    bool showSubmitButton = (certRepresentativeSignature != null &&
-            activeAudit.citations.length == 0 ||
-        certRepresentativeSignature != null &&
-            siteRepresentativeSignature != null &&
-            foodDepositoryMonitorSignature != null &&
-            Provider.of<AuditData>(context, listen: false)
-                .goToVerificationGoodPage);
+    bool showSubmitButton = ((certRepresentativeSignature != null &&
+                activeAudit.citations.length == 0 ||
+            certRepresentativeSignature != null &&
+                siteRepresentativeSignature != null &&
+                foodDepositoryMonitorSignature != null &&
+                Provider.of<AuditData>(context, listen: false)
+                    .goToVerificationGoodPage) &&
+        !(activeAudit.calendarResult.status == "Completed" ||
+            activeAudit.calendarResult.status == "Site Visit Req."));
 
     return MaterialApp(
       theme: ThemeData(

@@ -19,7 +19,7 @@ class AuditInfoDialog extends StatelessWidget {
         .auditExists(calendarResult);
     return Material(
       child: Container(
-        height: 500,
+        height: 600,
         width: 350,
         child: Column(
           children: [
@@ -122,6 +122,13 @@ class AuditInfoDialog extends StatelessWidget {
                       child: AutoSizeText('${calendarResult.siteInfo.contact}',
                           style: ColorDefs.textBodyBlue20),
                     ),
+                  // if (calendarResult.siteInfo?.contactEmail != null)
+                  //   Container(
+                  //     // color: Colors.grey,
+                  //     child: AutoSizeText(
+                  //         '${calendarResult.siteInfo.contactEmail}',
+                  //         style: ColorDefs.textBodyBlue20),
+                  //   ),
                   if (calendarResult.siteInfo?.operateHours != null)
                     Container(
                         child: RaisedButton(

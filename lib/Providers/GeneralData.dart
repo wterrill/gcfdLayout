@@ -12,6 +12,9 @@ class GeneralData with ChangeNotifier {
   String deviceid;
   bool confirmButtonEnabled = false;
   String personInterviewed;
+  bool syncInProgress = false;
+  String syncMessage = "";
+  // String contactEmail = "";
 
   //SchedulingPage
   bool backgroundDisable;
@@ -49,6 +52,13 @@ class GeneralData with ChangeNotifier {
     notifyListeners();
   }
 
-  // confirmButtonEnabled = false;
+  void toggleSyncInProgress() {
+    syncInProgress = !syncInProgress;
+    notifyListeners();
+  }
 
+  void updateSyncMessage(String message) {
+    syncMessage = message;
+    notifyListeners();
+  }
 }

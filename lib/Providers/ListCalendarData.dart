@@ -87,6 +87,22 @@ class ListCalendarData with ChangeNotifier {
         context: context, siteList: siteList, fullSync: fullSync);
   }
 
+  void forceScheduleDataUpload({String deviceid}) {
+    List<dynamic> dynKeys = calendarBox.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      CalendarResult preResult =
+          calendarBox.get(toBeSentKeys[i]) as CalendarResult;
+      CalendarResult anotherEvent = preResult.clone();
+
+      DateTime temp = DateTime.parse(anotherEvent.startTime);
+      calendarOutBox.put(
+          '${temp.toString()}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}-${anotherEvent.auditType}',
+          anotherEvent);
+    }
+    sendScheduledToCloud(deviceid);
+  }
+
   void sendScheduledToCloud(String deviceid) async {
     List<dynamic> dynKeys = calendarOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
@@ -132,9 +148,12 @@ class ListCalendarData with ChangeNotifier {
   void getScheduledFromCloud(
       {BuildContext context, SiteList siteList, bool fullSync}) async {
     int allNotMe = 0; // "1: Query All   0: Query All But Me"
+    print("### ### ### fullSync getScheduledFromCloud = $fullSync");
     if (calendarBox.keys.toList().length == 0 || fullSync == true) {
       allNotMe = 1;
     }
+
+    print("### ### ### allNotMe getScheduledFromCloud = $allNotMe");
 
     dynamic dynResult =
         await ScheduleAuditComms.getScheduled(allNotMe, deviceidProvider);

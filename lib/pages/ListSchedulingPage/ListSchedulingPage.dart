@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ListSchedulingPage extends StatefulWidget {
   @override
@@ -23,9 +24,17 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   @override
   void initState() {
     super.initState();
-    // ,,,,,,
-    totalDataSync(context);
+    // syncIfYouCan();
+    // WidgetsBinding.instance
+    // .addPostFrameCallback((_) => syncIfYouCan());
+
     print("ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ& STARTUP!!!!");
+  }
+
+  void syncIfYouCan() async {
+    if (!kIsWeb) {
+      await totalDataSync(context);
+    }
   }
 
   void dispose() {

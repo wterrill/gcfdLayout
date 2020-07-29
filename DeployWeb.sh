@@ -21,7 +21,7 @@ echo "Continuing flutter build"
 #############
 ### UAT #####
 #############
-echo "BE SURE TO SET TO :88"
+echo "DEPLOYING ON :88 THE UAT SERVER"
 echo "replacing :90 with :88"
 sed -i '' "s/:90/:88/g" lib/communications/Comms.dart
 echo "building web version"
@@ -43,7 +43,7 @@ flutter build ios --release
 ## Testing ##
 #############
 
-# echo "BE SURE TO SET TO :90"
+# echo "DEPLOYING ON :90 THE TEST SERVER"
 # echo "replacing :88 with :90"
 # sed -i '' "s/:88/:90/g" lib/communications/Comms.dart
 # echo "building web version"
