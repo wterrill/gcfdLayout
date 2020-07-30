@@ -37,7 +37,7 @@ class SiteAdapter extends TypeAdapter<Site> {
   @override
   void write(BinaryWriter writer, Site obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.programNumber)
       ..writeByte(1)
