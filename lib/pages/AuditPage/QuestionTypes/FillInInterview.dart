@@ -93,9 +93,6 @@ class _FillInInterviewState extends State<FillInInterview> {
                     if (!value.contains("@")) {
                       Provider.of<GeneralData>(context, listen: false)
                           .personInterviewed = value;
-                    } else {
-                      // Provider.of<GeneralData>(context, listen: false)
-                      //     .contactEmail = value;
                     }
 
                     if (value.length == 1) {

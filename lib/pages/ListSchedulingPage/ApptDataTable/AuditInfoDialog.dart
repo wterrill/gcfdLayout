@@ -122,13 +122,6 @@ class AuditInfoDialog extends StatelessWidget {
                       child: AutoSizeText('${calendarResult.siteInfo.contact}',
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  // if (calendarResult.siteInfo?.contactEmail != null)
-                  //   Container(
-                  //     // color: Colors.grey,
-                  //     child: AutoSizeText(
-                  //         '${calendarResult.siteInfo.contactEmail}',
-                  //         style: ColorDefs.textBodyBlue20),
-                  //   ),
                   if (calendarResult.siteInfo?.operateHours != null)
                     Container(
                         child: RaisedButton(

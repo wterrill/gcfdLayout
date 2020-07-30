@@ -13,12 +13,6 @@ List<Map<String, dynamic>> confirmDetails = [
     'databaseVar': 'PersonInterviewed',
     'databaseVarType': 'string'
   },
-  // <String, dynamic>{
-  //   'text': 'Email Contact:',
-  //   'type': 'fillInEmail',
-  //   'databaseVar': 'ContactEmail',
-  //   'databaseVarType': 'string'
-  // },
   <String, dynamic>{'text': 'Program Operating Hours:', 'type': 'display'},
 ];
 

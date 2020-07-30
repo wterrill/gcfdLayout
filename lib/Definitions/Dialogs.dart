@@ -217,8 +217,6 @@ class Dialogs {
                   if (siteList[index].zip != null) Text(siteList[index].zip),
                   if (siteList[index].contact != null)
                     Text(siteList[index].contact),
-                  // if (siteList[index].contactEmail != null)
-                  //   Text(siteList[index].contactEmail),
                   if (siteList[index].operateHours != null)
                     Text(siteList[index].operateHours),
                   if (siteList[index].programName != null)

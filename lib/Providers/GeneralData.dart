@@ -14,7 +14,6 @@ class GeneralData with ChangeNotifier {
   String personInterviewed;
   bool syncInProgress = false;
   String syncMessage = "";
-  // String contactEmail = "";
 
   //SchedulingPage
   bool backgroundDisable;

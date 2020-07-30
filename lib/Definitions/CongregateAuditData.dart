@@ -26,21 +26,9 @@ List<Map<String, dynamic>> confirmDetails = [
     'databaseVar': 'PersonInterviewed',
     'databaseVarType': 'string'
   },
-  // <String, dynamic>{
-  //   'text': 'Email Contact:',
-  //   'type': 'fillInEmail',
-  //   'databaseVar': 'ContactEmail',
-  //   'databaseVarType': 'string'
-  // },
   <String, dynamic>{'text': 'Program Operating Hours:', 'type': 'display'},
   <String, dynamic>{'text': 'Service Area:', 'type': 'display'},
 ];
-
-// Map<String, dynamic> audit2Section1 = <String, dynamic>{
-//   'name': 'Pantry Policy/Procedure Checklist',
-//   'questions': audit2Section1Questions,
-//   'sectionName': 'Intro',
-// };
 
 List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
