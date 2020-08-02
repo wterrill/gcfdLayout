@@ -30,38 +30,40 @@ class Site extends HiveObject {
   final String operateHours; // "",
   @HiveField(12)
   final String serviceArea; // null
+  @HiveField(13)
+  final String contactEmail;
 
-  Site({
-    this.programNumber,
-    this.programName,
-    this.programDisplayName,
-    this.agencyNumber,
-    this.agencyName,
-    this.address1,
-    this.address2,
-    this.city,
-    this.state,
-    this.zip,
-    this.contact,
-    this.operateHours,
-    this.serviceArea,
-  }) {}
+  Site(
+      {this.programNumber,
+      this.programName,
+      this.programDisplayName,
+      this.agencyNumber,
+      this.agencyName,
+      this.address1,
+      this.address2,
+      this.city,
+      this.state,
+      this.zip,
+      this.contact,
+      this.operateHours,
+      this.serviceArea,
+      this.contactEmail}) {}
 
   factory Site.fromJson(Map<String, dynamic> json) {
     return Site(
-      programNumber: json['ProgramNumber'] as String,
-      programName: json['ProgramName'] as String,
-      programDisplayName: json['ProgramDisplayName'] as String,
-      agencyNumber: json['AgencyNumber'] as String,
-      agencyName: json['AgencyName'] as String,
-      address1: json['Address1'] as String,
-      address2: json['Address2'] as String,
-      city: json['City'] as String,
-      state: json['State'] as String,
-      zip: json['Zip'] as String,
-      contact: json['Contact'] as String,
-      operateHours: json['OperateHours'] as String,
-      serviceArea: json['ServiceArea'] as String,
-    );
+        programNumber: json['ProgramNumber'] as String,
+        programName: json['ProgramName'] as String,
+        programDisplayName: json['ProgramDisplayName'] as String,
+        agencyNumber: json['AgencyNumber'] as String,
+        agencyName: json['AgencyName'] as String,
+        address1: json['Address1'] as String,
+        address2: json['Address2'] as String,
+        city: json['City'] as String,
+        state: json['State'] as String,
+        zip: json['Zip'] as String,
+        contact: json['Contact'] as String,
+        operateHours: json['OperateHours'] as String,
+        serviceArea: json['ServiceArea'] as String,
+        contactEmail: json['ContactEmail'] as String);
   }
 }

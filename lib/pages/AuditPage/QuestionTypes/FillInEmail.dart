@@ -85,13 +85,16 @@ class _FillInEmailState extends State<FillInEmail> {
                       hintText: (widget.activeSection.questions[index].text ==
                               "Person Interviewed:")
                           ? "Enter Person Interviewed for this Audit "
-                          : "Enter Site Contact Email"),
+                          : "Enter Site Contact Email(s) separated by ';'"),
                   controller: controller,
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
                     if (!value.contains("@")) {
                       Provider.of<GeneralData>(context, listen: false)
                           .personInterviewed = value;
+                    } else {
+                      Provider.of<GeneralData>(context, listen: false)
+                          .contactEmail = value;
                     }
 
                     if (value.length == 1) {
