@@ -59,3 +59,4 @@ git push
 cd ..
 echo "new version pushed to github."
 flutter build ios --release
+
