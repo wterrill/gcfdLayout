@@ -100,8 +100,8 @@ Map<String, dynamic> buildAuditToSend(
       outgoingAudit.sections[0].questions[7].userResponse;
   resultMap['PersonInterviewed'] =
       outgoingAudit.sections[0].questions[8].userResponse;
-  // resultMap['ContactEmail'] =
-  //     outgoingAudit.sections[0].questions[9].userResponse;
+  resultMap['ContactEmail'] =
+      outgoingAudit.sections[0].questions[9].userResponse;
   try {
     resultMap['ServiceArea'] =
         outgoingAudit.sections[0].questions[10].userResponse;

@@ -94,8 +94,8 @@ class _FillInInterviewState extends State<FillInInterview> {
                       Provider.of<GeneralData>(context, listen: false)
                           .personInterviewed = value;
                     } else {
-                      // Provider.of<GeneralData>(context, listen: false)
-                      //     .contactEmail = value;
+                      Provider.of<GeneralData>(context, listen: false)
+                          .contactEmail = value;
                     }
 
                     if (value.length == 1) {
