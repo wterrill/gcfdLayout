@@ -56,8 +56,8 @@ class ColorDefs {
       TextStyle(color: Colors.black, fontSize: 20.0);
   static TextStyle textBodyBlack30 =
       TextStyle(color: Colors.black, fontSize: 30.0);
-  static TextStyle textBodyBlack30Poppins =
-      TextStyle(color: Colors.black, fontSize: 30.0, fontFamily: 'Poppins');
+  static TextStyle textBodyBlack30Poppins = TextStyle(
+      color: Colors.black, fontSize: 30.0, fontFamily: 'Roboto'); //Poppins
 
   static TextStyle textBodyGrey20 =
       TextStyle(color: Colors.grey, fontSize: 20.0);

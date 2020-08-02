@@ -216,7 +216,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
         fontFamily:
-            'Arial', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
+            'Roboto', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
         textTheme: TextTheme(),
       ),
       home: SafeArea(

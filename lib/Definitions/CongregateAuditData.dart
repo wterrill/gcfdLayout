@@ -1734,7 +1734,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'VentilationIssuesComments',
     'actionItem':
-        'Please explain ventilatin issues and action items in comments'
+        'Please explain ventilation issues and action items in comments'
   },
   <String, dynamic>{
     'text':

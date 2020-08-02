@@ -100,7 +100,7 @@ class _AuditPageState extends State<AuditPage> {
         brightness: Brightness.light,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
-        fontFamily: 'Georgia',
+        fontFamily: 'Roboto', //Georgia
         textTheme: TextTheme(),
       ),
       home: Scaffold(
