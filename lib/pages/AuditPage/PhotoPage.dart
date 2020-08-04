@@ -33,14 +33,16 @@ class _PhotoPageState extends State<PhotoPage> {
                 color: ColorDefs.colorAudit1,
                 onPressed: () async {
                   final picker = ImagePicker();
-                  PickedFile fromPicker =
-                      await picker.getImage(source: ImageSource.gallery);
-                  pickedImage = await fromPicker.readAsBytes();
-                  widget.activeAudit.photoList.add(pickedImage);
-                  setState(() {});
-                  print(widget.activeAudit.photoList.length);
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveActiveAudit();
+                  try {
+                    PickedFile fromPicker =
+                        await picker.getImage(source: ImageSource.gallery);
+                    pickedImage = await fromPicker.readAsBytes();
+                    widget.activeAudit.photoList.add(pickedImage);
+                    setState(() {});
+                    print(widget.activeAudit.photoList.length);
+                    Provider.of<AuditData>(context, listen: false)
+                        .saveActiveAudit();
+                  } catch (err) {}
                 },
                 child: Text("Add picture", style: ColorDefs.textBodyWhite20),
               ),

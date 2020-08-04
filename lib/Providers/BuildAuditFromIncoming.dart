@@ -222,7 +222,7 @@ Future<dynamic> buildAuditFromIncoming(
                       question.userResponse = "No";
                     }
                     if (incomingAudit[databaseVar] as int == -1) {
-                      question.userResponse = "NA";
+                      question.userResponse = 'NA';
                     }
 
                     (question.userResponse =

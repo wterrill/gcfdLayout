@@ -133,7 +133,7 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                       dismissable: true);
                 } else {
                   String result = setQuestionValue(
-                      widget.citations[index].userResponse as String, "NA");
+                      widget.citations[index].userResponse as String, 'NA');
                   widget.citations[index].userResponse = result;
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
@@ -149,7 +149,7 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
-                  color: buttonColorPicker(widget.citations[index], "NA"),
+                  color: buttonColorPicker(widget.citations[index], 'NA'),
                   borderRadius: BorderRadius.circular(20.0),
                   // border:
                   //     Border.all(width: 2.0, color: Colors.grey)

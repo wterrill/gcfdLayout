@@ -92,7 +92,7 @@ class AuditInfoDialog extends StatelessWidget {
             ),
             // Address block and map pic.
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,13 +122,13 @@ class AuditInfoDialog extends StatelessWidget {
                       child: AutoSizeText('${calendarResult.siteInfo.contact}',
                           style: ColorDefs.textBodyBlue20),
                     ),
-                  if (calendarResult.siteInfo?.contactEmail != null)
-                    Container(
-                      // color: Colors.grey,
-                      child: AutoSizeText(
-                          '${calendarResult.siteInfo.contactEmail}',
-                          style: ColorDefs.textBodyBlue20),
-                    ),
+                  // if (calendarResult.siteInfo?.contactEmail != null)
+                  //   Container(
+                  //     // color: Colors.grey,
+                  //     child: AutoSizeText(
+                  //         '${calendarResult.siteInfo.contactEmail}',
+                  //         style: ColorDefs.textBodyBlue20),
+                  //   ),
                   if (calendarResult.siteInfo?.operateHours != null)
                     Container(
                         child: RaisedButton(

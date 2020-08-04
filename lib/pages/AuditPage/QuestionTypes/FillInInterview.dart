@@ -90,19 +90,38 @@ class _FillInInterviewState extends State<FillInInterview> {
                   controller: controller,
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
-                    if (!value.contains("@")) {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .personInterviewed = value;
-                    } else {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .contactEmail = value;
-                    }
 
-                    if (value.length == 1) {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .enableConfirmButton();
+                    Provider.of<GeneralData>(context, listen: false)
+                        .personInterviewed = value;
+
+                    if (value.length > 0 &&
+                        Provider.of<GeneralData>(context, listen: false)
+                            .emailValidated) {
+                      if (Provider.of<GeneralData>(context, listen: false)
+                              .confirmButtonEnabled ==
+                          false) {
+                        if (Provider.of<AuditData>(context, listen: false)
+                                    .contactEmail !=
+                                null &&
+                            Provider.of<AuditData>(context, listen: false)
+                                    .contactEmail !=
+                                "") {
+                          if (Provider.of<AuditData>(context, listen: false)
+                                  .activeAudit
+                                  .calendarResult
+                                  .status ==
+                              "Scheduled")
+                            Provider.of<GeneralData>(context, listen: false)
+                                .enableConfirmButton();
+                        }
+                      }
                     }
-                    if (value.length == 0) {
+                    if (value.length == 0 ||
+                        Provider.of<AuditData>(context, listen: false)
+                                .activeAudit
+                                .calendarResult
+                                .status !=
+                            "Scheduled") {
                       Provider.of<GeneralData>(context, listen: false)
                           .disableConfirmButton();
                     }
@@ -126,7 +145,7 @@ class _FillInInterviewState extends State<FillInInterview> {
             //       String result = setQuestionValue(
             //           widget.activeSection.questions[index].userResponse
             //               as String,
-            //           "NA");
+            //           'NA');
             //       widget.activeSection.questions[index].userResponse = result;
             //       Provider.of<AuditData>(context, listen: false)
             //           .updateSectionStatus(
@@ -145,7 +164,7 @@ class _FillInInterviewState extends State<FillInInterview> {
             //       margin: EdgeInsets.symmetric(horizontal: 4.0),
             //       decoration: BoxDecoration(
             //         color: buttonColorPicker(
-            //             widget.activeSection.questions[index], "NA"),
+            //             widget.activeSection.questions[index], 'NA'),
             //         borderRadius: BorderRadius.circular(20.0),
             //         // border:
             //         //     Border.all(width: 2.0, color: Colors.grey)

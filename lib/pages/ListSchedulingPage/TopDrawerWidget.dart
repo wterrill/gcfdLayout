@@ -30,7 +30,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
         CurvedAnimation(parent: controller, curve: Curves.easeInBack)
           ..addListener(() => setState(() {}));
 
-    animation = Tween(begin: 0.0, end: 150.0).animate(curvedAnimation);
+    animation = Tween(begin: 0.0, end: 180.0).animate(curvedAnimation);
     _drawerState = false;
 
     super.initState();
@@ -48,13 +48,13 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
       children: [
         Positioned(
           top: 50,
-          left: -175,
+          left: -210,
           child: Transform.translate(
-            offset: Offset((animation.value * (175 / 150)), 0.0),
+            offset: Offset((animation.value * (210 / 180)), 0.0),
             child: Container(
               // top drawer container
               height: 325,
-              width: 175,
+              width: 210,
               color: ColorDefs.colorTopDrawerBackground,
               child: Column(
                 children: [
@@ -369,21 +369,21 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black,
-                      blurRadius: (1 - animation.value / 150) *
+                      blurRadius: (1 - animation.value / 180) *
                           3.0, // soften the shadow
                       spreadRadius:
-                          (1 - animation.value / 150) * 1.0, //extend the shadow
+                          (1 - animation.value / 180) * 1.0, //extend the shadow
                       offset: Offset(
-                        (1 - animation.value / 150) *
+                        (1 - animation.value / 180) *
                             2.0, // Move to right 10  horizontally
-                        (1 - animation.value / 150) *
+                        (1 - animation.value / 180) *
                             2.0, // Move to bottom 10 Vertically
                       ),
                     )
                   ],
                 ),
                 child: Transform.rotate(
-                  angle: (animation.value / 150) * 3.14 / 4,
+                  angle: (animation.value / 180) * 3.14 / 4,
                   child: Icon(Icons.dehaze),
                 ),
               ),

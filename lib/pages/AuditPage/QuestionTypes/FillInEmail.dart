@@ -31,6 +31,25 @@ class _FillInEmailState extends State<FillInEmail> {
 
   @override
   Widget build(BuildContext context) {
+    bool emailValidated(String emailString) {
+      bool emailValidated = true;
+      List<String> emailList = emailString.split(";");
+      for (String email in emailList) {
+        email = email.replaceAll(" ", "");
+        if ((!email.contains(RegExp(
+                r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')) &&
+            email != "")) {
+          emailValidated = false;
+        }
+      }
+      print(emailList);
+      print("wtf?");
+      print(emailValidated);
+      Provider.of<GeneralData>(context, listen: false).emailValidated =
+          emailValidated;
+      return emailValidated;
+    }
+
     int index = widget.index;
     Section activeSection = widget.activeSection;
     TextEditingController controller = TextEditingController();
@@ -89,19 +108,34 @@ class _FillInEmailState extends State<FillInEmail> {
                   controller: controller,
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
-                    if (!value.contains("@")) {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .personInterviewed = value;
-                    } else {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .contactEmail = value;
-                    }
 
-                    if (value.length == 1) {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .enableConfirmButton();
+                    Provider.of<AuditData>(context, listen: false)
+                        .contactEmail = value;
+
+                    if (value.length > 0) {
+                      if (Provider.of<GeneralData>(context, listen: false)
+                              .confirmButtonEnabled ==
+                          false) {
+                        if (Provider.of<GeneralData>(context, listen: false)
+                                    .personInterviewed !=
+                                null &&
+                            Provider.of<GeneralData>(context, listen: false)
+                                    .personInterviewed !=
+                                "") {
+                          Provider.of<GeneralData>(context, listen: false)
+                              .enableConfirmButton();
+                        }
+                      }
                     }
-                    if (value.length == 0) {
+                    if ((!emailValidated(value) &&
+                            Provider.of<GeneralData>(context, listen: false)
+                                    .confirmButtonEnabled ==
+                                true) ||
+                        Provider.of<AuditData>(context, listen: false)
+                                .activeAudit
+                                .calendarResult
+                                .status !=
+                            "Scheduled") {
                       Provider.of<GeneralData>(context, listen: false)
                           .disableConfirmButton();
                     }
@@ -125,7 +159,7 @@ class _FillInEmailState extends State<FillInEmail> {
             //       String result = setQuestionValue(
             //           widget.activeSection.questions[index].userResponse
             //               as String,
-            //           "NA");
+            //           'NA');
             //       widget.activeSection.questions[index].userResponse = result;
             //       Provider.of<AuditData>(context, listen: false)
             //           .updateSectionStatus(
@@ -144,7 +178,7 @@ class _FillInEmailState extends State<FillInEmail> {
             //       margin: EdgeInsets.symmetric(horizontal: 4.0),
             //       decoration: BoxDecoration(
             //         color: buttonColorPicker(
-            //             widget.activeSection.questions[index], "NA"),
+            //             widget.activeSection.questions[index], 'NA'),
             //         borderRadius: BorderRadius.circular(20.0),
             //         // border:
             //         //     Border.all(width: 2.0, color: Colors.grey)

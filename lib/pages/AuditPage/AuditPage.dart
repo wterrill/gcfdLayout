@@ -60,6 +60,9 @@ class _AuditPageState extends State<AuditPage> {
       }
     }
     activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+    if (activeAudit.calendarResult.siteInfo.contactEmail != "") {
+      Provider.of<GeneralData>(context, listen: false).emailValidated = true;
+    }
     activeSection =
         Provider.of<AuditData>(context, listen: false).activeSection;
     Provider.of<AuditData>(context, listen: false).citations =
@@ -153,7 +156,7 @@ class _AuditPageState extends State<AuditPage> {
                         VerificationBadPage(
                           activeAudit: activeAudit,
                         ),
-                      if (activeSection?.name == "*Developer*") DeveloperPage(),
+                      // if (activeSection?.name == "*Developer*") DeveloperPage(),
                       if (activeSection?.name != "Review" &&
                           activeSection?.name != "Verification" &&
                           activeSection?.name != "Follow Up Review")

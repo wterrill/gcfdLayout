@@ -476,14 +476,15 @@ class ListCalendarData with ChangeNotifier {
 
       String programType = programTypes[random.nextInt(programTypes.length)];
       print(programType);
-      Auditor auditor =
-          Provider.of<ListCalendarData>(navigatorKey.currentContext)
-              .auditorList
-              .getRandom();
+      Auditor auditor = Provider.of<ListCalendarData>(
+              navigatorKey.currentContext,
+              listen: false)
+          .auditorList
+          .getRandom();
 
       print(auditor);
       String status =
-          randomDate.isBefore(DateTime.now()) ? "Submitted" : "Scheduled";
+          randomDate.isBefore(DateTime.now()) ? "Completed" : "Scheduled";
       print(status);
       addBoxEvent(event: <String, dynamic>{
         'startTime': startTime,
@@ -492,7 +493,7 @@ class ListCalendarData with ChangeNotifier {
         'auditType': auditType,
         'programNum': programNum,
         'programType': programType,
-        'auditor': auditor.toString(),
+        'auditor': auditor.username,
         'status': status,
       }, notify: false);
     }

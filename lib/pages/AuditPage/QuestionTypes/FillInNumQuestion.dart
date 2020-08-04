@@ -79,7 +79,7 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                   margin: EdgeInsets.symmetric(horizontal: 4.0),
                   decoration: BoxDecoration(
                     color: buttonColorPicker(
-                        widget.activeSection.questions[index], "NA"),
+                        widget.activeSection.questions[index], 'NA'),
                     borderRadius: BorderRadius.circular(20.0),
                     // border:
                     //     Border.all(width: 2.0, color: Colors.grey)

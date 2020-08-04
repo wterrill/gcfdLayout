@@ -65,13 +65,15 @@ List<Map<String, dynamic>> audit1Section1Questions = [
       '1x per week',
       '2x per Month',
       '1x per Month',
-      'Other'
+      'Other',
+      'NA'
     ],
     'happyPathResponse': [
       '1x per week',
       '2x per Month',
       '1x per Month',
-      'Other'
+      'Other',
+      'NA'
     ],
     'databaseVar': 'HowOftenGuestsReceiveFood',
     'databaseVarType': 'string',
@@ -167,7 +169,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'What is the number of deliveries per month?',
     'type': 'dropDown',
-    'menuItems': ['Select', '1', '2', '3', '4', '5', 'Other'],
+    'menuItems': ['Select', '1', '2', '3', '4', '5', 'Other', 'NA'],
     'databaseVar': 'NumberOfDeliveriesPerMonth',
     'databaseOptCom': 'NumberOfDeliveriesPerMonthComments',
     'databaseVarType': 'string',
@@ -194,13 +196,8 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Is information on our Agency Locator accurate?',
     'type': 'dropDown',
-    'menuItems': [
-      'Select',
-      'Yes',
-      'No',
-      'Closed Program',
-    ],
-    'happyPathResponse': ['Yes', 'No', 'Closed Program'],
+    'menuItems': ['Select', 'Yes', 'No', 'Closed Program', 'NA'],
+    // 'happyPathResponse': ['Yes', 'No', 'Closed Program'],
     'databaseVar': 'AgencyLocatorAccurate',
     'databaseVarType': 'string',
     'databaseOptCom': 'AgencyLocatorAccurateComments',
@@ -459,8 +456,8 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text': "# of Intake Volunteers",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
-    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
+    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50', 'NA'],
+    // 'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
     'databaseVar': 'NumberOfIntakeVolunteers',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumberOfIntakeVolunteersComments'
@@ -469,8 +466,8 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text': "# of Distribution volunteers:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50'],
-    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
+    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50', 'NA'],
+    // 'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50'],
     'databaseVar': 'NumberOfDistributionVolunteers',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumberOfDistributionVolunteersComments'
@@ -509,13 +506,14 @@ List<Map<String, dynamic>> audit1Section3Questions = [
       'Select',
       'Client Choice',
       'Prepacked',
-      'Partial Client Choice'
+      'Partial Client Choice',
+      'NA'
     ],
-    'happyPathResponse': [
-      'Client Choice',
-      'Prepacked',
-      'Partial Client Choice'
-    ],
+    // 'happyPathResponse': [
+    //   'Client Choice',
+    //   'Prepacked',
+    //   'Partial Client Choice'
+    // ],
     'databaseVar': 'DistributionStyle',
     'databaseVarType': 'string',
     'databaseOptCom': 'DistributionStyleComments'
@@ -665,8 +663,8 @@ List<Map<String, dynamic>> audit1Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of dry food currently in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
-    'happyPathResponse': ['1-300', '300-500', '500-1000'],
+    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'NA'],
+    // 'happyPathResponse': ['1-300', '300-500', '500-1000','NA'],
     'databaseVar': 'NumCasesOfDryFood',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfDryFoodComments'
@@ -682,8 +680,8 @@ List<Map<String, dynamic>> audit1Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of meat currently in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
-    'happyPathResponse': ['1-300', '300-500', '500-1000'],
+    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'NA'],
+    // 'happyPathResponse': ['1-300', '300-500', '500-1000'],
     'databaseVar': 'NumCasesOfMeat',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfMeatComments'
@@ -698,8 +696,8 @@ List<Map<String, dynamic>> audit1Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of perishable items in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000'],
-    'happyPathResponse': ['1-300', '300-500', '500-1000'],
+    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'NA'],
+    // 'happyPathResponse': ['1-300', '300-500', '500-1000'],
     'databaseVar': 'NumCasesOfPerishableItems',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfPerishableItemsComments'
@@ -883,7 +881,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -912,7 +910,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -940,7 +938,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -968,7 +966,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -996,7 +994,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1024,7 +1022,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1052,7 +1050,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1080,7 +1078,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1109,7 +1107,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1137,7 +1135,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1165,7 +1163,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1194,7 +1192,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1222,7 +1220,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1250,7 +1248,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1278,7 +1276,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1295,7 +1293,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'menuItems': ['Select', 'Freezer', 'Cooler', 'NA'],
     'databaseVar': 'WalkInFreezerCoolerOne',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerOneComments'
@@ -1328,7 +1326,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1342,7 +1340,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'menuItems': ['Select', 'Freezer', 'Cooler', 'NA'],
     'databaseVar': 'WalkInFreezerCoolerTwo',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerTwoComments'
@@ -1375,7 +1373,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1389,7 +1387,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'menuItems': ['Select', 'Freezer', 'Cooler', 'NA'],
     'databaseVar': 'WalkInFreezerCoolerThree',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerThreeComments'
@@ -1421,7 +1419,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1435,7 +1433,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'menuItems': ['Select', 'Freezer', 'Cooler', 'NA'],
     'databaseVar': 'WalkInFreezerCoolerFour',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerFourComments'
@@ -1468,7 +1466,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1482,7 +1480,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
   <String, dynamic>{
     'text': 'Walk in:',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Freezer', 'Cooler'],
+    'menuItems': ['Select', 'Freezer', 'Cooler', 'NA'],
     'databaseVar': 'WalkInFreezerCoolerFive',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerFiveComments'
@@ -1515,7 +1513,7 @@ List<Map<String, dynamic>> audit1Section5Questions = [
       '0 – 41 (acceptable for cooler)',
       'Over 41 (Danger zone)',
       "Temperature Unacceptable",
-      "NA"
+      'NA'
     ],
     'happyPathResponse': [
       'Under 0 (acceptable for freezer)',
@@ -1768,5 +1766,5 @@ List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{"Photos": photoData},
   <String, List<Map<String, dynamic>>>{"Review": reviewData},
   <String, List<Map<String, dynamic>>>{"Verification": verificationData},
-  <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
+  // <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];

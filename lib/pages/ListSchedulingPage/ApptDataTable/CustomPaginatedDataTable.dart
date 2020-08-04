@@ -190,7 +190,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
   ///
   /// Useful when initializing the field that will hold the current
   /// [rowsPerPage], when implemented [onRowsPerPageChanged].
-  static const int defaultRowsPerPage = 15;
+  static const int defaultRowsPerPage = 18;
 
   /// The options to offer for the rowsPerPage.
   ///

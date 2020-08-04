@@ -96,7 +96,7 @@ class _SectionButtonState extends State<SectionButton> {
               //Clay
               //Clay
               Container(
-                width: 110,
+                width: 111,
                 height: 70,
                 child: FlatButton(
                   color: buttonColor,

@@ -140,7 +140,7 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
                   String result = setQuestionValue(
                       widget.activeSection.questions[index].userResponse
                           as String,
-                      "NA");
+                      'NA');
                   widget.activeSection.questions[index].userResponse = result;
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(
@@ -157,7 +157,7 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
                 margin: EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
                   color: buttonColorPicker(
-                      widget.activeSection.questions[index], "NA"),
+                      widget.activeSection.questions[index], 'NA'),
                   borderRadius: BorderRadius.circular(20.0),
                   // border:
                   //     Border.all(width: 2.0, color: Colors.grey)

@@ -19,7 +19,7 @@ Color buttonColorPicker(Question questionData, String buttonText) {
     finalButtonColor = ColorDefs.colorButtonNo;
   }
 
-  if (questionData.userResponse == buttonText && buttonText == "NA") {
+  if (questionData.userResponse == buttonText && buttonText == 'NA') {
     finalButtonColor = ColorDefs.colorChatNeutral;
   }
   return finalButtonColor;

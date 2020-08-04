@@ -104,7 +104,7 @@ class DeveloperPage extends StatelessWidget {
                       question.happyPathResponse.contains("No") ? "Yes" : "No";
                   question.userResponse = answer;
                 } catch (err) {
-                  question.userResponse = "NA";
+                  question.userResponse = 'NA';
                 }
 
                 question.optionalComment =
@@ -207,7 +207,7 @@ class DeveloperPage extends StatelessWidget {
                 try {
                   question.userResponse = question?.happyPathResponse[0];
                 } catch (err) {
-                  question.userResponse = "NA";
+                  question.userResponse = 'NA';
                 }
 
                 question.optionalComment =

@@ -34,6 +34,7 @@ class AuditData with ChangeNotifier {
   List<Question> citations = [];
   List<Question> previousCitations = [];
   bool goToVerificationGoodPage = false;
+  String contactEmail = "";
 
   AuditData() {
     initialize();
@@ -406,6 +407,18 @@ class AuditData with ChangeNotifier {
           calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
+    }
+
+    for (Question question in activeSection.questions) {
+      print(question.text == "Email Contact:");
+      if (question.text == "Email Contact:" &&
+          activeAudit.calendarResult.siteInfo.contactEmail != "") {
+        question.userResponse =
+            activeAudit.calendarResult.siteInfo.contactEmail + " ; ";
+        contactEmail = activeAudit.calendarResult.siteInfo.contactEmail + " ; ";
+
+        print("email updated");
+      }
     }
   }
 

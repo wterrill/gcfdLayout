@@ -31,15 +31,15 @@ class TopWhiteHeaderWidget extends StatelessWidget {
                 ),
               ),
             ),
-            // RaisedButton(
-            //   color: Colors.yellow,
-            //   child: Text("Generate 10 random Appointments",
-            //       style: ColorDefs.textBodyBlack10),
-            //   onPressed: () {
-            //     Provider.of<ListCalendarData>(context, listen: false)
-            //         .generateAppointments(10);
-            //   },
-            // ),
+            RaisedButton(
+              color: Colors.yellow,
+              child: Text("Generate 10 random Appointments",
+                  style: ColorDefs.textBodyBlack10),
+              onPressed: () {
+                Provider.of<ListCalendarData>(context, listen: false)
+                    .generateAppointments(10);
+              },
+            ),
             // RaisedButton(
             //   color: Colors.red,
             //   child: Text("DELETE ALL", style: ColorDefs.textBodyBlack10),

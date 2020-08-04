@@ -42,7 +42,7 @@ Map<String, dynamic> buildAuditToSend(
             resultMap[name] = 0;
           } else if (question.userResponse == "No Issues")
             resultMap[name] = 1;
-          else if (question.userResponse == "NA") {
+          else if (question.userResponse == 'NA') {
             resultMap[name] = -1;
           } else {
             resultMap[name] = null;
