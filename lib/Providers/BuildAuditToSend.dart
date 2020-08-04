@@ -24,7 +24,11 @@ Map<String, dynamic> buildAuditToSend(
         String comment = question.questionMap['databaseOptCom'] as String;
 
         if (qtype == "int") {
-          resultMap[name] = question.userResponse as int;
+          try {
+            resultMap[name] = question.userResponse as int;
+          } catch (err) {
+            resultMap[name] = 0;
+          }
           try {
             resultMap[comment] = question.optionalComment;
           } catch (err) {

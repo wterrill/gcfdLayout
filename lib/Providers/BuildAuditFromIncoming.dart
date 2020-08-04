@@ -7,10 +7,15 @@ import 'package:auditor/Definitions/PantryAuditData.dart';
 import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
+import 'package:auditor/main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' show Response, get;
+import 'package:provider/provider.dart';
 import 'dart:typed_data';
 import 'dart:io';
+
+import 'AuditData.dart';
+import 'GeneralData.dart';
 
 Future<dynamic> buildAuditFromIncoming(
     dynamic fromServer, SiteList siteList) async {
@@ -181,6 +186,30 @@ Future<dynamic> buildAuditFromIncoming(
                       incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
+
+                case ("fillInInterview"):
+                  print(question.text);
+                  print('fillInInterview');
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as String;
+                  Provider.of<GeneralData>(navigatorKey.currentContext,
+                          listen: false)
+                      .personInterviewed = question.userResponse as String;
+
+                  break;
+                case ("fillInEmail"):
+                  print(question.text);
+                  print('fillInInterview');
+                  print(incomingAudit[databaseVar]);
+                  question.userResponse = incomingAudit[databaseVar] as String;
+                  Provider.of<AuditData>(navigatorKey.currentContext,
+                          listen: false)
+                      .contactEmail = question.userResponse as String;
+
+                  break;
+
+                // fillInInterview
+                // fillInEmail
 
                 case ("fillInNum"):
                   print(question.text);
