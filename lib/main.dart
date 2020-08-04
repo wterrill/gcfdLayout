@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'Definitions/AuditClasses/Question.dart';
 import 'Definitions/AuditClasses/Section.dart';
 import 'Definitions/AuditClasses/Audit.dart';
-import 'Definitions/Dialogs.dart';
+// import 'Definitions/Dialogs.dart';
 import 'Definitions/SiteClasses/Site.dart';
 import 'Definitions/SiteClasses/SiteList.dart';
 import 'Definitions/AuditorClasses/Auditor.dart';
@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    bool startSync = false;
+    // bool startSync = false;
     if (state == AppLifecycleState.resumed) {
       print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  RESUMED!!!!");
       if (!kIsWeb) {

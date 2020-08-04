@@ -1,6 +1,6 @@
 import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
-import 'package:auditor/Definitions/Dialogs.dart';
+// import 'package:auditor/Definitions/Dialogs.dart';
 
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
@@ -160,7 +160,6 @@ class ListCalendarData with ChangeNotifier {
 
     List<CalendarResult> downloadedCalendarResults =
         buildScheduledFromIncoming(dynResult, siteList);
-    // TODO update old followup to Complete, if followup scheduled.
     for (CalendarResult result in downloadedCalendarResults) {
       if (result.auditType == "Follow Up") {
         Map<String, dynamic> pastEvent =

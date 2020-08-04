@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
 
-import 'commonQuestionMethods.dart';
+// import 'commonQuestionMethods.dart';
 
 class FollowUpCommentSection extends StatefulWidget {
   final int index;

@@ -1,4 +1,4 @@
-import 'package:auditor/Definitions/AuditClasses/Audit.dart';
+// import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'FollowUpCommentSection.dart';
-import 'commonQuestionMethods.dart';
+// import 'commonQuestionMethods.dart';
 
 class FollowUpDropDownQuestion extends StatefulWidget {
   final int index;

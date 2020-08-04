@@ -7,7 +7,7 @@ import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 
 bool isNtlm = true;
 dynamic sender;
