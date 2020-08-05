@@ -185,8 +185,12 @@ class _AuditPageState extends State<AuditPage> {
                                     section.lastStatus = Status.available;
                                     activeSection.status = Status.completed;
                                     activeSection.lastStatus = Status.completed;
-                                    setState(() {});
+                                    if (activeAudit.calendarResult.auditType !=
+                                        "Follow Up") {
+                                      if (section.name == "Review") break;
+                                    }
                                   }
+                                  setState(() {});
                                   if (activeAudit.calendarResult.auditType ==
                                       "Follow Up") {
                                     Provider.of<AuditData>(context,
@@ -284,11 +288,11 @@ class _AuditPageState extends State<AuditPage> {
                         onPressed: () {
                           Provider.of<AuditData>(context, listen: false)
                               .toggleStartAudit();
-
-                          Provider.of<AuditData>(context, listen: false)
-                              .resetAudit();
                           Provider.of<AuditData>(context, listen: false)
                               .saveAuditLocally(activeAudit);
+                          Provider.of<AuditData>(context, listen: false)
+                              .resetAudit();
+
                           Navigator.of(context).pop();
                         },
                       ),

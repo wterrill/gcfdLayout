@@ -483,7 +483,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   // },
 
   <String, dynamic>{
-    'text': "# of cases of dry food currently in inventory:",
+    'text': "# of cases of dry food in inventory:",
     'type': 'dropDown',
     'menuItems': ['Select', '1-300', '300-500', '500-1000', 'NA'],
     // 'happyPathResponse': ['1-300', '300-500', '500-1000', 'NA'],
@@ -500,7 +500,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   // },
 
   <String, dynamic>{
-    'text': "# of cases of meat currently in inventory:",
+    'text': "# of cases of meat in inventory:",
     'type': 'dropDown',
     'menuItems': ['Select', '1-300', '300-500', '500-1000', 'NA'],
     'happyPathResponse': ['1-300', '300-500', '500-1000', 'NA'],

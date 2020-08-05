@@ -8,40 +8,29 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                color: ColorDefs.colorTopHeader,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(40.0),
-                  child: Hero(
-                    tag: "GCFD_Logo",
-                    child: Image(
-                      fit: BoxFit.fitHeight,
-                      image: AssetImage('assets/images/GCFD_Logo.png'),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        // color: ColorDefs.colorDarkBackground,
+
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+              ColorDefs.colorLogoDarkGreen,
+              ColorDefs.colorLogoDarkGreen,
+              ColorDefs.colorLogolightGreen
+            ])),
+        child: LayoutBuilder(
+            builder: (context, constraints) => Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: (constraints.minHeight) * 0.15,
                     ),
-                  ),
+                    LoginForm()
+                  ],
                 )),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Container(
-                  color: ColorDefs.colorDarkBackground,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 350.0),
-                      child: LoginForm(),
-                    ),
-                  )),
-            ),
-          ]),
-        ),
       ),
     );
   }

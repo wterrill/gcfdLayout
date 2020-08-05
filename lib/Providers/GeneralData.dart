@@ -52,8 +52,13 @@ class GeneralData with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleSyncInProgress() {
-    syncInProgress = !syncInProgress;
+  void toggleSyncInProgressOn() {
+    syncInProgress = true;
+    notifyListeners();
+  }
+
+  void toggleSyncInProgressOff() {
+    syncInProgress = false;
     notifyListeners();
   }
 

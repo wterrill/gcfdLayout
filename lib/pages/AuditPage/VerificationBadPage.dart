@@ -417,8 +417,9 @@ matter to ensure your community does not suffer an interruption of services.  If
                           widget.activeAudit.calendarResult.auditor)),
             if (siteRepresentativeSignature == null)
               Text("Agency Representative: " +
-                  Provider.of<GeneralData>(context, listen: false)
-                      .personInterviewed),
+                      (Provider.of<GeneralData>(context, listen: false)
+                          .personInterviewed) ??
+                  ""),
 //////////////  SECOND SIGNATURE /////////////////////////////
             siteRepresentativeSignature == null
                 ? Container()

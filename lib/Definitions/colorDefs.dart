@@ -33,6 +33,10 @@ class ColorDefs {
   static Color colorLoginBackground = Color(0xFFE7EFFE);
 
   static Color colorDisabledBackground = Color(0xAA555555);
+
+  static Color colorLogoDarkGreen = Color(0xAA1C4326);
+  static Color colorLogolightGreen = Color(0xAA148E44);
+
 ///////////////////////////////////////////////////////////////////////
 // Questionnaire
   static Color colorAlternateDark = Color(0xFFd4d4d4);
@@ -91,4 +95,10 @@ class ColorDefs {
       TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
   static TextStyle textBlackTerminal =
       TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
+
+  static TextStyle textGreenLogoLight30 = TextStyle(
+      color: colorLogolightGreen,
+      fontSize: 30.0,
+      fontFamily: 'Robot Slab',
+      fontWeight: FontWeight.bold);
 }

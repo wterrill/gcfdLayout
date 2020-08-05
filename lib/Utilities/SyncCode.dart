@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void totalDataSync(BuildContext context) async {
-  Provider.of<GeneralData>(context, listen: false).toggleSyncInProgress();
+  Provider.of<GeneralData>(context, listen: false).toggleSyncInProgressOn();
   //// Site Data /////
   // Dialogs.showMessage(
   //     context: context, message: "Syncing Site Data", dismissable: false);
@@ -54,5 +54,5 @@ void totalDataSync(BuildContext context) async {
   // Navigator.of(context).pop();
 
   /// Done with sync
-  Provider.of<GeneralData>(context, listen: false).toggleSyncInProgress();
+  Provider.of<GeneralData>(context, listen: false).toggleSyncInProgressOff();
 }

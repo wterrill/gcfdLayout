@@ -61,7 +61,18 @@ class AuditData with ChangeNotifier {
     });
   }
 
+  void prepAuditForSaving(Audit incomingAudit) {
+    for (Section section in incomingAudit.sections) {
+      if (section.status == Status.selected) {
+        section.status = section.lastStatus;
+      }
+    }
+  }
+
   void saveAuditLocally(Audit incomingAudit) {
+    if (!auditStarted) {
+      prepAuditForSaving(incomingAudit);
+    }
     if (incomingAudit != null) {
       Audit retrievedAudit = auditBox.get(
               '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}')
@@ -85,6 +96,55 @@ class AuditData with ChangeNotifier {
             incomingAudit);
       }
     }
+
+    Section verificationSection;
+    if (activeAudit != null) {
+      for (var i = activeAudit.sections.length - 1; i > 1; i--) {
+        if (activeAudit.sections[i].name == "Verification") {
+          verificationSection = activeAudit.sections[i];
+          break;
+        }
+      }
+      if (checkAllSectionsDone() &&
+              (Status.values.indexOf(verificationSection.status) <
+                  Status.values.indexOf(Status.available)) ||
+          (activeAudit.calendarResult.auditType == "Follow Up" &&
+              verificationSection.status != Status.selected &&
+              verificationSection.status != Status.completed)) {
+        verificationSection.status = Status.available;
+      }
+
+      if (!checkAllSectionsDone() &&
+          (Status.values.indexOf(verificationSection.status) >=
+              Status.values.indexOf(Status.available)) &&
+          activeAudit.calendarResult.auditType != "Follow Up") {
+        verificationSection.status = Status.disabled;
+      }
+    }
+  }
+
+  bool checkAllSectionsDone() {
+    bool allQuestionsDone = true;
+    for (Section section in activeAudit.sections) {
+      if (section.name == "Photos") {
+        break;
+      }
+      print(section.name);
+      print(section.status);
+      if (section.status != Status.selected) {
+        if (section.status != Status.completed) {
+          allQuestionsDone = false;
+          print("changed to false 1st");
+        }
+      } else {
+        if (section.lastStatus != Status.completed) {
+          allQuestionsDone = false;
+          print("changed to false 2nd");
+        }
+      }
+    }
+    print(allQuestionsDone);
+    return allQuestionsDone;
   }
 
   Audit getAuditFromBox(CalendarResult calendarResult) {
@@ -369,6 +429,7 @@ class AuditData with ChangeNotifier {
     successfullySubmitted = false;
     citations = [];
     goToVerificationGoodPage = false;
+
     // actionItemList = [];
   }
 

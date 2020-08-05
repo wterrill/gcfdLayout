@@ -19,7 +19,7 @@ class ListSchedulingPage extends StatefulWidget {
 
 class _ListSchedulingPageState extends State<ListSchedulingPage> {
   bool backgroundDisable = false;
-  final filterTextController = TextEditingController();
+  // final filterTextController = TextEditingController();
 
   @override
   void initState() {
@@ -37,11 +37,11 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
     }
   }
 
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    filterTextController.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   // Clean up the controller when the widget is disposed.
+  //   filterTextController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,31 +72,6 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              24.0, 0, 0, 0),
-                                          child: FlatButton(
-                                            color: ColorDefs.colorAudit2,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18.0),
-                                                side: BorderSide(
-                                                    color: ColorDefs
-                                                        .colorDarkBackground)),
-                                            onPressed: () {
-                                              if (auditorList != null) {
-                                                Dialogs.showScheduledAudit(
-                                                    context);
-                                              } else {
-                                                Dialogs.showNotSynced(context);
-                                              }
-                                            },
-                                            child: Text("Schedule New Audit",
-                                                style:
-                                                    ColorDefs.textBodyWhite20),
-                                          ),
-                                        ),
-                                        // SizedBox(width: 10),
                                         ConstrainedBox(
                                           constraints: BoxConstraints(
                                               maxHeight: 70,
@@ -138,35 +113,61 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 40,
-                                          width: 250,
-                                          child: TextField(
-                                            onChanged: (text) {
-                                              Provider.of<ListCalendarData>(
-                                                      context,
-                                                      listen: false)
-                                                  .updateFilterValue(
-                                                      filterTextController
-                                                          .text);
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              24.0, 0, 0, 0),
+                                          child: FlatButton(
+                                            color: ColorDefs.colorAudit2,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                    color: ColorDefs
+                                                        .colorDarkBackground)),
+                                            onPressed: () {
+                                              if (auditorList != null) {
+                                                Dialogs.showScheduledAudit(
+                                                    context);
+                                              } else {
+                                                Dialogs.showNotSynced(context);
+                                              }
                                             },
-                                            controller: filterTextController,
-                                            style: ColorDefs.textBodyBlack20,
-                                            decoration: InputDecoration(
-                                                hintStyle: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.grey),
-                                                filled: true,
-                                                fillColor: Colors.white,
-                                                border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.teal,
-                                                  ),
-                                                ),
-                                                hintText:
-                                                    'Agency / Program Number Filter'),
+                                            child: Text("Schedule Audit",
+                                                style:
+                                                    ColorDefs.textBodyWhite20),
                                           ),
-                                        )
+                                        ),
+                                        // SizedBox(width: 10),
+
+                                        // SizedBox(
+                                        //   height: 40,
+                                        //   width: 250,
+                                        //   child: TextField(
+                                        //     onChanged: (text) {
+                                        //       Provider.of<ListCalendarData>(
+                                        //               context,
+                                        //               listen: false)
+                                        //           .updateFilterValue(
+                                        //               filterTextController
+                                        //                   .text);
+                                        //     },
+                                        //     controller: filterTextController,
+                                        //     style: ColorDefs.textBodyBlack20,
+                                        //     decoration: InputDecoration(
+                                        //         hintStyle: TextStyle(
+                                        //             fontSize: 15.0,
+                                        //             color: Colors.grey),
+                                        //         filled: true,
+                                        //         fillColor: Colors.white,
+                                        //         border: OutlineInputBorder(
+                                        //           borderSide: BorderSide(
+                                        //             color: Colors.teal,
+                                        //           ),
+                                        //         ),
+                                        //         hintText:
+                                        //             'Agency / Program Number Filter'),
+                                        //   ),
+                                        // )
                                       ]),
                                 ),
                               ),
