@@ -71,17 +71,19 @@ class _DateQuestionState extends State<DateQuestion> {
                         );
                       },
                     );
-                    widget.activeSection.questions[index].userResponse =
-                        selectedDate.toString();
-                    Provider.of<AuditData>(context, listen: false)
-                        .updateSectionStatus(
-                            checkSectionDone(widget.activeSection));
-                    Audit thisAudit =
-                        Provider.of<AuditData>(context, listen: false)
-                            .activeAudit;
-                    Provider.of<AuditData>(context, listen: false)
-                        .saveAuditLocally(thisAudit);
-                    setState(() {});
+                    if (selectedDate != null) {
+                      widget.activeSection.questions[index].userResponse =
+                          selectedDate.toString();
+                      Provider.of<AuditData>(context, listen: false)
+                          .updateSectionStatus(
+                              checkSectionDone(widget.activeSection));
+                      Audit thisAudit =
+                          Provider.of<AuditData>(context, listen: false)
+                              .activeAudit;
+                      Provider.of<AuditData>(context, listen: false)
+                          .saveAuditLocally(thisAudit);
+                      setState(() {});
+                    }
                   }
                 },
                 child: Icon(Icons.calendar_today,

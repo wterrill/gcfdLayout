@@ -1,4 +1,3 @@
-// import 'package:auditor/providers/GeneralData.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/LoginScreen/LoginScreen.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
@@ -50,7 +49,6 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  // color: Color(0x00111111),
                   shape: BoxShape.rectangle,
                   boxShadow: [
                     BoxShadow(
@@ -113,14 +111,6 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                     hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
                     filled: true,
                     fillColor: Colors.white,
-                    // border: OutlineInputBorder(
-                    //   borderRadius: const BorderRadius.all(
-                    //     const Radius.circular(30.0),
-                    //   ),
-                    //   borderSide: BorderSide(
-                    //     color: Colors.teal,
-                    //   ),
-                    // ),
                     hintText: 'Agency / Program Number Filter'),
               ),
             ),
@@ -132,30 +122,6 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                 Provider.of<GeneralData>(context).syncMessage,
                 style: ColorDefs.textBodyBlack10,
               ),
-            // RaisedButton(
-            //     color: Colors.blue,
-            //     child: Text("Developer"),
-            //     onPressed: () {
-            //       Navigator.of(context).pop();
-            //       Navigator.push<dynamic>(
-            //         context,
-            //         MaterialPageRoute<dynamic>(
-            //             builder: (context) => DeveloperMenu()),
-            //       );
-            //     }),
-
-            //
-            //
-            //
-
-            // Theme(
-            //   data: Theme.of(context).copyWith(
-            //     cardColor: Colors.purple,
-            //     brightness: Brightness.light,
-            //     primaryColor: Colors.lightBlue[800],
-            //     accentColor: Colors.cyan[600],
-            //   ),
-            //   child:
             PopupMenuButton<String>(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 5.0),
@@ -172,13 +138,6 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                         child: Container(
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(
-                          //       color: ColorDefs.colorDarkBackground,
-                          //       width: 3.0),
-                          //   borderRadius:
-                          //       BorderRadius.all(Radius.circular(40.0)),
-                          // ),
                           child: FaIcon(
                             FontAwesomeIcons.user,
                             color: ColorDefs.colorLogoLightGreen,
@@ -212,13 +171,9 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
-                  value: "Beer",
+                  value: "logout",
                   child: Text('Logout'),
                 ),
-                // const PopupMenuItem<WhyFarther>(
-                //   value: WhyFarther.smarter,
-                //   child: Text('Being'),
-                // ),
               ],
             ),
             //)
@@ -226,6 +181,5 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
         ),
       ),
     );
-    // end of top white bar
   }
 }

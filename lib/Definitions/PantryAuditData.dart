@@ -1538,7 +1538,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'PlumbingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PlumbingIssuesComments',
-    'actionItem': 'Explain plumbing issues in comment field'
+    'actionItem': 'Explain issue and action item for plumbing issues: '
   },
   <String, dynamic>{
     'text': 'Sewage issues?',
@@ -1547,7 +1547,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'SewageIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SewageIssuesComments',
-    'actionItem': 'Explain issues with sewage and action items'
+    'actionItem': 'Explain issue and action item for Sewage issues: '
   },
   <String, dynamic>{
     'text': 'Garbage and refuse disposal',
@@ -1557,7 +1557,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVarType': 'bool', // <--------
     'databaseOptCom': 'GarbageRefusalDisposalIssuesComments', // <---------
     'actionItem':
-        'Explain issues with Garbage and refuse disposal and action items'
+        'Explain issue and action item for garbage and refuse disposal issues: '
   },
   <String, dynamic>{
     'text':
@@ -1601,7 +1601,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVar': 'AppropriateLightingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateLightingIssuesComments',
-    'actionItem': 'Please explain lighting issues and action items:'
+    'actionItem': 'Please explain lighting issues and action items: '
   },
 
   <String, dynamic>{
@@ -1612,7 +1612,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'VentilationIssuesComments',
     'actionItem':
-        'Please explain ventilation issues and action items in comments'
+        'Please explain ventilation issues and action items in comments: '
   },
   <String, dynamic>{
     'text':
@@ -1623,7 +1623,7 @@ List<Map<String, dynamic>> audit1Section6Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments',
     'actionItem':
-        'Please explain issues with access to all pertinent areas of food program, and action items:'
+        'Please explain issues with access to all pertinent areas of food program action items: '
   },
   <String, dynamic>{
     'text':

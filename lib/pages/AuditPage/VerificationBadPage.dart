@@ -1,5 +1,6 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Question.dart';
+import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
@@ -35,6 +36,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   Uint8List foodDepositoryMonitorSignature = null;
   List<String> actionItems;
   int followupReqVal;
+  String affectedIssues = "";
 
   DateTime selectedDate;
   @override
@@ -46,6 +48,50 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
       } else {
         followupReqVal = 0;
       }
+    }
+
+    bool checkActionItems() {
+      bool actionItemValid = true;
+      affectedIssues = "";
+      for (Question question in widget.activeAudit.citations) {
+        print(question.actionItem);
+        if (question.actionItem ==
+            ("Explain issue and action item for plumbing issues: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Explain issue and action item for Sewage issues: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Explain issue and action item for garbage and refuse disposal issues: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Explain action items for the fire extinguisher: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Please explain lighting issues and action items: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Please explain ventilation issues and action items in comments: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+        if (question.actionItem ==
+            ("Please explain issues with access to all pertinent areas of food program action items: ")) {
+          actionItemValid = false;
+          affectedIssues = affectedIssues + "\n - " + question.actionItem;
+        }
+      }
+      return actionItemValid;
     }
 
     bool flaggedCitationsExist(List<Question> citations) {
@@ -309,64 +355,72 @@ matter to ensure your community does not suffer an interruption of services.  If
                   MaterialButton(
                       color: Colors.green,
                       onPressed: () async {
-                        SignatureState sign = _sign.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
-                        int backColor = img.getColor(255, 255, 255);
-                        int imageWidth;
-                        int imageHeight;
-                        BuildContext currentContext = _sign.currentContext;
-                        if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
-                          imageWidth = box.size.width.toInt();
-                          imageHeight = box.size.height.toInt();
-                        }
-
-                        // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
-
-                        // set the image background color
-                        // remove this for a transparent background
-                        img.fill(signatureImage, backColor);
-
-                        for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
-                                thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
-                            // draw the point to the image
-                            img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
+                        if (checkActionItems()) {
+                          SignatureState sign = _sign.currentState;
+                          int lineColor =
+                              img.getColor(color.red, color.green, color.blue);
+                          int backColor = img.getColor(255, 255, 255);
+                          int imageWidth;
+                          int imageHeight;
+                          BuildContext currentContext = _sign.currentContext;
+                          if (currentContext != null) {
+                            var box =
+                                currentContext.findRenderObject() as RenderBox;
+                            imageWidth = box.size.width.toInt();
+                            imageHeight = box.size.height.toInt();
                           }
-                        }
 
-                        sign.clear();
-                        setState(() {
-                          foodDepositoryMonitorSignature =
-                              img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false)
-                                  .foodDepositoryMonitorSignature =
-                              foodDepositoryMonitorSignature;
-                          widget.activeAudit
-                                  .photoSig['foodDepositoryMonitorSignature'] =
-                              foodDepositoryMonitorSignature;
-                          Provider.of<AuditData>(context, listen: false)
-                              .notifyTheListeners();
-                        });
-                        debugPrint("onPressed ");
+                          // create the image with the given size
+                          img.Image signatureImage =
+                              img.Image(imageWidth, imageHeight);
+
+                          // set the image background color
+                          // remove this for a transparent background
+                          img.fill(signatureImage, backColor);
+
+                          for (int i = 0; i < sign.points.length - 1; i++) {
+                            if (sign.points[i] != null &&
+                                sign.points[i + 1] != null) {
+                              img.drawLine(
+                                  signatureImage,
+                                  sign.points[i].dx.toInt(),
+                                  sign.points[i].dy.toInt(),
+                                  sign.points[i + 1].dx.toInt(),
+                                  sign.points[i + 1].dy.toInt(),
+                                  lineColor,
+                                  thickness: 3);
+                            } else if (sign.points[i] != null &&
+                                sign.points[i + 1] == null) {
+                              // draw the point to the image
+                              img.drawPixel(
+                                  signatureImage,
+                                  sign.points[i].dx.toInt(),
+                                  sign.points[i].dy.toInt(),
+                                  lineColor);
+                            }
+                          }
+
+                          sign.clear();
+                          setState(() {
+                            foodDepositoryMonitorSignature =
+                                img.encodePng(signatureImage) as Uint8List;
+                            Provider.of<AuditData>(context, listen: false)
+                                    .foodDepositoryMonitorSignature =
+                                foodDepositoryMonitorSignature;
+                            widget.activeAudit.photoSig[
+                                    'foodDepositoryMonitorSignature'] =
+                                foodDepositoryMonitorSignature;
+                            Provider.of<AuditData>(context, listen: false)
+                                .notifyTheListeners();
+                          });
+                          debugPrint("onPressed ");
+                        } else {
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "These action items must be updated prior to signing: \n $affectedIssues",
+                              dismissable: true);
+                        }
                       },
                       child: Text("Save")),
                   MaterialButton(
@@ -415,11 +469,18 @@ matter to ensure your community does not suffer an interruption of services.  If
                       .auditorList
                       .getFirstAndLastFromUser(
                           widget.activeAudit.calendarResult.auditor)),
-            if (siteRepresentativeSignature == null)
+            if (siteRepresentativeSignature == null &&
+                Provider.of<GeneralData>(context, listen: false)
+                        .personInterviewed !=
+                    null)
               Text("Agency Representative: " +
                       (Provider.of<GeneralData>(context, listen: false)
                           .personInterviewed) ??
                   ""),
+            if (Provider.of<GeneralData>(context, listen: false)
+                    .personInterviewed ==
+                null)
+              Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
             siteRepresentativeSignature == null
                 ? Container()
@@ -464,63 +525,71 @@ matter to ensure your community does not suffer an interruption of services.  If
                   MaterialButton(
                       color: Colors.green,
                       onPressed: () async {
-                        SignatureState sign = _sign2.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
-                        int backColor = img.getColor(255, 255, 255);
-                        int imageWidth;
-                        int imageHeight;
-                        BuildContext currentContext = _sign2.currentContext;
-                        if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
-                          imageWidth = box.size.width.toInt();
-                          imageHeight = box.size.height.toInt();
-                        }
-
-                        // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
-
-                        // set the image background color
-                        // remove this for a transparent background
-                        img.fill(signatureImage, backColor);
-
-                        for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
-                                thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
-                            // draw the point to the image
-                            img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
+                        if (checkActionItems()) {
+                          SignatureState sign = _sign2.currentState;
+                          int lineColor =
+                              img.getColor(color.red, color.green, color.blue);
+                          int backColor = img.getColor(255, 255, 255);
+                          int imageWidth;
+                          int imageHeight;
+                          BuildContext currentContext = _sign2.currentContext;
+                          if (currentContext != null) {
+                            var box =
+                                currentContext.findRenderObject() as RenderBox;
+                            imageWidth = box.size.width.toInt();
+                            imageHeight = box.size.height.toInt();
                           }
+
+                          // create the image with the given size
+                          img.Image signatureImage =
+                              img.Image(imageWidth, imageHeight);
+
+                          // set the image background color
+                          // remove this for a transparent background
+                          img.fill(signatureImage, backColor);
+
+                          for (int i = 0; i < sign.points.length - 1; i++) {
+                            if (sign.points[i] != null &&
+                                sign.points[i + 1] != null) {
+                              img.drawLine(
+                                  signatureImage,
+                                  sign.points[i].dx.toInt(),
+                                  sign.points[i].dy.toInt(),
+                                  sign.points[i + 1].dx.toInt(),
+                                  sign.points[i + 1].dy.toInt(),
+                                  lineColor,
+                                  thickness: 3);
+                            } else if (sign.points[i] != null &&
+                                sign.points[i + 1] == null) {
+                              // draw the point to the image
+                              img.drawPixel(
+                                  signatureImage,
+                                  sign.points[i].dx.toInt(),
+                                  sign.points[i].dy.toInt(),
+                                  lineColor);
+                            }
+                          }
+                          sign.clear();
+                          setState(() {
+                            siteRepresentativeSignature =
+                                img.encodePng(signatureImage) as Uint8List;
+                            Provider.of<AuditData>(context, listen: false)
+                                    .siteRepresentativeSignature =
+                                siteRepresentativeSignature;
+                            widget.activeAudit
+                                    .photoSig['siteRepresentativeSignature'] =
+                                siteRepresentativeSignature;
+                            Provider.of<AuditData>(context, listen: false)
+                                .notifyTheListeners();
+                          });
+                          debugPrint("onPressed ");
+                        } else {
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "These action items must be updated: + $affectedIssues",
+                              dismissable: true);
                         }
-                        sign.clear();
-                        setState(() {
-                          siteRepresentativeSignature =
-                              img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false)
-                                  .siteRepresentativeSignature =
-                              siteRepresentativeSignature;
-                          widget.activeAudit
-                                  .photoSig['siteRepresentativeSignature'] =
-                              siteRepresentativeSignature;
-                          Provider.of<AuditData>(context, listen: false)
-                              .notifyTheListeners();
-                        });
-                        debugPrint("onPressed ");
                       },
                       child: Text("Save")),
                   MaterialButton(

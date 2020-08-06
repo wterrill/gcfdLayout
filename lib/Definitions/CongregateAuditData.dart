@@ -1736,7 +1736,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVar': 'AppropriateLightingIssues',
     'databaseVarType': 'bool',
     'databaseOptCom': 'AppropriateLightingIssuesComments',
-    'actionItem': 'Please explain lighting issues and action items:'
+    'actionItem': 'Please explain lighting issues and action items: '
   },
   <String, dynamic>{
     'text': 'Ventilation Issues?',
@@ -1746,7 +1746,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'VentilationIssuesComments',
     'actionItem':
-        'Please explain ventilation issues and action items in comments'
+        'Please explain ventilation issues and action items in comments: '
   },
   <String, dynamic>{
     'text':
@@ -1757,7 +1757,7 @@ List<Map<String, dynamic>> audit2Section7Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'AccessToAllPertinentAreasIssuesComments',
     'actionItem':
-        'Please explain issues with access to all pertinent areas of food program action items:'
+        'Please explain issues with access to all pertinent areas of food program action items: '
   },
   <String, dynamic>{
     'text':
