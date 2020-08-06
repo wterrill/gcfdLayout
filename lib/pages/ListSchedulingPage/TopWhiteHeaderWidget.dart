@@ -8,6 +8,7 @@ import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TopWhiteHeaderWidget extends StatefulWidget {
   const TopWhiteHeaderWidget({Key key}) : super(key: key);
@@ -30,7 +31,8 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
       scrollDirection: Axis.horizontal,
       child: Container(
         // Top header (white)
-        height: 50,
+        height: 70,
+
         width: MediaQuery.of(context).size.width,
         color: ColorDefs.colorTopHeader,
         child: Row(
@@ -45,9 +47,21 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                 ),
               ),
             ),
-            SizedBox(
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  // color: Color(0x00111111),
+                  shape: BoxShape.rectangle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x55555555),
+                      offset: const Offset(5.0, 5.0),
+                      blurRadius: 5.0,
+                      spreadRadius: 0.0,
+                    ),
+                  ]),
               height: 40,
-              width: 450,
+              width: 350,
               child: TextField(
                 onChanged: (text) {
                   if (text.toLowerCase() == "version") {
@@ -67,6 +81,19 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                 controller: filterTextController,
                 style: ColorDefs.textBodyBlack20,
                 decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: ColorDefs.colorLogoLightGreen,
+                        width: 2.0,
+                      ),
+                    ),
                     suffixIcon: IconButton(
                       onPressed: () {
                         filterTextController.clear();
@@ -75,19 +102,26 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                       },
                       icon: Icon(Icons.clear),
                     ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 0),
+                      child: FaIcon(
+                        FontAwesomeIcons.search,
+                        color: ColorDefs.colorLogoLightGreen,
+                        // size: 50.0,
+                      ),
+                    ),
                     hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
                     filled: true,
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(30.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.teal,
-                      ),
-                    ),
-                    hintText:
-                        '                    Agency / Program Number Filter'),
+                    // border: OutlineInputBorder(
+                    //   borderRadius: const BorderRadius.all(
+                    //     const Radius.circular(30.0),
+                    //   ),
+                    //   borderSide: BorderSide(
+                    //     color: Colors.teal,
+                    //   ),
+                    // ),
+                    hintText: 'Agency / Program Number Filter'),
               ),
             ),
 
@@ -126,11 +160,11 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 5.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ColorDefs.colorUserAccent, width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(
+                  //       color: ColorDefs.colorUserAccent, width: 1.0),
+                  //   borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                  // ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,17 +172,17 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                         child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: ColorDefs.colorDarkBackground,
-                                width: 3.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40.0)),
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            color: ColorDefs.colorDarkBackground,
-                            size: 30.0,
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(
+                          //       color: ColorDefs.colorDarkBackground,
+                          //       width: 3.0),
+                          //   borderRadius:
+                          //       BorderRadius.all(Radius.circular(40.0)),
+                          // ),
+                          child: FaIcon(
+                            FontAwesomeIcons.user,
+                            color: ColorDefs.colorLogoLightGreen,
+                            size: 50.0,
                           ),
                         ),
                       ),
@@ -178,7 +212,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
-                  // value: WhyFarther.harder,
+                  value: "Beer",
                   child: Text('Logout'),
                 ),
                 // const PopupMenuItem<WhyFarther>(

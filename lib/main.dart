@@ -21,6 +21,7 @@ import 'Definitions/SiteClasses/Site.dart';
 import 'Definitions/SiteClasses/SiteList.dart';
 import 'Definitions/AuditorClasses/Auditor.dart';
 import 'Definitions/AuditorClasses/AuditorList.dart';
+import 'Definitions/colorDefs.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:flutter/services.dart';
@@ -215,6 +216,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         brightness: Brightness.dark,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
+        toggleableActiveColor: ColorDefs.colorLogoDarkGreen,
         fontFamily:
             'Roboto', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
         textTheme: TextTheme(),

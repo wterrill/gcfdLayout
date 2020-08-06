@@ -35,7 +35,7 @@ class ColorDefs {
   static Color colorDisabledBackground = Color(0xAA555555);
 
   static Color colorLogoDarkGreen = Color(0xAA1C4326);
-  static Color colorLogolightGreen = Color(0xAA148E44);
+  static Color colorLogoLightGreen = Color(0xAA148E44);
 
 ///////////////////////////////////////////////////////////////////////
 // Questionnaire
@@ -97,8 +97,8 @@ class ColorDefs {
       TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
 
   static TextStyle textGreenLogoLight30 = TextStyle(
-      color: colorLogolightGreen,
+      color: colorLogoLightGreen,
       fontSize: 30.0,
-      fontFamily: 'Robot Slab',
+      fontFamily: 'Courier',
       fontWeight: FontWeight.bold);
 }

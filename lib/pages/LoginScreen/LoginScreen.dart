@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
                 colors: [
               ColorDefs.colorLogoDarkGreen,
               ColorDefs.colorLogoDarkGreen,
-              ColorDefs.colorLogolightGreen
+              ColorDefs.colorLogoLightGreen
             ])),
         child: LayoutBuilder(
             builder: (context, constraints) => Column(

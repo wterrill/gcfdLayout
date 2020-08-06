@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:auditor/providers/GeneralData.dart';
 
 import 'package:flutter/foundation.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -25,6 +26,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _enabledLoginButton = false;
   var _userController = TextEditingController();
   var _passwordController = TextEditingController();
+  bool rememberMeCheckedValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,8 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   //AutoSizeText
                   "Welcome!",
+                  //
+
                   style: ColorDefs.textGreenLogoLight30,
                   // maxLines: 1,
                   // minFontSize: 5,
@@ -94,12 +98,13 @@ class _LoginFormState extends State<LoginForm> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
-                        color: ColorDefs.colorLogolightGreen,
+                        color: ColorDefs.colorLogoLightGreen,
                         width: 2.0,
                       ),
                     ),
                     contentPadding: const EdgeInsets.all(10.0),
                     hintText: "User Name",
+                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
                     labelStyle: ColorDefs.textBodyBlack20,
                   ),
                 ),
@@ -123,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10.0),
                     hintText: "Password (Case Sensitive)",
-
+                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
@@ -133,11 +138,10 @@ class _LoginFormState extends State<LoginForm> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
-                        color: ColorDefs.colorLogolightGreen,
+                        color: ColorDefs.colorLogoLightGreen,
                         width: 2.0,
                       ),
                     ),
-
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -148,16 +152,28 @@ class _LoginFormState extends State<LoginForm> {
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: _obscureText
-                            ? Icon(Icons.visibility,
-                                color: ColorDefs.colorDarkBackground)
-                            : Icon(Icons.visibility_off,
-                                color: ColorDefs.colorDarkBackground),
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.eye, //icon.visibility,
+                                  color: ColorDefs.colorDarkBackground,
+                                ),
+                              )
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.eyeSlash, //icon.visibility,
+                                  color: ColorDefs.colorDarkBackground,
+                                ),
+                              ),
                       ),
                     ),
-                    filled: true,
-                    fillColor: ColorDefs.colorLoginBackground,
+                    // filled: true,
+                    // fillColor: ColorDefs.colorLoginBackground,
                     // labelText: 'Password',
-                    labelStyle: ColorDefs.textBodyBlack20,
+                    labelStyle: ColorDefs.textBodyBlack10,
                   ),
                 ),
               ),
@@ -213,6 +229,27 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
+            Container(height: 10),
+            Theme(
+              data: ThemeData(brightness: Brightness.light),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: CheckboxListTile(
+                  title: Text("Keep me logged in",
+                      style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
+                  value: rememberMeCheckedValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      rememberMeCheckedValue = newValue;
+                    });
+                  },
+
+                  controlAffinity:
+                      ListTileControlAffinity.leading, //  <-- leading Checkbox
+                ),
+              ),
+            ),
+
             //   ),
             // ),
             //   ),
