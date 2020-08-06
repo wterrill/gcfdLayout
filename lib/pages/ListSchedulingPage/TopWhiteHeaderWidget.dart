@@ -65,6 +65,10 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                   if (text.toLowerCase() == "version") {
                     Dialogs.showVersionDialog(context);
                   }
+                  if (text.toLowerCase() == "download") {
+                    Provider.of<GeneralData>(context, listen: false)
+                        .toggleShowTopDrawer();
+                  }
                   if (text.toLowerCase() == "developer") {
                     Navigator.of(context).pop();
                     Navigator.push<dynamic>(
@@ -92,15 +96,15 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                         width: 2.0,
                       ),
                     ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        filterTextController.clear();
-                        Provider.of<ListCalendarData>(context, listen: false)
-                            .updateFilterValue(filterTextController.text);
-                      },
-                      icon: Icon(Icons.clear),
-                    ),
-                    prefixIcon: Padding(
+                    // suffixIcon: IconButton(
+                    //   onPressed: () {
+                    //     filterTextController.clear();
+                    //     Provider.of<ListCalendarData>(context, listen: false)
+                    //         .updateFilterValue(filterTextController.text);
+                    //   },
+                    //   icon: Icon(Icons.clear),
+                    // ),
+                    suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 0),
                       child: FaIcon(
                         FontAwesomeIcons.search,
@@ -139,9 +143,9 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                         padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                         child: Container(
                           child: FaIcon(
-                            FontAwesomeIcons.user,
+                            FontAwesomeIcons.userAlt,
                             color: ColorDefs.colorLogoLightGreen,
-                            size: 50.0,
+                            size: 45.0,
                           ),
                         ),
                       ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
+import '../CustomDataTable.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
 
@@ -143,6 +144,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                   source: _calendarResultsDataSource,
                   showCheckboxColumn: false,
                   headingRowHeight: 70,
+                  headingRowColor: ColorDefs.colorLogoDarkGreen,
                   rowsPerPage: _rowsPerPage,
                   onRowsPerPageChanged: (int value) {
                     setState(() {
@@ -156,14 +158,14 @@ class _ApptDataTableState extends State<ApptDataTable> {
                   sortColumnIndex: _sortColumnIndex,
                   sortAscending: _sortAscending,
                   columnSpacing: 0,
-                  dataRowHeight: 50,
+                  dataRowHeight: 60,
                   horizontalMargin: 0,
-                  columns: <DataColumn>[
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Date',
-                                    style: ColorDefs.textBodyBlue20))),
+                  columns: <CustomDataColumn>[
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child: Text('Date', style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>(
@@ -171,39 +173,42 @@ class _ApptDataTableState extends State<ApptDataTable> {
                                     d.startDateTime.toString(),
                                 columnIndex,
                                 ascending)),
-                    DataColumn(
-                      label: Expanded(
-                          child: Center(
-                              child: Text('Start',
-                                  style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                      label: Padding(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                        child: Text('Start', style: ColorDefs.textBodyWhite20),
+                      ),
                       numeric: false,
                       onSort: (int columnIndex, bool ascending) =>
                           _sort<String>((CalendarResult d) => d.startTime,
                               columnIndex, ascending),
                     ),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Agency',
-                                    style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child:
+                              Text('Agency', style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.agencyName,
                                 columnIndex, ascending)),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Prog #',
-                                    style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child:
+                              Text('Prog #', style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.programNum,
                                 columnIndex, ascending)),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Audit Type',
-                                    style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child: Text('Audit Type',
+                              style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.auditType,
@@ -217,20 +222,22 @@ class _ApptDataTableState extends State<ApptDataTable> {
                     //     onSort: (int columnIndex, bool ascending) =>
                     //         _sort<String>((CalendarResult d) => d.programType,
                     //             columnIndex, ascending)),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Auditor',
-                                    style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child:
+                              Text('Auditor', style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.auditor,
                                 columnIndex, ascending)),
-                    DataColumn(
-                        label: Expanded(
-                            child: Center(
-                                child: Text('Status',
-                                    style: ColorDefs.textBodyBlue20))),
+                    CustomDataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child:
+                              Text('Status', style: ColorDefs.textBodyWhite20),
+                        ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
                             _sort<String>((CalendarResult d) => d.status,

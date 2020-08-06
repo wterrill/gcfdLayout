@@ -11,6 +11,9 @@ import 'package:flutter/gestures.dart' show DragStartBehavior;
 
 import 'package:flutter/material.dart';
 
+import '../CustomDataTable.dart';
+import '../CustomDataTableSource.dart';
+
 /// A material design data table that shows data using multiple pages.
 ///
 /// A paginated data table shows [rowsPerPage] rows of data per page and
@@ -61,6 +64,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
     this.onSelectAll,
     this.dataRowHeight = kMinInteractiveDimension,
     this.headingRowHeight = 56.0,
+    this.headingRowColor: Colors.red,
     this.horizontalMargin = 24.0,
     this.columnSpacing = 56.0,
     this.showCheckboxColumn = true,
@@ -123,7 +127,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
   final List<Widget> actions;
 
   /// The configuration and labels for the columns in the table.
-  final List<DataColumn> columns;
+  final List<CustomDataColumn> columns;
 
   /// The current primary sort key's column.
   ///
@@ -152,6 +156,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
   ///
   /// This value is optional and defaults to 56.0 if not specified.
   final double headingRowHeight;
+  final Color headingRowColor;
 
   /// The horizontal margin between the edges of the table and the content
   /// in the first and last cells of each row.
@@ -190,7 +195,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
   ///
   /// Useful when initializing the field that will hold the current
   /// [rowsPerPage], when implemented [onRowsPerPageChanged].
-  static const int defaultRowsPerPage = 18;
+  static const int defaultRowsPerPage = 14;
 
   /// The options to offer for the rowsPerPage.
   ///
@@ -210,7 +215,7 @@ class CustomPaginatedDataTable extends StatefulWidget {
   /// This object should generally have a lifetime longer than the
   /// [CustomPaginatedDataTable] widget itself; it should be reused each time the
   /// [CustomPaginatedDataTable] constructor is called.
-  final DataTableSource source;
+  final CustomDataTableSource source;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
@@ -228,7 +233,7 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
   int _rowCount;
   bool _rowCountApproximate;
   // int _selectedRowCount;
-  final Map<int, DataRow> _rows = <int, DataRow>{};
+  final Map<int, CustomDataRow> _rows = <int, CustomDataRow>{};
 
   @override
   void initState() {
@@ -275,44 +280,45 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
       widget.onPageChanged(_firstRowIndex);
   }
 
-  DataRow _getBlankRowFor(int index) {
-    return DataRow.byIndex(
+  CustomDataRow _getBlankRowFor(int index) {
+    return CustomDataRow.byIndex(
       index: index,
       cells: widget.columns
-          .map<DataCell>((DataColumn column) => DataCell.empty)
+          .map<CustomDataCell>(
+              (CustomDataColumn column) => CustomDataCell.empty)
           .toList(),
     );
   }
 
-  DataRow _getProgressIndicatorRowFor(int index) {
+  CustomDataRow _getProgressIndicatorRowFor(int index) {
     bool haveProgressIndicator = false;
-    final List<DataCell> cells =
-        widget.columns.map<DataCell>((DataColumn column) {
+    final List<CustomDataCell> cells =
+        widget.columns.map<CustomDataCell>((CustomDataColumn column) {
       if (!column.numeric) {
         haveProgressIndicator = true;
-        return const DataCell(CircularProgressIndicator());
+        return const CustomDataCell(CircularProgressIndicator());
       }
-      return DataCell.empty;
+      return CustomDataCell.empty;
     }).toList();
     if (!haveProgressIndicator) {
       haveProgressIndicator = true;
-      cells[0] = const DataCell(CircularProgressIndicator());
+      cells[0] = const CustomDataCell(CircularProgressIndicator());
     }
-    return DataRow.byIndex(
+    return CustomDataRow.byIndex(
       index: index,
       cells: cells,
     );
   }
 
-  List<DataRow> _getRows(int firstRowIndex, int rowsPerPage) {
-    final List<DataRow> result = <DataRow>[];
+  List<CustomDataRow> _getRows(int firstRowIndex, int rowsPerPage) {
+    final List<CustomDataRow> result = <CustomDataRow>[];
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
     bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
       if (index < _rowCount) {
         // <---
         // This stops "overflow" rows from appearing on the last page.
-        DataRow row;
+        CustomDataRow row;
         if (index < _rowCount || _rowCountApproximate) {
           row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
           if (row == null && !haveProgressIndicator) {
@@ -440,7 +446,7 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
                   constraints: BoxConstraints(minWidth: constraints.minWidth),
                   child: Container(
                     color: ColorDefs.colorDarkest,
-                    child: DataTable(
+                    child: CustomDataTable(
                       showCheckboxColumn: widget.showCheckboxColumn,
                       key: _tableKey,
                       columns: widget.columns,
@@ -449,6 +455,7 @@ class CustomPaginatedDataTableState extends State<CustomPaginatedDataTable> {
                       onSelectAll: widget.onSelectAll,
                       dataRowHeight: widget.dataRowHeight,
                       headingRowHeight: widget.headingRowHeight,
+                      headingRowColor: widget.headingRowColor,
                       horizontalMargin: widget.horizontalMargin,
                       columnSpacing: widget.columnSpacing,
                       rows: _getRows(_firstRowIndex, widget.rowsPerPage),

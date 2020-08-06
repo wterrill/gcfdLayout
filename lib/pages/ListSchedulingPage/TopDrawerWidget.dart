@@ -62,18 +62,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       height: 40,
                       width: double.infinity,
                       color: ColorDefs.colorTopDrawerBackground),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Dialogs.showNotImplemented(context);
-                  //   },
-                  //   // child: Container(
-                  //   //     height: 35.4,
-                  //   //     width: double.infinity,
-                  //   //     color: ColorDefs.colorTopDrawerAlternating,
-                  //   //     child: Center(
-                  //   //         child: Text("Schedule Audit",
-                  //   //             style: ColorDefs.textBodyBlue20))),
-                  // ),
+
                   GestureDetector(
                     onTap: () {
                       SiteList siteList =

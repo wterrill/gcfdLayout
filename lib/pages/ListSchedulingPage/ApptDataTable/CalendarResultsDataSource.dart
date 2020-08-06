@@ -4,7 +4,10 @@ import 'package:auditor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 
-class CalendarResultsDataSource extends DataTableSource {
+import '../CustomDataTable.dart';
+import '../CustomDataTableSource.dart';
+
+class CalendarResultsDataSource extends CustomDataTableSource {
   final List<CalendarResult> _calendarResults;
   CalendarResultsDataSource(this._calendarResults);
 
@@ -25,7 +28,7 @@ class CalendarResultsDataSource extends DataTableSource {
   int _selectedCount = 0;
 
   @override
-  DataRow getRow(int index) {
+  CustomDataRow getRow(int index) {
     assert(index >= 0);
     if (index >= _calendarResults.length) return null;
     final CalendarResult calendarResult = _calendarResults[index];
@@ -47,7 +50,7 @@ class CalendarResultsDataSource extends DataTableSource {
       return color;
     }
 
-    return DataRow.byIndex(
+    return CustomDataRow.byIndex(
         index: index,
         selected: calendarResult.selected,
         onSelectChanged: (bool value) {
@@ -56,61 +59,68 @@ class CalendarResultsDataSource extends DataTableSource {
           Dialogs.showAuditInfo(
               navigatorKey.currentState.overlay.context, calendarResult);
         },
-        cells: <DataCell>[
-          DataCell(Container(
+        cells: <CustomDataCell>[
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(6.0, 4.0, 4.0, 4.0),
-                child: Center(
-                    child: Text('${calendarResult.getDateFormatted()}',
-                        style: ColorDefs.textBodyWhite15)),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                  child: Text('${calendarResult.getDateFormatted()}',
+                      style: ColorDefs.textBodyWhite15),
+                ),
               ))),
-          DataCell(Container(
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
-                    child: Text('${calendarResult.getStartTimeFormatted()}',
-                        style: ColorDefs.textBodyWhite15)),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                  child: Text('${calendarResult.getStartTimeFormatted()}',
+                      style: ColorDefs.textBodyWhite15),
+                ),
               ))),
-          DataCell(Container(
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 250),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 225),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                     child: Text('${calendarResult.agencyName}',
                         style: ColorDefs.textBodyWhite15,
                         overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ))),
-          DataCell(Container(
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
-                    child: Text('${calendarResult.programNum}',
-                        style: ColorDefs.textBodyWhite15)),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                  child: Text('${calendarResult.programNum}',
+                      style: ColorDefs.textBodyWhite15),
+                ),
               ))),
-          DataCell(Container(
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
@@ -124,7 +134,8 @@ class CalendarResultsDataSource extends DataTableSource {
                   decoration: BoxDecoration(
                       color: selectColor(calendarResult.programType),
                       borderRadius: BorderRadius.circular(20.0),
-                      border: Border.all(width: 2.0, color: Colors.grey)),
+                      border: Border.all(
+                          width: 4.0, color: ColorDefs.colorLogoDarkGreen)),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
@@ -146,30 +157,32 @@ class CalendarResultsDataSource extends DataTableSource {
           //           child: Text('${calendarResult.programType}',
           //               style: ColorDefs.textBodyWhite15)),
           //     ))),
-          DataCell(Container(
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Center(
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                     child: Text('${calendarResult.auditor}',
-                        style: ColorDefs.textBodyWhite15)),
-              ))),
-          DataCell(Container(
+                        style: ColorDefs.textBodyWhite15),
+                  )))),
+          CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
               color: index.isEven
                   ? ColorDefs.colorAlternatingDark
                   : ColorDefs.colorDarkBackground,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(4.0, 4.0, 6.0, 4.0),
-                child: Center(
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                     child: Text('${calendarResult.status}',
-                        style: ColorDefs.textBodyWhite15)),
-              ))),
+                        style: ColorDefs.textBodyWhite15),
+                  )))),
         ]);
   }
 

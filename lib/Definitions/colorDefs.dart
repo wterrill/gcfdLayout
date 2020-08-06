@@ -70,8 +70,16 @@ class ColorDefs {
       TextStyle(color: Colors.white, fontSize: 30.0);
   static TextStyle textBodyWhite20 =
       TextStyle(color: Colors.white, fontSize: 20.0);
+  static TextStyle textBodyWhite20Underlined = TextStyle(
+      color: Colors.white,
+      fontSize: 20.0,
+      decoration: TextDecoration.underline);
   static TextStyle textBodyWhite15 =
       TextStyle(color: Colors.white, fontSize: 15.0);
+  static TextStyle textBodyWhite15Underlined = TextStyle(
+      color: Colors.white,
+      fontSize: 15.0,
+      decoration: TextDecoration.underline);
   static TextStyle textBodyWhite10 =
       TextStyle(color: Colors.white, fontSize: 10.0);
 

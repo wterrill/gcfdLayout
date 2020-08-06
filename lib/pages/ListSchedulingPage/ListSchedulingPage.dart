@@ -1,10 +1,15 @@
 import 'dart:ui';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
+import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/SyncCode.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/ApptDataTable.dart';
+import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'TopDrawerWidget.dart';
@@ -19,6 +24,7 @@ class ListSchedulingPage extends StatefulWidget {
 
 class _ListSchedulingPageState extends State<ListSchedulingPage> {
   bool backgroundDisable = false;
+  bool startSync = false;
   // final filterTextController = TextEditingController();
 
   @override
@@ -47,7 +53,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   Widget build(BuildContext context) {
     bool filteredTime =
         Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
-    String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
+    // String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
     AuditorList auditorList =
         Provider.of<ListCalendarData>(context).auditorList;
     return SafeArea(
@@ -68,107 +74,185 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        ConstrainedBox(
-                                          constraints: BoxConstraints(
-                                              maxHeight: 70,
-                                              maxWidth: 400,
-                                              minWidth: 30),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16.0),
-                                            child: FlatButton(
-                                              color: filteredTime
-                                                  ? ColorDefs
-                                                      .colorDarkBackground
-                                                  : ColorDefs.colorAudit2,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18.0),
-                                                  side: BorderSide(
-                                                    color: filteredTime
-                                                        ? ColorDefs.colorAudit2
-                                                        : ColorDefs
-                                                            .colorDarkBackground,
-                                                  )),
-                                              onPressed: () {
-                                                print("Show this week pressed");
-                                                Provider.of<ListCalendarData>(
-                                                        context,
-                                                        listen: false)
-                                                    .toggleFilterTimeToggle();
-                                              },
-                                              child: filteredTime
-                                                  ? Text("Show All",
-                                                      style: ColorDefs
-                                                          .textBodyBlue20)
-                                                  : Text(
-                                                      "Show last $dayOfWeek to next $dayOfWeek ",
-                                                      style: ColorDefs
-                                                          .textBodyWhite20),
+                                  child: Container(
+                                    color: Colors.black,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              child: Row(
+                                            children: [
+                                              Container(width: 30),
+                                              IconButton(
+                                                  icon: FaIcon(
+                                                      FontAwesomeIcons.sync,
+                                                      size: 35),
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      startSync = true;
+                                                    });
+                                                    //// Site Data /////
+                                                    Dialogs.showMessage(
+                                                        context: context,
+                                                        message:
+                                                            "Syncing Site Data",
+                                                        dismissable: false);
+                                                    String deviceid = Provider
+                                                            .of<GeneralData>(
+                                                                context,
+                                                                listen: false)
+                                                        .deviceid;
+                                                    print("before siteSync");
+                                                    await Provider.of<SiteData>(
+                                                            context,
+                                                            listen: false)
+                                                        .siteSync();
+                                                    print("After siteSync");
+                                                    SiteList siteList =
+                                                        Provider.of<SiteData>(
+                                                                context,
+                                                                listen: false)
+                                                            .siteList;
+                                                    print(
+                                                        "after siteList load");
+                                                    Navigator.of(context).pop();
+
+                                                    /// Schedule data ///
+                                                    Dialogs.showMessage(
+                                                        context: context,
+                                                        message:
+                                                            "Syncing Scheduling data: upload and download",
+                                                        dismissable: false);
+                                                    await Provider.of<
+                                                                ListCalendarData>(
+                                                            context,
+                                                            listen: false)
+                                                        .dataSync(
+                                                            context: context,
+                                                            siteList: siteList,
+                                                            deviceid: deviceid,
+                                                            fullSync: false);
+                                                    Navigator.of(context).pop();
+
+                                                    /// Audit Data ///
+                                                    // Navigator.of(context).pop();
+                                                    Dialogs.showMessage(
+                                                        context: context,
+                                                        message:
+                                                            "Syncing Audit calendar data: upload and download",
+                                                        dismissable: false);
+
+                                                    await Provider.of<
+                                                                AuditData>(
+                                                            context,
+                                                            listen: false)
+                                                        .dataSync(
+                                                            context: context,
+                                                            siteList: siteList,
+                                                            deviceid: deviceid,
+                                                            fullSync: false);
+                                                    Navigator.of(context).pop();
+
+                                                    /// Done with sync
+                                                    setState(() {
+                                                      startSync = false;
+                                                    });
+                                                  }),
+                                              Container(width: 30),
+                                              IconButton(
+                                                icon: FaIcon(
+                                                    FontAwesomeIcons.sitemap,
+                                                    size: 35),
+                                                onPressed: () {
+                                                  SiteList siteList =
+                                                      Provider.of<SiteData>(
+                                                              context,
+                                                              listen: false)
+                                                          .siteList;
+                                                  Dialogs.showSites(context,
+                                                      siteList.siteList);
+                                                },
+                                              )
+                                            ],
+                                          )),
+                                          Container(
+                                            height: 70,
+                                            child: Row(
+                                              children: [
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      print(
+                                                          "Show this week pressed");
+                                                      Provider.of<ListCalendarData>(
+                                                              context,
+                                                              listen: false)
+                                                          .toggleFilterTimeToggle();
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                            "${DateFormat('MM/dd').format(DateTime.now().subtract(Duration(days: 7)))}-${DateFormat('MM/dd').format(DateTime.now().add(Duration(days: 7)))}",
+                                                            style: !filteredTime
+                                                                ? ColorDefs
+                                                                    .textBodyWhite15
+                                                                : ColorDefs
+                                                                    .textBodyWhite15Underlined),
+                                                        Container(width: 2),
+                                                        Text("|"),
+                                                        Container(width: 2),
+                                                        Text("Show All",
+                                                            style: filteredTime
+                                                                ? ColorDefs
+                                                                    .textBodyWhite15
+                                                                : ColorDefs
+                                                                    .textBodyWhite15Underlined),
+                                                      ],
+                                                    ) //filteredTime
+
+                                                    ),
+                                                Container(
+                                                  width: 20,
+                                                ),
+                                                FlatButton(
+                                                  color:
+                                                      ColorDefs.colorTopHeader,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.0),
+                                                    side: BorderSide(
+                                                        color: ColorDefs
+                                                            .colorLogoLightGreen,
+                                                        width: 3.0),
+                                                  ),
+                                                  onPressed: () {
+                                                    if (auditorList != null) {
+                                                      Dialogs
+                                                          .showScheduledAudit(
+                                                              context);
+                                                    } else {
+                                                      Dialogs.showNotSynced(
+                                                          context);
+                                                    }
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        5.0, 12.0, 5.0, 12.0),
+                                                    child: Text(
+                                                        "Schedule Audit",
+                                                        style: ColorDefs
+                                                            .textBodyBlack20),
+                                                  ),
+                                                ),
+                                                Container(width: 20)
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              24.0, 0, 0, 0),
-                                          child: FlatButton(
-                                            color: ColorDefs.colorAudit2,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18.0),
-                                                side: BorderSide(
-                                                    color: ColorDefs
-                                                        .colorDarkBackground)),
-                                            onPressed: () {
-                                              if (auditorList != null) {
-                                                Dialogs.showScheduledAudit(
-                                                    context);
-                                              } else {
-                                                Dialogs.showNotSynced(context);
-                                              }
-                                            },
-                                            child: Text("Schedule Audit",
-                                                style:
-                                                    ColorDefs.textBodyWhite20),
-                                          ),
-                                        ),
-                                        // SizedBox(width: 10),
-
-                                        // SizedBox(
-                                        //   height: 40,
-                                        //   width: 250,
-                                        //   child: TextField(
-                                        //     onChanged: (text) {
-                                        //       Provider.of<ListCalendarData>(
-                                        //               context,
-                                        //               listen: false)
-                                        //           .updateFilterValue(
-                                        //               filterTextController
-                                        //                   .text);
-                                        //     },
-                                        //     controller: filterTextController,
-                                        //     style: ColorDefs.textBodyBlack20,
-                                        //     decoration: InputDecoration(
-                                        //         hintStyle: TextStyle(
-                                        //             fontSize: 15.0,
-                                        //             color: Colors.grey),
-                                        //         filled: true,
-                                        //         fillColor: Colors.white,
-                                        //         border: OutlineInputBorder(
-                                        //           borderSide: BorderSide(
-                                        //             color: Colors.teal,
-                                        //           ),
-                                        //         ),
-                                        //         hintText:
-                                        //             'Agency / Program Number Filter'),
-                                        //   ),
-                                        // )
-                                      ]),
+                                        ]),
+                                  ),
                                 ),
                               ),
                               ApptDataTable()
@@ -193,7 +277,8 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
             if (backgroundDisable)
               Container(color: ColorDefs.colorDisabledBackground),
 
-            TopDrawerWidget(),
+            if (Provider.of<GeneralData>(context).showTopDrawer)
+              TopDrawerWidget(),
             // AuditPage()
           ],
         ),

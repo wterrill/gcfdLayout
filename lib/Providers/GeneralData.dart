@@ -15,12 +15,17 @@ class GeneralData with ChangeNotifier {
   bool syncInProgress = false;
   String syncMessage = "";
   bool emailValidated = false;
+  bool showTopDrawer = false;
 
   //SchedulingPage
   bool backgroundDisable;
 
   GeneralData() {
     initializeApp();
+  }
+
+  void toggleShowTopDrawer() {
+    showTopDrawer = !showTopDrawer;
   }
 
   void initializeApp() async {
