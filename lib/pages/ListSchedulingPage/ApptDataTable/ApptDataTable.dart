@@ -7,6 +7,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import '../CustomDataTable.dart';
 import 'CalendarResultsDataSource.dart';
 import 'CustomPaginatedDataTable.dart';
+import 'dart:async';
 
 class ApptDataTable extends StatefulWidget {
   @override
@@ -19,9 +20,9 @@ class _ApptDataTableState extends State<ApptDataTable> {
   void initState() {
     super.initState();
 
-    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
-    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
-    // _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    // Timer(Duration(microseconds: 100), () {
+    //   _sort<String>((CalendarResult d) => d.startDateTime.toString(), 0, false);
+    // });
   }
 
   CalendarResultsDataSource _calendarResultsDataSource =
@@ -31,11 +32,13 @@ class _ApptDataTableState extends State<ApptDataTable> {
   String lastFilterText = "";
   bool filterTimeToggle;
   int _rowsPerPage = CustomPaginatedDataTable.defaultRowsPerPage;
-  int _sortColumnIndex = 1;
+  int _sortColumnIndex = 0;
   bool _sortAscending = false;
 
   void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex,
       bool ascending) {
+    print('columnIndex: $columnIndex');
+    print('ascending: $ascending');
     _calendarResultsDataSource.sort<T>(getField, ascending);
     setState(() {
       _sortColumnIndex = columnIndex;
@@ -134,6 +137,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
     Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
     getData(calendarBox);
     print("BUILD PAGINATEDDATATABLE2");
+    _sort<String>((CalendarResult d) => d.startDateTime.toString(),
+        _sortColumnIndex, _sortAscending);
     return !initializedx
         ? (Text("Initializing..."))
         : Expanded(

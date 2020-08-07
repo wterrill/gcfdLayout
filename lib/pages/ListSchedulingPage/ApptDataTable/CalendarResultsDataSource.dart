@@ -135,7 +135,7 @@ class CalendarResultsDataSource extends CustomDataTableSource {
                       color: selectColor(calendarResult.programType),
                       borderRadius: BorderRadius.circular(20.0),
                       border: Border.all(
-                          width: 4.0, color: ColorDefs.colorLogoDarkGreen)),
+                          width: 4.0, color: ColorDefs.colorLogoLightGreen)),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Center(

@@ -9,6 +9,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Signature for [CustomDataColumn.onSort] callback.
 typedef DataColumnSortCallback = void Function(int columnIndex, bool ascending);
@@ -1041,7 +1042,7 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
   }
 
   static const double _arrowIconBaselineOffset = -1.5;
-  static const double _arrowIconSize = 16.0;
+  static const double _arrowIconSize = 30.0;
 
   @override
   Widget build(BuildContext context) {
@@ -1052,8 +1053,8 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
             Matrix4.rotationZ(_orientationOffset + _orientationAnimation.value)
               ..setTranslationRaw(0.0, _arrowIconBaselineOffset, 0.0),
         alignment: Alignment.center,
-        child: Icon(
-          Icons.arrow_downward,
+        child: FaIcon(
+          FontAwesomeIcons.caretDown,
           size: _arrowIconSize,
           color: (Theme.of(context).brightness == Brightness.light)
               ? Colors.black87
