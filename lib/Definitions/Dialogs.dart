@@ -3,6 +3,7 @@ import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.d
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
 import 'package:auditor/pages/ListSchedulingPage/RescheduleFollowUpAuditDialog.dart';
+import 'package:auditor/pages/ListSchedulingPage/SitePopUp.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:typed_data';
 
+import 'SiteClasses/SiteList.dart';
 import 'colorDefs.dart';
 
 class Dialogs {
@@ -201,53 +203,14 @@ class Dialogs {
     );
   }
 
-  static void showSites(BuildContext context, List<Site> siteList) {
+  static void showSites(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
-      elevation: 6.0,
-      content: Container(
-        width: 600,
-        height: 900,
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: siteList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (siteList[index].agencyName != null)
-                    Text(siteList[index].agencyName),
-                  if (siteList[index].agencyNumber != null)
-                    Text(siteList[index].agencyNumber),
-                  if (siteList[index].address1 != null)
-                    Text(siteList[index].address1),
-                  if (siteList[index].address2 != null)
-                    Text(siteList[index].address2),
-                  if (siteList[index].city != null) Text(siteList[index].city),
-                  if (siteList[index].state != null)
-                    Text(siteList[index].state),
-                  if (siteList[index].zip != null) Text(siteList[index].zip),
-                  if (siteList[index].contact != null)
-                    Text(siteList[index].contact),
-                  if (siteList[index].contactEmail != null)
-                    Text(siteList[index].contactEmail),
-                  if (siteList[index].operateHours != null)
-                    Text(siteList[index].operateHours),
-                  if (siteList[index].programName != null)
-                    Text(siteList[index].programName),
-                  if (siteList[index].programNumber != null)
-                    Text(siteList[index].programNumber),
-                  if (siteList[index].serviceArea != null)
-                    Text(siteList[index].serviceArea),
-                  if (siteList[index].programDisplayName != null)
-                    Text(siteList[index].programDisplayName),
-                ],
-              ));
-            }),
-      ),
-    );
+        contentPadding: EdgeInsets.all(0.0),
+        backgroundColor: Colors.green,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0))),
+        elevation: 0.0,
+        content: SitePopUp());
     showDialog<void>(
       barrierDismissible: true,
       context: context,
@@ -273,10 +236,12 @@ class Dialogs {
     showDialog<void>(
       barrierDismissible: true,
       context: context,
-      builder: (BuildContext context) {
+      builder: (_) {
         return alert;
       },
     );
+
+    // showDialog(context: context, builder: (_) => bodyProgress,);
   }
 
   static void mustBeNumber(BuildContext context) {

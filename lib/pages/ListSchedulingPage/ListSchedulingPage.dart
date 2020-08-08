@@ -171,8 +171,9 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                               context,
                                                               listen: false)
                                                           .siteList;
-                                                  Dialogs.showSites(context,
-                                                      siteList.siteList);
+                                                  Dialogs.showSites(
+                                                    context,
+                                                  );
                                                 },
                                               )
                                             ],

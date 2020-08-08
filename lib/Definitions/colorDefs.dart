@@ -107,6 +107,23 @@ class ColorDefs {
   static TextStyle textGreenLogoLight30 = TextStyle(
       color: colorLogoLightGreen,
       fontSize: 30.0,
-      fontFamily: 'Courier',
-      fontWeight: FontWeight.bold);
+      fontFamily: 'RobotoSlab',
+      fontWeight: FontWeight.w800);
+
+  static TextStyle textGreenLogoDarkBig = TextStyle(
+      color: Color(0xAA0F843E),
+      fontSize: 50.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w800);
+
+  static TextStyle textGreen40 = TextStyle(
+      color: Color(0xAA0F843E),
+      fontSize: 40.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w600);
+  static TextStyle textGreen30 = TextStyle(
+      color: Color(0xAA0F843E),
+      fontSize: 30.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w600);
 }

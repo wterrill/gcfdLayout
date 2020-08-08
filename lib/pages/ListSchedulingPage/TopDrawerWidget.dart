@@ -63,21 +63,21 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget>
                       width: double.infinity,
                       color: ColorDefs.colorTopDrawerBackground),
 
-                  GestureDetector(
-                    onTap: () {
-                      SiteList siteList =
-                          Provider.of<SiteData>(context, listen: false)
-                              .siteList;
-                      Dialogs.showSites(context, siteList.siteList);
-                    },
-                    child: Container(
-                        color: ColorDefs.colorTopDrawerAlternating,
-                        height: 35.4,
-                        width: double.infinity,
-                        child: Center(
-                            child: Text("Sites",
-                                style: ColorDefs.textBodyBlue20))),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     SiteList siteList =
+                  //         Provider.of<SiteData>(context, listen: false)
+                  //             .siteList;
+                  //     Dialogs.showSites(context, siteList.siteList);
+                  //   },
+                  //   child: Container(
+                  //       color: ColorDefs.colorTopDrawerAlternating,
+                  //       height: 35.4,
+                  //       width: double.infinity,
+                  //       child: Center(
+                  //           child: Text("Sites",
+                  //               style: ColorDefs.textBodyBlue20))),
+                  // ),
                   Container(
                       height: 35.4,
                       width: double.infinity,
