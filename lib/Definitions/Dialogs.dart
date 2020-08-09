@@ -20,7 +20,7 @@ class Dialogs {
   static void showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -41,7 +41,7 @@ class Dialogs {
   static void showSuccess(BuildContext context) async {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -68,7 +68,7 @@ class Dialogs {
       @required bool dismissable}) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +123,7 @@ class Dialogs {
       BuildContext context, Function continueCallBack) async {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,7 @@ class Dialogs {
   static void showid(BuildContext context, String deviceid) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +183,7 @@ class Dialogs {
   static void showNotSynced(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +208,7 @@ class Dialogs {
         contentPadding: EdgeInsets.all(0.0),
         backgroundColor: Colors.green,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25.0))),
+            borderRadius: BorderRadius.all(Radius.circular(50.0))),
         elevation: 0.0,
         content: SitePopUp());
     showDialog<void>(
@@ -223,7 +223,7 @@ class Dialogs {
   static void failedAuthentication(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,14 +240,12 @@ class Dialogs {
         return alert;
       },
     );
-
-    // showDialog(context: context, builder: (_) => bodyProgress,);
   }
 
   static void mustBeNumber(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +267,7 @@ class Dialogs {
   static void numbersOnly(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,7 +291,7 @@ class Dialogs {
       BuildContext context, String errorString) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,7 +314,7 @@ class Dialogs {
   static void showVersionDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,7 +338,7 @@ class Dialogs {
   // static void showNotImplemented(BuildContext context) {
   //   AlertDialog alert = AlertDialog(
   //     shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.all(Radius.circular(25.0))),
+  //         borderRadius: BorderRadius.all(Radius.circular(50.0))),
   //     elevation: 6.0,
   //     content: Column(
   //       crossAxisAlignment: CrossAxisAlignment.start,
@@ -362,7 +360,7 @@ class Dialogs {
   static void showBadSchedule(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,7 +383,7 @@ class Dialogs {
   static void showPdfCreated(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -407,7 +405,7 @@ class Dialogs {
   static void showDeveloperMenu(BuildContext context) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       title: Text('Open developer Menu?'),
       content: const Text('Do you want to open the developer menu?'),
       actions: <Widget>[
@@ -440,7 +438,7 @@ class Dialogs {
   static void showDeletePic(BuildContext context, int index) {
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
       title: Text('Delete Pic?'),
       content:
           const Text('Would you like to delete this picture from the audit?'),
@@ -476,8 +474,10 @@ class Dialogs {
       context: context, //navigatorKey.currentState.overlay.context,
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.all(0.0),
+          backgroundColor: ColorDefs.colorTopHeader,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+              borderRadius: BorderRadius.all(Radius.circular(50.0))),
           // title: Text("Audit Info"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
@@ -493,20 +493,22 @@ class Dialogs {
   }
 
   static void showScheduledAudit(
-    BuildContext context,
-  ) {
+      {BuildContext context, Site siteFromLookupScreen}) {
     showGeneralDialog<void>(
-        barrierColor: Colors.black.withOpacity(0.5),
+        // barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
           return Transform.scale(
             scale: a1.value,
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
+                backgroundColor: ColorDefs.colorTopHeader,
                 shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0)),
-                title: Text('Schedule a New Audit:'),
-                content: NewAuditDialog(followup: false),
+                    borderRadius: BorderRadius.circular(50.0)),
+                title:
+                    Text('Schedule a New Audit:', style: ColorDefs.textGreen35),
+                content: NewAuditDialog(
+                    followup: false, loadSite: siteFromLookupScreen),
               ),
             ),
           );

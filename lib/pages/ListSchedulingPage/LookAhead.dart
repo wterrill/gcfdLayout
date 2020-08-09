@@ -48,134 +48,147 @@ class _LookAheadState extends State<LookAhead> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Theme(
-          data: ThemeData.light(),
-          child: TypeAheadField<String>(
-            textFieldConfiguration: TextFieldConfiguration<String>(
-                autofocus: false,
-                decoration: InputDecoration(
-                  hintText: 'Enter agency name or program number',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(
-                        color: Colors.red, //ColorDefs.colorLogoLightGreen,
-                        width: 5.0,
-                      )),
-                  contentPadding: const EdgeInsets.all(10.0),
-                  suffixIcon: IconButton(
-                    onPressed: () => _typeAheadController.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
+        TypeAheadField<String>(
+          textFieldConfiguration: TextFieldConfiguration<String>(
+              autofocus: false,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide: BorderSide(
+                      color: ColorDefs.colorAnotherDarkGreen, width: 3),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide:
+                      BorderSide(color: ColorDefs.colorAudit2, width: 3),
                 ),
 
-                // decoration: InputDecoration(
-                //       focusedBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(25.0),
-                //         borderSide: BorderSide(
-                //           color: Colors.blue,
-                //         ),
-                //       ),
-                //       enabledBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(25.0),
-                //         borderSide: BorderSide(
-                //           color: ColorDefs.colorLogoLightGreen,
-                //           width: 2.0,
-                //         ),
-                //       ),
-                //       contentPadding: const EdgeInsets.all(10.0),
-                //       hintText: "User Name",
-                //       hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
-                //       labelStyle: ColorDefs.textBodyBlack20,
-                //     ),
+// focusedBorder: InputBorder.none,
+//             enabledBorder: InputBorder.none,
+//             errorBorder: InputBorder.none,
+//             disabledBorder: InputBorder.none,
 
-                controller: _typeAheadController),
-            suggestionsCallback: (pattern) async {
-              pattern = pattern.toLowerCase();
-              Iterable<Site> subsites = siteList.siteList.where((Site site) {
-                String sitename = site.programDisplayName;
-                sitename = sitename.toLowerCase();
-                if (siteList.siteList.length == 1) {
-                  return true;
+                isDense: true,
+                contentPadding: EdgeInsets.all(17),
+                hintText: 'Enter agency name or program number',
+                // border: OutlineInputBorder(
+                //     borderRadius: BorderRadius.circular(25.0),
+                //     borderSide: BorderSide(
+                //       color: Colors.red, //ColorDefs.colorLogoLightGreen,
+                //       width: 20.0,
+                //     )),
+                suffixIcon: IconButton(
+                  onPressed: () => _typeAheadController.clear(),
+                  icon: Icon(Icons.clear),
+                ),
+              ),
+
+              // decoration: InputDecoration(
+              //       focusedBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(25.0),
+              //         borderSide: BorderSide(
+              //           color: Colors.blue,
+              //         ),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(25.0),
+              //         borderSide: BorderSide(
+              //           color: ColorDefs.colorLogoLightGreen,
+              //           width: 2.0,
+              //         ),
+              //       ),
+              //       contentPadding: const EdgeInsets.all(10.0),
+              //       hintText: "User Name",
+              //       hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
+              //       labelStyle: ColorDefs.textBodyBlack20,
+              //     ),
+
+              controller: _typeAheadController),
+          suggestionsCallback: (pattern) async {
+            pattern = pattern.toLowerCase();
+            Iterable<Site> subsites = siteList.siteList.where((Site site) {
+              String sitename = site.programDisplayName;
+              sitename = sitename.toLowerCase();
+              if (siteList.siteList.length == 1) {
+                return true;
+              }
+              return sitename.contains(pattern);
+            });
+            Iterable<String> subsubsites = subsites.map((subsite) {
+              String displayName = subsite.programDisplayName;
+              return displayName;
+            });
+            return subsubsites;
+          },
+          itemBuilder: (context, String suggestion) {
+            return GestureDetector(
+              onPanDown: (_) {
+                print(suggestion);
+                if (widget.disable) {
+                  suggestion = widget.setValue + " - " + widget.programNumber;
                 }
-                return sitename.contains(pattern);
-              });
-              Iterable<String> subsubsites = subsites.map((subsite) {
-                String displayName = subsite.programDisplayName;
-                return displayName;
-              });
-              return subsubsites;
-            },
-            itemBuilder: (context, String suggestion) {
-              return GestureDetector(
-                onPanDown: (_) {
-                  print(suggestion);
-                  if (widget.disable) {
-                    suggestion = widget.setValue + " - " + widget.programNumber;
-                  }
-                  _typeAheadController.text = suggestion;
+                _typeAheadController.text = suggestion;
 
-                  List<String> nameArray = [];
-                  List<String> tempArray = suggestion.split(" - ");
-                  if (tempArray.length == 2) {
-                    nameArray = tempArray;
-                  }
-                  if (tempArray.length > 2) {
-                    String biggerName = "";
-                    for (int i = 0; i < tempArray.length - 1; i++) {
-                      if (i == 0) {
-                        biggerName = biggerName + tempArray[i];
-                      } else {
-                        biggerName = biggerName + " - " + tempArray[i];
-                      }
+                List<String> nameArray = [];
+                List<String> tempArray = suggestion.split(" - ");
+                if (tempArray.length == 2) {
+                  nameArray = tempArray;
+                }
+                if (tempArray.length > 2) {
+                  String biggerName = "";
+                  for (int i = 0; i < tempArray.length - 1; i++) {
+                    if (i == 0) {
+                      biggerName = biggerName + tempArray[i];
+                    } else {
+                      biggerName = biggerName + " - " + tempArray[i];
                     }
-                    nameArray.add(biggerName);
-                    nameArray.add(tempArray[tempArray.length - 1]);
                   }
-
-                  print(
-                      "name: ${nameArray[0]} program number: ${nameArray[1]}");
-                  widget.lookAheadCallback(nameArray);
-                },
-                child: Container(
-                  color: ColorDefs.colorAlternatingDark,
-                  child: ListTile(
-                    dense: true,
-                    title: Text(suggestion),
-                  ),
-                ),
-              );
-            },
-            onSuggestionSelected: (suggestion) {
-              if (widget.disable) {
-                suggestion = widget.setValue + " - " + widget.programNumber;
-              }
-              _typeAheadController.text = suggestion; //.titleCase;
-
-              // List<String> nameArray = suggestion.split(" - ");
-              // print("name: ${nameArray[0]} program number: ${nameArray[1]}");
-
-              List<String> nameArray = [];
-              List<String> tempArray = suggestion.split(" - ");
-              if (tempArray.length == 2) {
-                nameArray = tempArray;
-              }
-              if (tempArray.length > 2) {
-                String biggerName = "";
-                for (int i = 0; i < tempArray.length - 1; i++) {
-                  if (i == 0) {
-                    biggerName = biggerName + tempArray[i];
-                  } else {
-                    biggerName = biggerName + " - " + tempArray[i];
-                  }
+                  nameArray.add(biggerName);
+                  nameArray.add(tempArray[tempArray.length - 1]);
                 }
-                nameArray.add(biggerName);
-                nameArray.add(tempArray[tempArray.length - 1]);
-              }
-              print(nameArray);
 
-              widget.lookAheadCallback(nameArray);
-            },
-          ),
+                print("name: ${nameArray[0]} program number: ${nameArray[1]}");
+                widget.lookAheadCallback(nameArray);
+              },
+              child: Container(
+                color: ColorDefs.colorTopHeader,
+                child: ListTile(
+                  dense: true,
+                  title: Text(suggestion, style: ColorDefs.textBodyBlack20),
+                ),
+              ),
+            );
+          },
+          onSuggestionSelected: (suggestion) {
+            if (widget.disable) {
+              suggestion = widget.setValue + " - " + widget.programNumber;
+            }
+            _typeAheadController.text = suggestion; //.titleCase;
+
+            // List<String> nameArray = suggestion.split(" - ");
+            // print("name: ${nameArray[0]} program number: ${nameArray[1]}");
+
+            List<String> nameArray = [];
+            List<String> tempArray = suggestion.split(" - ");
+            if (tempArray.length == 2) {
+              nameArray = tempArray;
+            }
+            if (tempArray.length > 2) {
+              String biggerName = "";
+              for (int i = 0; i < tempArray.length - 1; i++) {
+                if (i == 0) {
+                  biggerName = biggerName + tempArray[i];
+                } else {
+                  biggerName = biggerName + " - " + tempArray[i];
+                }
+              }
+              nameArray.add(biggerName);
+              nameArray.add(tempArray[tempArray.length - 1]);
+            }
+            print(nameArray);
+
+            widget.lookAheadCallback(nameArray);
+          },
         )
       ],
     );

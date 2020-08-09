@@ -132,7 +132,9 @@ class _SitePopUpState extends State<SitePopUp> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              Dialogs.showScheduledAudit(context);
+                              Dialogs.showScheduledAudit(
+                                  context: context,
+                                  siteFromLookupScreen: selectedSite);
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(
@@ -141,9 +143,11 @@ class _SitePopUpState extends State<SitePopUp> {
                                   style: ColorDefs.textBodyBlack20),
                             ),
                           ),
+                          Container(height: 10),
                           if (selectedSite.operateHours != null)
                             Text("Hours of Operation:",
                                 style: ColorDefs.textBodyBlack30),
+                          Container(height: 10),
                           if (selectedSite.operateHours != null)
                             Text(
                               selectedSite?.operateHours
@@ -153,6 +157,7 @@ class _SitePopUpState extends State<SitePopUp> {
                                   "None Defined",
                               style: ColorDefs.textBodyBlack20,
                             ),
+                          Container(height: 60)
                         ],
                       )),
                 ),

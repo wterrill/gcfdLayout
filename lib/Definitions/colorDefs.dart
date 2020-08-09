@@ -36,6 +36,7 @@ class ColorDefs {
 
   static Color colorLogoDarkGreen = Color(0xAA1C4326);
   static Color colorLogoLightGreen = Color(0xAA148E44);
+  static Color colorAnotherDarkGreen = Color(0xAA0F843E);
 
 ///////////////////////////////////////////////////////////////////////
 // Questionnaire
@@ -111,19 +112,34 @@ class ColorDefs {
       fontWeight: FontWeight.w800);
 
   static TextStyle textGreenLogoDarkBig = TextStyle(
-      color: Color(0xAA0F843E),
+      color: colorAnotherDarkGreen,
       fontSize: 50.0,
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
       fontWeight: FontWeight.w800);
 
   static TextStyle textGreen40 = TextStyle(
-      color: Color(0xAA0F843E),
+      color: colorAnotherDarkGreen,
       fontSize: 40.0,
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
+      fontWeight: FontWeight.w600);
+  static TextStyle textGreen25 = TextStyle(
+      color: colorAnotherDarkGreen,
+      fontSize: 25.0,
+      // fontFamily: 'Roboto',
+      fontWeight: FontWeight.w600);
+  static TextStyle textGreen20 = TextStyle(
+      color: colorAnotherDarkGreen,
+      fontSize: 20.0,
+      // fontFamily: 'Roboto',
+      fontWeight: FontWeight.w600);
+  static TextStyle textGreen35 = TextStyle(
+      color: colorAnotherDarkGreen,
+      fontSize: 35.0,
+      // fontFamily: 'Roboto',
       fontWeight: FontWeight.w600);
   static TextStyle textGreen30 = TextStyle(
-      color: Color(0xAA0F843E),
+      color: colorAnotherDarkGreen,
       fontSize: 30.0,
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
       fontWeight: FontWeight.w600);
 }

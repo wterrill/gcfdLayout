@@ -197,18 +197,18 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                             "${DateFormat('MM/dd').format(DateTime.now().subtract(Duration(days: 7)))}-${DateFormat('MM/dd').format(DateTime.now().add(Duration(days: 7)))}",
                                                             style: !filteredTime
                                                                 ? ColorDefs
-                                                                    .textBodyWhite15
+                                                                    .textBodyWhite20
                                                                 : ColorDefs
-                                                                    .textBodyWhite15Underlined),
+                                                                    .textBodyWhite20Underlined),
                                                         Container(width: 2),
                                                         Text("|"),
                                                         Container(width: 2),
                                                         Text("Show All",
                                                             style: filteredTime
                                                                 ? ColorDefs
-                                                                    .textBodyWhite15
+                                                                    .textBodyWhite20
                                                                 : ColorDefs
-                                                                    .textBodyWhite15Underlined),
+                                                                    .textBodyWhite20Underlined),
                                                       ],
                                                     ) //filteredTime
 
@@ -232,7 +232,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                                     if (auditorList != null) {
                                                       Dialogs
                                                           .showScheduledAudit(
-                                                              context);
+                                                              context: context);
                                                     } else {
                                                       Dialogs.showNotSynced(
                                                           context);

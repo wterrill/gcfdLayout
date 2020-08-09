@@ -17,10 +17,14 @@ class AuditInfoDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     bool alreadyExist = Provider.of<AuditData>(context, listen: false)
         .auditExists(calendarResult);
-    return Material(
+
+    Widget oldVersion = Material(
       child: Container(
+        decoration: BoxDecoration(
+            color: ColorDefs.colorTopHeader,
+            borderRadius: BorderRadius.all(Radius.circular(25.0))),
         height: 600,
-        width: 350,
+        width: 500,
         child: Column(
           children: [
             //Site Name
@@ -298,5 +302,94 @@ class AuditInfoDialog extends StatelessWidget {
         ),
       ),
     );
+
+    bool newVersion = true;
+
+    Widget newWidget = Container(
+        decoration: BoxDecoration(
+            color: ColorDefs.colorTopHeader,
+            borderRadius: BorderRadius.all(Radius.circular(25.0))),
+        height: 600,
+        width: 500,
+        child: Column(
+          children: [
+            Expanded(
+                flex: 2,
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: calendarResult.programTypeColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0))),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(calendarResult.agencyName,
+                              // textAlign: TextAlign.left,
+                              style: ColorDefs.textBodyWhite30),
+                          Container(height: 10),
+                          if (calendarResult.siteInfo?.address1 != null)
+                            Container(
+                              // color: Colors.grey,
+                              child: AutoSizeText(
+                                  calendarResult.siteInfo.address1,
+                                  style: ColorDefs.textBodyWhite20),
+                            ),
+                          if (calendarResult.siteInfo?.address2 != null)
+                            Container(
+                              // color: Colors.grey,
+                              child: AutoSizeText(
+                                  calendarResult.siteInfo.address2,
+                                  style: ColorDefs.textBodyWhite20),
+                            ),
+                          if (calendarResult.siteInfo?.city != null)
+                            Container(
+                              // color: Colors.grey,
+                              child: AutoSizeText(
+                                  '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state ?? ""},  ${calendarResult.siteInfo.zip ?? ""},',
+                                  style: ColorDefs.textBodyWhite20),
+                            ),
+                          if (calendarResult.siteInfo?.contact != null)
+                            Container(
+                              // color: Colors.grey,
+                              child: AutoSizeText(
+                                  '${calendarResult.siteInfo.contact}',
+                                  style: ColorDefs.textBodyWhite20),
+                            ),
+                          // if (calendarResult.siteInfo?.contactEmail != null)
+                          //   Container(
+                          //     // color: Colors.grey,
+                          //     child: AutoSizeText(
+                          //         '${calendarResult.siteInfo.contactEmail}',
+                          //         style: ColorDefs.textBodyBlue20),
+                          //   ),
+                          if (calendarResult.siteInfo?.operateHours != null)
+                            Container(
+                                child: RaisedButton(
+                                    onPressed: () {
+                                      Dialogs.showMessage(
+                                          context: context,
+                                          message: calendarResult
+                                              .siteInfo.operateHours
+                                              .replaceAll("\$", "")
+                                              .replaceAll("||", "    ")
+                                              .replaceAll("\\n", "\n\n")
+                                              .replaceAll("|", "   "),
+                                          dismissable: true);
+                                    },
+                                    child: Text("Show operating hours"))),
+                        ],
+                      ),
+                    ))),
+            Expanded(
+                flex: 3,
+                child: Text("beer2", style: ColorDefs.textBodyBlack30)),
+          ],
+        ));
+
+    return newVersion ? newWidget : oldVersion;
   }
 }
