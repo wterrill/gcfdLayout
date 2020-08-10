@@ -14,13 +14,7 @@ class CommentSection extends StatefulWidget {
   final Section activeSection;
   final bool mandatory;
   final bool numKeyboard;
-  CommentSection(
-      {Key key,
-      @required this.index,
-      @required this.activeSection,
-      @required this.mandatory,
-      @required this.numKeyboard})
-      : super(key: key);
+  CommentSection({Key key, @required this.index, @required this.activeSection, @required this.mandatory, @required this.numKeyboard}) : super(key: key);
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -34,8 +28,7 @@ class _CommentSectionState extends State<CommentSection> {
     String text;
 
     if (widget.mandatory) {
-      text =
-          widget.activeSection.questions[widget.index].userResponse?.toString();
+      text = widget.activeSection.questions[widget.index].userResponse?.toString();
     } else {
       text = widget.activeSection.questions[widget.index].optionalComment;
     }
@@ -51,30 +44,20 @@ class _CommentSectionState extends State<CommentSection> {
     int index = widget.index;
     // Section activeSection = widget.activeSection;
     return AnimatedContainer(
+      decoration: BoxDecoration(color: ColorDefs.colorTopHeader, borderRadius: BorderRadius.all(Radius.circular(25.0))),
       height: widget.activeSection.questions[index].textBoxRollOut ? 80 : 0,
-      color: Colors.white,
       duration: Duration(milliseconds: 150),
       child: TextField(
-        keyboardType:
-            widget.numKeyboard ? TextInputType.number : TextInputType.text,
+        keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          if (Provider.of<AuditData>(context, listen: false)
-                  .activeAudit
-                  .calendarResult
-                  .status !=
-              "Scheduled") {
-            Dialogs.showMessage(
-                context: context,
-                message:
-                    "This audit has already been submitted, and cannot be edited",
-                dismissable: true);
+          if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
+            Dialogs.showMessage(context: context, message: "This audit has already been submitted, and cannot be edited", dismissable: true);
           } else {
             if (widget.mandatory) {
               if (widget.numKeyboard) {
                 try {
-                  widget.activeSection.questions[index].userResponse =
-                      int.parse(value);
+                  widget.activeSection.questions[index].userResponse = int.parse(value);
                 } catch (error) {
                   Dialogs.mustBeNumber(context);
                 }
@@ -94,27 +77,21 @@ class _CommentSectionState extends State<CommentSection> {
               widget.activeSection.questions[index].optionalComment = value;
             }
 
-            Audit thisAudit =
-                Provider.of<AuditData>(context, listen: false).activeAudit;
-            Provider.of<AuditData>(context, listen: false)
-                .saveAuditLocally(thisAudit);
+            Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+            Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
           }
         },
         maxLines: null,
-        style: widget.activeSection.questions[index].textBoxRollOut
-            ? ColorDefs.textBodyBlack20
-            : ColorDefs.textTransparent,
+        style: widget.activeSection.questions[index].textBoxRollOut ? ColorDefs.textBodyBlack20 : ColorDefs.textTransparent,
         decoration: InputDecoration(
             suffixIcon: (widget.activeSection.questions[index].textBoxRollOut)
                 ? IconButton(
                     onPressed: () {
                       controller.clear();
                       if (widget.mandatory) {
-                        widget.activeSection.questions[widget.index]
-                            .userResponse = "";
+                        widget.activeSection.questions[widget.index].userResponse = "";
                       } else {
-                        widget.activeSection.questions[widget.index]
-                            .optionalComment = "";
+                        widget.activeSection.questions[widget.index].optionalComment = "";
                       }
                     },
                     icon: Icon(Icons.clear),
@@ -125,8 +102,7 @@ class _CommentSectionState extends State<CommentSection> {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
             hintText: "Enter comments "),
       ),
     );

@@ -168,12 +168,23 @@ class _AuditPageState extends State<AuditPage> {
                           ),
                       if (activeSection?.name == "Confirm Details" &&
                           activeAudit.detailsConfirmed == false)
-                        RaisedButton(
+                        FlatButton(
+                          // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                20.0, 12.0, 20.0, 12.0),
+                            child: Text("Confirm",
+                                style: ColorDefs.textBodyBlack20),
+                          ),
                           disabledColor: ColorDefs.colorButtonNeutral,
-                          color: Colors.blue,
-                          textColor: Colors.black,
-                          child:
-                              Text("Confirm", style: ColorDefs.textBodyBlack20),
+                          color: ColorDefs.colorTopHeader,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                              side: BorderSide(
+                                  color: ColorDefs.colorAnotherDarkGreen,
+                                  width: 3.0)),
+
+                          // disabledTextColor: Colors.blue,
                           onPressed: (!Provider.of<GeneralData>(context)
                                   .confirmButtonEnabled)
                               ? null
@@ -209,14 +220,30 @@ class _AuditPageState extends State<AuditPage> {
                                   }
                                 },
                         ),
+
+                      //),
+
                       if (activeSection?.name == "Verification")
                         if (showSubmitButton)
-                          RaisedButton(
+                          FlatButton(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    20.0, 12.0, 20.0, 12.0),
+                                child: Text("Submit Audit",
+                                    style: ColorDefs.textBodyBlack30),
+                              ),
+                              color: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(50),
+                                  ),
+                                  side: BorderSide(
+                                      color: ColorDefs.colorAnotherDarkGreen,
+                                      width: 3.0)),
                               disabledColor: ColorDefs.colorButtonNeutral,
-                              color: Colors.blue,
-                              textColor: Colors.black,
-                              child: Text("Submit Audit",
-                                  style: ColorDefs.textBodyBlack20),
+                              // color: Colors.blue,
+                              // textColor: Colors.black,
+                              // child: Text("Submit Audit", style: ColorDefs.textBodyBlack20),
                               onPressed: (() async {
                                 // Save Date time
                                 activeAudit.calendarResult.endDateTime =
@@ -280,11 +307,24 @@ class _AuditPageState extends State<AuditPage> {
                             Navigator.of(context).pop();
                           },
                         ),
+                      Container(height: 10),
                       FlatButton(
-                        color: Colors.blue,
-                        textColor: Colors.black,
-                        child: Text("Close and Save Audit",
-                            style: ColorDefs.textBodyBlack20),
+                        disabledColor: ColorDefs.colorButtonNeutral,
+                        color: ColorDefs.colorTopHeader,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0),
+                            side: BorderSide(
+                                color: ColorDefs.colorAnotherDarkGreen,
+                                width: 3.0)),
+
+                        // color: Colors.blue,
+                        // textColor: Colors.black,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                          child: Text("Close and Save",
+                              style: ColorDefs.textBodyBlack20),
+                        ),
                         onPressed: () {
                           Provider.of<AuditData>(context, listen: false)
                               .toggleStartAudit();
@@ -296,6 +336,7 @@ class _AuditPageState extends State<AuditPage> {
                           Navigator.of(context).pop();
                         },
                       ),
+                      Container(height: 10)
                     ],
                   ),
                 )),

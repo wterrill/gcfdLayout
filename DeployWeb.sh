@@ -27,7 +27,7 @@ echo "Continuing flutter build"
 # echo "building web version"
 # flutter build web --release
 # echo "moving built web version to wterrill.github.io"
-# mv ./build/web/* ./wterrill.github.io/
+# cp -fr ./build/web/* ./wterrill.github.io/ 
 # cd wterrill.github.io
 # echo "pushing new version to github"
 # git add .
@@ -50,7 +50,7 @@ sed -i '' "s/:88/:90/g" lib/communications/Comms.dart
 echo "building web version"
 flutter build web --release
 echo "moving built web version to websiteTesting"
-mv ./build/web/* ./websiteTesting/
+cp -fr ./build/web/* ./websiteTesting/ 
 cd websiteTesting
 echo "pushing new version to github"
 git add .

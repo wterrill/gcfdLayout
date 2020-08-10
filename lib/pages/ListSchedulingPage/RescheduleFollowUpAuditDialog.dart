@@ -13,18 +13,14 @@ import 'LookAhead.dart';
 
 class RescheduleFollowUpAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
-  RescheduleFollowUpAuditDialog({
-    Key key,
-    @required this.calendarResult,
-  }) : super(key: key);
+  final bool alreadyExists;
+  RescheduleFollowUpAuditDialog({Key key, @required this.calendarResult, this.alreadyExists}) : super(key: key);
 
   @override
-  _RescheduleFollowUpAuditDialogState createState() =>
-      _RescheduleFollowUpAuditDialogState();
+  _RescheduleFollowUpAuditDialogState createState() => _RescheduleFollowUpAuditDialogState();
 }
 
-class _RescheduleFollowUpAuditDialogState
-    extends State<RescheduleFollowUpAuditDialog> {
+class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditDialog> {
   final _formKey = GlobalKey<FormState>();
   String selectedAuditType = "Select";
   String selectedProgType = "Select";
@@ -47,8 +43,7 @@ class _RescheduleFollowUpAuditDialogState
 
       this.selectedProgType = widget.calendarResult.programType;
       this.selectedDate = widget.calendarResult.startDateTime;
-      this.selectedTime =
-          TimeOfDay.fromDateTime(widget.calendarResult.startDateTime);
+      this.selectedTime = TimeOfDay.fromDateTime(widget.calendarResult.startDateTime);
       this.selectedSiteName = widget.calendarResult.agencyName;
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
@@ -57,9 +52,7 @@ class _RescheduleFollowUpAuditDialogState
       alreadyExisted = true;
     }
 
-    auditorDropDownMenu = Provider.of<ListCalendarData>(context, listen: false)
-        .auditorList
-        .getAuditorDropDown();
+    auditorDropDownMenu = Provider.of<ListCalendarData>(context, listen: false).auditorList.getAuditorDropDown();
     siteList = Provider.of<SiteData>(context, listen: false).siteList;
   }
 
@@ -127,8 +120,7 @@ class _RescheduleFollowUpAuditDialogState
 
     bool pastTimeWarning() {
       bool pastTime = false;
-      DateTime enteredTime = DateTime(selectedDate.year, selectedDate.month,
-          selectedDate.day, selectedTime.hour, selectedTime.minute);
+      DateTime enteredTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
       if (DateTime.now().isAfter(enteredTime)) {
         pastTime = true;
       }
@@ -136,8 +128,7 @@ class _RescheduleFollowUpAuditDialogState
     }
 
     List<DropdownMenuItem<String>> dropdown(List<String> stringArray) {
-      List<DropdownMenuItem<String>> dropDownList =
-          stringArray.map<DropdownMenuItem<String>>((String value) {
+      List<DropdownMenuItem<String>> dropDownList = stringArray.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(
@@ -150,8 +141,8 @@ class _RescheduleFollowUpAuditDialogState
     }
 
     return Container(
-      width: 500,
-      height: 500,
+      width: 700,
+      height: 650,
       child: Form(
         key: _formKey,
         child: Column(
@@ -165,8 +156,7 @@ class _RescheduleFollowUpAuditDialogState
               lookAheadCallback: (List<String> val) {
                 selectedSiteName = val[0];
                 selectedProgramNumber = val[1];
-                selectedAgencyNum =
-                    siteList.agencyNumFromAgencyName(selectedSiteName);
+                selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
                 print(selectedAgencyNum);
               },
             ),
@@ -187,9 +177,7 @@ class _RescheduleFollowUpAuditDialogState
                       style: ColorDefs.textBodyBlack20,
                       underline: Container(
                         height: 2,
-                        color: (selectedAuditType == "")
-                            ? Colors.red
-                            : Colors.green,
+                        color: (selectedAuditType == "") ? Colors.red : Colors.green,
                       ),
                       onChanged: (String newValue) {
                         setState(() {
@@ -277,8 +265,7 @@ class _RescheduleFollowUpAuditDialogState
                       }
                     });
                   },
-                  child:
-                      Text(DateFormat('EEE MM-dd-yyyy').format(selectedDate)),
+                  child: Text(DateFormat('EEE MM-dd-yyyy').format(selectedDate)),
                 ),
               ],
             ),
@@ -289,8 +276,7 @@ class _RescheduleFollowUpAuditDialogState
                 Text("Start Time", style: ColorDefs.textBodyBlue20),
                 GestureDetector(
                   onTap: () async {
-                    TimeOfDay fromTimeSelector = await showTimePicker(
-                        context: context, initialTime: selectedTime
+                    TimeOfDay fromTimeSelector = await showTimePicker(context: context, initialTime: selectedTime
                         // builder: (BuildContext context, Widget child) {
                         //   return Directionality(
                         //     // textDirection: TextDirection.LTR,
@@ -328,8 +314,7 @@ class _RescheduleFollowUpAuditDialogState
                     style: ColorDefs.textBodyBlack20,
                     underline: Container(
                       height: 2,
-                      color:
-                          (selectedAuditType == "") ? Colors.red : Colors.green,
+                      color: (selectedAuditType == "") ? Colors.red : Colors.green,
                     ),
                     onChanged: (String newValue) {
                       setState(() {
@@ -346,9 +331,7 @@ class _RescheduleFollowUpAuditDialogState
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
               child: FlatButton(
                   color: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: ColorDefs.colorAudit2)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0), side: BorderSide(color: ColorDefs.colorAudit2)),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -366,27 +349,18 @@ class _RescheduleFollowUpAuditDialogState
 
                       bool validated = validateEntry();
 
-                      Map<String, dynamic> oldAuditCitationsObject =
-                          widget.calendarResult.citationsToFollowUp;
+                      Map<String, dynamic> oldAuditCitationsObject = widget.calendarResult.citationsToFollowUp;
 
                       if (validated && timeInPastOK) {
-                        Provider.of<ListCalendarData>(context, listen: false)
-                            .deleteCalendarItem(widget.calendarResult);
+                        Provider.of<ListCalendarData>(context, listen: false).deleteCalendarItem(widget.calendarResult);
 
-                        DateTime selectedDateTime = DateTime(
-                            selectedDate.year,
-                            selectedDate.month,
-                            selectedDate.day,
-                            selectedTime.hour,
-                            selectedTime.minute);
+                        DateTime selectedDateTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
                         print(selectedDateTime.toString());
                         print(selectedSiteName);
                         print(selectedProgramNumber);
 
                         // Map<String, dynamic> oldAuditCitationsObject;
-                        String deviceid =
-                            Provider.of<GeneralData>(context, listen: false)
-                                .deviceid;
+                        String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;
                         // if (widget.followup) {
                         //   oldAuditCitationsObject =
                         //       Provider.of<AuditData>(context, listen: false)
@@ -401,16 +375,11 @@ class _RescheduleFollowUpAuditDialogState
                         if (oldAuditCitationsObject != null) {
                           oldAuditCitationsObject['PreviousEvent'] = {
                             'StartTime': alreadyExistedCalendarResult.startTime,
-                            'AgencyName':
-                                alreadyExistedCalendarResult.agencyName,
-                            'AgencyNumber':
-                                alreadyExistedCalendarResult.agencyNum,
-                            'ProgramNumber':
-                                alreadyExistedCalendarResult.programNum,
+                            'AgencyName': alreadyExistedCalendarResult.agencyName,
+                            'AgencyNumber': alreadyExistedCalendarResult.agencyNum,
+                            'ProgramNumber': alreadyExistedCalendarResult.programNum,
                             'AuditType': alreadyExistedCalendarResult.auditType,
-                            'ProgramType': alreadyExistedCalendarResult
-                                .programType
-                                .toString(),
+                            'ProgramType': alreadyExistedCalendarResult.programType.toString(),
                             'Auditor': alreadyExistedCalendarResult.auditor
                           };
                         }
@@ -429,15 +398,12 @@ class _RescheduleFollowUpAuditDialogState
                           'citationsToFollowUp': oldAuditCitationsObject
                         };
 
-                        bool exists = Provider.of<ListCalendarData>(context,
-                                listen: false)
-                            .checkBoxEvent(
+                        bool exists = Provider.of<ListCalendarData>(context, listen: false).checkBoxEvent(
                           event: newEvent,
                         );
 
                         if (!exists) {
-                          Provider.of<ListCalendarData>(context, listen: false)
-                              .addBoxEvent(
+                          Provider.of<ListCalendarData>(context, listen: false).addBoxEvent(
                             event: newEvent,
                             notify: true,
                           );
@@ -445,8 +411,7 @@ class _RescheduleFollowUpAuditDialogState
                           Dialogs.showMessage(
                               context: context,
                               dismissable: true,
-                              message:
-                                  "An audit exists at this location for the same time and same auditor. \nPlease check your entry and try again.");
+                              message: "An audit exists at this location for the same time and same auditor. \nPlease check your entry and try again.");
                         }
 
                         if (!exists) {
@@ -460,8 +425,7 @@ class _RescheduleFollowUpAuditDialogState
                       }
                     }
                   },
-                  child: Text("Reschedule Follow-Up Audit",
-                      style: ColorDefs.textBodyBlue20)),
+                  child: Text("Reschedule Follow-Up Audit", style: ColorDefs.textBodyBlue20)),
             ),
           ],
         ),

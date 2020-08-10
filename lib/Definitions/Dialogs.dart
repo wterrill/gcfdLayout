@@ -19,8 +19,7 @@ import 'colorDefs.dart';
 class Dialogs {
   static void showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -40,16 +39,12 @@ class Dialogs {
 
   static void showSuccess(BuildContext context) async {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 5),
-              child: Text(
-                  "The Audit has been successfully saved and will upload during the next sync")),
+          Container(margin: EdgeInsets.only(left: 5), child: Text("The Audit has been successfully saved and will upload during the next sync")),
         ],
       ),
     );
@@ -62,13 +57,9 @@ class Dialogs {
     );
   }
 
-  static void showMessage(
-      {@required BuildContext context,
-      @required String message,
-      @required bool dismissable}) {
+  static void showMessage({@required BuildContext context, @required String message, @required bool dismissable}) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,15 +78,13 @@ class Dialogs {
     );
   }
 
-  static void showPicture(
-      {BuildContext context, Uint8List image, bool dismissable}) {
+  static void showPicture({BuildContext context, Uint8List image, bool dismissable}) {
     showDialog<void>(
       context: context,
       barrierDismissible: dismissable,
       builder: (_) => new AlertDialog(
         contentPadding: EdgeInsets.all(2.0),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30.0))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
         content: Builder(
           builder: (context) {
             // Get available height and width of the build area of this widget. Make a choice depending on the size.
@@ -119,18 +108,15 @@ class Dialogs {
     );
   }
 
-  static void timeInPast(
-      BuildContext context, Function continueCallBack) async {
+  static void timeInPast(BuildContext context, Function continueCallBack) async {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-              'The date and time you entered is in the past.  Are you sure you want to schedule this audit?'),
+          Text('The date and time you entered is in the past.  Are you sure you want to schedule this audit?'),
         ],
       ),
       actions: <Widget>[
@@ -160,8 +146,7 @@ class Dialogs {
 
   static void showid(BuildContext context, String deviceid) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,15 +167,13 @@ class Dialogs {
 
   static void showNotSynced(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-              'This device has not had an initial sync with the database.  Please connect to a wifi connection and allow the device to sync prior to initial use.'),
+          Text('This device has not had an initial sync with the database.  Please connect to a wifi connection and allow the device to sync prior to initial use.'),
         ],
       ),
     );
@@ -203,14 +186,13 @@ class Dialogs {
     );
   }
 
-  static void showSites(BuildContext context) {
+  static void showSites({BuildContext context, String agencyNum}) {
     AlertDialog alert = AlertDialog(
         contentPadding: EdgeInsets.all(0.0),
         backgroundColor: Colors.green,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(50.0))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
         elevation: 0.0,
-        content: SitePopUp());
+        content: SitePopUp(agencyNum: agencyNum));
     showDialog<void>(
       barrierDismissible: true,
       context: context,
@@ -222,8 +204,7 @@ class Dialogs {
 
   static void failedAuthentication(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,8 +225,7 @@ class Dialogs {
 
   static void mustBeNumber(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,15 +246,13 @@ class Dialogs {
 
   static void numbersOnly(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-              'This field only accepts numbers.  Please enter a whole digit number'),
+          Text('This field only accepts numbers.  Please enter a whole digit number'),
         ],
       ),
     );
@@ -287,18 +265,15 @@ class Dialogs {
     );
   }
 
-  static void failedAuthenticationWithError(
-      BuildContext context, String errorString) {
+  static void failedAuthenticationWithError(BuildContext context, String errorString) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-              'There was an error communicating with the server. Error = $errorString'),
+          Text('There was an error communicating with the server. Error = $errorString'),
         ],
       ),
     );
@@ -313,8 +288,7 @@ class Dialogs {
 
   static void showVersionDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,15 +333,13 @@ class Dialogs {
 
   static void showBadSchedule(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-              'This audit cannot be scheduled as entered.  Please verify that all fields are filled.'),
+          Text('This audit cannot be scheduled as entered.  Please verify that all fields are filled.'),
         ],
       ),
     );
@@ -382,8 +354,7 @@ class Dialogs {
 
   static void showPdfCreated(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -404,8 +375,7 @@ class Dialogs {
 
   static void showDeveloperMenu(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       title: Text('Open developer Menu?'),
       content: const Text('Do you want to open the developer menu?'),
       actions: <Widget>[
@@ -437,11 +407,9 @@ class Dialogs {
 
   static void showDeletePic(BuildContext context, int index) {
     AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       title: Text('Delete Pic?'),
-      content:
-          const Text('Would you like to delete this picture from the audit?'),
+      content: const Text('Would you like to delete this picture from the audit?'),
       actions: <Widget>[
         FlatButton(
           child: const Text('CANCEL'),
@@ -452,8 +420,7 @@ class Dialogs {
         FlatButton(
           child: const Text('YES'),
           onPressed: () {
-            Provider.of<AuditData>(context, listen: false)
-                .removePicAtIndex(index);
+            Provider.of<AuditData>(context, listen: false).removePicAtIndex(index);
             Navigator.of(context, rootNavigator: true).pop();
           },
         )
@@ -468,23 +435,18 @@ class Dialogs {
     );
   }
 
-  static void showAuditInfo(
-      BuildContext context, CalendarResult calendarResult) {
+  static void showAuditInfo(BuildContext context, CalendarResult calendarResult) {
     showDialog<void>(
       context: context, //navigatorKey.currentState.overlay.context,
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(0.0),
           backgroundColor: ColorDefs.colorTopHeader,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(50.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
           // title: Text("Audit Info"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              return SingleChildScrollView(
-                  child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: AuditInfoDialog(calendarResult: calendarResult)));
+              return SingleChildScrollView(child: FittedBox(fit: BoxFit.contain, child: AuditInfoDialog(calendarResult: calendarResult)));
             },
           ),
         );
@@ -492,8 +454,7 @@ class Dialogs {
     );
   }
 
-  static void showScheduledAudit(
-      {BuildContext context, Site siteFromLookupScreen}) {
+  static void showScheduledAudit({BuildContext context, Site siteFromLookupScreen}) {
     showGeneralDialog<void>(
         // barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
@@ -503,12 +464,9 @@ class Dialogs {
               opacity: a1.value,
               child: AlertDialog(
                 backgroundColor: ColorDefs.colorTopHeader,
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0)),
-                title:
-                    Text('Schedule a New Audit:', style: ColorDefs.textGreen35),
-                content: NewAuditDialog(
-                    followup: false, loadSite: siteFromLookupScreen),
+                shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
+                title: Text('Schedule a New Audit:', style: ColorDefs.textGreen35),
+                content: NewAuditDialog(followup: false, loadSite: siteFromLookupScreen),
               ),
             ),
           );
@@ -522,32 +480,23 @@ class Dialogs {
         });
   }
 
-  static void showRescheduleAudit(BuildContext context,
-      {CalendarResult calendarResult, bool followup}) {
-    bool rescheduleFollowUp = (followup == true &&
-        calendarResult.auditType == "Follow Up" &&
-        calendarResult.status == "Scheduled");
+  static void showRescheduleAudit(BuildContext context, {CalendarResult calendarResult, bool followup, bool alreadyExists}) {
+    bool rescheduleFollowUp = (followup == true && calendarResult.auditType == "Follow Up" && calendarResult.status == "Scheduled");
     showGeneralDialog<void>(
-        barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
           return Transform.scale(
             scale: a1.value,
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0)),
-                title: (followup && calendarResult.auditType == "Follow Up")
-                    ? Text('Schedule Follow Up')
-                    : Text('Reschedule this Audit:'),
+                backgroundColor: ColorDefs.colorTopHeader,
+                shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
+                title: (followup) //&& calendarResult.auditType == "Follow Up"
+                    ? Text('Schedule Follow Up', style: ColorDefs.textGreen40)
+                    : Text('Reschedule this Audit:', style: ColorDefs.textGreen40),
                 content: rescheduleFollowUp
-                    ? RescheduleFollowUpAuditDialog(
-                        calendarResult: calendarResult,
-                      )
-                    : NewAuditDialog(
-                        calendarResult: calendarResult,
-                        followup: followup,
-                      ),
+                    ? RescheduleFollowUpAuditDialog(calendarResult: calendarResult, alreadyExists: alreadyExists)
+                    : NewAuditDialog(calendarResult: calendarResult, followup: followup, alreadyExists: alreadyExists),
               ),
             ),
           );

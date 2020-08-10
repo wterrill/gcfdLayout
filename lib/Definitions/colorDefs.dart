@@ -2,23 +2,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorDefs {
-  static Color colorTopHeader =
-      Color(0xFFFEFEFE); // off white for main header and text and borders
-  static Color colorDarkBackground =
-      Color(0xFF343434); // grey for big background and row
-  static Color colorAlternatingDark =
-      Color(0xFF393939); // grey for alternating lines
-  static Color colorCalendarHeader =
-      Color(0xFF5B5B5B); // light gray for calendar header
-  static Color colorButton1Background =
-      Color(0xFF717171); // left / right button background
-  static Color colorTimeBackground =
-      Color(0xFF303030); // background of time column / date row
+  static Color colorTopHeader = Color(0xFFFEFEFE); // off white for main header and text and borders
+  static Color colorDarkBackground = Color(0xFF343434); // grey for big background and row
+  static Color colorAlternatingDark = Color(0xFF393939); // grey for alternating lines
+  static Color colorCalendarHeader = Color(0xFF5B5B5B); // light gray for calendar header
+  static Color colorButton1Background = Color(0xFF717171); // left / right button background
+  static Color colorTimeBackground = Color(0xFF303030); // background of time column / date row
   static Color colorUserAccent = Colors.green; // Profile image and outline
-  static Color colorTransparentOffDayBackground =
-      Color(0x114ED4DF); // For the OFF day overlay
-  static Color colorTransparentOffDayText =
-      Color(0x88919C9D); // For the OFF day overlay
+  static Color colorTransparentOffDayBackground = Color(0x114ED4DF); // For the OFF day overlay
+  static Color colorTransparentOffDayText = Color(0x88919C9D); // For the OFF day overlay
   static Color colorTopDrawerBackground = Color(0xFF3C3C3C); //
   static Color colorTopDrawerAlternating = Color(0xFF474747);
   static Color colorBigDrawerBronze = Color(0xFFA36422);
@@ -28,7 +20,7 @@ class ColorDefs {
   static Color colorAudit2 = Color(0xFF4ED4DF);
   static Color colorAudit3 = Color(0xFF26BF7D);
   static Color colorAudit4 = Color(0xFFD8AD43);
-  static Color colorAudit5 = Color(0xFFFFFFFF);
+  // static Color colorAudit5 = Color(0xFFFFFFFF);
 
   static Color colorLoginBackground = Color(0xFFE7EFFE);
 
@@ -50,66 +42,38 @@ class ColorDefs {
   static Color colorChatRequired = Colors.red;
 
 // Styles
-  static TextStyle textBodyBlue10 =
-      TextStyle(color: colorAudit2, fontSize: 10.0);
-  static TextStyle textBodyBlue20 =
-      TextStyle(color: colorAudit2, fontSize: 20.0);
+  static TextStyle textBodyBlue10 = TextStyle(color: colorAudit2, fontSize: 10.0);
+  static TextStyle textBodyBlue20 = TextStyle(color: colorAudit2, fontSize: 20.0);
 
-  static TextStyle textBodyBlack10 =
-      TextStyle(color: Colors.black, fontSize: 10.0);
-  static TextStyle textBodyBlack20 =
-      TextStyle(color: Colors.black, fontSize: 20.0);
-  static TextStyle textBodyBlack30 =
-      TextStyle(color: Colors.black, fontSize: 30.0);
-  static TextStyle textBodyBlack30Poppins = TextStyle(
-      color: Colors.black, fontSize: 30.0, fontFamily: 'Roboto'); //Poppins
+  static TextStyle textBodyBlack10 = TextStyle(color: Colors.black, fontSize: 10.0);
+  static TextStyle textBodyBlack20 = TextStyle(color: Colors.black, fontSize: 20.0);
+  static TextStyle textBodyBlack30 = TextStyle(color: Colors.black, fontSize: 30.0);
+  static TextStyle textBodyBlack30Poppins = TextStyle(color: Colors.black, fontSize: 30.0, fontFamily: 'Roboto'); //Poppins
 
-  static TextStyle textBodyGrey20 =
-      TextStyle(color: Colors.grey, fontSize: 20.0);
+  static TextStyle textBodyGrey20 = TextStyle(color: Colors.grey, fontSize: 20.0);
 
-  static TextStyle textBodyWhite30 =
-      TextStyle(color: Colors.white, fontSize: 30.0);
-  static TextStyle textBodyWhite20 =
-      TextStyle(color: Colors.white, fontSize: 20.0);
-  static TextStyle textBodyWhite20Underlined = TextStyle(
-      color: Colors.white,
-      fontSize: 20.0,
-      decoration: TextDecoration.underline);
-  static TextStyle textBodyWhite15 =
-      TextStyle(color: Colors.white, fontSize: 15.0);
-  static TextStyle textBodyWhite15Underlined = TextStyle(
-      color: Colors.white,
-      fontSize: 15.0,
-      decoration: TextDecoration.underline);
-  static TextStyle textBodyWhite10 =
-      TextStyle(color: Colors.white, fontSize: 10.0);
+  static TextStyle textBodyWhite30 = TextStyle(color: Colors.white, fontSize: 30.0);
+  static TextStyle textBodyWhite20 = TextStyle(color: Colors.white, fontSize: 20.0);
+  static TextStyle textBodyWhite25 = TextStyle(color: Colors.white, fontSize: 25);
+  static TextStyle textBodyWhite20Underlined = TextStyle(color: Colors.white, fontSize: 20.0, decoration: TextDecoration.underline);
+  static TextStyle textBodyWhite15 = TextStyle(color: Colors.white, fontSize: 15.0);
+  static TextStyle textBodyWhite15Underlined = TextStyle(color: Colors.white, fontSize: 15.0, decoration: TextDecoration.underline);
+  static TextStyle textBodyWhite10 = TextStyle(color: Colors.white, fontSize: 10.0);
 
-  static TextStyle textBodyText2 =
-      TextStyle(color: colorTopHeader, fontSize: 20.0);
-  static TextStyle textSubtitle2 =
-      TextStyle(color: colorTopHeader, fontSize: 15.0);
+  static TextStyle textBodyText2 = TextStyle(color: colorTopHeader, fontSize: 20.0);
+  static TextStyle textSubtitle2 = TextStyle(color: colorTopHeader, fontSize: 15.0);
 
-  static TextStyle textTransparentOffDay =
-      TextStyle(color: colorTransparentOffDayText, fontSize: 42.0);
+  static TextStyle textTransparentOffDay = TextStyle(color: colorTransparentOffDayText, fontSize: 42.0);
 
-  static TextStyle textBodyBronze20 =
-      TextStyle(color: colorBigDrawerBronze, fontSize: 20.0);
-  static TextStyle textBodyBronze15 =
-      TextStyle(color: colorBigDrawerBronze, fontSize: 15.0);
+  static TextStyle textBodyBronze20 = TextStyle(color: colorBigDrawerBronze, fontSize: 20.0);
+  static TextStyle textBodyBronze15 = TextStyle(color: colorBigDrawerBronze, fontSize: 15.0);
 
-  static TextStyle textTransparent =
-      TextStyle(color: Colors.transparent, fontSize: 20.0);
+  static TextStyle textTransparent = TextStyle(color: Colors.transparent, fontSize: 20.0);
 
-  static TextStyle textWhiteTerminal =
-      TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
-  static TextStyle textBlackTerminal =
-      TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
+  static TextStyle textWhiteTerminal = TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
+  static TextStyle textBlackTerminal = TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
 
-  static TextStyle textGreenLogoLight30 = TextStyle(
-      color: colorLogoLightGreen,
-      fontSize: 30.0,
-      fontFamily: 'RobotoSlab',
-      fontWeight: FontWeight.w800);
+  static TextStyle textGreenLogoLight30 = TextStyle(color: colorLogoLightGreen, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
 
   static TextStyle textGreenLogoDarkBig = TextStyle(
       color: colorAnotherDarkGreen,

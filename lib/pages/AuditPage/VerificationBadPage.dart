@@ -16,6 +16,7 @@ import 'dart:typed_data';
 
 import 'ReviewSection/FollowupActionItems2.dart';
 import 'ReviewSection/FollowupCitationsSections.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class VerificationBadPage extends StatefulWidget {
   const VerificationBadPage({Key key, this.activeAudit}) : super(key: key);
@@ -155,7 +156,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                     // activeAudit: widget.activeAudit,
                     ),
               ),
-
+            Container(height: 20),
             Row(
               children: [
                 Padding(
@@ -163,10 +164,27 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                   child: Text(
                       "These Compliance Requirements must be completed by: "),
                 ),
-                RaisedButton(
-                  child: Text((selectedDate != null)
-                      ? DateFormat('MM-dd-yyyy').format(selectedDate)
-                      : "Select Date"),
+                FlatButton(
+                  disabledColor: ColorDefs.colorButtonNeutral,
+                  color: ColorDefs.colorTopHeader,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      side: BorderSide(
+                          color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                  // color: Colors.blue,
+                  // textColor: Colors.black,
+                  // child: Padding(
+                  //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                  //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
+                  // ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                    child: Text((selectedDate != null)
+                        ? DateFormat('MM-dd-yyyy').format(selectedDate)
+                        : "Select Date"),
+                  ),
                   onPressed: () async {
                     selectedDate = await showDatePicker(
                       context: context,
@@ -178,7 +196,22 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         selectedDate;
                     setState(() {});
                   },
-                )
+                ),
+
+                // InkWell(
+                //   child: FaIcon(FontAwesomeIcons.calendarAlt, size: 35),
+                //   onTap: () async {
+                //     selectedDate = await showDatePicker(
+                //       context: context,
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime.now(),
+                //       lastDate: DateTime(2030),
+                //     );
+                //     widget.activeAudit.correctiveActionPlanDueDate =
+                //         selectedDate;
+                //     setState(() {});
+                //   },
+                // ),
               ],
             ),
 
@@ -254,17 +287,18 @@ matter to ensure your community does not suffer an interruption of services.  If
                         });
                       },
                       child: Container(
-                        color: ColorDefs.colorButtonNeutral,
-                        height: 50,
-                        width: 50,
+                        decoration: BoxDecoration(
+                            color: ColorDefs.colorButtonNeutral,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0))),
+                        height: 70,
+                        width: 70,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red,
-                            ),
-                            Text("Yes")
+                            Icon(Icons.error_outline,
+                                color: Colors.red, size: 40),
+                            Text("Yes", style: ColorDefs.textBodyBlack20)
                           ],
                         ),
                       ),
@@ -284,14 +318,18 @@ matter to ensure your community does not suffer an interruption of services.  If
                       });
                     },
                     child: Container(
-                      color: ColorDefs.colorButtonNeutral,
-                      height: 50,
-                      width: 50,
+                      decoration: BoxDecoration(
+                          color: ColorDefs.colorButtonNeutral,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(25.0))),
+                      height: 70,
+                      width: 70,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.check_circle, color: Colors.green),
-                          Text("No")
+                          Icon(Icons.check_circle,
+                              color: Colors.green, size: 40),
+                          Text("No", style: ColorDefs.textBodyBlack20)
                         ],
                       ),
                     ),
@@ -352,88 +390,113 @@ matter to ensure your community does not suffer an interruption of services.  If
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                      color: Colors.green,
-                      onPressed: () async {
-                        if (checkActionItems()) {
-                          SignatureState sign = _sign.currentState;
-                          int lineColor =
-                              img.getColor(color.red, color.green, color.blue);
-                          int backColor = img.getColor(255, 255, 255);
-                          int imageWidth;
-                          int imageHeight;
-                          BuildContext currentContext = _sign.currentContext;
-                          if (currentContext != null) {
-                            var box =
-                                currentContext.findRenderObject() as RenderBox;
-                            imageWidth = box.size.width.toInt();
-                            imageHeight = box.size.height.toInt();
-                          }
-
-                          // create the image with the given size
-                          img.Image signatureImage =
-                              img.Image(imageWidth, imageHeight);
-
-                          // set the image background color
-                          // remove this for a transparent background
-                          img.fill(signatureImage, backColor);
-
-                          for (int i = 0; i < sign.points.length - 1; i++) {
-                            if (sign.points[i] != null &&
-                                sign.points[i + 1] != null) {
-                              img.drawLine(
-                                  signatureImage,
-                                  sign.points[i].dx.toInt(),
-                                  sign.points[i].dy.toInt(),
-                                  sign.points[i + 1].dx.toInt(),
-                                  sign.points[i + 1].dy.toInt(),
-                                  lineColor,
-                                  thickness: 3);
-                            } else if (sign.points[i] != null &&
-                                sign.points[i + 1] == null) {
-                              // draw the point to the image
-                              img.drawPixel(
-                                  signatureImage,
-                                  sign.points[i].dx.toInt(),
-                                  sign.points[i].dy.toInt(),
-                                  lineColor);
-                            }
-                          }
-
-                          sign.clear();
-                          setState(() {
-                            foodDepositoryMonitorSignature =
-                                img.encodePng(signatureImage) as Uint8List;
-                            Provider.of<AuditData>(context, listen: false)
-                                    .foodDepositoryMonitorSignature =
-                                foodDepositoryMonitorSignature;
-                            widget.activeAudit.photoSig[
-                                    'foodDepositoryMonitorSignature'] =
-                                foodDepositoryMonitorSignature;
-                            Provider.of<AuditData>(context, listen: false)
-                                .notifyTheListeners();
-                          });
-                          debugPrint("onPressed ");
-                        } else {
-                          Dialogs.showMessage(
-                              context: context,
-                              message:
-                                  "These action items must be updated prior to signing: \n $affectedIssues",
-                              dismissable: true);
+                  FlatButton(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Save"),
+                    ),
+                    color: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
+                    onPressed: () async {
+                      if (checkActionItems()) {
+                        SignatureState sign = _sign.currentState;
+                        int lineColor =
+                            img.getColor(color.red, color.green, color.blue);
+                        int backColor = img.getColor(255, 255, 255);
+                        int imageWidth;
+                        int imageHeight;
+                        BuildContext currentContext = _sign.currentContext;
+                        if (currentContext != null) {
+                          var box =
+                              currentContext.findRenderObject() as RenderBox;
+                          imageWidth = box.size.width.toInt();
+                          imageHeight = box.size.height.toInt();
                         }
-                      },
-                      child: Text("Save")),
-                  MaterialButton(
-                      color: Colors.grey,
-                      onPressed: () {
-                        final sign = _sign.currentState;
+
+                        // create the image with the given size
+                        img.Image signatureImage =
+                            img.Image(imageWidth, imageHeight);
+
+                        // set the image background color
+                        // remove this for a transparent background
+                        img.fill(signatureImage, backColor);
+
+                        for (int i = 0; i < sign.points.length - 1; i++) {
+                          if (sign.points[i] != null &&
+                              sign.points[i + 1] != null) {
+                            img.drawLine(
+                                signatureImage,
+                                sign.points[i].dx.toInt(),
+                                sign.points[i].dy.toInt(),
+                                sign.points[i + 1].dx.toInt(),
+                                sign.points[i + 1].dy.toInt(),
+                                lineColor,
+                                thickness: 3);
+                          } else if (sign.points[i] != null &&
+                              sign.points[i + 1] == null) {
+                            // draw the point to the image
+                            img.drawPixel(
+                                signatureImage,
+                                sign.points[i].dx.toInt(),
+                                sign.points[i].dy.toInt(),
+                                lineColor);
+                          }
+                        }
+
                         sign.clear();
                         setState(() {
-                          foodDepositoryMonitorSignature = null;
+                          foodDepositoryMonitorSignature =
+                              img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false)
+                                  .foodDepositoryMonitorSignature =
+                              foodDepositoryMonitorSignature;
+                          widget.activeAudit
+                                  .photoSig['foodDepositoryMonitorSignature'] =
+                              foodDepositoryMonitorSignature;
+                          Provider.of<AuditData>(context, listen: false)
+                              .notifyTheListeners();
                         });
-                        debugPrint("cleared");
-                      },
-                      child: Text("Clear")),
+                        debugPrint("onPressed ");
+                      } else {
+                        Dialogs.showMessage(
+                            context: context,
+                            message:
+                                "These action items must be updated prior to signing: \n $affectedIssues",
+                            dismissable: true);
+                      }
+                    },
+                  ),
+                  FlatButton(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Clear"),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
+                    onPressed: () {
+                      final sign = _sign.currentState;
+                      sign.clear();
+                      setState(() {
+                        foodDepositoryMonitorSignature = null;
+                      });
+                      debugPrint("cleared");
+                    },
+                  ),
                 ],
               ),
             if (foodDepositoryMonitorSignature == null)
@@ -522,87 +585,115 @@ matter to ensure your community does not suffer an interruption of services.  If
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                      color: Colors.green,
-                      onPressed: () async {
-                        if (checkActionItems()) {
-                          SignatureState sign = _sign2.currentState;
-                          int lineColor =
-                              img.getColor(color.red, color.green, color.blue);
-                          int backColor = img.getColor(255, 255, 255);
-                          int imageWidth;
-                          int imageHeight;
-                          BuildContext currentContext = _sign2.currentContext;
-                          if (currentContext != null) {
-                            var box =
-                                currentContext.findRenderObject() as RenderBox;
-                            imageWidth = box.size.width.toInt();
-                            imageHeight = box.size.height.toInt();
-                          }
+                  FlatButton(
+                    // color: Colors.green,
 
-                          // create the image with the given size
-                          img.Image signatureImage =
-                              img.Image(imageWidth, imageHeight);
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Save"),
+                    ),
+                    color: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
 
-                          // set the image background color
-                          // remove this for a transparent background
-                          img.fill(signatureImage, backColor);
-
-                          for (int i = 0; i < sign.points.length - 1; i++) {
-                            if (sign.points[i] != null &&
-                                sign.points[i + 1] != null) {
-                              img.drawLine(
-                                  signatureImage,
-                                  sign.points[i].dx.toInt(),
-                                  sign.points[i].dy.toInt(),
-                                  sign.points[i + 1].dx.toInt(),
-                                  sign.points[i + 1].dy.toInt(),
-                                  lineColor,
-                                  thickness: 3);
-                            } else if (sign.points[i] != null &&
-                                sign.points[i + 1] == null) {
-                              // draw the point to the image
-                              img.drawPixel(
-                                  signatureImage,
-                                  sign.points[i].dx.toInt(),
-                                  sign.points[i].dy.toInt(),
-                                  lineColor);
-                            }
-                          }
-                          sign.clear();
-                          setState(() {
-                            siteRepresentativeSignature =
-                                img.encodePng(signatureImage) as Uint8List;
-                            Provider.of<AuditData>(context, listen: false)
-                                    .siteRepresentativeSignature =
-                                siteRepresentativeSignature;
-                            widget.activeAudit
-                                    .photoSig['siteRepresentativeSignature'] =
-                                siteRepresentativeSignature;
-                            Provider.of<AuditData>(context, listen: false)
-                                .notifyTheListeners();
-                          });
-                          debugPrint("onPressed ");
-                        } else {
-                          Dialogs.showMessage(
-                              context: context,
-                              message:
-                                  "These action items must be updated: + $affectedIssues",
-                              dismissable: true);
+                    onPressed: () async {
+                      if (checkActionItems()) {
+                        SignatureState sign = _sign2.currentState;
+                        int lineColor =
+                            img.getColor(color.red, color.green, color.blue);
+                        int backColor = img.getColor(255, 255, 255);
+                        int imageWidth;
+                        int imageHeight;
+                        BuildContext currentContext = _sign2.currentContext;
+                        if (currentContext != null) {
+                          var box =
+                              currentContext.findRenderObject() as RenderBox;
+                          imageWidth = box.size.width.toInt();
+                          imageHeight = box.size.height.toInt();
                         }
-                      },
-                      child: Text("Save")),
-                  MaterialButton(
-                      color: Colors.grey,
-                      onPressed: () {
-                        final sign = _sign2.currentState;
+
+                        // create the image with the given size
+                        img.Image signatureImage =
+                            img.Image(imageWidth, imageHeight);
+
+                        // set the image background color
+                        // remove this for a transparent background
+                        img.fill(signatureImage, backColor);
+
+                        for (int i = 0; i < sign.points.length - 1; i++) {
+                          if (sign.points[i] != null &&
+                              sign.points[i + 1] != null) {
+                            img.drawLine(
+                                signatureImage,
+                                sign.points[i].dx.toInt(),
+                                sign.points[i].dy.toInt(),
+                                sign.points[i + 1].dx.toInt(),
+                                sign.points[i + 1].dy.toInt(),
+                                lineColor,
+                                thickness: 3);
+                          } else if (sign.points[i] != null &&
+                              sign.points[i + 1] == null) {
+                            // draw the point to the image
+                            img.drawPixel(
+                                signatureImage,
+                                sign.points[i].dx.toInt(),
+                                sign.points[i].dy.toInt(),
+                                lineColor);
+                          }
+                        }
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature = null;
+                          siteRepresentativeSignature =
+                              img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false)
+                                  .siteRepresentativeSignature =
+                              siteRepresentativeSignature;
+                          widget.activeAudit
+                                  .photoSig['siteRepresentativeSignature'] =
+                              siteRepresentativeSignature;
+                          Provider.of<AuditData>(context, listen: false)
+                              .notifyTheListeners();
                         });
-                        debugPrint("cleared");
-                      },
-                      child: Text("Clear")),
+                        debugPrint("onPressed ");
+                      } else {
+                        Dialogs.showMessage(
+                            context: context,
+                            message:
+                                "These action items must be updated: + $affectedIssues",
+                            dismissable: true);
+                      }
+                    },
+                  ),
+                  FlatButton(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Clear"),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
+                    onPressed: () {
+                      final sign = _sign2.currentState;
+                      sign.clear();
+                      setState(() {
+                        siteRepresentativeSignature = null;
+                      });
+                      debugPrint("cleared");
+                    },
+                  ),
                 ],
               ),
             if (siteRepresentativeSignature == null)
@@ -631,18 +722,35 @@ matter to ensure your community does not suffer an interruption of services.  If
                       child: Text("Change stroke width")),
                 ],
               ),
+            Container(height: 30),
             if (foodDepositoryMonitorSignature != null &&
                 siteRepresentativeSignature != null)
-              RaisedButton(
-                  color: Colors.green,
-                  onPressed: () {
-                    Provider.of<AuditData>(context, listen: false)
-                        .updateGoToVerificationGoodPage(true);
-                  },
+              FlatButton(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                   child: Text(
                     "Success! Go to the Inspection Certificate",
                     style: ColorDefs.textBodyWhite30,
-                  )),
+                  ),
+                ),
+                color: Colors.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                    side: BorderSide(
+                        color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                // color: Colors.green,
+                onPressed: () {
+                  Provider.of<AuditData>(context, listen: false)
+                      .updateGoToVerificationGoodPage(true);
+                },
+                // child: Text(
+                //   "Success! Go to the Inspection Certificate",
+                //   style: ColorDefs.textBodyWhite30,
+                // )
+              ),
 
             Container(
               height: 300,

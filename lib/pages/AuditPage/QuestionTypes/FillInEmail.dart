@@ -73,30 +73,24 @@ class _FillInEmailState extends State<FillInEmail> {
             Expanded(
               flex: 3,
               child: Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
                   decoration: new InputDecoration(
-                      // suffixIcon: widget.questions[index].textBoxRollOut
-                      //     ? IconButton(
-                      //         onPressed: () {
-                      //           controller.clear();
-                      //           if (widget.mandatory) {
-                      //             widget.questions[widget.index].userResponse = "";
-                      //           } else {
-                      //             if (widget.actionItem == true) {
-                      //               widget.questions[widget.index].actionItem = "";
-                      //             } else {
-                      //               widget.questions[widget.index].optionalComment = "";
-                      //             }
-                      //           }
-                      //         },
-                      //     icon: Icon(Icons.clear),
-                      //   )
-                      // : null,
-
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen, width: 3),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide:
+                            BorderSide(color: ColorDefs.colorAudit2, width: 3),
+                      ),
                       border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
+                      // focusedBorder: InputBorder.none,
+                      // enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                       contentPadding: EdgeInsets.only(

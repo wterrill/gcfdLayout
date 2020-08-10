@@ -111,80 +111,108 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                      color: Colors.green,
-                      onPressed: () async {
-                        SignatureState sign = _sign.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
-                        int backColor = img.getColor(255, 255, 255);
-                        int imageWidth;
-                        int imageHeight;
-                        BuildContext currentContext = _sign.currentContext;
-                        if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
-                          imageWidth = box.size.width.toInt();
-                          imageHeight = box.size.height.toInt();
+                  FlatButton(
+                    color: Colors.green,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Save"),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
+
+                    // color: Colors.green,
+                    onPressed: () async {
+                      SignatureState sign = _sign.currentState;
+                      int lineColor =
+                          img.getColor(color.red, color.green, color.blue);
+                      int backColor = img.getColor(255, 255, 255);
+                      int imageWidth;
+                      int imageHeight;
+                      BuildContext currentContext = _sign.currentContext;
+                      if (currentContext != null) {
+                        var box =
+                            currentContext.findRenderObject() as RenderBox;
+                        imageWidth = box.size.width.toInt();
+                        imageHeight = box.size.height.toInt();
+                      }
+
+                      // create the image with the given size
+                      img.Image signatureImage =
+                          img.Image(imageWidth, imageHeight);
+
+                      // set the image background color
+                      // remove this for a transparent background
+                      img.fill(signatureImage, backColor);
+
+                      for (int i = 0; i < sign.points.length - 1; i++) {
+                        if (sign.points[i] != null &&
+                            sign.points[i + 1] != null) {
+                          img.drawLine(
+                              signatureImage,
+                              sign.points[i].dx.toInt(),
+                              sign.points[i].dy.toInt(),
+                              sign.points[i + 1].dx.toInt(),
+                              sign.points[i + 1].dy.toInt(),
+                              lineColor,
+                              thickness: 3);
+                        } else if (sign.points[i] != null &&
+                            sign.points[i + 1] == null) {
+                          // draw the point to the image
+                          img.drawPixel(
+                              signatureImage,
+                              sign.points[i].dx.toInt(),
+                              sign.points[i].dy.toInt(),
+                              lineColor);
                         }
+                      }
 
-                        // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
+                      sign.clear();
 
-                        // set the image background color
-                        // remove this for a transparent background
-                        img.fill(signatureImage, backColor);
-
-                        for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
-                                thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
-                            // draw the point to the image
-                            img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
-                          }
-                        }
-
-                        sign.clear();
-
-                        certRepresentativeSignature =
-                            img.encodePng(signatureImage) as Uint8List;
-                        Provider.of<AuditData>(context, listen: false)
-                                .certRepresentativeSignature =
-                            certRepresentativeSignature;
-                        widget.activeAudit
-                                .photoSig['certRepresentativeSignature'] =
-                            certRepresentativeSignature;
-                        setState(() {});
-                        Provider.of<AuditData>(context, listen: false)
-                            .notifyTheListeners();
-                        debugPrint("onPressed ");
-                      },
-                      child: Text("Save")),
-                  MaterialButton(
-                      color: Colors.grey,
-                      onPressed: () {
-                        final sign = _sign.currentState;
-                        sign.clear();
-                        setState(() {
-                          certRepresentativeSignature = null;
-                        });
-                        debugPrint("cleared");
-                      },
-                      child: Text("Clear")),
+                      certRepresentativeSignature =
+                          img.encodePng(signatureImage) as Uint8List;
+                      Provider.of<AuditData>(context, listen: false)
+                              .certRepresentativeSignature =
+                          certRepresentativeSignature;
+                      widget.activeAudit
+                              .photoSig['certRepresentativeSignature'] =
+                          certRepresentativeSignature;
+                      setState(() {});
+                      Provider.of<AuditData>(context, listen: false)
+                          .notifyTheListeners();
+                      debugPrint("onPressed ");
+                    },
+                    // child: Text("Save")
+                  ),
+                  FlatButton(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child: Text("Clear"),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
+                        side: BorderSide(
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            width: 3.0)),
+                    onPressed: () {
+                      final sign = _sign.currentState;
+                      sign.clear();
+                      setState(() {
+                        certRepresentativeSignature = null;
+                      });
+                      debugPrint("cleared");
+                    },
+                  ),
                 ],
               ),
             if (certRepresentativeSignature == null)
