@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'dart:typed_data';
 import 'dart:convert';
+import 'package:connectivity/connectivity.dart';
 
 import 'BuildAuditFromIncoming.dart';
 // import 'dart:typed_data';
@@ -22,7 +23,7 @@ class AuditData with ChangeNotifier {
   Audit activeAudit;
   Section activeSection;
   Box auditBox;
-  Box auditsToSendBox;
+  // Box auditsToSendBox;
   Box auditOutBox;
   Audit retrievedAudit;
   CalendarResult activeCalendarResult;
@@ -43,19 +44,19 @@ class AuditData with ChangeNotifier {
 /////////////// HIVE STUFF ////////////////
   void initHive() {
     Future auditBoxFuture = Hive.openBox<Audit>('auditBox');
-    Future auditToSendBoxFuture = Hive.openBox<Audit>('auditsToSendBox');
+    // Future auditToSendBoxFuture = Hive.openBox<Audit>('auditsToSendBox');
     Future auditOutBoxFuture = Hive.openBox<Audit>('auditOutBox');
 
     Future.wait<dynamic>([
       auditBoxFuture,
-      auditToSendBoxFuture,
+      // auditToSendBoxFuture,
       auditOutBoxFuture,
     ]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
       print(value.runtimeType);
       auditBox = Hive.box<Audit>('auditBox');
-      auditsToSendBox = Hive.box<Audit>('auditsToSendBox');
+      // auditsToSendBox = Hive.box<Audit>('auditsToSendBox');
       auditOutBox = Hive.box<Audit>('auditOutBox');
       notifyListeners();
     });
@@ -67,6 +68,13 @@ class AuditData with ChangeNotifier {
         section.status = section.lastStatus;
       }
     }
+  }
+
+  void deleteAudit(CalendarResult calendarResult) {
+    print(auditBox.keys.length);
+    auditBox.delete(
+        '${calendarResult.startDateTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+    print(auditBox.keys.length);
   }
 
   void saveAuditLocally(Audit incomingAudit) {
@@ -81,8 +89,7 @@ class AuditData with ChangeNotifier {
         // only the put if the status is higher than what we already have:
         if (convertStatusToNumber(retrievedAudit.calendarResult.status) <=
             convertStatusToNumber(incomingAudit.calendarResult.status)) {
-          DateTime temp =
-              DateTime.parse(incomingAudit.calendarResult.startTime);
+          DateTime temp = DateTime.parse(incomingAudit.calendarResult.startTime);
 
           auditBox.put(
               '${temp.toString()}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
@@ -106,8 +113,7 @@ class AuditData with ChangeNotifier {
         }
       }
       if (checkAllSectionsDone() &&
-              (Status.values.indexOf(verificationSection.status) <
-                  Status.values.indexOf(Status.available)) ||
+              (Status.values.indexOf(verificationSection.status) < Status.values.indexOf(Status.available)) ||
           (activeAudit.calendarResult.auditType == "Follow Up" &&
               verificationSection.status != Status.selected &&
               verificationSection.status != Status.completed)) {
@@ -115,8 +121,7 @@ class AuditData with ChangeNotifier {
       }
 
       if (!checkAllSectionsDone() &&
-          (Status.values.indexOf(verificationSection.status) >=
-              Status.values.indexOf(Status.available)) &&
+          (Status.values.indexOf(verificationSection.status) >= Status.values.indexOf(Status.available)) &&
           activeAudit.calendarResult.auditType != "Follow Up") {
         verificationSection.status = Status.disabled;
       }
@@ -161,8 +166,8 @@ class AuditData with ChangeNotifier {
     Audit retrievedAudit;
     // check to see if it's a reschedule of a followup audit
     if (newCalendarResult.auditType == "Follow Up") {
-      DateTime translate = DateTime.parse(newCalendarResult
-          .citationsToFollowUp['PreviousEvent']['StartTime'] as String);
+      DateTime translate =
+          DateTime.parse(newCalendarResult.citationsToFollowUp['PreviousEvent']['StartTime'] as String);
       retrievedAudit = auditBox.get(
               '${translate.toString()}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AgencyName']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['ProgramNumber']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['Auditor']}-${newCalendarResult.citationsToFollowUp['PreviousEvent']['AuditType']}')
           as Audit;
@@ -175,21 +180,15 @@ class AuditData with ChangeNotifier {
 
     for (Question citation in retrievedAudit.citations) {
       if (!citation.unflagged) {
-        citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
-            1;
-        citationsMap[(citation.questionMap['databaseVar'] as String) +
-            'ActionItem'] = citation.actionItem;
-        citationsMap[(citation.questionMap['databaseVar'] as String) +
-            'OriginalAnswer'] = citation.userResponse;
-        citationsMap[(citation.questionMap['databaseVar'] as String) +
-            'OriginalComments'] = citation.optionalComment;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'ActionItem'] = citation.actionItem;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalAnswer'] = citation.userResponse;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalComments'] = citation.optionalComment;
       } else {
         String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
         citationsMap[text] = 0;
-        citationsMap[(citation.questionMap['databaseVar'] as String) +
-            'OriginalAnswer'] = citation.userResponse;
-        citationsMap[(citation.questionMap['databaseVar'] as String) +
-            'OriginalComments'] = citation.optionalComment;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalAnswer'] = citation.userResponse;
+        citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalComments'] = citation.optionalComment;
       }
     }
     return citationsMap;
@@ -200,7 +199,7 @@ class AuditData with ChangeNotifier {
     //this gets rid of the "T"
     DateTime temp = DateTime.parse(outgoingAudit.calendarResult.startTime);
 
-    auditsToSendBox.put(
+    auditOutBox.put(
         '${temp.toString()}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
         clonedOutgoingAudit);
   }
@@ -242,8 +241,7 @@ class AuditData with ChangeNotifier {
   void makeCitations() {
     if (activeAudit.calendarResult.status == "Scheduled") {
       for (Section section in activeAudit.sections) {
-        List<String> avoid =
-            []; //["Photos", "Intro", "Review", "Verification"];
+        List<String> avoid = []; //["Photos", "Intro", "Review", "Verification"];
         if (!avoid.contains(section.name)) {
           for (Question question in section.questions) {
             if (question.userResponse != null) {
@@ -293,15 +291,13 @@ class AuditData with ChangeNotifier {
       message: null,
       deviceid: deviceidProvider,
       siteInfo: null,
-      citationsToFollowUp:
-          result['citationsToFollowUp'] as Map<String, dynamic>,
+      citationsToFollowUp: result['citationsToFollowUp'] as Map<String, dynamic>,
     );
     return created;
   }
 
   void buildQuestionFromCitation(CalendarResult calendarResult) {
-    Map<String, dynamic> previousCitationsTemp =
-        calendarResult.citationsToFollowUp;
+    Map<String, dynamic> previousCitationsTemp = calendarResult.citationsToFollowUp;
     List<String> citationDatabaseVarsList = [];
 
     for (String key in previousCitationsTemp.keys) {
@@ -310,10 +306,8 @@ class AuditData with ChangeNotifier {
       }
     }
 
-    dynamic temp = calendarResult.citationsToFollowUp['PreviousEvent']
-        .cast<String, String>();
-    CalendarResult temp2 =
-        convertToThrowawayCalendarResult(temp as Map<String, String>);
+    dynamic temp = calendarResult.citationsToFollowUp['PreviousEvent'].cast<String, String>();
+    CalendarResult temp2 = convertToThrowawayCalendarResult(temp as Map<String, String>);
     Audit retrievedAudit = getAuditFromBox(temp2);
     if (retrievedAudit == null) {
       // First, method that uses what we were sent by the database.  Currently, this has some problems:
@@ -327,34 +321,26 @@ class AuditData with ChangeNotifier {
             // found one
             if (previousCitationsTemp[databaseVar + 'Flag'] as int == 0) {
               question.unflagged = true;
-            } else if (previousCitationsTemp[databaseVar + 'Flag'] as int ==
-                1) {
+            } else if (previousCitationsTemp[databaseVar + 'Flag'] as int == 1) {
               question.unflagged = false;
             }
             question.fromSectionName = section.name;
 
-            question.actionItem =
-                previousCitationsTemp[databaseVar + "ActionItem"] as String;
+            question.actionItem = previousCitationsTemp[databaseVar + "ActionItem"] as String;
 
-            List<String> happyPath =
-                question.questionMap['happyPathResponse'] as List<String>;
+            List<String> happyPath = question.questionMap['happyPathResponse'] as List<String>;
 
             if (question.typeOfQuestion == "yesNo") {
               question.userResponse = happyPath.contains("Yes") ? "No" : "Yes";
             }
             if (question.typeOfQuestion == "issuesNoIssues") {
-              List<String> happyPath =
-                  question.questionMap['happyPathResponse'] as List<String>;
-              question.userResponse =
-                  happyPath.contains("Issues") ? "No Issues" : "Issues";
+              List<String> happyPath = question.questionMap['happyPathResponse'] as List<String>;
+              question.userResponse = happyPath.contains("Issues") ? "No Issues" : "Issues";
             }
             if (question.typeOfQuestion == "dropDown") {
-              List<String> happyPath =
-                  question.questionMap['happyPathResponse'] as List<String>;
-              List<String> menu =
-                  question.questionMap['menuItems'] as List<String>;
-              List<String> difference =
-                  happyPath.toSet().difference(menu.toSet()).toList();
+              List<String> happyPath = question.questionMap['happyPathResponse'] as List<String>;
+              List<String> menu = question.questionMap['menuItems'] as List<String>;
+              List<String> difference = happyPath.toSet().difference(menu.toSet()).toList();
               if (difference.length >= 3) {
                 print("oh crap");
               }
@@ -370,12 +356,10 @@ class AuditData with ChangeNotifier {
       // this means that we found the audit in question.  Let's copy the questions directly
       for (var i = 0; i < activeAudit.sections.length; i++) {
         for (var j = 0; j < activeAudit.sections[i].questions.length; j++) {
-          String databaseVar = activeAudit
-              .sections[i].questions[j].questionMap['databaseVar'] as String;
+          String databaseVar = activeAudit.sections[i].questions[j].questionMap['databaseVar'] as String;
           if (citationDatabaseVarsList.contains(databaseVar)) {
             // found one. copy the question over
-            activeAudit.sections[i].questions[j] =
-                retrievedAudit.sections[i].questions[j];
+            activeAudit.sections[i].questions[j] = retrievedAudit.sections[i].questions[j];
             citations.add(activeAudit.sections[i].questions[j]);
           }
         }
@@ -437,45 +421,34 @@ class AuditData with ChangeNotifier {
     activeAudit = retrievedAudit;
     activeSection = activeAudit.sections[0];
     activeCalendarResult = calendarResult;
-    certRepresentativeSignature =
-        activeAudit.photoSig['certRepresentativeSignature'];
-    siteRepresentativeSignature =
-        activeAudit.photoSig['siteRepresentativeSignature'];
-    foodDepositoryMonitorSignature =
-        activeAudit.photoSig['foodDepositoryMonitorSignature'];
+    certRepresentativeSignature = activeAudit.photoSig['certRepresentativeSignature'];
+    siteRepresentativeSignature = activeAudit.photoSig['siteRepresentativeSignature'];
+    foodDepositoryMonitorSignature = activeAudit.photoSig['foodDepositoryMonitorSignature'];
   }
 
   void createAuditClass(CalendarResult calendarResult) {
     if (calendarResult.programType == "Pantry") {
-      activeAudit = Audit(
-          questionnaire: pantryAuditSectionsQuestions,
-          calendarResult: calendarResult);
+      activeAudit = Audit(questionnaire: pantryAuditSectionsQuestions, calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
     if (calendarResult.programType == "Congregate") {
-      activeAudit = Audit(
-          questionnaire: congregateAuditSectionsQuestions,
-          calendarResult: calendarResult);
+      activeAudit = Audit(questionnaire: congregateAuditSectionsQuestions, calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
 
     if (calendarResult.programType == "Senior Adults Program" ||
         calendarResult.programType == "Healthy Student Market") {
-      activeAudit = Audit(
-          questionnaire: pPCAuditSectionsQuestions,
-          calendarResult: calendarResult);
+      activeAudit = Audit(questionnaire: pPCAuditSectionsQuestions, calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
       activeCalendarResult = calendarResult;
     }
 
     for (Question question in activeSection.questions) {
       print(question.text == "Email Contact:");
-      if (question.text == "Email Contact:" &&
-          activeAudit.calendarResult.siteInfo.contactEmail != "") {
-        question.userResponse =
-            activeAudit.calendarResult.siteInfo.contactEmail + " ; ";
+      if (question.text == "Email Contact:" && activeAudit.calendarResult.siteInfo.contactEmail != "") {
+        question.userResponse = activeAudit.calendarResult.siteInfo.contactEmail + " ; ";
         contactEmail = activeAudit.calendarResult.siteInfo.contactEmail + " ; ";
 
         print("email updated");
@@ -504,18 +477,10 @@ class AuditData with ChangeNotifier {
   }
 
   /////////////////////// sync stuff //////////////////////////
-  void dataSync(
-      {BuildContext context,
-      SiteList siteList,
-      String deviceid,
-      bool fullSync}) async {
+  void dataSync({BuildContext context, SiteList siteList, String deviceid, bool fullSync}) async {
     deviceidProvider = deviceid;
     await sendAuditsToCloud(deviceid);
-    await getAuditsFromCloud(
-        context: context,
-        siteList: siteList,
-        deviceid: deviceid,
-        fullSync: fullSync);
+    await getAuditsFromCloud(context: context, siteList: siteList, deviceid: deviceid, fullSync: fullSync);
   }
   // // // // // // // // // // //
 
@@ -524,11 +489,7 @@ class AuditData with ChangeNotifier {
     int i = 0;
     for (Uint8List picture in photoList) {
       String base64Image = base64Encode(picture);
-      Map<String, String> file = {
-        "Filename": i.toString(),
-        "FileExtension": ".png",
-        "FileContent": base64Image
-      };
+      Map<String, String> file = {"Filename": i.toString(), "FileExtension": ".png", "FileContent": base64Image};
       files.add(file);
       i++;
     }
@@ -542,8 +503,7 @@ class AuditData with ChangeNotifier {
     String json = jsonEncode(<String, dynamic>{
       "AgencyNumber": audit.calendarResult.agencyNum,
       "ProgramNumber": audit.calendarResult.programNum,
-      "ProgramType":
-          convertProgramTypeToNumber(audit.calendarResult.programType),
+      "ProgramType": convertProgramTypeToNumber(audit.calendarResult.programType),
       "Auditor": audit.calendarResult.auditor,
       "AuditType": convertAuditTypeToNumber(audit.calendarResult.auditType),
       "StartTime": audit.calendarResult.startDateTime.toString(),
@@ -572,28 +532,56 @@ class AuditData with ChangeNotifier {
   }
 
   void sendAuditsToCloud(String deviceid) async {
-    List<dynamic> dynKeys = auditsToSendBox.keys.toList();
+    List<dynamic> dynKeys = auditOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      Audit result = auditsToSendBox.get(toBeSentKeys[i]) as Audit;
+      Audit result = auditOutBox.get(toBeSentKeys[i]) as Audit;
 
-      Map<String, dynamic> mainBody =
-          buildAuditToSend(result, deviceidProvider);
-      bool successful = await FullAuditComms.sendFullAudit(mainBody).timeout(
-        const Duration(seconds: 10),
-        onTimeout: () {
-          // Navigator.of(navigatorKey.currentContext).pop();
-          // Dialogs.showMessage(
-          //     context: navigatorKey.currentContext,
-          //     message:
-          //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
-          //     dismissable: true);
-          return null;
-        },
-      ) as bool;
+      Map<String, dynamic> mainBody = buildAuditToSend(result, deviceidProvider);
+
+      bool successful = false;
+      try {
+        // import 'package:connectivity/connectivity.dart';
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+          // I am connected to a mobile network. or a wifi network
+          print("######### CONNECTED upload pic list #########");
+        } else {
+          throw ("No internet connection found");
+        }
+
+        successful = await FullAuditComms.sendFullAudit(mainBody).timeout(
+          const Duration(seconds: 10),
+          onTimeout: () {
+            // Navigator.of(navigatorKey.currentContext).pop();
+            // Dialogs.showMessage(
+            //     context: navigatorKey.currentContext,
+            //     message:
+            //         "A timeout error has occurred while contacting the site data enpoint. Check internet connection",
+            //     dismissable: true);
+            return null;
+          },
+        ) as bool;
+      } catch (err) {
+        successful = false;
+      }
+
       String picJson = getPicListBody(result, deviceid);
-      bool successfulpic = await FullAuditComms.uploadPicList(picJson) as bool;
-      if (successful) auditsToSendBox.delete(toBeSentKeys[i]);
+
+      try {
+        // import 'package:connectivity/connectivity.dart';
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+          // I am connected to a mobile network. or a wifi network
+          print("######### CONNECTED upload pic list #########");
+        } else {
+          throw ("No internet connection found");
+        }
+        bool successfulpic = await FullAuditComms.uploadPicList(picJson) as bool;
+      } catch (err) {
+        successful = false;
+      }
+      if (successful) auditOutBox.delete(toBeSentKeys[i]);
     }
   }
 
@@ -602,20 +590,29 @@ class AuditData with ChangeNotifier {
     notifyListeners();
   }
 
-  void getAuditsFromCloud(
-      {BuildContext context,
-      SiteList siteList,
-      String deviceid,
-      bool fullSync}) async {
+  void getAuditsFromCloud({BuildContext context, SiteList siteList, String deviceid, bool fullSync}) async {
     int allNotMe = 0; // "1: Query All   0: Query All But Me"
     if (auditBox.keys.toList().length == 0 || fullSync == true) {
       allNotMe = 1;
     }
+    dynamic fromServer = null;
+    try {
+      // import 'package:connectivity/connectivity.dart';
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+        // I am connected to a mobile network. or a wifi network
+        print("######### CONNECTED upload pic list #########");
+      } else {
+        throw ("No internet connection found");
+      }
 
-    dynamic fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
+      fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
+    } catch (err) {
+      print(err);
+      fromServer = null;
+    }
     if (fromServer != null) {
-      List<Audit> newAudits =
-          await buildAuditFromIncoming(fromServer, siteList) as List<Audit>;
+      List<Audit> newAudits = await buildAuditFromIncoming(fromServer, siteList) as List<Audit>;
       print(newAudits);
       for (Audit audit in newAudits) {
         print(audit);

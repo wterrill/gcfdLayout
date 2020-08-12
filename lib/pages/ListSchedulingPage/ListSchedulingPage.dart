@@ -16,6 +16,8 @@ import 'TopDrawerWidget.dart';
 import 'TopWhiteHeaderWidget.dart';
 import 'package:auditor/providers/ListCalendarData.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:connectivity/connectivity.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ListSchedulingPage extends StatefulWidget {
   @override
@@ -25,11 +27,13 @@ class ListSchedulingPage extends StatefulWidget {
 class _ListSchedulingPageState extends State<ListSchedulingPage> {
   bool backgroundDisable = false;
   bool startSync = false;
+  FToast fToast;
   // final filterTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
     // syncIfYouCan();
     // WidgetsBinding.instance
     // .addPostFrameCallback((_) => syncIfYouCan());
@@ -39,6 +43,13 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
 
   void syncIfYouCan() async {
     if (!kIsWeb) {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+        // I am connected to a mobile network. or a wifi network
+        print("######### CONNECTED site sync #########");
+        await totalDataSync(context);
+      }
+
       await totalDataSync(context);
     }
   }
@@ -51,6 +62,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
 
   @override
   Widget build(BuildContext context) {
+    fToast = FToast(context);
     bool filteredTime = Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
     // String dayOfWeek = DateFormat('EEE').format(DateTime.now()).toString();
     AuditorList auditorList = Provider.of<ListCalendarData>(context).auditorList;
@@ -83,37 +95,96 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                           InkWell(
                                               child: FaIcon(FontAwesomeIcons.sync, size: 35),
                                               onTap: () async {
-                                                setState(() {
-                                                  startSync = true;
-                                                });
-                                                //// Site Data /////
-                                                Dialogs.showMessage(context: context, message: "Syncing Site Data", dismissable: false);
-                                                String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;
-                                                print("before siteSync");
-                                                await Provider.of<SiteData>(context, listen: false).siteSync();
-                                                print("After siteSync");
-                                                SiteList siteList = Provider.of<SiteData>(context, listen: false).siteList;
-                                                print("after siteList load");
-                                                Navigator.of(context).pop();
-
-                                                /// Schedule data ///
-                                                Dialogs.showMessage(context: context, message: "Syncing Scheduling data: upload and download", dismissable: false);
-                                                await Provider.of<ListCalendarData>(context, listen: false)
-                                                    .dataSync(context: context, siteList: siteList, deviceid: deviceid, fullSync: false);
-                                                Navigator.of(context).pop();
-
-                                                /// Audit Data ///
+                                                var connectivityResult = await (Connectivity().checkConnectivity());
+                                                if (connectivityResult == ConnectivityResult.mobile ||
+                                                    connectivityResult == ConnectivityResult.wifi) {
+                                                  // I am connected to a mobile network. or a wifi network
+                                                  print("######### CONNECTED site sync #########");
+                                                  await totalDataSync(context);
+                                                } else {
+                                                  fToast.showToast(
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(25.0),
+                                                        color: ColorDefs.colorTopHeader,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          Icon(Icons.check, color: Colors.black),
+                                                          SizedBox(
+                                                            width: 12.0,
+                                                          ),
+                                                          Center(
+                                                            child: Text("The app is currently in offline mode",
+                                                                style: ColorDefs.textBodyBlack20),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    gravity: ToastGravity.BOTTOM,
+                                                    toastDuration: Duration(seconds: 2),
+                                                  );
+                                                }
+                                                // setState(() {
+                                                //   startSync = true;
+                                                // });
+                                                // //// Site Data /////
+                                                // Dialogs.showMessage(
+                                                //     context: context, message: "Syncing Site Data", dismissable: false);
+                                                // String deviceid =
+                                                //     Provider.of<GeneralData>(context, listen: false).deviceid;
+                                                // print("before siteSync");
+                                                // try {
+                                                //   await Provider.of<SiteData>(context, listen: false).siteSync();
+                                                // } catch (err) {
+                                                //   print(err);
+                                                //   Navigator.of(context).pop();
+                                                //   Dialogs.showMessage(
+                                                //       context: context,
+                                                //       message:
+                                                //           "Could not connect to site data endpoint. Check internet connection",
+                                                //       dismissable: true);
+                                                //   return null;
+                                                // }
+                                                // print("After siteSync");
+                                                // SiteList siteList =
+                                                //     Provider.of<SiteData>(context, listen: false).siteList;
+                                                // print("after siteList load");
                                                 // Navigator.of(context).pop();
-                                                Dialogs.showMessage(context: context, message: "Syncing Audit calendar data: upload and download", dismissable: false);
 
-                                                await Provider.of<AuditData>(context, listen: false)
-                                                    .dataSync(context: context, siteList: siteList, deviceid: deviceid, fullSync: false);
-                                                Navigator.of(context).pop();
+                                                // /// Schedule data ///
+                                                // Dialogs.showMessage(
+                                                //     context: context,
+                                                //     message: "Syncing Scheduling data: upload and download",
+                                                //     dismissable: false);
+                                                // await Provider.of<ListCalendarData>(context, listen: false).dataSync(
+                                                //     context: context,
+                                                //     siteList: siteList,
+                                                //     deviceid: deviceid,
+                                                //     fullSync: false);
+                                                // Navigator.of(context).pop();
 
-                                                /// Done with sync
-                                                setState(() {
-                                                  startSync = false;
-                                                });
+                                                // /// Audit Data ///
+                                                // // Navigator.of(context).pop();
+                                                // Dialogs.showMessage(
+                                                //     context: context,
+                                                //     message: "Syncing Audit calendar data: upload and download",
+                                                //     dismissable: false);
+
+                                                // await Provider.of<AuditData>(context, listen: false).dataSync(
+                                                //     context: context,
+                                                //     siteList: siteList,
+                                                //     deviceid: deviceid,
+                                                //     fullSync: false);
+                                                // Navigator.of(context).pop();
+
+                                                // /// Done with sync
+                                                // setState(() {
+                                                //   startSync = false;
+                                                // });
                                               }),
                                           Container(width: 30),
                                           InkWell(
@@ -139,17 +210,23 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                             GestureDetector(
                                                 onTap: () {
                                                   print("Show this week pressed");
-                                                  Provider.of<ListCalendarData>(context, listen: false).toggleFilterTimeToggle();
+                                                  Provider.of<ListCalendarData>(context, listen: false)
+                                                      .toggleFilterTimeToggle();
                                                 },
                                                 child: Row(
                                                   children: [
                                                     Text(
                                                         "${DateFormat('MM/dd').format(DateTime.now().subtract(Duration(days: 7)))}-${DateFormat('MM/dd').format(DateTime.now().add(Duration(days: 7)))}",
-                                                        style: !filteredTime ? ColorDefs.textBodyWhite20 : ColorDefs.textBodyWhite20Underlined),
+                                                        style: !filteredTime
+                                                            ? ColorDefs.textBodyWhite20
+                                                            : ColorDefs.textBodyWhite20Underlined),
                                                     Container(width: 2),
                                                     Text("|"),
                                                     Container(width: 2),
-                                                    Text("Show All", style: filteredTime ? ColorDefs.textBodyWhite20 : ColorDefs.textBodyWhite20Underlined),
+                                                    Text("Show All",
+                                                        style: filteredTime
+                                                            ? ColorDefs.textBodyWhite20
+                                                            : ColorDefs.textBodyWhite20Underlined),
                                                   ],
                                                 ) //filteredTime
 

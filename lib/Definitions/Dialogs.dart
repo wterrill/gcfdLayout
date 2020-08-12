@@ -44,7 +44,9 @@ class Dialogs {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // CircularProgressIndicator(),
-          Container(margin: EdgeInsets.only(left: 5), child: Text("The Audit has been successfully saved and will upload during the next sync")),
+          Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text("The Audit has been successfully saved and will upload during the next sync")),
         ],
       ),
     );
@@ -173,7 +175,8 @@ class Dialogs {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('This device has not had an initial sync with the database.  Please connect to a wifi connection and allow the device to sync prior to initial use.'),
+          Text(
+              'This device has not had an initial sync with the database.  Please connect to a wifi connection and allow the device to sync prior to initial use.'),
         ],
       ),
     );
@@ -446,7 +449,8 @@ class Dialogs {
           // title: Text("Audit Info"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              return SingleChildScrollView(child: FittedBox(fit: BoxFit.contain, child: AuditInfoDialog(calendarResult: calendarResult)));
+              return SingleChildScrollView(
+                  child: FittedBox(fit: BoxFit.contain, child: AuditInfoDialog(calendarResult: calendarResult)));
             },
           ),
         );
@@ -465,7 +469,7 @@ class Dialogs {
               child: AlertDialog(
                 backgroundColor: ColorDefs.colorTopHeader,
                 shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
-                title: Text('Schedule a New Audit:', style: ColorDefs.textGreen35),
+                title: Text('Schedule Audit', style: ColorDefs.textGreen35),
                 content: NewAuditDialog(followup: false, loadSite: siteFromLookupScreen),
               ),
             ),
@@ -480,8 +484,28 @@ class Dialogs {
         });
   }
 
-  static void showRescheduleAudit(BuildContext context, {CalendarResult calendarResult, bool followup, bool alreadyExists}) {
-    bool rescheduleFollowUp = (followup == true && calendarResult.auditType == "Follow Up" && calendarResult.status == "Scheduled");
+  static void showRescheduleAudit(BuildContext context,
+      {CalendarResult calendarResult, bool followup, bool auditAlreadyStarted}) {
+    bool rescheduleFollowUp =
+        (followup == true && calendarResult.auditType == "Follow Up" && calendarResult.status == "Scheduled");
+    Widget selectWidget(bool alreadyExists, bool rescheduleFollowUp) {
+      Widget selectedWidget;
+      if (rescheduleFollowUp) {
+        selectedWidget =
+            RescheduleFollowUpAuditDialog(calendarResult: calendarResult, auditAlreadyStarted: auditAlreadyStarted);
+      } else {
+        if (alreadyExists) {
+          selectedWidget =
+              RescheduleFollowUpAuditDialog(calendarResult: calendarResult, auditAlreadyStarted: auditAlreadyStarted);
+        } else {
+          selectedWidget =
+              NewAuditDialog(calendarResult: calendarResult, followup: followup, alreadyExists: alreadyExists);
+        }
+      }
+
+      return selectedWidget;
+    }
+
     showGeneralDialog<void>(
         transitionBuilder: (context, a1, a2, widget) {
           return Transform.scale(
@@ -489,15 +513,12 @@ class Dialogs {
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
-                backgroundColor: ColorDefs.colorTopHeader,
-                shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
-                title: (followup) //&& calendarResult.auditType == "Follow Up"
-                    ? Text('Schedule Follow Up', style: ColorDefs.textGreen40)
-                    : Text('Reschedule this Audit:', style: ColorDefs.textGreen40),
-                content: rescheduleFollowUp
-                    ? RescheduleFollowUpAuditDialog(calendarResult: calendarResult, alreadyExists: alreadyExists)
-                    : NewAuditDialog(calendarResult: calendarResult, followup: followup, alreadyExists: alreadyExists),
-              ),
+                  backgroundColor: ColorDefs.colorTopHeader,
+                  shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
+                  title: (followup) //&& calendarResult.auditType == "Follow Up"
+                      ? Text('Schedule Follow Up', style: ColorDefs.textGreen40)
+                      : Text('Edit Audit', style: ColorDefs.textGreen40),
+                  content: selectWidget(auditAlreadyStarted, rescheduleFollowUp)),
             ),
           );
         },

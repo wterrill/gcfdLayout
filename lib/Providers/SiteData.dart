@@ -4,9 +4,7 @@ import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:auditor/Definitions/ExternalSiteData.dart';
-
+import 'package:connectivity/connectivity.dart';
 import 'package:hive/hive.dart';
 
 List<List<dynamic>> rowsAsListOfValues;
@@ -52,26 +50,42 @@ class SiteData with ChangeNotifier {
 
   void siteSync() async {
     print("sync");
-    dynamic result = await SiteComms.getSites().timeout(
-      const Duration(seconds: 10),
-      onTimeout: () {
-        Navigator.of(navigatorKey.currentContext).pop();
-        Dialogs.showMessage(
-            context: navigatorKey.currentContext,
-            message:
-                "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
-            dismissable: true);
-        return null;
-      },
-    );
+    dynamic result = null;
+    try {
+      // import 'package:connectivity/connectivity.dart';
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+        // I am connected to a mobile network. or a wifi network
+        print("######### CONNECTED site sync #########");
+      } else {
+        throw ("No internet connection found");
+      }
+      result = await SiteComms.getSites().timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          // Navigator.of(navigatorKey.currentContext).pop();
+          // Dialogs.showMessage(
+          //     context: navigatorKey.currentContext,
+          //     message:
+          //         "A timeout error has occurred while contacting the site data endpoint. Check internet connection",
+          //     dismissable: true);
+          return null;
+        },
+      );
+    } catch (err) {
+      print(err);
+      result = null;
+    }
 
-    siteList = SiteList(siteList: result as List<Site>);
-    print("beflore siteList downloaded length");
-    print("Sitelist downloaded length =  ${siteList.siteList.length}");
-    print("after siteList downloaded length before put");
-    print(siteList);
-    siteListBox.put('siteList', siteList);
-    print("after siteList put");
+    if (result != null) {
+      siteList = SiteList(siteList: result as List<Site>);
+      print("beflore siteList downloaded length");
+      print("Sitelist downloaded length =  ${siteList.siteList.length}");
+      print("after siteList downloaded length before put");
+      print(siteList);
+      siteListBox.put('siteList', siteList);
+      print("after siteList put");
+    }
     notifyListeners();
   }
 }

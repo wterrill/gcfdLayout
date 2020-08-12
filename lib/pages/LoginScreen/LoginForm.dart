@@ -9,6 +9,7 @@ import 'package:auditor/providers/GeneralData.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:connectivity/connectivity.dart';
 
 class LoginForm extends StatefulWidget {
   LoginForm({Key key}) : super(key: key);
@@ -26,7 +27,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _enabledLoginButton = false;
   var _userController = TextEditingController();
   var _passwordController = TextEditingController();
-  bool rememberMeCheckedValue = false;
+  bool rememberMeCheckedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,7 @@ class _LoginFormState extends State<LoginForm> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      margin: EdgeInsets.symmetric(
-          horizontal: .2 * Provider.of<GeneralData>(context).mediaArea.width),
+      margin: EdgeInsets.symmetric(horizontal: .2 * Provider.of<GeneralData>(context).mediaArea.width),
       color: ColorDefs.colorTopHeader,
       child: SingleChildScrollView(
         child: Form(
@@ -81,8 +81,7 @@ class _LoginFormState extends State<LoginForm> {
                 height: 70,
                 child: TextFormField(
                   controller: _userController,
-                  onChanged: (input) =>
-                      _onChangeField(input: input, from: "username"),
+                  onChanged: (input) => _onChangeField(input: input, from: "username"),
                   // validator: (input) => !input.contains('@')
                   //     ? "make sure your username has a '@'"
                   //     : null,
@@ -117,11 +116,8 @@ class _LoginFormState extends State<LoginForm> {
                 height: 70,
                 child: TextFormField(
                   controller: _passwordController,
-                  onChanged: (input) =>
-                      _onChangeField(input: input, from: "password"),
-                  validator: (input) => input.length < 1
-                      ? "your password requires at least 6 characters"
-                      : null,
+                  onChanged: (input) => _onChangeField(input: input, from: "password"),
+                  validator: (input) => input.length < 1 ? "your password requires at least 6 characters" : null,
                   onSaved: (input) => _password = input,
                   obscureText: _obscureText,
                   style: ColorDefs.textBodyBlack20,
@@ -153,16 +149,14 @@ class _LoginFormState extends State<LoginForm> {
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: _obscureText
                             ? Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                                 child: FaIcon(
                                   FontAwesomeIcons.eye, //icon.visibility,
                                   color: ColorDefs.colorDarkBackground,
                                 ),
                               )
                             : Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                                 child: FaIcon(
                                   FontAwesomeIcons.eyeSlash, //icon.visibility,
                                   color: ColorDefs.colorDarkBackground,
@@ -216,8 +210,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.green,
                   disabledColor: Colors.grey,
                   disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                   onPressed: _enabledLoginButton ? _submit : null,
                   child: Text(
                     'Log In',
@@ -230,25 +223,23 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(height: 10),
-            Theme(
-              data: ThemeData(brightness: Brightness.light),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: CheckboxListTile(
-                  title: Text("Keep me logged in",
-                      style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
-                  value: rememberMeCheckedValue,
-                  onChanged: (newValue) {
-                    setState(() {
-                      rememberMeCheckedValue = newValue;
-                    });
-                  },
+            // Theme(
+            //   data: ThemeData(brightness: Brightness.light),
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            //     child: CheckboxListTile(
+            //       title: Text("Keep me logged in", style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
+            //       value: rememberMeCheckedValue,
+            //       onChanged: (newValue) {
+            //         setState(() {
+            //           Provider.of<GeneralData>(context, listen: false).setRememberMe(newValue);
+            //         });
+            //       },
 
-                  controlAffinity:
-                      ListTileControlAffinity.leading, //  <-- leading Checkbox
-                ),
-              ),
-            ),
+            //       controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+            //     ),
+            //   ),
+            // ),
 
             //   ),
             // ),
@@ -271,8 +262,15 @@ class _LoginFormState extends State<LoginForm> {
       bool isError = false;
       String errorString = "";
       try {
-        isAuthenticated = await Authentication.authenticate(
-            username: _username, password: _password);
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+          // I am connected to a mobile network. or a wifi network
+          print("######### CONNECTED Auth #########");
+        } else {
+          throw ("No internet connection found");
+        }
+
+        isAuthenticated = await Authentication.authenticate(username: _username, password: _password);
       } catch (error) {
         print(error);
         isAuthenticated = false;
@@ -325,10 +323,8 @@ class _LoginFormState extends State<LoginForm> {
       _dirtyPassword = false;
     }
 
-    bool bothDirtyAndNotEnabled =
-        _dirtyUsername && _dirtyPassword && !_enabledLoginButton;
-    bool enabledButOnlyOneIsDirty =
-        _enabledLoginButton && (!_dirtyUsername || !_dirtyPassword);
+    bool bothDirtyAndNotEnabled = _dirtyUsername && _dirtyPassword && !_enabledLoginButton;
+    bool enabledButOnlyOneIsDirty = _enabledLoginButton && (!_dirtyUsername || !_dirtyPassword);
     if (bothDirtyAndNotEnabled) {
       setState(() {
         _enabledLoginButton = true;

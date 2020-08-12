@@ -9,7 +9,7 @@ part 'CalendarResult.g.dart';
 @HiveType(typeId: 1)
 class CalendarResult extends HiveObject {
   @HiveField(0)
-  final String startTime;
+  String startTime;
   @HiveField(1)
   final String agencyName;
   @HiveField(2)
@@ -21,7 +21,7 @@ class CalendarResult extends HiveObject {
   @HiveField(5)
   final String programType;
   @HiveField(6)
-  final String auditor;
+  String auditor;
   @HiveField(7)
   String status;
   @HiveField(8)

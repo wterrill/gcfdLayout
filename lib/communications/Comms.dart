@@ -34,7 +34,7 @@ class Authentication {
     try {
       return client
           .get(
-        "http://12.216.81.220:90/api/AuthenticateUser",
+        "http://12.216.81.220:88/api/AuthenticateUser",
       )
           .then((result) {
         bool isAuthenticated = false;
@@ -64,14 +64,14 @@ class FullAuditComms {
     print('sendFullAudit send ${DateTime.now()}');
 
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:90/api/Audit/',
+      sender = client.post('http://12.216.81.220:88/api/Audit/',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
           },
           body: body);
     } else {
-      sender = http.post('http://12.216.81.220:90/api/Audit/',
+      sender = http.post('http://12.216.81.220:88/api/Audit/',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
@@ -93,20 +93,17 @@ class FullAuditComms {
   }
 
   static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {
-    var queryParameters = {
-      "MyDeviceId": kIsWeb ? "website" : deviceid,
-      "QueryType": allNotMe.toString()
-    };
+    var queryParameters = {"MyDeviceId": kIsWeb ? "website" : deviceid, "QueryType": allNotMe.toString()};
     print("========== getFullAudit =========");
     print(queryParameters);
     print('getFullAudit send ${DateTime.now()}');
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:90/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:90/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
@@ -131,19 +128,11 @@ class FullAuditComms {
   static Future<dynamic> uploadPicList(String json) {
     print(json);
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:90/api/Audit/FileUpload',
-          body: json,
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          });
+      sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
+          body: json, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
     } else {
-      sender = http.post('http://12.216.81.220:90/api/Audit/FileUpload',
-          body: json,
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          });
+      sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
+          body: json, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
     }
     return sender.then((http.Response res) {
       print(res.statusCode);
@@ -161,14 +150,14 @@ class ScheduleAuditComms {
     print(body);
     print('scheduleAudit send ${DateTime.now()}');
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:90/api/Audit/Schedule',
+      sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
           },
           body: body);
     } else {
-      sender = http.post('http://12.216.81.220:90/api/Audit/Schedule',
+      sender = http.post('http://12.216.81.220:88/api/Audit/Schedule',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
@@ -199,10 +188,10 @@ class ScheduleAuditComms {
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:90/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:90/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
@@ -226,9 +215,9 @@ class ScheduleAuditComms {
 
   static Future<dynamic> getAuditors() async {
     if (isNtlm) {
-      sender = client.get("http://12.216.81.220:90/api/GetAuditors");
+      sender = client.get("http://12.216.81.220:88/api/GetAuditors");
     } else {
-      sender = http.get("http://12.216.81.220:90/api/GetAuditors");
+      sender = http.get("http://12.216.81.220:88/api/GetAuditors");
     }
     print('getAuditors send ${DateTime.now()}');
 
@@ -242,8 +231,7 @@ class ScheduleAuditComms {
           List<dynamic> auditors = resultMap["Result"] as List<dynamic>;
           List<Auditor> auditorsList = [];
           for (int i = 0; i < auditors.length; i++) {
-            Auditor auditor =
-                Auditor(auditorMap: auditors[i] as Map<String, dynamic>);
+            Auditor auditor = Auditor(auditorMap: auditors[i] as Map<String, dynamic>);
             auditorsList.add(auditor);
           }
           AuditorList auditorList = AuditorList(auditorList: auditorsList);
@@ -262,9 +250,9 @@ class SiteComms {
   static Future<dynamic> getSites() async {
     dynamic sender;
     if (isNtlm) {
-      sender = client.get("http://12.216.81.220:90/api/SiteInfo");
+      sender = client.get("http://12.216.81.220:88/api/SiteInfo");
     } else {
-      sender = http.get("http://12.216.81.220:90/api/SiteInfo");
+      sender = http.get("http://12.216.81.220:88/api/SiteInfo");
     }
     print('getSites send ${DateTime.now()}');
     return sender.then(
@@ -272,11 +260,9 @@ class SiteComms {
         // print(res.body);
         print('getSites Receive ${DateTime.now()}');
         try {
-          dynamic parsed =
-              json.decode(res.body)['Result'].cast<Map<String, dynamic>>();
-          List<Site> oneliner = parsed
-              .map<Site>((Map<String, dynamic> json) => Site.fromJson(json))
-              .toList() as List<Site>;
+          dynamic parsed = json.decode(res.body)['Result'].cast<Map<String, dynamic>>();
+          List<Site> oneliner =
+              parsed.map<Site>((Map<String, dynamic> json) => Site.fromJson(json)).toList() as List<Site>;
           // print(oneliner);
           return oneliner;
         } catch (error) {

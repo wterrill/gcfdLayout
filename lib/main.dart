@@ -25,6 +25,7 @@ import 'Definitions/colorDefs.dart';
 import 'pages/developer/hiveTest/Contact.dart';
 import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:flutter/services.dart';
+import 'package:connectivity/connectivity.dart';
 // import 'package:background_fetch/background_fetch.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -38,8 +39,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
-    final dynamic appDocumentDirectory =
-        await path_provider.getApplicationDocumentsDirectory();
+    final dynamic appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDirectory.path as String);
   }
   Hive.registerAdapter(ContactAdapter());
@@ -189,7 +189,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  RESUMED!!!!");
       if (!kIsWeb) {
-        await totalDataSync(context);
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+          // I am connected to a mobile network. or a wifi network
+          print("######### CONNECTED site sync #########");
+          await totalDataSync(context);
+        }
       }
 
       print("sync done");
@@ -217,22 +222,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
         toggleableActiveColor: ColorDefs.colorLogoDarkGreen,
-        fontFamily:
-            'Roboto', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
+        fontFamily: 'Roboto', // 'Poppins', //'Arial', // Arial Regular, Arial, sans-serif  <-- from Kyle
         textTheme: TextTheme(),
       ),
       home: SafeArea(
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
+        child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
           print("constraints: $constraints");
           Size mediaSize = MediaQuery.of(context).size;
           double safeAreaSize = mediaSize.height - constraints.maxHeight;
           Provider.of<GeneralData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<GeneralData>(context).safeArea = constraints;
           Provider.of<GeneralData>(context).mediaArea = mediaSize;
-          return kIsWeb
-              ? Scaffold(body: ListSchedulingPage())
-              : Scaffold(body: LoginScreen());
+          return kIsWeb ? Scaffold(body: ListSchedulingPage()) : Scaffold(body: LoginScreen());
           // return Scaffold(body: ListSchedulingPage());
         }),
       ),

@@ -20,12 +20,10 @@ import 'VerificationBadPage.dart';
 import 'dart:typed_data';
 
 class AuditPage extends StatefulWidget {
-  final bool alreadyExist;
+  final bool auditAlreadyStarted;
   final CalendarResult calendarResult;
   // final String programType;
-  AuditPage(
-      {Key key, @required this.calendarResult, @required this.alreadyExist})
-      : super(key: key);
+  AuditPage({Key key, @required this.calendarResult, @required this.auditAlreadyStarted}) : super(key: key);
   @override
   _AuditPageState createState() => _AuditPageState();
 }
@@ -46,15 +44,12 @@ class _AuditPageState extends State<AuditPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.alreadyExist) {
-      Provider.of<AuditData>(context, listen: false)
-          .loadExisting(widget.calendarResult);
+    if (widget.auditAlreadyStarted) {
+      Provider.of<AuditData>(context, listen: false).loadExisting(widget.calendarResult);
     } else {
-      Provider.of<AuditData>(context, listen: false)
-          .createNewAudit(widget.calendarResult);
+      Provider.of<AuditData>(context, listen: false).createNewAudit(widget.calendarResult);
       if (widget.calendarResult.citationsToFollowUp != null) {
-        Provider.of<AuditData>(context, listen: false)
-            .buildQuestionFromCitation(widget.calendarResult);
+        Provider.of<AuditData>(context, listen: false).buildQuestionFromCitation(widget.calendarResult);
         // List<Question> beer = Provider.of<AuditData>(context).previousCitations;
         // print(beer);
       }
@@ -63,12 +58,9 @@ class _AuditPageState extends State<AuditPage> {
     if (activeAudit.calendarResult.siteInfo.contactEmail != "") {
       Provider.of<GeneralData>(context, listen: false).emailValidated = true;
     }
-    activeSection =
-        Provider.of<AuditData>(context, listen: false).activeSection;
-    Provider.of<AuditData>(context, listen: false).citations =
-        activeAudit.citations;
-    Provider.of<AuditData>(context, listen: false).previousCitations =
-        activeAudit.previousCitations;
+    activeSection = Provider.of<AuditData>(context, listen: false).activeSection;
+    Provider.of<AuditData>(context, listen: false).citations = activeAudit.citations;
+    Provider.of<AuditData>(context, listen: false).previousCitations = activeAudit.previousCitations;
     paintButtons();
   }
 
@@ -80,23 +72,16 @@ class _AuditPageState extends State<AuditPage> {
     Section activeSection = Provider.of<AuditData>(context).activeSection;
     double mediaWidth = Provider.of<GeneralData>(context).mediaArea.width;
     double mediaHeight = Provider.of<GeneralData>(context).mediaArea.height;
-    CalendarResult activeCalendarResult =
-        Provider.of<AuditData>(context).activeCalendarResult;
-    Uint8List certRepresentativeSignature =
-        Provider.of<AuditData>(context).certRepresentativeSignature;
-    Uint8List siteRepresentativeSignature =
-        Provider.of<AuditData>(context).siteRepresentativeSignature;
-    Uint8List foodDepositoryMonitorSignature =
-        Provider.of<AuditData>(context).foodDepositoryMonitorSignature;
-    bool showSubmitButton = ((certRepresentativeSignature != null &&
-                activeAudit.citations.length == 0 ||
+    CalendarResult activeCalendarResult = Provider.of<AuditData>(context).activeCalendarResult;
+    Uint8List certRepresentativeSignature = Provider.of<AuditData>(context).certRepresentativeSignature;
+    Uint8List siteRepresentativeSignature = Provider.of<AuditData>(context).siteRepresentativeSignature;
+    Uint8List foodDepositoryMonitorSignature = Provider.of<AuditData>(context).foodDepositoryMonitorSignature;
+    bool showSubmitButton = ((certRepresentativeSignature != null && activeAudit.citations.length == 0 ||
             certRepresentativeSignature != null &&
                 siteRepresentativeSignature != null &&
                 foodDepositoryMonitorSignature != null &&
-                Provider.of<AuditData>(context, listen: false)
-                    .goToVerificationGoodPage) &&
-        !(activeAudit.calendarResult.status == "Completed" ||
-            activeAudit.calendarResult.status == "Site Visit Req."));
+                Provider.of<AuditData>(context, listen: false).goToVerificationGoodPage) &&
+        !(activeAudit.calendarResult.status == "Completed" || activeAudit.calendarResult.status == "Site Visit Req."));
 
     return MaterialApp(
       theme: ThemeData(
@@ -120,8 +105,7 @@ class _AuditPageState extends State<AuditPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Container(
-                          child: SectionButtons(activeAudit: activeAudit)),
+                      Container(child: SectionButtons(activeAudit: activeAudit)),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Divider(
@@ -141,18 +125,15 @@ class _AuditPageState extends State<AuditPage> {
                         PhotoPage(
                           activeAudit: activeAudit,
                         ),
-                      if (activeSection?.name == "Verification" &&
-                              activeAudit.citations.length == 0 ||
-                          Provider.of<AuditData>(context)
-                                  .goToVerificationGoodPage &&
+                      if (activeSection?.name == "Verification" && activeAudit.citations.length == 0 ||
+                          Provider.of<AuditData>(context).goToVerificationGoodPage &&
                               activeSection?.name == "Verification")
                         VerificationGoodPage(
                           activeAudit: activeAudit,
                         ),
                       if (activeSection?.name == "Verification" &&
                           activeAudit.citations.length != 0 &&
-                          !Provider.of<AuditData>(context)
-                              .goToVerificationGoodPage)
+                          !Provider.of<AuditData>(context).goToVerificationGoodPage)
                         VerificationBadPage(
                           activeAudit: activeAudit,
                         ),
@@ -163,60 +144,45 @@ class _AuditPageState extends State<AuditPage> {
                         if (activeSection?.name != "Photos")
                           Container(
                             child: AuditQuestions(
-                                activeSection: activeSection,
-                                activecalendarResult: activeCalendarResult),
+                                activeSection: activeSection, activecalendarResult: activeCalendarResult),
                           ),
-                      if (activeSection?.name == "Confirm Details" &&
-                          activeAudit.detailsConfirmed == false)
+                      if (activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false)
                         FlatButton(
                           // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                20.0, 12.0, 20.0, 12.0),
-                            child: Text("Confirm",
-                                style: ColorDefs.textBodyBlack20),
+                            padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                            child: Text("Confirm", style: ColorDefs.textBodyBlack20),
                           ),
                           disabledColor: ColorDefs.colorButtonNeutral,
                           color: ColorDefs.colorTopHeader,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
-                              side: BorderSide(
-                                  color: ColorDefs.colorAnotherDarkGreen,
-                                  width: 3.0)),
+                              side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
                           // disabledTextColor: Colors.blue,
-                          onPressed: (!Provider.of<GeneralData>(context)
-                                  .confirmButtonEnabled)
+                          onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
                               ? null
                               : () {
                                   activeAudit.detailsConfirmed = true;
-                                  for (Section section
-                                      in activeAudit.sections) {
+                                  for (Section section in activeAudit.sections) {
                                     section.status = Status.available;
                                     section.lastStatus = Status.available;
                                     activeSection.status = Status.completed;
                                     activeSection.lastStatus = Status.completed;
-                                    if (activeAudit.calendarResult.auditType !=
-                                        "Follow Up") {
+                                    if (activeAudit.calendarResult.auditType != "Follow Up") {
                                       if (section.name == "Review") break;
                                     }
                                   }
                                   setState(() {});
-                                  if (activeAudit.calendarResult.auditType ==
-                                      "Follow Up") {
-                                    Provider.of<AuditData>(context,
-                                            listen: false)
-                                        .makeCitations();
+                                  if (activeAudit.calendarResult.auditType == "Follow Up") {
+                                    Provider.of<AuditData>(context, listen: false).makeCitations();
                                     Section goToSection;
-                                    for (Section section
-                                        in activeAudit.sections) {
+                                    for (Section section in activeAudit.sections) {
                                       if (section.name == "Follow Up Review") {
                                         goToSection = section;
                                       }
                                     }
-                                    Provider.of<AuditData>(context,
-                                            listen: false)
-                                        .updateActiveSection(goToSection);
+                                    Provider.of<AuditData>(context, listen: false).updateActiveSection(goToSection);
                                   }
                                 },
                         ),
@@ -227,82 +193,59 @@ class _AuditPageState extends State<AuditPage> {
                         if (showSubmitButton)
                           FlatButton(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    20.0, 12.0, 20.0, 12.0),
-                                child: Text("Submit Audit",
-                                    style: ColorDefs.textBodyBlack30),
+                                padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                child: Text("Submit Audit", style: ColorDefs.textBodyBlack30),
                               ),
                               color: Colors.green,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(50),
                                   ),
-                                  side: BorderSide(
-                                      color: ColorDefs.colorAnotherDarkGreen,
-                                      width: 3.0)),
+                                  side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
                               disabledColor: ColorDefs.colorButtonNeutral,
                               // color: Colors.blue,
                               // textColor: Colors.black,
                               // child: Text("Submit Audit", style: ColorDefs.textBodyBlack20),
                               onPressed: (() async {
                                 // Save Date time
-                                activeAudit.calendarResult.endDateTime =
-                                    DateTime.now();
+                                activeAudit.calendarResult.endDateTime = DateTime.now();
                                 // this is done to prevent "Verification" from showing as selected when opening again.
-                                for (var i = activeAudit.sections.length - 1;
-                                    i > -1;
-                                    i--) {
-                                  if (activeAudit.sections[i].name ==
-                                      "Verification") {
-                                    activeAudit.sections[i].status =
-                                        Status.completed;
+                                for (var i = activeAudit.sections.length - 1; i > -1; i--) {
+                                  if (activeAudit.sections[i].name == "Verification") {
+                                    activeAudit.sections[i].status = Status.completed;
                                     break;
                                   }
                                 }
                                 // Save citations, and update status
-                                activeAudit.citations = Provider.of<AuditData>(
-                                        context,
-                                        listen: false)
-                                    .citations;
+                                activeAudit.citations = Provider.of<AuditData>(context, listen: false).citations;
                                 activeAudit.previousCitations =
-                                    Provider.of<AuditData>(context,
-                                            listen: false)
-                                        .citations;
+                                    Provider.of<AuditData>(context, listen: false).citations;
                                 String status = "Completed";
                                 if (activeAudit.siteVisitRequired == true) {
                                   status = "Site Visit Req.";
                                 }
 
                                 activeAudit.calendarResult.status = status;
-                                Provider.of<AuditData>(context, listen: false)
-                                    .saveAuditLocally(activeAudit);
+                                Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
                                 // the calendar item needs to be updated due to the status change.
-                                Provider.of<ListCalendarData>(context,
-                                        listen: false)
-                                    .addCalendarItem(
-                                        activeAudit.calendarResult);
-                                Provider.of<AuditData>(context, listen: false)
-                                    .notifyTheListeners();
-                                Provider.of<AuditData>(context, listen: false)
-                                    .saveAuditToSend(activeAudit);
+                                Provider.of<ListCalendarData>(context, listen: false)
+                                    .addCalendarItem(activeAudit.calendarResult);
+                                Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                                Provider.of<AuditData>(context, listen: false).saveAuditToSend(activeAudit);
 
                                 await Dialogs.showSuccess(context);
                                 Navigator.of(context).pop();
                                 // Navigator.of(context).pop();
-                                Provider.of<AuditData>(context, listen: false)
-                                    .resetAudit();
+                                Provider.of<AuditData>(context, listen: false).resetAudit();
                               })),
                       if (activeAudit?.calendarResult?.status == 0)
                         FlatButton(
                           color: Colors.blue,
                           textColor: Colors.black,
-                          child: Text("Cancel Audit",
-                              style: ColorDefs.textBodyBlack20),
+                          child: Text("Cancel Audit", style: ColorDefs.textBodyBlack20),
                           onPressed: () {
-                            Provider.of<AuditData>(context, listen: false)
-                                .toggleStartAudit();
-                            Provider.of<AuditData>(context, listen: false)
-                                .resetAudit();
+                            Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+                            Provider.of<AuditData>(context, listen: false).resetAudit();
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
                           },
@@ -313,25 +256,18 @@ class _AuditPageState extends State<AuditPage> {
                         color: ColorDefs.colorTopHeader,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0),
-                            side: BorderSide(
-                                color: ColorDefs.colorAnotherDarkGreen,
-                                width: 3.0)),
+                            side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
                         // color: Colors.blue,
                         // textColor: Colors.black,
                         child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                          child: Text("Close and Save",
-                              style: ColorDefs.textBodyBlack20),
+                          padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                          child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
                         ),
                         onPressed: () {
-                          Provider.of<AuditData>(context, listen: false)
-                              .toggleStartAudit();
-                          Provider.of<AuditData>(context, listen: false)
-                              .saveAuditLocally(activeAudit);
-                          Provider.of<AuditData>(context, listen: false)
-                              .resetAudit();
+                          Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+                          Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
+                          Provider.of<AuditData>(context, listen: false).resetAudit();
 
                           Navigator.of(context).pop();
                         },

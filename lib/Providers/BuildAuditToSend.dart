@@ -5,8 +5,7 @@ import 'package:auditor/Utilities/Conversion.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
-Map<String, dynamic> buildAuditToSend(
-    Audit outgoingAudit, String deviceidProvider) {
+Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvider) {
   Map<String, dynamic> resultMap = <String, dynamic>{};
 ////////// Encode all of the questions first //////////
   for (Section section in outgoingAudit.sections) {
@@ -87,47 +86,37 @@ Map<String, dynamic> buildAuditToSend(
 ////////// Encode main body  //////////
   String deviceid = deviceidProvider;
 
-  String dateOfSiteVisit =
-      outgoingAudit.calendarResult.startDateTime.toString();
+  String dateOfSiteVisit = outgoingAudit.calendarResult.startDateTime.toString();
 
-  String startOfAudit = DateFormat("HH:mm:ss.000")
-      .format(outgoingAudit.calendarResult.startDateTime);
+  String startOfAudit = DateFormat("HH:mm:ss.000").format(outgoingAudit.calendarResult.startDateTime);
 
-  String endOfAudit = DateFormat("HH:mm:ss.000")
-      .format(outgoingAudit.calendarResult.endDateTime);
+  String endOfAudit = DateFormat("HH:mm:ss.000").format(outgoingAudit.calendarResult.endDateTime);
 
   resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
   resultMap["StartOfAudit"] = startOfAudit;
   resultMap["EndOfAudit"] = endOfAudit;
   resultMap["GCFDAuditorID"] = outgoingAudit.calendarResult.auditor;
-  resultMap['ProgramContact'] =
-      outgoingAudit.sections[0].questions[7].userResponse;
-  resultMap['PersonInterviewed'] =
-      outgoingAudit.sections[0].questions[8].userResponse;
-  resultMap['ContactEmail'] =
-      outgoingAudit.sections[0].questions[9].userResponse;
+  resultMap['ProgramContact'] = outgoingAudit.sections[0].questions[7].userResponse;
+  resultMap['PersonInterviewed'] = outgoingAudit.sections[0].questions[8].userResponse;
+  resultMap['ContactEmail'] = outgoingAudit.sections[0].questions[9].userResponse;
   try {
-    resultMap['ServiceArea'] =
-        outgoingAudit.sections[0].questions[10].userResponse;
+    resultMap['ServiceArea'] = outgoingAudit.sections[0].questions[10].userResponse;
   } catch (err) {
     print(err);
   }
   if (outgoingAudit.correctiveActionPlanDueDate != null) {
-    String tempDateTimeString =
-        outgoingAudit.correctiveActionPlanDueDate.toString();
+    String tempDateTimeString = outgoingAudit.correctiveActionPlanDueDate.toString();
     resultMap['CorrectiveActionPlanDueDate'] = tempDateTimeString;
   }
 
 ////////// Encode signatures in base 64 //////////
   if (outgoingAudit.photoSig['certRepresentativeSignature'] != null)
-    resultMap['CertRepresentativeSignature'] =
-        base64Encode(outgoingAudit.photoSig['certRepresentativeSignature']);
+    resultMap['CertRepresentativeSignature'] = base64Encode(outgoingAudit.photoSig['certRepresentativeSignature']);
 
   if (outgoingAudit.photoSig['foodDepositoryMonitorSignature'] != null) {
     resultMap['FoodDepositoryMonitorSignature'] =
         base64Encode(outgoingAudit.photoSig['foodDepositoryMonitorSignature']);
-    resultMap['SiteRepresentativeSignature'] =
-        base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
+    resultMap['SiteRepresentativeSignature'] = base64Encode(outgoingAudit.photoSig['siteRepresentativeSignature']);
   }
   // bool siteVisitRequired = false;
 
@@ -136,24 +125,18 @@ Map<String, dynamic> buildAuditToSend(
   for (Question citation in outgoingAudit.citations) {
     if (!citation.unflagged) {
       // siteVisitRequired = true;
-      citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] =
-          1;
-      citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'ActionItem'] = citation.actionItem;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'Flag'] = 1;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'ActionItem'] = citation.actionItem;
 
-      citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalAnswer'] = citation.userResponse;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalAnswer'] = citation.userResponse;
 
-      citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalComments'] = citation.optionalComment;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalComments'] = citation.optionalComment;
     } else {
       String text = (citation.questionMap['databaseVar'] as String) + 'Flag';
       citationsMap[text] = 0;
-      citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalAnswer'] = citation.userResponse;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalAnswer'] = citation.userResponse;
 
-      citationsMap[(citation.questionMap['databaseVar'] as String) +
-          'OriginalComments'] = citation.optionalComment;
+      citationsMap[(citation.questionMap['databaseVar'] as String) + 'OriginalComments'] = citation.optionalComment;
     }
   }
 
@@ -164,11 +147,9 @@ Map<String, dynamic> buildAuditToSend(
   Map<String, dynamic> mainBody = <String, dynamic>{
     "AgencyNumber": outgoingAudit.calendarResult.agencyNum,
     "ProgramNumber": outgoingAudit.calendarResult.programNum,
-    "ProgramType":
-        convertProgramTypeToNumber(outgoingAudit.calendarResult.programType),
+    "ProgramType": convertProgramTypeToNumber(outgoingAudit.calendarResult.programType),
     "Auditor": outgoingAudit.calendarResult.auditor,
-    "AuditType":
-        convertAuditTypeToNumber(outgoingAudit.calendarResult.auditType),
+    "AuditType": convertAuditTypeToNumber(outgoingAudit.calendarResult.auditType),
     "StartTime": outgoingAudit.calendarResult.startDateTime.toString(),
     "DeviceId": deviceid,
     "PantryFollowUp": null,
@@ -203,7 +184,7 @@ Map<String, dynamic> buildAuditToSend(
   //     // Dialogs.showMessage(
   //     //     context: navigatorKey.currentContext,
   //     //     message:
-  //     //         "A timeout error has ocurred while contacting the site data enpoint. Check internet connection",
+  //     //         "A timeout error has occurred while contacting the site data enpoint. Check internet connection",
   //     //     dismissable: true);
   //     return null;
   //   },

@@ -15,8 +15,7 @@ class AuditInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool alreadyExist = Provider.of<AuditData>(context, listen: false)
-        .auditExists(calendarResult);
+    bool auditAlreadyStarted = Provider.of<AuditData>(context, listen: false).auditExists(calendarResult);
 
     // Widget oldVersion = Material(
     //   child: Container(
@@ -255,11 +254,10 @@ class AuditInfoDialog extends StatelessWidget {
     // );
 
     Widget newWidget = Container(
-        decoration: BoxDecoration(
-            color: ColorDefs.colorTopHeader,
-            borderRadius: BorderRadius.all(Radius.circular(25.0))),
+        decoration:
+            BoxDecoration(color: ColorDefs.colorTopHeader, borderRadius: BorderRadius.all(Radius.circular(25.0))),
         height: 700,
-        width: 650,
+        width: 600,
         child: Column(
           children: [
             Expanded(
@@ -267,9 +265,8 @@ class AuditInfoDialog extends StatelessWidget {
                 child: Container(
                     decoration: BoxDecoration(
                         color: calendarResult.programTypeColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25.0),
-                            topRight: Radius.circular(25.0))),
+                        borderRadius:
+                            BorderRadius.only(topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
@@ -279,63 +276,52 @@ class AuditInfoDialog extends StatelessWidget {
                           AutoSizeText(calendarResult.agencyName,
                               // textAlign: TextAlign.left,
                               style: ColorDefs.textBodyWhite30),
-                          Spacer(),
-                          Container(height: 10),
+                          // Spacer(),
+                          Container(height: 0),
                           if (calendarResult.siteInfo?.address1 != null)
                             Container(
                               // color: Colors.grey,
-                              child: AutoSizeText(
-                                  calendarResult.siteInfo.address1,
-                                  style: ColorDefs.textBodyWhite20),
+                              child: AutoSizeText(calendarResult.siteInfo.address1, style: ColorDefs.textBodyWhite20),
                             ),
-                          if (calendarResult.siteInfo?.address2 != null)
+                          if (calendarResult.siteInfo?.address2 != null && calendarResult.siteInfo?.address2 != "")
                             Container(
                               // color: Colors.grey,
-                              child: AutoSizeText(
-                                  calendarResult.siteInfo.address2,
-                                  style: ColorDefs.textBodyWhite20),
+                              child: AutoSizeText(calendarResult.siteInfo.address2, style: ColorDefs.textBodyWhite20),
                             ),
                           if (calendarResult.siteInfo?.city != null)
                             Container(
                               // color: Colors.grey,
                               child: AutoSizeText(
-                                  '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state ?? ""},  ${calendarResult.siteInfo.zip ?? ""},',
+                                  '${calendarResult.siteInfo.city}, ${calendarResult.siteInfo.state ?? ""},  ${calendarResult.siteInfo.zip ?? ""}',
                                   style: ColorDefs.textBodyWhite20),
                             ),
+                          Spacer(),
                           if (calendarResult.siteInfo?.contact != null)
                             Container(
                               // color: Colors.grey,
-                              child: AutoSizeText(
-                                  '${calendarResult.siteInfo.contact}',
+                              child: AutoSizeText('Contact Name: ${calendarResult.siteInfo.contact}',
                                   style: ColorDefs.textBodyWhite20),
                             ),
-                          // if (calendarResult.siteInfo?.contactEmail != null)
-                          //   Container(
-                          //     // color: Colors.grey,
-                          //     child: AutoSizeText(
-                          //         '${calendarResult.siteInfo.contactEmail}',
-                          //         style: ColorDefs.textBodyBlue20),
-                          //   ),
+                          if (calendarResult.siteInfo?.contactEmail != null)
+                            Container(
+                              // color: Colors.grey,
+                              child: AutoSizeText('${calendarResult.siteInfo.contactEmail}',
+                                  style: ColorDefs.textBodyWhite20),
+                            ),
                           Spacer(),
 
                           FlatButton(
                             color: ColorDefs.colorTopHeader,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0),
-                              side: BorderSide(
-                                  color: ColorDefs.colorLogoLightGreen,
-                                  width: 3.0),
+                              side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
                             ),
                             onPressed: () {
-                              Dialogs.showSites(
-                                  context: context,
-                                  agencyNum: calendarResult.agencyNum);
+                              Dialogs.showSites(context: context, agencyNum: calendarResult.agencyNum);
                             },
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  5.0, 12.0, 5.0, 12.0),
-                              child: Text("Site Information",
-                                  style: ColorDefs.textBodyBlack20),
+                              padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                              child: Text("Site Information", style: ColorDefs.textBodyBlack20),
                             ),
                           ),
                         ],
@@ -346,9 +332,8 @@ class AuditInfoDialog extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     color: ColorDefs.colorAlternatingDark,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25.0),
-                        bottomRight: Radius.circular(25.0))),
+                    borderRadius:
+                        BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0))),
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
@@ -365,14 +350,11 @@ class AuditInfoDialog extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text("Start Time:",
-                                  style: ColorDefs.textBodyWhite25),
-                              Text("Program Number:",
-                                  style: ColorDefs.textBodyWhite25),
-                              Text("Audit Type:",
-                                  style: ColorDefs.textBodyWhite25),
-                              Text("Auditor", style: ColorDefs.textBodyWhite25),
-                              Text("Status", style: ColorDefs.textBodyWhite25)
+                              Text("Start Time:", style: ColorDefs.textBodyWhite25),
+                              Text("Program Number:", style: ColorDefs.textBodyWhite25),
+                              Text("Audit Type:", style: ColorDefs.textBodyWhite25),
+                              Text("Auditor:", style: ColorDefs.textBodyWhite25),
+                              Text("Status:", style: ColorDefs.textBodyWhite25)
                             ],
                           ),
                           Container(
@@ -381,17 +363,12 @@ class AuditInfoDialog extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                  '${DateFormat.yMd().add_jm().format(calendarResult.startDateTime)}',
+                              Text('${DateFormat.yMd().add_jm().format(calendarResult.startDateTime)}',
                                   style: ColorDefs.textBodyWhite25),
-                              Text('${calendarResult.programNum}',
-                                  style: ColorDefs.textBodyWhite25),
-                              Text('${calendarResult.auditType}',
-                                  style: ColorDefs.textBodyWhite25),
-                              Text('${calendarResult.auditor}',
-                                  style: ColorDefs.textBodyWhite25),
-                              Text('${calendarResult.status}',
-                                  style: ColorDefs.textBodyWhite25),
+                              Text('${calendarResult.programNum}', style: ColorDefs.textBodyWhite25),
+                              Text('${calendarResult.auditType}', style: ColorDefs.textBodyWhite25),
+                              Text('${calendarResult.auditor}', style: ColorDefs.textBodyWhite25),
+                              Text('${calendarResult.status}', style: ColorDefs.textBodyWhite25),
                             ],
                           ),
                         ],
@@ -404,29 +381,23 @@ class AuditInfoDialog extends StatelessWidget {
                             color: ColorDefs.colorTopHeader,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(
-                                    color: calendarResult.programTypeColor,
-                                    width: 3.0)),
+                                side: BorderSide(color: calendarResult.programTypeColor, width: 3.0)),
 
                             // disabledTextColor: Colors.blue,
                             onPressed: () {
-                              Provider.of<AuditData>(context, listen: false)
-                                  .toggleStartAudit();
+                              Provider.of<AuditData>(context, listen: false).toggleStartAudit();
                               Navigator.of(context).pop();
                               Navigator.push<dynamic>(
                                 context,
                                 MaterialPageRoute<dynamic>(
                                   builder: (context) => AuditPage(
-                                      calendarResult: calendarResult,
-                                      alreadyExist: alreadyExist),
+                                      calendarResult: calendarResult, auditAlreadyStarted: auditAlreadyStarted),
                                 ),
                               );
                             },
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  5.0, 12.0, 5.0, 12.0),
-                              child: AutoSizeText(
-                                  alreadyExist ? 'View Audit' : 'Begin Audit',
+                              padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                              child: AutoSizeText(auditAlreadyStarted ? 'View Audit' : 'Begin Audit',
                                   style: ColorDefs.textBodyBlack20),
                             ),
                           ),
@@ -446,9 +417,7 @@ class AuditInfoDialog extends StatelessWidget {
                               color: ColorDefs.colorTopHeader,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(
-                                      color: calendarResult.programTypeColor,
-                                      width: 3.0)),
+                                  side: BorderSide(color: calendarResult.programTypeColor, width: 3.0)),
                               onPressed: () {
                                 bool followup = false;
                                 if (calendarResult.auditType == "Follow Up") {
@@ -456,13 +425,12 @@ class AuditInfoDialog extends StatelessWidget {
                                 }
                                 Dialogs.showRescheduleAudit(context,
                                     calendarResult: calendarResult,
-                                    followup: followup);
+                                    followup: followup,
+                                    auditAlreadyStarted: auditAlreadyStarted);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    5.0, 12.0, 5.0, 12.0),
-                                child: AutoSizeText('Edit Audit',
-                                    style: ColorDefs.textBodyBlack20),
+                                padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                                child: AutoSizeText('Edit Audit', style: ColorDefs.textBodyBlack20),
                               ),
                             ),
                           if (calendarResult.status == "Site Visit Req.")
@@ -470,19 +438,13 @@ class AuditInfoDialog extends StatelessWidget {
                               color: ColorDefs.colorTopHeader,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(
-                                      color: calendarResult.programTypeColor,
-                                      width: 3.0)),
+                                  side: BorderSide(color: calendarResult.programTypeColor, width: 3.0)),
                               onPressed: () {
-                                Dialogs.showRescheduleAudit(context,
-                                    calendarResult: calendarResult,
-                                    followup: true);
+                                Dialogs.showRescheduleAudit(context, calendarResult: calendarResult, followup: true);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    5.0, 12.0, 5.0, 12.0),
-                                child: AutoSizeText('Schedule Followup',
-                                    style: ColorDefs.textBodyBlack20),
+                                padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                                child: AutoSizeText('Schedule Followup', style: ColorDefs.textBodyBlack20),
                               ),
                             ),
                         ],
