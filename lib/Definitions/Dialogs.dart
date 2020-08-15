@@ -485,7 +485,7 @@ class Dialogs {
   }
 
   static void showRescheduleAudit(BuildContext context,
-      {CalendarResult calendarResult, bool followup, bool auditAlreadyStarted}) {
+      {CalendarResult calendarResult, bool followup, @required bool auditAlreadyStarted}) {
     bool rescheduleFollowUp =
         (followup == true && calendarResult.auditType == "Follow Up" && calendarResult.status == "Scheduled");
     Widget selectWidget(bool alreadyExists, bool rescheduleFollowUp) {

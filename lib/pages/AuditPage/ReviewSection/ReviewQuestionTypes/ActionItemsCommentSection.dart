@@ -19,8 +19,7 @@ class ActionItemsCommentSection extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ActionItemsCommentSectionState createState() =>
-      _ActionItemsCommentSectionState();
+  _ActionItemsCommentSectionState createState() => _ActionItemsCommentSectionState();
 }
 
 class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
@@ -34,8 +33,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
       text = widget.questions[widget.index].userResponse?.toString();
     } else {
       if (widget.actionItem == true) {
-        if (widget.questions[widget.index].actionItem ==
-            "action item does not exist for this question") {
+        if (widget.questions[widget.index].actionItem == "action item does not exist for this question") {
           text = " --> " + widget.questions[widget.index].text;
         }
 
@@ -58,16 +56,12 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
         ? Container()
         : Card(
             child: AnimatedContainer(
-              padding: widget.questions[index].unflagged
-                  ? EdgeInsets.all(0.0)
-                  : EdgeInsets.all(8.0),
+              padding: widget.questions[index].unflagged ? EdgeInsets.all(0.0) : EdgeInsets.all(8.0),
               height: widget.questions[index].unflagged ? 0 : 67,
-              color: ColorDefs.colorAudit4,
+              color: ColorDefs.colorAudit2, // ACTION ITEM
               duration: Duration(milliseconds: 300),
               child: TextField(
-                keyboardType: widget.numKeyboard
-                    ? TextInputType.number
-                    : TextInputType.text,
+                keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
                 controller: controller,
                 onChanged: (value) {
                   widget.questions[index].actionItem = value;
@@ -80,15 +74,12 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
                             onPressed: () {
                               controller.clear();
                               if (widget.mandatory) {
-                                widget.questions[widget.index].userResponse =
-                                    "";
+                                widget.questions[widget.index].userResponse = "";
                               } else {
                                 if (widget.actionItem == true) {
-                                  widget.questions[widget.index].actionItem =
-                                      "";
+                                  widget.questions[widget.index].actionItem = "";
                                 } else {
-                                  widget.questions[widget.index]
-                                      .optionalComment = "";
+                                  widget.questions[widget.index].optionalComment = "";
                                 }
                               }
                             },
@@ -100,8 +91,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 15, bottom: 11, top: 11, right: 15),
+                    contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                     hintText: "Enter action item comments "),
               ),
             ),

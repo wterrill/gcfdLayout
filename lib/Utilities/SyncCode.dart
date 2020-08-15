@@ -14,16 +14,22 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 void totalDataSync(BuildContext context) async {
   try {
+    Future.delayed(Duration(milliseconds: 300), () => true);
+
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       // I am connected to a mobile network. or a wifi network
-      print("######### CONNECTED upload pic list #########");
+      print("######### CONNECTED inside syncCode  #########");
     } else {
       throw ("No internet connection found");
     }
 
     //// Site Data /////
-    _showToast(context, "Syncing Data", Icon(Icons.sync));
+    try {
+      _showToast(context, "Syncing Data", Icon(Icons.sync));
+    } catch (err) {
+      print(err);
+    }
     Provider.of<GeneralData>(context, listen: false).updateSyncMessage("Syncing");
     print("deviceid");
     String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;

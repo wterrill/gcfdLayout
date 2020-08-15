@@ -416,6 +416,8 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                                 // Update retrieved audit:
                                 copy_retrieved.calendarResult.startTime = newEvent['startTime'] as String;
                                 copy_retrieved.calendarResult.auditor = newEvent['auditor'] as String;
+                                copy_retrieved.calendarResult.startDateTime =
+                                    DateTime.parse(newEvent['startTime'] as String);
 
                                 Provider.of<AuditData>(context, listen: false).saveAuditLocally(copy_retrieved);
 

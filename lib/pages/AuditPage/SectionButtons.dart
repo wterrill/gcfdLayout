@@ -51,15 +51,39 @@ class _SectionButtonsState extends State<SectionButtons> {
                       LimitedBox(
                         maxHeight: 80,
                         child: Image(
-                          image: AssetImage(
-                              'assets/images/GCFD_Logo_vertical.png'),
+                          image: AssetImage('assets/images/GCFD_Logo_vertical.png'),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
-                        child: Text(
-                          widget.activeAudit?.name ?? "",
-                          style: ColorDefs.textBodyBlack30,
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.activeAudit?.calendarResult?.agencyName ?? "",
+                              style: ColorDefs.textGreen25,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  widget.activeAudit?.calendarResult?.agencyNum ?? "",
+                                  style: ColorDefs.textGreen25,
+                                ),
+                                Text(
+                                  "/",
+                                  style: ColorDefs.textGreen25,
+                                ),
+                                Text(
+                                  widget.activeAudit?.calendarResult?.programNum ?? "",
+                                  style: ColorDefs.textGreen25,
+                                ),
+                              ],
+                            ),
+                            Text(
+                              widget.activeAudit?.name ?? "",
+                              style: ColorDefs.textBodyBlack20,
+                            ),
+                          ],
                         ),
                       )
                     ],
@@ -71,21 +95,14 @@ class _SectionButtonsState extends State<SectionButtons> {
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    separatorBuilder: (context, index) =>
-                        Container(width: 5, color: Colors.transparent),
+                    separatorBuilder: (context, index) => Container(width: 5, color: Colors.transparent),
                     itemCount: widget.activeAudit.sections.length,
                     itemBuilder: (context, index) {
-                      SectionButton sectionButton = SectionButton(
-                          section: widget.activeAudit.sections[index],
-                          buttonAutoGroup: buttonAutoGroup);
-                      if (index == 0)
-                        return Padding(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: sectionButton);
+                      SectionButton sectionButton =
+                          SectionButton(section: widget.activeAudit.sections[index], buttonAutoGroup: buttonAutoGroup);
+                      if (index == 0) return Padding(padding: EdgeInsets.only(left: 10.0), child: sectionButton);
                       if (index == widget.activeAudit.sections.length - 1)
-                        return Padding(
-                            padding: EdgeInsets.only(right: 10.0),
-                            child: sectionButton);
+                        return Padding(padding: EdgeInsets.only(right: 10.0), child: sectionButton);
                       return sectionButton;
                     },
                   ),

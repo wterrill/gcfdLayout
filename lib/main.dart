@@ -192,7 +192,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
           // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED site sync #########");
+          print("######### CONNECTED total data sync #########");
           await totalDataSync(context);
         }
       }

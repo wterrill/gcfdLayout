@@ -88,7 +88,7 @@ class _AuditPageState extends State<AuditPage> {
         brightness: Brightness.light,
         primaryColor: Colors.lightBlue[800],
         accentColor: Colors.cyan[600],
-        fontFamily: 'Roboto', //Georgia
+        fontFamily: 'Roboto', // Georgia
         textTheme: TextTheme(),
       ),
       home: Scaffold(
@@ -97,7 +97,7 @@ class _AuditPageState extends State<AuditPage> {
             child: Container(
                 decoration: BoxDecoration(
                     color: ColorDefs.colorTopHeader,
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(25.0),
                     border: Border.all(width: 2.0, color: Colors.grey)),
                 height: mediaHeight * 0.95,
                 width: mediaWidth * 0.9,
@@ -146,46 +146,6 @@ class _AuditPageState extends State<AuditPage> {
                             child: AuditQuestions(
                                 activeSection: activeSection, activecalendarResult: activeCalendarResult),
                           ),
-                      if (activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false)
-                        FlatButton(
-                          // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                            child: Text("Confirm", style: ColorDefs.textBodyBlack20),
-                          ),
-                          disabledColor: ColorDefs.colorButtonNeutral,
-                          color: ColorDefs.colorTopHeader,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                              side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                          // disabledTextColor: Colors.blue,
-                          onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
-                              ? null
-                              : () {
-                                  activeAudit.detailsConfirmed = true;
-                                  for (Section section in activeAudit.sections) {
-                                    section.status = Status.available;
-                                    section.lastStatus = Status.available;
-                                    activeSection.status = Status.completed;
-                                    activeSection.lastStatus = Status.completed;
-                                    if (activeAudit.calendarResult.auditType != "Follow Up") {
-                                      if (section.name == "Review") break;
-                                    }
-                                  }
-                                  setState(() {});
-                                  if (activeAudit.calendarResult.auditType == "Follow Up") {
-                                    Provider.of<AuditData>(context, listen: false).makeCitations();
-                                    Section goToSection;
-                                    for (Section section in activeAudit.sections) {
-                                      if (section.name == "Follow Up Review") {
-                                        goToSection = section;
-                                      }
-                                    }
-                                    Provider.of<AuditData>(context, listen: false).updateActiveSection(goToSection);
-                                  }
-                                },
-                        ),
 
                       //),
 
@@ -251,28 +211,148 @@ class _AuditPageState extends State<AuditPage> {
                           },
                         ),
                       Container(height: 10),
-                      FlatButton(
-                        disabledColor: ColorDefs.colorButtonNeutral,
-                        color: ColorDefs.colorTopHeader,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                            side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                        // color: Colors.blue,
-                        // textColor: Colors.black,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                          child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
+                          color: ColorDefs.colorAlternateDark,
+                          // border: Border(top: BorderSide(width: 2.0, color: Colors.green))
                         ),
-                        onPressed: () {
-                          Provider.of<AuditData>(context, listen: false).toggleStartAudit();
-                          Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
-                          Provider.of<AuditData>(context, listen: false).resetAudit();
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            FlatButton(
+                              disabledColor: ColorDefs.colorButtonNeutral,
+                              color: ColorDefs.colorAnotherDarkGreen,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
-                          Navigator.of(context).pop();
-                        },
+                              // color: Colors.blue,
+                              // textColor: Colors.black,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                child: Text("Save and Close", style: ColorDefs.textBodyWhite20),
+                              ),
+                              onPressed: () {
+                                Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+                                Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
+                                Provider.of<AuditData>(context, listen: false).resetAudit();
+
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            if (activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false)
+                              FlatButton(
+                                // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                  child: Text("Confirm", style: ColorDefs.textBodyBlack20),
+                                ),
+                                disabledColor: ColorDefs.colorButtonNeutral,
+                                color: ColorDefs.colorTopHeader,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                                // disabledTextColor: Colors.blue,
+                                onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
+                                    ? null
+                                    : () {
+                                        activeAudit.detailsConfirmed = true;
+                                        for (Section section in activeAudit.sections) {
+                                          section.status = Status.available;
+                                          section.lastStatus = Status.available;
+                                          activeSection.status = Status.completed;
+                                          activeSection.lastStatus = Status.completed;
+                                          if (activeAudit.calendarResult.auditType != "Follow Up") {
+                                            if (section.name == "Review") break;
+                                          }
+                                        }
+                                        setState(() {});
+                                        if (activeAudit.calendarResult.auditType == "Follow Up") {
+                                          Provider.of<AuditData>(context, listen: false).makeCitations();
+                                          Section goToSection;
+                                          for (Section section in activeAudit.sections) {
+                                            if (section.name == "Follow Up Review") {
+                                              goToSection = section;
+                                            }
+                                          }
+                                          Provider.of<AuditData>(context, listen: false)
+                                              .updateActiveSection(goToSection);
+                                        }
+                                      },
+                              ),
+                            if (!(activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false))
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: 160,
+                                    child: FlatButton(
+                                      disabledColor: ColorDefs.colorButtonNeutral,
+                                      color: ColorDefs.colorTopHeader,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                                      // color: Colors.blue,
+                                      // textColor: Colors.black,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                        child: Text("Previous", style: ColorDefs.textBodyBlack20),
+                                      ),
+                                      onPressed: () {
+                                        Section nextSection =
+                                            Provider.of<AuditData>(context, listen: false).cycleSections(-1);
+                                        if (Status.values.indexOf(nextSection.status) >=
+                                            Status.values.indexOf(Status.available)) {
+                                          Provider.of<AuditData>(context, listen: false)
+                                              .updateActiveSection(nextSection);
+                                          Provider.of<AuditData>(context, listen: false).saveActiveAudit();
+                                          Provider.of<AuditData>(context, listen: false).makeCitations();
+                                        }
+
+                                        // TODO
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 160,
+                                    child: FlatButton(
+                                      disabledColor: ColorDefs.colorButtonNeutral,
+                                      color: ColorDefs.colorTopHeader,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                        child: Text("Next", style: ColorDefs.textBodyBlack20),
+                                      ),
+                                      onPressed: () {
+                                        Section nextSection =
+                                            Provider.of<AuditData>(context, listen: false).cycleSections(1);
+                                        if (Status.values.indexOf(nextSection.status) >=
+                                            Status.values.indexOf(Status.available)) {
+                                          Provider.of<AuditData>(context, listen: false)
+                                              .updateActiveSectionNext(nextSection);
+                                          Provider.of<AuditData>(context, listen: false).saveActiveAudit();
+                                          Provider.of<AuditData>(context, listen: false).makeCitations();
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ],
+                        ),
                       ),
-                      Container(height: 10)
+
+                      // Container(height: 10)
                     ],
                   ),
                 )),

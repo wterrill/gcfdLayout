@@ -9,12 +9,7 @@ class ReviewDisplay extends StatefulWidget {
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
   final CalendarResult activeCalendarResult;
-  ReviewDisplay(
-      {Key key,
-      this.index,
-      this.activeSection,
-      this.questionAutoGroup,
-      this.activeCalendarResult})
+  ReviewDisplay({Key key, this.index, this.activeSection, this.questionAutoGroup, this.activeCalendarResult})
       : super(key: key);
 
   @override
@@ -49,7 +44,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
         case ("Agency/Program Number:"):
           widget = Text(activeCalendarResult?.programNum);
           break;
-        case ("Site address:"):
+        case ("Site Address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";
           string = string + (activeCalendarResult.siteInfo?.address2 ?? " ");
           string = string + (activeCalendarResult.siteInfo?.city ?? " ");
@@ -62,16 +57,13 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
           widget = Text(activeCalendarResult.auditor);
           break;
         case ("Program Contact:"):
-          widget =
-              Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
+          widget = Text(activeCalendarResult.siteInfo?.contact ?? "None Defined");
           break;
         case ("Program Operating Hours:"):
-          widget = Text(
-              activeCalendarResult.siteInfo?.operateHours ?? "None Defined");
+          widget = Text(activeCalendarResult.siteInfo?.operateHours ?? "None Defined");
           break;
         case ("Service Area:"):
-          widget = Text(
-              activeCalendarResult.siteInfo?.serviceArea ?? "None Defined");
+          widget = Text(activeCalendarResult.siteInfo?.serviceArea ?? "None Defined");
           break;
       }
       return widget;
@@ -83,13 +75,10 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
           children: [
             Expanded(
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 3,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 3, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             Expanded(
-              child:
-                  getWidgetFromText(widget.activeSection.questions[index].text),
+              child: getWidgetFromText(widget.activeSection.questions[index].text),
             )
           ],
         ),

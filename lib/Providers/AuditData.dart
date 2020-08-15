@@ -456,7 +456,53 @@ class AuditData with ChangeNotifier {
     }
   }
 
+  Section cycleSections(int offset) {
+    int index = getSectionIndex(activeSection);
+    index = index + offset;
+    if (index == activeAudit.sections.length) {
+      index = activeAudit.sections.length - 1;
+    }
+    if (index < 0) {
+      index = 0;
+    }
+    return activeAudit.sections[index];
+  }
+
+  int getSectionIndex(Section section) {
+    int index = 0;
+    for (var i = 0; i < activeAudit.sections.length; i++) {
+      if (section.name == activeAudit.sections[i].name) {
+        index = i;
+      }
+    }
+    return index;
+  }
+
   void updateActiveSection(Section newSection) {
+    if (['Photos', 'Review', 'Verification'].contains(activeSection.name)) {
+      activeSection.status = Status.completed;
+    } else {
+      activeSection.status = activeSection.lastStatus;
+    }
+    activeSection = newSection;
+    activeSection.lastStatus = activeSection.status;
+    activeSection.status = Status.selected;
+    notifyListeners();
+  }
+
+  void updateActiveSectionNext(Section newSection) {
+    if (['Photos', 'Review', 'Verification'].contains(activeSection.name)) {
+      activeSection.status = Status.completed;
+    } else {
+      activeSection.status = activeSection.lastStatus;
+    }
+    activeSection = newSection;
+    activeSection.lastStatus = activeSection.status;
+    activeSection.status = Status.selected;
+    notifyListeners();
+  }
+
+  void updateActiveSectionPrevios(Section newSection) {
     if (['Photos', 'Review', 'Verification'].contains(activeSection.name)) {
       activeSection.status = Status.completed;
     } else {
@@ -545,7 +591,7 @@ class AuditData with ChangeNotifier {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
           // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED upload pic list #########");
+          print("######### CONNECTED sendFullAudit list #########");
         } else {
           throw ("No internet connection found");
         }
@@ -601,7 +647,7 @@ class AuditData with ChangeNotifier {
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
         // I am connected to a mobile network. or a wifi network
-        print("######### CONNECTED upload pic list #########");
+        print("######### CONNECTED getFullAudit list #########");
       } else {
         throw ("No internet connection found");
       }

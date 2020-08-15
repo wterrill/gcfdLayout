@@ -13,12 +13,7 @@ class Display extends StatefulWidget {
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
   final CalendarResult activeCalendarResult;
-  Display(
-      {Key key,
-      this.index,
-      this.activeSection,
-      this.questionAutoGroup,
-      this.activeCalendarResult})
+  Display({Key key, this.index, this.activeSection, this.questionAutoGroup, this.activeCalendarResult})
       : super(key: key);
 
   @override
@@ -36,36 +31,27 @@ class _DisplayState extends State<Display> {
       Widget widget = Text("");
       switch (text) {
         case ("Date of Visit:"):
-          widget = Text(
-              DateFormat.yMd().format(activeCalendarResult.startDateTime),
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(DateFormat.yMd().format(activeCalendarResult.startDateTime), style: ColorDefs.textBodyBlack20);
           break;
         case ("Start Time:"):
-          widget = Text(
-              DateFormat.jm().format(activeCalendarResult.startDateTime),
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(DateFormat.jm().format(activeCalendarResult.startDateTime), style: ColorDefs.textBodyBlack20);
           break;
         case ("Date of Visit:"):
-          widget = Text(activeCalendarResult?.startDateTime.toString(),
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult?.startDateTime.toString(), style: ColorDefs.textBodyBlack20);
           break;
         case ("Type of Visit:"):
-          widget = Text(activeCalendarResult?.programType,
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult?.programType, style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency Name:"):
-          widget = Text(activeCalendarResult?.agencyName?.titleCase,
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult?.agencyName?.titleCase, style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency/Program Number:"):
-          widget = Text(
-              '${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}',
+          widget = Text('${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}',
               style: ColorDefs.textBodyBlack20);
           break;
-        case ("Site address:"):
+        case ("Site Address:"):
           String string = activeCalendarResult.siteInfo?.address1 ?? " ";
-          string =
-              string + " " + (activeCalendarResult.siteInfo?.address2 ?? " ");
+          string = string + " " + (activeCalendarResult.siteInfo?.address2 ?? " ");
           string = string + " " + (activeCalendarResult.siteInfo?.city ?? " ");
           string = string + " " + (activeCalendarResult.siteInfo?.state ?? " ");
           string = string + " " + (activeCalendarResult.siteInfo?.zip ?? "");
@@ -80,9 +66,7 @@ class _DisplayState extends State<Display> {
               style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Contact:"):
-          widget = Text(
-              activeCalendarResult.siteInfo?.contact ?? "None Defined",
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult.siteInfo?.contact ?? "None Defined", style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Operating Hours:"):
           widget = Text(
@@ -95,9 +79,7 @@ class _DisplayState extends State<Display> {
           );
           break;
         case ("Service Area:"):
-          widget = Text(
-              activeCalendarResult.siteInfo?.serviceArea ?? "None Defined",
-              style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult.siteInfo?.serviceArea ?? "None Defined", style: ColorDefs.textBodyBlack20);
           break;
       }
       return widget;
@@ -110,14 +92,11 @@ class _DisplayState extends State<Display> {
             Expanded(
               flex: 2,
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 3,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 3, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             Expanded(
               flex: 3,
-              child:
-                  getWidgetFromText(widget.activeSection.questions[index].text),
+              child: getWidgetFromText(widget.activeSection.questions[index].text),
             )
           ],
         ),

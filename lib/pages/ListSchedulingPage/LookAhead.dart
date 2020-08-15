@@ -8,13 +8,7 @@ import 'package:provider/provider.dart';
 // import 'package:recase/recase.dart';
 
 class LookAhead extends StatefulWidget {
-  LookAhead(
-      {Key key,
-      this.lookAheadCallback,
-      this.setValue,
-      this.disable,
-      this.programNumber})
-      : super(key: key);
+  LookAhead({Key key, this.lookAheadCallback, this.setValue, this.disable, this.programNumber}) : super(key: key);
   final Function lookAheadCallback;
   final String setValue;
   final bool disable;
@@ -39,11 +33,7 @@ class _LookAheadState extends State<LookAhead> {
   Widget build(BuildContext context) {
     SiteList siteList = Provider.of<SiteData>(context).siteList;
     if (siteList == null) {
-      siteList = SiteList(siteList: [
-        Site(
-            programDisplayName:
-                "For first use, please allow the device to sync")
-      ]);
+      siteList = SiteList(siteList: [Site(programDisplayName: "For first use, please allow the device to sync")]);
     }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,13 +44,11 @@ class _LookAheadState extends State<LookAhead> {
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(
-                      color: ColorDefs.colorAnotherDarkGreen, width: 3),
+                  borderSide: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  borderSide:
-                      BorderSide(color: ColorDefs.colorAudit2, width: 3),
+                  borderSide: BorderSide(color: ColorDefs.colorAudit2, width: 3),
                 ),
 
 // focusedBorder: InputBorder.none,
@@ -70,7 +58,7 @@ class _LookAheadState extends State<LookAhead> {
 
                 isDense: true,
                 contentPadding: EdgeInsets.all(17),
-                hintText: 'Enter agency name or program number',
+                hintText: 'Enter agency name, number or program number',
                 // border: OutlineInputBorder(
                 //     borderRadius: BorderRadius.circular(25.0),
                 //     borderSide: BorderSide(

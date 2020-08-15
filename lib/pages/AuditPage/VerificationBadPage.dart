@@ -56,33 +56,27 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
       affectedIssues = "";
       for (Question question in widget.activeAudit.citations) {
         print(question.actionItem);
-        if (question.actionItem ==
-            ("Explain issue and action item for plumbing issues: ")) {
+        if (question.actionItem == ("Explain issue and action item for plumbing issues: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
-        if (question.actionItem ==
-            ("Explain issue and action item for Sewage issues: ")) {
+        if (question.actionItem == ("Explain issue and action item for Sewage issues: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
-        if (question.actionItem ==
-            ("Explain issue and action item for garbage and refuse disposal issues: ")) {
+        if (question.actionItem == ("Explain issue and action item for garbage and refuse disposal issues: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
-        if (question.actionItem ==
-            ("Explain action items for the fire extinguisher: ")) {
+        if (question.actionItem == ("Explain action items for the fire extinguisher: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
-        if (question.actionItem ==
-            ("Please explain lighting issues and action items: ")) {
+        if (question.actionItem == ("Please explain lighting issues and action items: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
-        if (question.actionItem ==
-            ("Please explain ventilation issues and action items in comments: ")) {
+        if (question.actionItem == ("Please explain ventilation issues and action items in comments: ")) {
           actionItemValid = false;
           affectedIssues = affectedIssues + "\n - " + question.actionItem;
         }
@@ -109,12 +103,10 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
     List<Question> citations = Provider.of<AuditData>(context).citations;
     selectedDate = widget.activeAudit?.correctiveActionPlanDueDate;
     try {
-      foodDepositoryMonitorSignature =
-          widget.activeAudit?.photoSig['foodDepositoryMonitorSignature'];
+      foodDepositoryMonitorSignature = widget.activeAudit?.photoSig['foodDepositoryMonitorSignature'];
     } catch (err) {}
     try {
-      siteRepresentativeSignature =
-          widget.activeAudit?.photoSig['siteRepresentativeSignature'];
+      siteRepresentativeSignature = widget.activeAudit?.photoSig['siteRepresentativeSignature'];
     } catch (err) {}
 
     print("onbuild: $followupReqVal");
@@ -161,16 +153,14 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                      "These Compliance Requirements must be completed by: "),
+                  child: Text("These Compliance Requirements must be completed by: "),
                 ),
                 FlatButton(
                   disabledColor: ColorDefs.colorButtonNeutral,
                   color: ColorDefs.colorTopHeader,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0),
-                      side: BorderSide(
-                          color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                      side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
                   // color: Colors.blue,
                   // textColor: Colors.black,
@@ -181,9 +171,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
 
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                    child: Text((selectedDate != null)
-                        ? DateFormat('MM-dd-yyyy').format(selectedDate)
-                        : "Select Date"),
+                    child: Text((selectedDate != null) ? DateFormat('MM-dd-yyyy').format(selectedDate) : "Select Date"),
                   ),
                   onPressed: () async {
                     selectedDate = await showDatePicker(
@@ -192,8 +180,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2030),
                     );
-                    widget.activeAudit.correctiveActionPlanDueDate =
-                        selectedDate;
+                    widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
                     setState(() {});
                   },
                 ),
@@ -219,8 +206,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                      "Require follow-up site visit for this establishment? "),
+                  child: Text("Require follow-up site visit for this establishment? "),
                 ),
                 DropdownButton<int>(
                     value: followupReqVal,
@@ -237,9 +223,8 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         print(newValue);
                         followupReqVal = newValue;
                         print(followupReqVal);
-                        Provider.of<AuditData>(context, listen: false)
-                            .activeAudit
-                            .siteVisitRequired = newValue == 0 ? false : true;
+                        Provider.of<AuditData>(context, listen: false).activeAudit.siteVisitRequired =
+                            newValue == 0 ? false : true;
                       });
                     },
                     items: [
@@ -258,13 +243,16 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
             // Padding(
             //   padding: const EdgeInsets.all(20.0),
             // child:
-            Wrap(direction: Axis.vertical, children: [
-              Text(
-                '''
-In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in a breach of program agreement, being placed on HOLD status, corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this
-matter to ensure your community does not suffer an interruption of services.  If the agency does not adhere to the corrective action plan and/or receives additional violations during the probation period of three (3) months, the program may be permanently removed as determined by the Greater Chicago Food Depository.''',
-              ),
-            ]),
+            Container(
+              padding: EdgeInsets.all(25),
+              // width: 500, //MediaQuery.of(context).size.width,
+              child: Wrap(direction: Axis.horizontal, children: [
+                Text(
+                  '''
+In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in a breach of program agreement, being placed on HOLD status, corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this matter to ensure your community does not suffer an interruption of services.  If the agency does not adhere to the corrective action plan and/or receives additional violations during the probation period of three (3) months, the program may be permanently removed as determined by the Greater Chicago Food Depository.''',
+                ),
+              ]),
+            ),
             Row(
               children: [
                 Padding(
@@ -278,8 +266,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          if (widget.activeAudit.putProgramOnImmediateHold ==
-                              null) {
+                          if (widget.activeAudit.putProgramOnImmediateHold == null) {
                             widget.activeAudit.putProgramOnImmediateHold = true;
                           } else {
                             widget.activeAudit.putProgramOnImmediateHold = null;
@@ -288,16 +275,13 @@ matter to ensure your community does not suffer an interruption of services.  If
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: ColorDefs.colorButtonNeutral,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0))),
+                            color: ColorDefs.colorButtonNeutral, borderRadius: BorderRadius.all(Radius.circular(25.0))),
                         height: 70,
                         width: 70,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline,
-                                color: Colors.red, size: 40),
+                            Icon(Icons.error_outline, color: Colors.red, size: 40),
                             Text("Yes", style: ColorDefs.textBodyBlack20)
                           ],
                         ),
@@ -309,8 +293,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        if (widget.activeAudit.putProgramOnImmediateHold ==
-                            null) {
+                        if (widget.activeAudit.putProgramOnImmediateHold == null) {
                           widget.activeAudit.putProgramOnImmediateHold = false;
                         } else {
                           widget.activeAudit.putProgramOnImmediateHold = null;
@@ -319,16 +302,13 @@ matter to ensure your community does not suffer an interruption of services.  If
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: ColorDefs.colorButtonNeutral,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0))),
+                          color: ColorDefs.colorButtonNeutral, borderRadius: BorderRadius.all(Radius.circular(25.0))),
                       height: 70,
                       width: 70,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.check_circle,
-                              color: Colors.green, size: 40),
+                          Icon(Icons.check_circle, color: Colors.green, size: 40),
                           Text("No", style: ColorDefs.textBodyBlack20)
                         ],
                       ),
@@ -348,8 +328,7 @@ matter to ensure your community does not suffer an interruption of services.  If
               Text("Food Depository Monitor: " +
                   Provider.of<ListCalendarData>(context, listen: false)
                       .auditorList
-                      .getFirstAndLastFromUser(
-                          widget.activeAudit.calendarResult.auditor)),
+                      .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
 
             foodDepositoryMonitorSignature == null
                 ? Container()
@@ -359,12 +338,9 @@ matter to ensure your community does not suffer an interruption of services.  If
                         child: Container(
                             decoration: BoxDecoration(
                                 border: Border(
-                              bottom: BorderSide(
-                                  width: 2.0, color: Colors.lightBlue.shade900),
+                              bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
                             )),
-                            child: Image.memory(foodDepositoryMonitorSignature
-                                .buffer
-                                .asUint8List()))),
+                            child: Image.memory(foodDepositoryMonitorSignature.buffer.asUint8List()))),
                   ),
 
             if (foodDepositoryMonitorSignature == null)
@@ -372,8 +348,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
+                  border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                 ),
                 child: Signature(
                   color: color,
@@ -392,8 +367,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                 children: [
                   FlatButton(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                       child: Text("Save"),
                     ),
                     color: Colors.green,
@@ -402,82 +376,61 @@ matter to ensure your community does not suffer an interruption of services.  If
                           bottomLeft: Radius.circular(25),
                           topLeft: Radius.circular(25),
                         ),
-                        side: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen,
-                            width: 3.0)),
+                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
                     onPressed: () async {
                       if (checkActionItems()) {
                         SignatureState sign = _sign.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
+                        int lineColor = img.getColor(color.red, color.green, color.blue);
                         int backColor = img.getColor(255, 255, 255);
                         int imageWidth;
                         int imageHeight;
                         BuildContext currentContext = _sign.currentContext;
                         if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
+                          var box = currentContext.findRenderObject() as RenderBox;
                           imageWidth = box.size.width.toInt();
                           imageHeight = box.size.height.toInt();
                         }
 
                         // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
+                        img.Image signatureImage = img.Image(imageWidth, imageHeight);
 
                         // set the image background color
                         // remove this for a transparent background
                         img.fill(signatureImage, backColor);
 
                         for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
+                          if (sign.points[i] != null && sign.points[i + 1] != null) {
+                            img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
+                                sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
                                 thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
+                          } else if (sign.points[i] != null && sign.points[i + 1] == null) {
                             // draw the point to the image
                             img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
+                                signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
                           }
                         }
 
                         sign.clear();
                         setState(() {
-                          foodDepositoryMonitorSignature =
-                              img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false)
-                                  .foodDepositoryMonitorSignature =
+                          foodDepositoryMonitorSignature = img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false).foodDepositoryMonitorSignature =
                               foodDepositoryMonitorSignature;
-                          widget.activeAudit
-                                  .photoSig['foodDepositoryMonitorSignature'] =
+                          widget.activeAudit.photoSig['foodDepositoryMonitorSignature'] =
                               foodDepositoryMonitorSignature;
-                          Provider.of<AuditData>(context, listen: false)
-                              .notifyTheListeners();
+                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                         });
                         debugPrint("onPressed ");
                       } else {
                         Dialogs.showMessage(
                             context: context,
-                            message:
-                                "These action items must be updated prior to signing: \n $affectedIssues",
+                            message: "These action items must be updated prior to signing: \n $affectedIssues",
                             dismissable: true);
                       }
                     },
                   ),
                   FlatButton(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                       child: Text("Clear"),
                     ),
                     shape: RoundedRectangleBorder(
@@ -485,9 +438,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                           bottomRight: Radius.circular(25),
                           topRight: Radius.circular(25),
                         ),
-                        side: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen,
-                            width: 3.0)),
+                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
                     onPressed: () {
                       final sign = _sign.currentState;
                       sign.clear();
@@ -506,8 +457,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                   MaterialButton(
                       onPressed: () {
                         setState(() {
-                          color =
-                              color == Colors.green ? Colors.red : Colors.green;
+                          color = color == Colors.green ? Colors.red : Colors.green;
                         });
                         debugPrint("change color");
                       },
@@ -530,19 +480,12 @@ matter to ensure your community does not suffer an interruption of services.  If
               Text("Food Depository Monitor: " +
                   Provider.of<ListCalendarData>(context, listen: false)
                       .auditorList
-                      .getFirstAndLastFromUser(
-                          widget.activeAudit.calendarResult.auditor)),
+                      .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
             if (siteRepresentativeSignature == null &&
-                Provider.of<GeneralData>(context, listen: false)
-                        .personInterviewed !=
-                    null)
-              Text("Agency Representative: " +
-                      (Provider.of<GeneralData>(context, listen: false)
-                          .personInterviewed) ??
+                Provider.of<GeneralData>(context, listen: false).personInterviewed != null)
+              Text("Agency Representative: " + (Provider.of<GeneralData>(context, listen: false).personInterviewed) ??
                   ""),
-            if (Provider.of<GeneralData>(context, listen: false)
-                    .personInterviewed ==
-                null)
+            if (Provider.of<GeneralData>(context, listen: false).personInterviewed == null)
               Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
             siteRepresentativeSignature == null
@@ -552,23 +495,18 @@ matter to ensure your community does not suffer an interruption of services.  If
                     child: Container(
                         decoration: BoxDecoration(
                             border: Border(
-                          bottom: BorderSide(
-                              width: 2.0, color: Colors.lightBlue.shade900),
+                          bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
                         )),
-                        child: Image.memory(
-                            siteRepresentativeSignature.buffer.asUint8List()))),
+                        child: Image.memory(siteRepresentativeSignature.buffer.asUint8List()))),
             if (siteRepresentativeSignature != null)
               Text("Agency Representative: " +
-                  (Provider.of<GeneralData>(context, listen: false)
-                          .personInterviewed ??
-                      "")),
+                  (Provider.of<GeneralData>(context, listen: false).personInterviewed ?? "")),
             if (siteRepresentativeSignature == null)
               Container(
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
+                  border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                 ),
                 child: Signature(
                   color: color,
@@ -589,8 +527,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                     // color: Colors.green,
 
                     child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                       child: Text("Save"),
                     ),
                     color: Colors.green,
@@ -599,82 +536,60 @@ matter to ensure your community does not suffer an interruption of services.  If
                           bottomLeft: Radius.circular(25),
                           topLeft: Radius.circular(25),
                         ),
-                        side: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen,
-                            width: 3.0)),
+                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
                     onPressed: () async {
                       if (checkActionItems()) {
                         SignatureState sign = _sign2.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
+                        int lineColor = img.getColor(color.red, color.green, color.blue);
                         int backColor = img.getColor(255, 255, 255);
                         int imageWidth;
                         int imageHeight;
                         BuildContext currentContext = _sign2.currentContext;
                         if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
+                          var box = currentContext.findRenderObject() as RenderBox;
                           imageWidth = box.size.width.toInt();
                           imageHeight = box.size.height.toInt();
                         }
 
                         // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
+                        img.Image signatureImage = img.Image(imageWidth, imageHeight);
 
                         // set the image background color
                         // remove this for a transparent background
                         img.fill(signatureImage, backColor);
 
                         for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
+                          if (sign.points[i] != null && sign.points[i + 1] != null) {
+                            img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
+                                sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
                                 thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
+                          } else if (sign.points[i] != null && sign.points[i + 1] == null) {
                             // draw the point to the image
                             img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
+                                signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
                           }
                         }
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature =
-                              img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false)
-                                  .siteRepresentativeSignature =
+                          siteRepresentativeSignature = img.encodePng(signatureImage) as Uint8List;
+                          Provider.of<AuditData>(context, listen: false).siteRepresentativeSignature =
                               siteRepresentativeSignature;
-                          widget.activeAudit
-                                  .photoSig['siteRepresentativeSignature'] =
-                              siteRepresentativeSignature;
-                          Provider.of<AuditData>(context, listen: false)
-                              .notifyTheListeners();
+                          widget.activeAudit.photoSig['siteRepresentativeSignature'] = siteRepresentativeSignature;
+                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                         });
                         debugPrint("onPressed ");
                       } else {
                         Dialogs.showMessage(
                             context: context,
-                            message:
-                                "These action items must be updated: + $affectedIssues",
+                            message: "These action items must be updated: + $affectedIssues",
                             dismissable: true);
                       }
                     },
                   ),
                   FlatButton(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                       child: Text("Clear"),
                     ),
                     shape: RoundedRectangleBorder(
@@ -682,9 +597,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                           bottomRight: Radius.circular(25),
                           topRight: Radius.circular(25),
                         ),
-                        side: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen,
-                            width: 3.0)),
+                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
                     onPressed: () {
                       final sign = _sign2.currentState;
                       sign.clear();
@@ -703,8 +616,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                   MaterialButton(
                       onPressed: () {
                         setState(() {
-                          color =
-                              color == Colors.green ? Colors.red : Colors.green;
+                          color = color == Colors.green ? Colors.red : Colors.green;
                         });
                         debugPrint("change color");
                       },
@@ -723,8 +635,7 @@ matter to ensure your community does not suffer an interruption of services.  If
                 ],
               ),
             Container(height: 30),
-            if (foodDepositoryMonitorSignature != null &&
-                siteRepresentativeSignature != null)
+            if (foodDepositoryMonitorSignature != null && siteRepresentativeSignature != null)
               FlatButton(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
@@ -738,13 +649,11 @@ matter to ensure your community does not suffer an interruption of services.  If
                     borderRadius: BorderRadius.all(
                       Radius.circular(25),
                     ),
-                    side: BorderSide(
-                        color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                    side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
                 // color: Colors.green,
                 onPressed: () {
-                  Provider.of<AuditData>(context, listen: false)
-                      .updateGoToVerificationGoodPage(true);
+                  Provider.of<AuditData>(context, listen: false).updateGoToVerificationGoodPage(true);
                 },
                 // child: Text(
                 //   "Success! Go to the Inspection Certificate",
@@ -770,8 +679,7 @@ class _WatermarkPaint extends CustomPainter {
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10.8,
-        Paint()..color = Colors.blue);
+    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10.8, Paint()..color = Colors.blue);
   }
 
   @override

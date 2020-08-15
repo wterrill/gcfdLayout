@@ -109,12 +109,9 @@ class _SectionButtonState extends State<SectionButton> {
                     buttonDisabled
                         ? null
                         : {
-                            Provider.of<AuditData>(context, listen: false)
-                                .updateActiveSection(widget.section),
-                            Provider.of<AuditData>(context, listen: false)
-                                .saveActiveAudit(),
-                            Provider.of<AuditData>(context, listen: false)
-                                .makeCitations(),
+                            Provider.of<AuditData>(context, listen: false).updateActiveSection(widget.section),
+                            Provider.of<AuditData>(context, listen: false).saveActiveAudit(),
+                            Provider.of<AuditData>(context, listen: false).makeCitations(),
                           };
                   },
                   child: AutoSizeText(
@@ -122,6 +119,7 @@ class _SectionButtonState extends State<SectionButton> {
                     group: widget.buttonAutoGroup,
                     maxLines: 2,
                     minFontSize: 14,
+                    maxFontSize: 14,
                     style: ColorDefs.textBodyBlack10,
                     wrapWords: true,
                     softWrap: true,

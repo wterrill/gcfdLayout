@@ -412,7 +412,7 @@ class AuditInfoDialog extends StatelessWidget {
                           //     child: Text("Delete Audit", style: ColorDefs.textBodyBlack20),
                           //   ),
                           // ),
-                          if (calendarResult.status != "Completed")
+                          if (!(calendarResult.status == "Completed" || calendarResult.status == "Site Visit Req."))
                             FlatButton(
                               color: ColorDefs.colorTopHeader,
                               shape: RoundedRectangleBorder(
@@ -440,7 +440,8 @@ class AuditInfoDialog extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(25.0),
                                   side: BorderSide(color: calendarResult.programTypeColor, width: 3.0)),
                               onPressed: () {
-                                Dialogs.showRescheduleAudit(context, calendarResult: calendarResult, followup: true);
+                                Dialogs.showRescheduleAudit(context,
+                                    calendarResult: calendarResult, followup: true, auditAlreadyStarted: false);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),

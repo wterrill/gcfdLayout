@@ -106,7 +106,7 @@ class ListCalendarData with ChangeNotifier {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
           // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED upload pic list #########");
+          print("######### CONNECTED scheduleAudit list #########");
         } else {
           throw ("No internet connection found");
         }
