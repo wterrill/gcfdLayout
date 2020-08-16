@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'LookAhead.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NewAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
@@ -28,8 +29,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   final _formKey = GlobalKey<FormState>();
   String selectedAuditType = "Select";
   String selectedProgType = "Select";
-  DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay(hour: 10, minute: 0);
+  DateTime selectedDate; // = DateTime.now();
+  TimeOfDay selectedTime; // = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
   String selectedAgencyNum;
@@ -288,10 +289,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         }
                       });
                     },
-                    child: Text(
-                      DateFormat('EEE MM-dd-yyyy').format(selectedDate),
-                      style: ColorDefs.textGreen25,
-                    ),
+                    child: (selectedDate == null)
+                        ? FaIcon(FontAwesomeIcons.calendarAlt, color: ColorDefs.colorAnotherDarkGreen, size: 60)
+                        : Text(
+                            DateFormat('EEE MM-dd-yyyy').format(selectedDate),
+                            style: ColorDefs.textGreen25,
+                          ),
                   ),
                 ],
               ),
@@ -319,7 +322,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         }
                       });
                     },
-                    child: Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25),
+                    child: (selectedTime == null)
+                        ? FaIcon(FontAwesomeIcons.clock, color: ColorDefs.colorAnotherDarkGreen, size: 60)
+                        : Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25),
                   ),
                 ],
               ),

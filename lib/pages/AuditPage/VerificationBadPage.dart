@@ -155,35 +155,52 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text("These Compliance Requirements must be completed by: "),
                 ),
-                FlatButton(
-                  disabledColor: ColorDefs.colorButtonNeutral,
-                  color: ColorDefs.colorTopHeader,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                if (selectedDate != null)
+                  FlatButton(
+                    disabledColor: ColorDefs.colorButtonNeutral,
+                    color: ColorDefs.colorTopHeader,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
-                  // color: Colors.blue,
-                  // textColor: Colors.black,
-                  // child: Padding(
-                  //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                  //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
-                  // ),
+                    // color: Colors.blue,
+                    // textColor: Colors.black,
+                    // child: Padding(
+                    //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                    //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
+                    // ),
 
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                    child: Text((selectedDate != null) ? DateFormat('MM-dd-yyyy').format(selectedDate) : "Select Date"),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      child:
+                          Text((selectedDate != null) ? DateFormat('MM-dd-yyyy').format(selectedDate) : "Select Date"),
+                    ),
+                    onPressed: () async {
+                      selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2030),
+                      );
+                      widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
+                      setState(() {});
+                    },
                   ),
-                  onPressed: () async {
-                    selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030),
-                    );
-                    widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
-                    setState(() {});
-                  },
-                ),
+
+                if (selectedDate == null)
+                  GestureDetector(
+                    child: FaIcon(FontAwesomeIcons.calendarAlt, color: ColorDefs.colorAnotherDarkGreen, size: 60),
+                    onTap: () async {
+                      selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2030),
+                      );
+                      widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
+                      setState(() {});
+                    },
+                  )
 
                 // InkWell(
                 //   child: FaIcon(FontAwesomeIcons.calendarAlt, size: 35),

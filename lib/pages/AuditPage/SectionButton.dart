@@ -24,6 +24,7 @@ class _SectionButtonState extends State<SectionButton> {
   @override
   Widget build(BuildContext context) {
     Status status = widget.section.status;
+    Status iconStatus = widget.section.lastStatus;
     Widget icon;
     Color buttonColor;
     bool buttonDisabled = false;
@@ -47,10 +48,24 @@ class _SectionButtonState extends State<SectionButton> {
         break;
 
       case Status.selected:
-        icon = Icon(
-          Icons.adjust,
-          color: ColorDefs.colorAudit2,
-        );
+        if (iconStatus == Status.available) {
+          icon = Icon(
+            Icons.slideshow,
+            color: ColorDefs.colorChatSelected,
+          );
+        }
+        if (iconStatus == Status.inProgress) {
+          icon = Icon(
+            Icons.watch_later,
+            color: ColorDefs.colorAudit4,
+          );
+        }
+        if (iconStatus == Status.completed) {
+          icon = Icon(
+            Icons.check_circle,
+            color: ColorDefs.colorButtonYes,
+          );
+        }
         buttonColor = ColorDefs.colorAudit2;
         buttonDisabled = false;
         break;
