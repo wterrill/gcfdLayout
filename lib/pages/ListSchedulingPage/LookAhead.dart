@@ -119,12 +119,12 @@ class _LookAheadState extends State<LookAhead> {
 
                 List<String> nameArray = [];
                 List<String> tempArray = suggestion.split(" - ");
-                if (tempArray.length == 2) {
+                if (tempArray.length == 3) {
                   nameArray = tempArray;
                 }
-                if (tempArray.length > 2) {
+                if (tempArray.length > 3) {
                   String biggerName = "";
-                  for (int i = 0; i < tempArray.length - 1; i++) {
+                  for (int i = 0; i < tempArray.length - 2; i++) {
                     if (i == 0) {
                       biggerName = biggerName + tempArray[i];
                     } else {
@@ -132,10 +132,11 @@ class _LookAheadState extends State<LookAhead> {
                     }
                   }
                   nameArray.add(biggerName);
+                  nameArray.add(tempArray[tempArray.length - 2]);
                   nameArray.add(tempArray[tempArray.length - 1]);
                 }
 
-                print("name: ${nameArray[0]} program number: ${nameArray[1]}");
+                print("name: ${nameArray[0]} program number: ${nameArray[1]} agency number: ${nameArray[2]}");
                 widget.lookAheadCallback(nameArray);
               },
               child: Container(
@@ -158,12 +159,12 @@ class _LookAheadState extends State<LookAhead> {
 
             List<String> nameArray = [];
             List<String> tempArray = suggestion.split(" - ");
-            if (tempArray.length == 2) {
+            if (tempArray.length == 3) {
               nameArray = tempArray;
             }
-            if (tempArray.length > 2) {
+            if (tempArray.length > 3) {
               String biggerName = "";
-              for (int i = 0; i < tempArray.length - 1; i++) {
+              for (int i = 0; i < tempArray.length - 2; i++) {
                 if (i == 0) {
                   biggerName = biggerName + tempArray[i];
                 } else {
@@ -171,6 +172,7 @@ class _LookAheadState extends State<LookAhead> {
                 }
               }
               nameArray.add(biggerName);
+              nameArray.add(tempArray[tempArray.length - 2]);
               nameArray.add(tempArray[tempArray.length - 1]);
             }
             print(nameArray);

@@ -20,6 +20,7 @@ class GeneralData with ChangeNotifier {
   bool rememberMe = false;
   Box generalBox;
   bool generalInitialized = false;
+  ScrollController questionScrollController = ScrollController();
 
   //SchedulingPage
   bool backgroundDisable;
@@ -45,7 +46,7 @@ class GeneralData with ChangeNotifier {
   }
 
   void initializeApp() async {
-    // initHive();
+    initHive();
     backgroundDisable = false;
     numberOfDaysShown = 8;
 

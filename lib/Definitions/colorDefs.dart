@@ -15,6 +15,7 @@ class ColorDefs {
   static Color colorTopDrawerAlternating = Color(0xFF474747);
   static Color colorBigDrawerBronze = Color(0xFFA36422);
   static Color colorDarkest = Color(0xFF262626);
+  static Color colorHighlight = Color(0x664ED4DF);
 
   static Color colorAudit1 = Color(0xFFD84342);
   static Color colorAudit2 = Color(0xFF4ED4DF);
@@ -48,16 +49,20 @@ class ColorDefs {
   static TextStyle textBodyBlack10 = TextStyle(color: Colors.black, fontSize: 10.0);
   static TextStyle textBodyBlack20 = TextStyle(color: Colors.black, fontSize: 20.0);
   static TextStyle textBodyBlack30 = TextStyle(color: Colors.black, fontSize: 30.0);
-  static TextStyle textBodyBlack30Poppins = TextStyle(color: Colors.black, fontSize: 30.0, fontFamily: 'Roboto'); //Poppins
+  static TextStyle textBodyBlack30Poppins =
+      TextStyle(color: Colors.black, fontSize: 30.0, fontFamily: 'Roboto'); //Poppins
 
   static TextStyle textBodyGrey20 = TextStyle(color: Colors.grey, fontSize: 20.0);
 
   static TextStyle textBodyWhite30 = TextStyle(color: Colors.white, fontSize: 30.0);
   static TextStyle textBodyWhite20 = TextStyle(color: Colors.white, fontSize: 20.0);
+  static TextStyle textBodyWhiteBold20 = TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold);
   static TextStyle textBodyWhite25 = TextStyle(color: Colors.white, fontSize: 25);
-  static TextStyle textBodyWhite20Underlined = TextStyle(color: Colors.white, fontSize: 20.0, decoration: TextDecoration.underline);
+  static TextStyle textBodyWhite20Underlined =
+      TextStyle(color: Colors.white, fontSize: 20.0, decoration: TextDecoration.underline);
   static TextStyle textBodyWhite15 = TextStyle(color: Colors.white, fontSize: 15.0);
-  static TextStyle textBodyWhite15Underlined = TextStyle(color: Colors.white, fontSize: 15.0, decoration: TextDecoration.underline);
+  static TextStyle textBodyWhite15Underlined =
+      TextStyle(color: Colors.white, fontSize: 15.0, decoration: TextDecoration.underline);
   static TextStyle textBodyWhite10 = TextStyle(color: Colors.white, fontSize: 10.0);
 
   static TextStyle textBodyText2 = TextStyle(color: colorTopHeader, fontSize: 20.0);
@@ -73,7 +78,8 @@ class ColorDefs {
   static TextStyle textWhiteTerminal = TextStyle(color: Colors.white, fontSize: 15.0, fontFamily: 'Courier');
   static TextStyle textBlackTerminal = TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
 
-  static TextStyle textGreenLogoLight30 = TextStyle(color: colorLogoLightGreen, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
+  static TextStyle textGreenLogoLight30 =
+      TextStyle(color: colorLogoLightGreen, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
 
   static TextStyle textGreenLogoDarkBig = TextStyle(
       color: colorAnotherDarkGreen,

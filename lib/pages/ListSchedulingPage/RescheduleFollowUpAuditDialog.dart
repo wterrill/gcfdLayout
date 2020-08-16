@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'LookAhead.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RescheduleFollowUpAuditDialog extends StatefulWidget {
   final CalendarResult calendarResult;
@@ -26,8 +27,8 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
   final _formKey = GlobalKey<FormState>();
   String selectedAuditType = "Select";
   String selectedProgType = "Select";
-  DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay(hour: 10, minute: 0);
+  DateTime selectedDate; // = DateTime.now();
+  TimeOfDay selectedTime; // = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
   String selectedAgencyNum;
@@ -174,7 +175,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Audit Type",
+                      "Audit Type:",
                       style: ColorDefs.textGreen25,
                     ),
                     Container(
@@ -205,13 +206,13 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Program Type", style: ColorDefs.textGreen25),
+                    Text("Program Type:", style: ColorDefs.textGreen25),
                     DropdownButton<String>(
-                      // isExpanded: true,
+                      isExpanded: false,
                       value: selectedProgType ?? "Select",
                       icon: Icon(Icons.keyboard_arrow_down, color: ColorDefs.colorLogoLightGreen, size: 60),
-                      iconSize: 24,
-                      elevation: 100,
+                      // iconSize: 24,
+                      elevation: 16,
                       style: ColorDefs.textBodyBlack20,
                       underline: Container(
                         height: 2,
@@ -232,7 +233,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Date", style: ColorDefs.textGreen25),
+                    Text("Date:", style: ColorDefs.textGreen25),
                     GestureDetector(
                       onTap: () async {
                         DateTime fromCalendar;
@@ -256,10 +257,19 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                           }
                         });
                       },
-                      child: Text(
-                        DateFormat('EEE MM-dd-yyyy').format(selectedDate),
-                        style: ColorDefs.textGreen25,
-                      ),
+                      child: (selectedDate == null)
+                          ? FaIcon(FontAwesomeIcons.calendarAlt, color: ColorDefs.colorAnotherDarkGreen, size: 60)
+                          : Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(width: 2.0, color: ColorDefs.colorAnotherDarkGreen),
+                                ),
+                              ),
+                              child: Text(
+                                DateFormat('EEE MM-dd-yyyy').format(selectedDate),
+                                style: ColorDefs.textGreen25,
+                              ),
+                            ),
                     ),
                   ],
                 ),
@@ -267,7 +277,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Start Time", style: ColorDefs.textGreen25),
+                    Text("Start Time:", style: ColorDefs.textGreen25),
                     GestureDetector(
                       onTap: () async {
                         TimeOfDay fromTimeSelector = await showTimePicker(context: context, initialTime: selectedTime
@@ -284,7 +294,17 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                           }
                         });
                       },
-                      child: Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25),
+                      child: (selectedTime == null)
+                          ? FaIcon(FontAwesomeIcons.clock, color: ColorDefs.colorAnotherDarkGreen, size: 60)
+                          : Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(width: 2.0, color: ColorDefs.colorAnotherDarkGreen),
+                                ),
+                              ),
+                              child: Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25)),
+
+                      // Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25),
                     ),
                   ],
                 ),
@@ -295,7 +315,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Auditor",
+                      "Auditor:",
                       style: ColorDefs.textGreen25,
                     ),
                     Container(

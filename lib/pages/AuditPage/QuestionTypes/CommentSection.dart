@@ -14,7 +14,13 @@ class CommentSection extends StatefulWidget {
   final Section activeSection;
   final bool mandatory;
   final bool numKeyboard;
-  CommentSection({Key key, @required this.index, @required this.activeSection, @required this.mandatory, @required this.numKeyboard}) : super(key: key);
+  CommentSection(
+      {Key key,
+      @required this.index,
+      @required this.activeSection,
+      @required this.mandatory,
+      @required this.numKeyboard})
+      : super(key: key);
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -52,7 +58,10 @@ class _CommentSectionState extends State<CommentSection> {
         controller: controller,
         onChanged: (value) {
           if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
-            Dialogs.showMessage(context: context, message: "This audit has already been submitted, and cannot be edited", dismissable: true);
+            Dialogs.showMessage(
+                context: context,
+                message: "This audit has already been submitted, and cannot be edited",
+                dismissable: true);
           } else {
             if (widget.mandatory) {
               if (widget.numKeyboard) {
@@ -79,10 +88,13 @@ class _CommentSectionState extends State<CommentSection> {
 
             Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
             Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
+            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
           }
         },
         maxLines: null,
-        style: widget.activeSection.questions[index].textBoxRollOut ? ColorDefs.textBodyBlack20 : ColorDefs.textTransparent,
+        style: widget.activeSection.questions[index].textBoxRollOut
+            ? ColorDefs.textBodyBlack20
+            : ColorDefs.textTransparent,
         decoration: InputDecoration(
             suffixIcon: (widget.activeSection.questions[index].textBoxRollOut)
                 ? IconButton(

@@ -216,7 +216,6 @@ class _AuditPageState extends State<AuditPage> {
                         borderRadius:
                             BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
                         color: ColorDefs.colorAlternateDark,
-                        // border: Border(top: BorderSide(width: 2.0, color: Colors.green))
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -227,9 +226,6 @@ class _AuditPageState extends State<AuditPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50.0),
                                 side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                            // color: Colors.blue,
-                            // textColor: Colors.black,
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                               child: Text("Save and Close", style: ColorDefs.textBodyWhite20),
@@ -348,8 +344,6 @@ class _AuditPageState extends State<AuditPage> {
                         ],
                       ),
                     ),
-
-                    // Container(height: 10)
                   ],
                 ),
               ),

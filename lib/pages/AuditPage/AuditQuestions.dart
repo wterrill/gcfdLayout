@@ -1,8 +1,10 @@
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
+import 'package:provider/provider.dart';
 
 import 'QuestionTypes/DateQuestion.dart';
 import 'QuestionTypes/Display.dart';
@@ -16,8 +18,7 @@ import 'QuestionTypes/YesNoNaQuestion.dart';
 import 'QuestionTypes/YesNoQuestion.dart';
 
 class AuditQuestions extends StatefulWidget {
-  AuditQuestions({Key key, this.activeSection, this.activecalendarResult})
-      : super(key: key);
+  AuditQuestions({Key key, this.activeSection, this.activecalendarResult}) : super(key: key);
   final Section activeSection;
   final CalendarResult activecalendarResult;
 
@@ -26,8 +27,10 @@ class AuditQuestions extends StatefulWidget {
 }
 
 class _AuditQuestionsState extends State<AuditQuestions> {
+  ScrollController _scrollController;
   @override
   Widget build(BuildContext context) {
+    _scrollController = Provider.of<GeneralData>(context).questionScrollController;
     print("building auditQuestions");
     var questionAutoGroup = AutoSizeGroup();
     Widget built;
@@ -35,85 +38,65 @@ class _AuditQuestionsState extends State<AuditQuestions> {
         ? built = Text("")
         : built = Expanded(
             child: Scrollbar(
+              // thickness: 2,
               child: ListView.builder(
+                controller: _scrollController,
                 itemCount: widget.activeSection?.questions?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    color: index.isEven
-                        ? ColorDefs.colorAlternateDark
-                        : ColorDefs.colorAlternateLight,
+                    color: index.isEven ? ColorDefs.colorAlternateDark : ColorDefs.colorAlternateLight,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "display")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "display")
                             Display(
                               index: index,
                               activeSection: widget.activeSection,
                               activeCalendarResult: widget.activecalendarResult,
                             ),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "yesNo")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "yesNo")
                             YesNoQuestion(
                               index: index,
                               activeSection: widget.activeSection,
                             ),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "issuesNoIssues")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "issuesNoIssues")
                             IssuesNoIssuesQuestion(
                               index: index,
                               activeSection: widget.activeSection,
                             ),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "fillIn")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillIn")
                             FillInQuestion(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "fillInInterview")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInInterview")
                             FillInInterview(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "fillInEmail")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmail")
                             FillInEmail(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "fillInNum")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInNum")
                             FillInNumQuestion(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "dropDown")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "dropDown")
                             DropDownQuestion(
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "date")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "date")
                             DateQuestion(
                               index: index,
                               activeSection: widget.activeSection,
                               questionAutoGroup: questionAutoGroup,
                             ),
-                          if (widget.activeSection?.questions[index]
-                                  .typeOfQuestion ==
-                              "yesNoNa")
+                          if (widget.activeSection?.questions[index].typeOfQuestion == "yesNoNa")
                             YesNoNaQuestion(
                               index: index,
                               activeSection: widget.activeSection,

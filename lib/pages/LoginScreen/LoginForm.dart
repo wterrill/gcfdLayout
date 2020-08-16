@@ -149,14 +149,14 @@ class _LoginFormState extends State<LoginForm> {
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: _obscureText
                             ? Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 13.0, 0, 0),
                                 child: FaIcon(
                                   FontAwesomeIcons.eye, //icon.visibility,
                                   color: ColorDefs.colorDarkBackground,
                                 ),
                               )
                             : Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 13.0, 0, 0),
                                 child: FaIcon(
                                   FontAwesomeIcons.eyeSlash, //icon.visibility,
                                   color: ColorDefs.colorDarkBackground,
@@ -223,28 +223,24 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(height: 10),
-            // Theme(
-            //   data: ThemeData(brightness: Brightness.light),
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            //     child: CheckboxListTile(
-            //       title: Text("Keep me logged in", style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
-            //       value: rememberMeCheckedValue,
-            //       onChanged: (newValue) {
-            //         setState(() {
-            //           Provider.of<GeneralData>(context, listen: false).setRememberMe(newValue);
-            //         });
-            //       },
+            Theme(
+              data: ThemeData(brightness: Brightness.light),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: CheckboxListTile(
+                  title: Text("Keep me logged in", style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
+                  value: Provider.of<GeneralData>(context, listen: false).rememberMe,
+                  onChanged: (newValue) {
+                    setState(() {
+                      Provider.of<GeneralData>(context, listen: false).setRememberMe(newValue);
+                    });
+                  },
 
-            //       controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
-            //     ),
-            //   ),
-            // ),
+                  controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+                ),
+              ),
+            ),
 
-            //   ),
-            // ),
-            //   ),
-            // ),
             Container(height: 20)
           ]),
         ),

@@ -213,7 +213,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // }).catchError((dynamic e) {
     //   print('[BackgroundFetch] start FAILURE: $e');
     // });
-
+    Widget screen;
+    if (Provider.of<GeneralData>(context).rememberMe == true) {
+      screen = ListSchedulingPage();
+    } else {
+      screen = LoginScreen();
+    }
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
@@ -233,7 +238,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           Provider.of<GeneralData>(context).safeAreaDiff = safeAreaSize;
           Provider.of<GeneralData>(context).safeArea = constraints;
           Provider.of<GeneralData>(context).mediaArea = mediaSize;
-          return kIsWeb ? Scaffold(body: ListSchedulingPage()) : Scaffold(body: LoginScreen());
+
+          return kIsWeb ? Scaffold(body: ListSchedulingPage()) : Scaffold(body: screen);
           // return Scaffold(body: ListSchedulingPage());
         }),
       ),

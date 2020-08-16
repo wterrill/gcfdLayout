@@ -1,6 +1,7 @@
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,11 @@ class SectionButton extends StatefulWidget {
 class _SectionButtonState extends State<SectionButton> {
   @override
   Widget build(BuildContext context) {
+    ScrollController _scrollController = Provider.of<GeneralData>(context).questionScrollController;
     Status status = widget.section.status;
+    if (widget.section.lastStatus == null) {
+      widget.section.lastStatus = Status.available;
+    }
     Status iconStatus = widget.section.lastStatus;
     Widget icon;
     Color buttonColor;
@@ -66,6 +71,19 @@ class _SectionButtonState extends State<SectionButton> {
             color: ColorDefs.colorButtonYes,
           );
         }
+        if (iconStatus == Status.selected) {
+          icon = Icon(
+            Icons.slideshow,
+            color: ColorDefs.colorChatSelected,
+          );
+        }
+        if (iconStatus == null) {
+          icon = Icon(
+            Icons.slideshow,
+            color: ColorDefs.colorChatSelected,
+          );
+        }
+
         buttonColor = ColorDefs.colorAudit2;
         buttonDisabled = false;
         break;
@@ -121,6 +139,11 @@ class _SectionButtonState extends State<SectionButton> {
                   ),
                   // color: buttonColor,
                   onPressed: () {
+                    try {
+                      _scrollController.jumpTo(0);
+                    } catch (err) {
+                      // this is not an error
+                    }
                     buttonDisabled
                         ? null
                         : {
@@ -129,6 +152,7 @@ class _SectionButtonState extends State<SectionButton> {
                             Provider.of<AuditData>(context, listen: false).makeCitations(),
                           };
                   },
+                  // child: Text("boob")
                   child: AutoSizeText(
                     widget.section.name,
                     group: widget.buttonAutoGroup,

@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 
 Color buttonColorPicker(Question questionData, String buttonText) {
   Color finalButtonColor;
-  if (questionData.userResponse == null ||
-      questionData.userResponse != buttonText) {
+  if (questionData.userResponse == null || questionData.userResponse != buttonText) {
     finalButtonColor = ColorDefs.colorButtonNeutral;
   }
   if (questionData.userResponse == buttonText && buttonText == "Yes" ||
@@ -49,10 +48,10 @@ Status checkSectionDone(Section activeSection) {
   bool done = true;
   int numComplete = 0;
   Status result = Status.available;
+  int numQuestions = activeSection.questions.length;
 
   for (Question question in activeSection.questions) {
-    if (question.userResponse == null &&
-        question.typeOfQuestion.toLowerCase() != "display") {
+    if (question.userResponse == null && question.typeOfQuestion.toLowerCase() != "display") {
       done = false;
     } else {
       numComplete += 1;
@@ -61,6 +60,19 @@ Status checkSectionDone(Section activeSection) {
 
   if (!done && numComplete > 0) result = Status.inProgress;
   if (done) result = Status.completed;
+  if ((numQuestions - numComplete) < 4) {
+    highlightQuestions(activeSection);
+  }
 
   return result;
+}
+
+void highlightQuestions(Section activeSection) {
+  for (Question question in activeSection.questions) {
+    if (question.userResponse == null && question.typeOfQuestion.toLowerCase() != "display") {
+      question.highlight = true;
+    } else {
+      question.highlight = false;
+    }
+  }
 }

@@ -47,38 +47,34 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  shape: BoxShape.rectangle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x55555555),
-                      offset: const Offset(5.0, 5.0),
-                      blurRadius: 5.0,
-                      spreadRadius: 0.0,
-                    ),
-                  ]),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20.0), shape: BoxShape.rectangle, boxShadow: [
+                BoxShadow(
+                  color: Color(0x55555555),
+                  offset: const Offset(5.0, 5.0),
+                  blurRadius: 5.0,
+                  spreadRadius: 0.0,
+                ),
+              ]),
               height: 40,
               width: 350,
               child: TextField(
+                // autofocus: true,
                 onChanged: (text) {
                   if (text.toLowerCase() == "version") {
                     Dialogs.showVersionDialog(context);
                   }
                   if (text.toLowerCase() == "download") {
-                    Provider.of<GeneralData>(context, listen: false)
-                        .toggleShowTopDrawer();
+                    Provider.of<GeneralData>(context, listen: false).toggleShowTopDrawer();
                   }
                   if (text.toLowerCase() == "developer") {
                     Navigator.of(context).pop();
                     Navigator.push<dynamic>(
                       context,
-                      MaterialPageRoute<dynamic>(
-                          builder: (context) => DeveloperMenu()),
+                      MaterialPageRoute<dynamic>(builder: (context) => DeveloperMenu()),
                     );
                   }
-                  Provider.of<ListCalendarData>(context, listen: false)
-                      .updateFilterValue(filterTextController.text);
+                  Provider.of<ListCalendarData>(context, listen: false).updateFilterValue(filterTextController.text);
                 },
                 controller: filterTextController,
                 style: ColorDefs.textBodyBlack20,
@@ -119,8 +115,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               ),
             ),
 
-            if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
-              CircularProgressIndicator(),
+            if (Provider.of<GeneralData>(context, listen: true).syncInProgress) CircularProgressIndicator(),
             if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
               Text(
                 Provider.of<GeneralData>(context).syncMessage,
@@ -152,9 +147,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
-                          Provider.of<GeneralData>(context, listen: false)
-                                  .username ??
-                              "generic login",
+                          Provider.of<GeneralData>(context, listen: false).username ?? "generic login",
                           style: ColorDefs.textBodyBlack20,
                         ),
                       )
@@ -166,11 +159,11 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               elevation: 3,
               offset: Offset(0, 43),
               onSelected: (dynamic result) {
+                Provider.of<GeneralData>(context, listen: false).setRememberMe(false);
                 Navigator.of(context).pop();
                 Navigator.push<dynamic>(
                   context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => LoginScreen()),
+                  MaterialPageRoute<dynamic>(builder: (context) => LoginScreen()),
                 );
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[

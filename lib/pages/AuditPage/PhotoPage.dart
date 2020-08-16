@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:photo_view/photo_view.dart';
 import 'dart:async';
+import 'package:flutter_appavailability/flutter_appavailability.dart';
 
 import 'package:provider/provider.dart';
 
@@ -34,17 +35,30 @@ class _PhotoPageState extends State<PhotoPage> {
                 onPressed: () async {
                   final picker = ImagePicker();
                   try {
-                    PickedFile fromPicker =
-                        await picker.getImage(source: ImageSource.gallery);
+                    PickedFile fromPicker = await picker.getImage(source: ImageSource.gallery);
                     pickedImage = await fromPicker.readAsBytes();
                     widget.activeAudit.photoList.add(pickedImage);
                     setState(() {});
                     print(widget.activeAudit.photoList.length);
-                    Provider.of<AuditData>(context, listen: false)
-                        .saveActiveAudit();
+                    Provider.of<AuditData>(context, listen: false).saveActiveAudit();
                   } catch (err) {}
                 },
                 child: Text("Add picture", style: ColorDefs.textBodyWhite20),
+              ),
+            ),
+            Container(
+              child: RaisedButton(
+                color: ColorDefs.colorAudit3,
+                onPressed: () async {
+                  AppAvailability.launchApp("Camera").then((_) {
+                    print("launched");
+                  }).catchError((dynamic err) {
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Container(height: 40, child: Center(child: Text("Camera App not found!")))));
+                    print(err);
+                  });
+                },
+                child: Text("Launch Camera", style: ColorDefs.textBodyWhite20),
               ),
             ),
             GridView.builder(
@@ -53,9 +67,7 @@ class _PhotoPageState extends State<PhotoPage> {
 
               itemCount: widget.activeAudit.photoList?.length ?? 0,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing:
-                      10.0), //(orientation == Orientation.portrait) ? 2 : 3),
+                  crossAxisCount: 4, crossAxisSpacing: 10.0), //(orientation == Orientation.portrait) ? 2 : 3),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   child: LimitedBox(
@@ -63,24 +75,19 @@ class _PhotoPageState extends State<PhotoPage> {
                       child: Container(
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(
-                                width: 2.0, color: Colors.lightBlue.shade900),
+                            bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
                           )),
                           child: GestureDetector(
                             onTap: () {
                               Dialogs.showPicture(
                                   context: context,
-                                  image: widget
-                                      .activeAudit.photoList[index].buffer
-                                      .asUint8List(),
+                                  image: widget.activeAudit.photoList[index].buffer.asUint8List(),
                                   dismissable: true);
                             },
                             onLongPress: () {
                               Dialogs.showDeletePic(context, index);
                             },
-                            child: Image.memory(widget
-                                .activeAudit.photoList[index].buffer
-                                .asUint8List()),
+                            child: Image.memory(widget.activeAudit.photoList[index].buffer.asUint8List()),
                           ))),
                 );
               },
