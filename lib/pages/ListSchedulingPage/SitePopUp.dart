@@ -30,7 +30,8 @@ class _SitePopUpState extends State<SitePopUp> {
         brightness: Brightness.light,
       ),
       child: Container(
-        decoration: BoxDecoration(color: ColorDefs.colorTopHeader, borderRadius: BorderRadius.all(Radius.circular(25.0))),
+        decoration:
+            BoxDecoration(color: ColorDefs.colorTopHeader, borderRadius: BorderRadius.all(Radius.circular(25.0))),
         width: 650,
         height: (selectedSite == null) ? 200 : 700,
         child: Column(
@@ -51,6 +52,7 @@ class _SitePopUpState extends State<SitePopUp> {
                   lookAheadCallback: (List<String> val) {
                     String selectedSiteName = val[0];
                     String selectedProgramNumber = val[1];
+                    String selectedAgencyNumber = val[2];
 
                     // Site selectedSite =
                     String selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
@@ -62,86 +64,95 @@ class _SitePopUpState extends State<SitePopUp> {
             ),
             if (selectedSite != null)
               Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 60.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 25.0),
-                              child: Text(
-                                selectedSite?.programDisplayName,
-                                style: ColorDefs.textGreen30,
-                              )),
-                          if (selectedSite.address1 != null)
-                            Text(
-                              selectedSite?.address1?.replaceAll("\\n", ""),
-                              style: ColorDefs.textBodyBlack20,
+                child: Scrollbar(
+                  thickness: 4.0,
+                  child: SingleChildScrollView(
+                    child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 60.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 25.0),
+                                child: Text(
+                                  selectedSite?.programDisplayName,
+                                  style: ColorDefs.textGreen30,
+                                )),
+                            if (selectedSite.address1 != null)
+                              Text(
+                                selectedSite?.address1?.replaceAll("\\n", ""),
+                                style: ColorDefs.textBodyBlack20,
+                              ),
+                            if (selectedSite.address2 != null && selectedSite.address2 != "")
+                              Text(
+                                selectedSite?.address2,
+                                style: ColorDefs.textBodyBlack20,
+                              ),
+                            Row(
+                              children: [
+                                if (selectedSite.city != null)
+                                  Text(
+                                    selectedSite?.city + ", ",
+                                    style: ColorDefs.textBodyBlack20,
+                                  ),
+                                if (selectedSite.state != null)
+                                  Text(
+                                    selectedSite?.state + " ",
+                                    style: ColorDefs.textBodyBlack20,
+                                  ),
+                                if (selectedSite.zip != null)
+                                  Text(
+                                    selectedSite?.zip + ", ",
+                                    style: ColorDefs.textBodyBlack20,
+                                  ),
+                              ],
                             ),
-                          if (selectedSite.address2 != null && selectedSite.address2 != "")
-                            Text(
-                              selectedSite?.address2,
-                              style: ColorDefs.textBodyBlack20,
+                            Text(""),
+                            if (selectedSite.contact != null)
+                              Text(
+                                selectedSite?.contact,
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                              ),
+                            if (selectedSite.contactEmail != null)
+                              Text(
+                                selectedSite?.contactEmail,
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
+                              ),
+                            Text(""),
+                            FlatButton(
+                              color: ColorDefs.colorTopHeader,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
+                              ),
+                              onPressed: () {
+                                // selectedSite = null;
+                                Navigator.of(context).pop();
+                                Dialogs.showScheduledAudit(context: context, siteFromLookupScreen: selectedSite);
+                                selectedSite = null;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                                child: Text("Schedule Audit", style: ColorDefs.textBodyBlack20),
+                              ),
                             ),
-                          Row(
-                            children: [
-                              if (selectedSite.city != null)
-                                Text(
-                                  selectedSite?.city + ", ",
-                                  style: ColorDefs.textBodyBlack20,
-                                ),
-                              if (selectedSite.state != null)
-                                Text(
-                                  selectedSite?.state + " ",
-                                  style: ColorDefs.textBodyBlack20,
-                                ),
-                              if (selectedSite.zip != null)
-                                Text(
-                                  selectedSite?.zip + ", ",
-                                  style: ColorDefs.textBodyBlack20,
-                                ),
-                            ],
-                          ),
-                          Text(""),
-                          if (selectedSite.contact != null)
-                            Text(
-                              selectedSite?.contact,
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-                            ),
-                          if (selectedSite.contactEmail != null)
-                            Text(
-                              selectedSite?.contactEmail,
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
-                            ),
-                          Text(""),
-                          FlatButton(
-                            color: ColorDefs.colorTopHeader,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
-                            ),
-                            onPressed: () {
-                              selectedSite = null;
-                              Navigator.of(context).pop();
-                              Dialogs.showScheduledAudit(context: context, siteFromLookupScreen: selectedSite);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                              child: Text("Schedule Audit", style: ColorDefs.textBodyBlack20),
-                            ),
-                          ),
-                          Container(height: 10),
-                          if (selectedSite.operateHours != null) Text("Hours of Operation:", style: ColorDefs.textBodyBlack30),
-                          Container(height: 10),
-                          if (selectedSite.operateHours != null)
-                            Text(
-                              selectedSite?.operateHours?.replaceAll("\\n", "\n\n")?.replaceAll("||", "   ")?.replaceAll("|", "   ") ?? "None Defined",
-                              style: ColorDefs.textBodyBlack20,
-                            ),
-                          Container(height: 60)
-                        ],
-                      )),
+                            Container(height: 10),
+                            if (selectedSite.operateHours != null)
+                              Text("Hours of Operation:", style: ColorDefs.textBodyBlack30),
+                            Container(height: 10),
+                            if (selectedSite.operateHours != null)
+                              Text(
+                                selectedSite?.operateHours
+                                        ?.replaceAll("\\n", "\n\n")
+                                        ?.replaceAll("||", "   ")
+                                        ?.replaceAll("|", "   ") ??
+                                    "None Defined",
+                                style: ColorDefs.textBodyBlack20,
+                              ),
+                            Container(height: 60)
+                          ],
+                        )),
+                  ),
                 ),
               )
           ],

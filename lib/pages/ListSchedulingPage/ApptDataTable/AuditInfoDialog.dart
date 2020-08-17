@@ -215,7 +215,7 @@ class AuditInfoDialog extends StatelessWidget {
     //                               }
     //                               Dialogs.showRescheduleAudit(context, calendarResult: calendarResult, followup: followup);
     //                             },
-    //                             child: AutoSizeText('Edit Audit', style: ColorDefs.textBodyBronze20),
+    //                             child: AutoSizeText('Revise Audit', style: ColorDefs.textBodyBronze20),
     //                           ),
     //                         ),
     //                       ),
@@ -300,7 +300,7 @@ class AuditInfoDialog extends StatelessWidget {
                             Container(
                               // color: Colors.grey,
                               child: AutoSizeText('Contact Name: ${calendarResult.siteInfo.contact}',
-                                  style: ColorDefs.textBodyWhite20),
+                                  style: ColorDefs.textBodyWhiteBold20),
                             ),
                           if (calendarResult.siteInfo?.contactEmail != null)
                             Container(
@@ -430,7 +430,7 @@ class AuditInfoDialog extends StatelessWidget {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                                child: AutoSizeText('Edit Audit', style: ColorDefs.textBodyBlack20),
+                                child: AutoSizeText('Revise Audit', style: ColorDefs.textBodyBlack20),
                               ),
                             ),
                           if (calendarResult.status == "Site Visit Req.")

@@ -112,162 +112,209 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
     print("onbuild: $followupReqVal");
     return Container(
       child: Expanded(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text("CITATIONS", style: ColorDefs.textBodyBlack30),
-            if (citations.length != 0)
-              Text(
-                "Follow-Up / Citations",
-                style: ColorDefs.textBodyBlack30,
-              ),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 240),
-              child: FollowupCitationsSections(
-                  // activeAudit: widget.activeAudit,
-                  ),
-            ),
-            if (flaggedCitationsExist(citations))
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 5.0),
-                child: Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
-              ),
-
-            // Container(
-            //   height: 350,
-            //   child: FollowupActionItems(
-            //     activeAudit: widget.activeAudit,
-            //   ),
-            // ),
-            // Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
-
-            if (flaggedCitationsExist(citations))
+          child: Scrollbar(
+        thickness: 4,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text("CITATIONS", style: ColorDefs.textBodyBlack30),
+              if (citations.length != 0)
+                Text(
+                  "Follow-Up / Citations",
+                  style: ColorDefs.textBodyBlack30,
+                ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 340),
-                child: FollowupActionItems2(
+                constraints: BoxConstraints(maxHeight: 240),
+                child: FollowupCitationsSections(
                     // activeAudit: widget.activeAudit,
                     ),
               ),
-            Container(height: 20),
-            Row(
-              children: [
+              if (flaggedCitationsExist(citations))
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text("These Compliance Requirements must be completed by: "),
-                ),
-                FlatButton(
-                  disabledColor: ColorDefs.colorButtonNeutral,
-                  color: ColorDefs.colorTopHeader,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                  // color: Colors.blue,
-                  // textColor: Colors.black,
-                  // child: Padding(
-                  //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                  //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
-                  // ),
-
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                    child: Text((selectedDate != null) ? DateFormat('MM-dd-yyyy').format(selectedDate) : "Select Date"),
-                  ),
-                  onPressed: () async {
-                    selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030),
-                    );
-                    widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
-                    setState(() {});
-                  },
+                  padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 5.0),
+                  child: Text("ACTION ITEMS", style: ColorDefs.textBodyBlack30),
                 ),
 
-                // InkWell(
-                //   child: FaIcon(FontAwesomeIcons.calendarAlt, size: 35),
-                //   onTap: () async {
-                //     selectedDate = await showDatePicker(
-                //       context: context,
-                //       initialDate: DateTime.now(),
-                //       firstDate: DateTime.now(),
-                //       lastDate: DateTime(2030),
-                //     );
-                //     widget.activeAudit.correctiveActionPlanDueDate =
-                //         selectedDate;
-                //     setState(() {});
-                //   },
-                // ),
-              ],
-            ),
+              // Container(
+              //   height: 350,
+              //   child: FollowupActionItems(
+              //     activeAudit: widget.activeAudit,
+              //   ),
+              // ),
+              // Text("ACTION ITEMS Ver 2", style: ColorDefs.textBodyBlack30),
 
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text("Require follow-up site visit for this establishment? "),
-                ),
-                DropdownButton<int>(
-                    value: followupReqVal,
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: ColorDefs.textBodyBlack20,
-                    underline: Container(
-                      height: 2,
-                      color: (followupReqVal == 1) ? Colors.red : Colors.green,
-                    ),
-                    onChanged: (int newValue) {
-                      setState(() {
-                        print(newValue);
-                        followupReqVal = newValue;
-                        print(followupReqVal);
-                        Provider.of<AuditData>(context, listen: false).activeAudit.siteVisitRequired =
-                            newValue == 0 ? false : true;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem<int>(
-                        value: 0,
-                        child: Text("No follow up site visit required"),
+              if (flaggedCitationsExist(citations))
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 340),
+                  child: FollowupActionItems2(
+                      // activeAudit: widget.activeAudit,
                       ),
-                      DropdownMenuItem<int>(
-                        value: 1,
-                        child: Text("Follow up site visit required"),
-                      )
-                    ]),
-              ],
-            ),
-
-            // Padding(
-            //   padding: const EdgeInsets.all(20.0),
-            // child:
-            Container(
-              padding: EdgeInsets.all(25),
-              // width: 500, //MediaQuery.of(context).size.width,
-              child: Wrap(direction: Axis.horizontal, children: [
-                Text(
-                  '''
-In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in a breach of program agreement, being placed on HOLD status, corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this matter to ensure your community does not suffer an interruption of services.  If the agency does not adhere to the corrective action plan and/or receives additional violations during the probation period of three (3) months, the program may be permanently removed as determined by the Greater Chicago Food Depository.''',
                 ),
-              ]),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text('Program is being placed on immediate hold:'),
-                ),
-                if (widget.activeAudit.putProgramOnImmediateHold == null ||
-                    widget.activeAudit.putProgramOnImmediateHold == true)
+              Container(height: 20),
+              Row(
+                children: [
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: GestureDetector(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text("These Compliance Requirements must be completed by: "),
+                  ),
+                  if (selectedDate != null)
+                    FlatButton(
+                      disabledColor: ColorDefs.colorButtonNeutral,
+                      color: ColorDefs.colorTopHeader,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                      // color: Colors.blue,
+                      // textColor: Colors.black,
+                      // child: Padding(
+                      //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                      //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
+                      // ),
+
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                        child: Text(
+                            (selectedDate != null) ? DateFormat('MM-dd-yyyy').format(selectedDate) : "Select Date"),
+                      ),
+                      onPressed: () async {
+                        selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2030),
+                        );
+                        widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
+                        setState(() {});
+                      },
+                    ),
+
+                  if (selectedDate == null)
+                    GestureDetector(
+                      child: FaIcon(FontAwesomeIcons.calendarAlt, color: ColorDefs.colorAnotherDarkGreen, size: 60),
+                      onTap: () async {
+                        selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2030),
+                        );
+                        widget.activeAudit.correctiveActionPlanDueDate = selectedDate;
+                        setState(() {});
+                      },
+                    )
+
+                  // InkWell(
+                  //   child: FaIcon(FontAwesomeIcons.calendarAlt, size: 35),
+                  //   onTap: () async {
+                  //     selectedDate = await showDatePicker(
+                  //       context: context,
+                  //       initialDate: DateTime.now(),
+                  //       firstDate: DateTime.now(),
+                  //       lastDate: DateTime(2030),
+                  //     );
+                  //     widget.activeAudit.correctiveActionPlanDueDate =
+                  //         selectedDate;
+                  //     setState(() {});
+                  //   },
+                  // ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text("Require follow-up site visit for this establishment? "),
+                  ),
+                  DropdownButton<int>(
+                      value: followupReqVal,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: ColorDefs.textBodyBlack20,
+                      underline: Container(
+                        height: 2,
+                        color: (followupReqVal == 1) ? Colors.red : Colors.green,
+                      ),
+                      onChanged: (int newValue) {
+                        setState(() {
+                          print(newValue);
+                          followupReqVal = newValue;
+                          print(followupReqVal);
+                          Provider.of<AuditData>(context, listen: false).activeAudit.siteVisitRequired =
+                              newValue == 0 ? false : true;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem<int>(
+                          value: 0,
+                          child: Text("No follow up site visit required"),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 1,
+                          child: Text("Follow up site visit required"),
+                        )
+                      ]),
+                ],
+              ),
+
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              // child:
+              Container(
+                padding: EdgeInsets.all(25),
+                // width: 500, //MediaQuery.of(context).size.width,
+                child: Wrap(direction: Axis.horizontal, children: [
+                  Text(
+                    '''
+In order to be fully certified and in good standing with the Greater Chicago Food Depository. Failure to comply with the requirements listed below will result in a breach of program agreement, being placed on HOLD status, corrective action up to, and including, suspension and/or termination of membership. We appreciate your prompt attention to this matter to ensure your community does not suffer an interruption of services.  If the agency does not adhere to the corrective action plan and/or receives additional violations during the probation period of three (3) months, the program may be permanently removed as determined by the Greater Chicago Food Depository.''',
+                  ),
+                ]),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text('Program is being placed on immediate hold:'),
+                  ),
+                  if (widget.activeAudit.putProgramOnImmediateHold == null ||
+                      widget.activeAudit.putProgramOnImmediateHold == true)
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (widget.activeAudit.putProgramOnImmediateHold == null) {
+                              widget.activeAudit.putProgramOnImmediateHold = true;
+                            } else {
+                              widget.activeAudit.putProgramOnImmediateHold = null;
+                            }
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: ColorDefs.colorButtonNeutral,
+                              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                          height: 70,
+                          width: 70,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.error_outline, color: Colors.red, size: 40),
+                              Text("Yes", style: ColorDefs.textBodyBlack20)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (widget.activeAudit.putProgramOnImmediateHold == null ||
+                      widget.activeAudit.putProgramOnImmediateHold == false)
+                    GestureDetector(
                       onTap: () {
                         setState(() {
                           if (widget.activeAudit.putProgramOnImmediateHold == null) {
-                            widget.activeAudit.putProgramOnImmediateHold = true;
+                            widget.activeAudit.putProgramOnImmediateHold = false;
                           } else {
                             widget.activeAudit.putProgramOnImmediateHold = null;
                           }
@@ -281,390 +328,364 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline, color: Colors.red, size: 40),
-                            Text("Yes", style: ColorDefs.textBodyBlack20)
+                            Icon(Icons.check_circle, color: Colors.green, size: 40),
+                            Text("No", style: ColorDefs.textBodyBlack20)
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                if (widget.activeAudit.putProgramOnImmediateHold == null ||
-                    widget.activeAudit.putProgramOnImmediateHold == false)
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (widget.activeAudit.putProgramOnImmediateHold == null) {
-                          widget.activeAudit.putProgramOnImmediateHold = false;
-                        } else {
-                          widget.activeAudit.putProgramOnImmediateHold = null;
-                        }
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: ColorDefs.colorButtonNeutral, borderRadius: BorderRadius.all(Radius.circular(25.0))),
-                      height: 70,
-                      width: 70,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check_circle, color: Colors.green, size: 40),
-                          Text("No", style: ColorDefs.textBodyBlack20)
-                        ],
-                      ),
-                    ),
-                  )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                  '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
+                    )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                    '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
  '''),
-            ),
-            // ),
-
-            if (foodDepositoryMonitorSignature == null)
-              Text("Food Depository Monitor: " +
-                  Provider.of<ListCalendarData>(context, listen: false)
-                      .auditorList
-                      .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
-
-            foodDepositoryMonitorSignature == null
-                ? Container()
-                : Container(
-                    child: LimitedBox(
-                        maxHeight: 100.0,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                border: Border(
-                              bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
-                            )),
-                            child: Image.memory(foodDepositoryMonitorSignature.buffer.asUint8List()))),
-                  ),
-
-            if (foodDepositoryMonitorSignature == null)
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
-                ),
-                child: Signature(
-                  color: color,
-                  key: _sign,
-                  onSign: () {
-                    final sign = _sign.currentState;
-                    debugPrint('${sign.points.length} points in the signature');
-                  },
-                  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
-                  strokeWidth: strokeWidth,
-                ),
               ),
-            if (foodDepositoryMonitorSignature == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                      child: Text("Save"),
+              // ),
+
+              if (foodDepositoryMonitorSignature == null)
+                Text("Food Depository Monitor: " +
+                    Provider.of<ListCalendarData>(context, listen: false)
+                        .auditorList
+                        .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
+
+              foodDepositoryMonitorSignature == null
+                  ? Container()
+                  : Container(
+                      child: LimitedBox(
+                          maxHeight: 100.0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
+                              )),
+                              child: Image.memory(foodDepositoryMonitorSignature.buffer.asUint8List()))),
                     ),
-                    color: Colors.green,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                        ),
-                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-                    onPressed: () async {
-                      if (checkActionItems()) {
-                        SignatureState sign = _sign.currentState;
-                        int lineColor = img.getColor(color.red, color.green, color.blue);
-                        int backColor = img.getColor(255, 255, 255);
-                        int imageWidth;
-                        int imageHeight;
-                        BuildContext currentContext = _sign.currentContext;
-                        if (currentContext != null) {
-                          var box = currentContext.findRenderObject() as RenderBox;
-                          imageWidth = box.size.width.toInt();
-                          imageHeight = box.size.height.toInt();
-                        }
 
-                        // create the image with the given size
-                        img.Image signatureImage = img.Image(imageWidth, imageHeight);
-
-                        // set the image background color
-                        // remove this for a transparent background
-                        img.fill(signatureImage, backColor);
-
-                        for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null && sign.points[i + 1] != null) {
-                            img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
-                                thickness: 3);
-                          } else if (sign.points[i] != null && sign.points[i + 1] == null) {
-                            // draw the point to the image
-                            img.drawPixel(
-                                signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
-                          }
-                        }
-
-                        sign.clear();
-                        setState(() {
-                          foodDepositoryMonitorSignature = img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false).foodDepositoryMonitorSignature =
-                              foodDepositoryMonitorSignature;
-                          widget.activeAudit.photoSig['foodDepositoryMonitorSignature'] =
-                              foodDepositoryMonitorSignature;
-                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
-                        });
-                        debugPrint("onPressed ");
-                      } else {
-                        Dialogs.showMessage(
-                            context: context,
-                            message: "These action items must be updated prior to signing: \n $affectedIssues",
-                            dismissable: true);
-                      }
-                    },
+              if (foodDepositoryMonitorSignature == null)
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                   ),
-                  FlatButton(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                      child: Text("Clear"),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                        ),
-                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-                    onPressed: () {
+                  child: Signature(
+                    color: color,
+                    key: _sign,
+                    onSign: () {
                       final sign = _sign.currentState;
-                      sign.clear();
-                      setState(() {
-                        foodDepositoryMonitorSignature = null;
-                      });
-                      debugPrint("cleared");
+                      debugPrint('${sign.points.length} points in the signature');
                     },
+                    backgroundPainter: _WatermarkPaint("2.0", "2.0"),
+                    strokeWidth: strokeWidth,
                   ),
-                ],
-              ),
-            if (foodDepositoryMonitorSignature == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          color = color == Colors.green ? Colors.red : Colors.green;
-                        });
-                        debugPrint("change color");
-                      },
-                      child: Text("Change color")),
-                  MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          int min = 1;
-                          int max = 10;
-                          int selection = min + (Random().nextInt(max - min));
-                          strokeWidth = selection.roundToDouble();
-                          debugPrint("change stroke width to $selection");
-                        });
-                      },
-                      child: Text("Change stroke width")),
-                ],
-              ),
-//////////////  END FIRST SIGNATURE /////////////////////////////
-            if (foodDepositoryMonitorSignature != null)
-              Text("Food Depository Monitor: " +
-                  Provider.of<ListCalendarData>(context, listen: false)
-                      .auditorList
-                      .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
-            if (siteRepresentativeSignature == null &&
-                Provider.of<GeneralData>(context, listen: false).personInterviewed != null)
-              Text("Agency Representative: " + (Provider.of<GeneralData>(context, listen: false).personInterviewed) ??
-                  ""),
-            if (Provider.of<GeneralData>(context, listen: false).personInterviewed == null)
-              Text("Agency Representative"),
-//////////////  SECOND SIGNATURE /////////////////////////////
-            siteRepresentativeSignature == null
-                ? Container()
-                : LimitedBox(
-                    maxHeight: 100.0,
-                    child: Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                          bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
-                        )),
-                        child: Image.memory(siteRepresentativeSignature.buffer.asUint8List()))),
-            if (siteRepresentativeSignature != null)
-              Text("Agency Representative: " +
-                  (Provider.of<GeneralData>(context, listen: false).personInterviewed ?? "")),
-            if (siteRepresentativeSignature == null)
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                 ),
-                child: Signature(
-                  color: color,
-                  key: _sign2,
-                  onSign: () {
-                    final sign = _sign2.currentState;
-                    debugPrint('${sign.points.length} points in the signature');
-                  },
-                  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
-                  strokeWidth: strokeWidth,
-                ),
-              ),
-            if (siteRepresentativeSignature == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    // color: Colors.green,
-
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                      child: Text("Save"),
-                    ),
-                    color: Colors.green,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                        ),
-                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                    onPressed: () async {
-                      if (checkActionItems()) {
-                        SignatureState sign = _sign2.currentState;
-                        int lineColor = img.getColor(color.red, color.green, color.blue);
-                        int backColor = img.getColor(255, 255, 255);
-                        int imageWidth;
-                        int imageHeight;
-                        BuildContext currentContext = _sign2.currentContext;
-                        if (currentContext != null) {
-                          var box = currentContext.findRenderObject() as RenderBox;
-                          imageWidth = box.size.width.toInt();
-                          imageHeight = box.size.height.toInt();
-                        }
-
-                        // create the image with the given size
-                        img.Image signatureImage = img.Image(imageWidth, imageHeight);
-
-                        // set the image background color
-                        // remove this for a transparent background
-                        img.fill(signatureImage, backColor);
-
-                        for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null && sign.points[i + 1] != null) {
-                            img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
-                                thickness: 3);
-                          } else if (sign.points[i] != null && sign.points[i + 1] == null) {
-                            // draw the point to the image
-                            img.drawPixel(
-                                signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
+              if (foodDepositoryMonitorSignature == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                        child: Text("Save"),
+                      ),
+                      color: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            topLeft: Radius.circular(25),
+                          ),
+                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                      onPressed: () async {
+                        if (checkActionItems()) {
+                          SignatureState sign = _sign.currentState;
+                          int lineColor = img.getColor(color.red, color.green, color.blue);
+                          int backColor = img.getColor(255, 255, 255);
+                          int imageWidth;
+                          int imageHeight;
+                          BuildContext currentContext = _sign.currentContext;
+                          if (currentContext != null) {
+                            var box = currentContext.findRenderObject() as RenderBox;
+                            imageWidth = box.size.width.toInt();
+                            imageHeight = box.size.height.toInt();
                           }
+
+                          // create the image with the given size
+                          img.Image signatureImage = img.Image(imageWidth, imageHeight);
+
+                          // set the image background color
+                          // remove this for a transparent background
+                          img.fill(signatureImage, backColor);
+
+                          for (int i = 0; i < sign.points.length - 1; i++) {
+                            if (sign.points[i] != null && sign.points[i + 1] != null) {
+                              img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
+                                  sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
+                                  thickness: 3);
+                            } else if (sign.points[i] != null && sign.points[i + 1] == null) {
+                              // draw the point to the image
+                              img.drawPixel(
+                                  signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
+                            }
+                          }
+
+                          sign.clear();
+                          setState(() {
+                            foodDepositoryMonitorSignature = img.encodePng(signatureImage) as Uint8List;
+                            Provider.of<AuditData>(context, listen: false).foodDepositoryMonitorSignature =
+                                foodDepositoryMonitorSignature;
+                            widget.activeAudit.photoSig['foodDepositoryMonitorSignature'] =
+                                foodDepositoryMonitorSignature;
+                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                          });
+                          debugPrint("onPressed ");
+                        } else {
+                          Dialogs.showMessage(
+                              context: context,
+                              message: "These action items must be updated prior to signing: \n $affectedIssues",
+                              dismissable: true);
                         }
+                      },
+                    ),
+                    FlatButton(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                        child: Text("Clear"),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                      onPressed: () {
+                        final sign = _sign.currentState;
                         sign.clear();
                         setState(() {
-                          siteRepresentativeSignature = img.encodePng(signatureImage) as Uint8List;
-                          Provider.of<AuditData>(context, listen: false).siteRepresentativeSignature =
-                              siteRepresentativeSignature;
-                          widget.activeAudit.photoSig['siteRepresentativeSignature'] = siteRepresentativeSignature;
-                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                          foodDepositoryMonitorSignature = null;
                         });
-                        debugPrint("onPressed ");
-                      } else {
-                        Dialogs.showMessage(
-                            context: context,
-                            message: "These action items must be updated: + $affectedIssues",
-                            dismissable: true);
-                      }
-                    },
-                  ),
-                  FlatButton(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                      child: Text("Clear"),
+                        debugPrint("cleared");
+                      },
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                        ),
-                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-                    onPressed: () {
-                      final sign = _sign2.currentState;
-                      sign.clear();
-                      setState(() {
-                        siteRepresentativeSignature = null;
-                      });
-                      debugPrint("cleared");
-                    },
+                  ],
+                ),
+              if (foodDepositoryMonitorSignature == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            color = color == Colors.green ? Colors.red : Colors.green;
+                          });
+                          debugPrint("change color");
+                        },
+                        child: Text("Change color")),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            int min = 1;
+                            int max = 10;
+                            int selection = min + (Random().nextInt(max - min));
+                            strokeWidth = selection.roundToDouble();
+                            debugPrint("change stroke width to $selection");
+                          });
+                        },
+                        child: Text("Change stroke width")),
+                  ],
+                ),
+//////////////  END FIRST SIGNATURE /////////////////////////////
+              if (foodDepositoryMonitorSignature != null)
+                Text("Food Depository Monitor: " +
+                    Provider.of<ListCalendarData>(context, listen: false)
+                        .auditorList
+                        .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
+              if (siteRepresentativeSignature == null &&
+                  Provider.of<GeneralData>(context, listen: false).personInterviewed != null)
+                Text("Agency Representative: " + (Provider.of<GeneralData>(context, listen: false).personInterviewed) ??
+                    ""),
+              if (Provider.of<GeneralData>(context, listen: false).personInterviewed == null)
+                Text("Agency Representative"),
+//////////////  SECOND SIGNATURE /////////////////////////////
+              siteRepresentativeSignature == null
+                  ? Container()
+                  : LimitedBox(
+                      maxHeight: 100.0,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                            bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade900),
+                          )),
+                          child: Image.memory(siteRepresentativeSignature.buffer.asUint8List()))),
+              if (siteRepresentativeSignature != null)
+                Text("Agency Representative: " +
+                    (Provider.of<GeneralData>(context, listen: false).personInterviewed ?? "")),
+              if (siteRepresentativeSignature == null)
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
                   ),
-                ],
-              ),
-            if (siteRepresentativeSignature == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          color = color == Colors.green ? Colors.red : Colors.green;
-                        });
-                        debugPrint("change color");
-                      },
-                      child: Text("Change color")),
-                  MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          int min = 1;
-                          int max = 10;
-                          int selection = min + (Random().nextInt(max - min));
-                          strokeWidth = selection.roundToDouble();
-                          debugPrint("change stroke width to $selection");
-                        });
-                      },
-                      child: Text("Change stroke width")),
-                ],
-              ),
-            Container(height: 30),
-            if (foodDepositoryMonitorSignature != null && siteRepresentativeSignature != null)
-              FlatButton(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                  child: Text(
-                    "Success! Go to the Inspection Certificate",
-                    style: ColorDefs.textBodyWhite30,
+                  child: Signature(
+                    color: color,
+                    key: _sign2,
+                    onSign: () {
+                      final sign = _sign2.currentState;
+                      debugPrint('${sign.points.length} points in the signature');
+                    },
+                    backgroundPainter: _WatermarkPaint("2.0", "2.0"),
+                    strokeWidth: strokeWidth,
                   ),
                 ),
-                color: Colors.green,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+              if (siteRepresentativeSignature == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      // color: Colors.green,
+
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                        child: Text("Save"),
+                      ),
+                      color: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            topLeft: Radius.circular(25),
+                          ),
+                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+
+                      onPressed: () async {
+                        if (checkActionItems()) {
+                          SignatureState sign = _sign2.currentState;
+                          int lineColor = img.getColor(color.red, color.green, color.blue);
+                          int backColor = img.getColor(255, 255, 255);
+                          int imageWidth;
+                          int imageHeight;
+                          BuildContext currentContext = _sign2.currentContext;
+                          if (currentContext != null) {
+                            var box = currentContext.findRenderObject() as RenderBox;
+                            imageWidth = box.size.width.toInt();
+                            imageHeight = box.size.height.toInt();
+                          }
+
+                          // create the image with the given size
+                          img.Image signatureImage = img.Image(imageWidth, imageHeight);
+
+                          // set the image background color
+                          // remove this for a transparent background
+                          img.fill(signatureImage, backColor);
+
+                          for (int i = 0; i < sign.points.length - 1; i++) {
+                            if (sign.points[i] != null && sign.points[i + 1] != null) {
+                              img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
+                                  sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
+                                  thickness: 3);
+                            } else if (sign.points[i] != null && sign.points[i + 1] == null) {
+                              // draw the point to the image
+                              img.drawPixel(
+                                  signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
+                            }
+                          }
+                          sign.clear();
+                          setState(() {
+                            siteRepresentativeSignature = img.encodePng(signatureImage) as Uint8List;
+                            Provider.of<AuditData>(context, listen: false).siteRepresentativeSignature =
+                                siteRepresentativeSignature;
+                            widget.activeAudit.photoSig['siteRepresentativeSignature'] = siteRepresentativeSignature;
+                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                          });
+                          debugPrint("onPressed ");
+                        } else {
+                          Dialogs.showMessage(
+                              context: context,
+                              message: "These action items must be updated: + $affectedIssues",
+                              dismissable: true);
+                        }
+                      },
                     ),
-                    side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                    FlatButton(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                        child: Text("Clear"),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                      onPressed: () {
+                        final sign = _sign2.currentState;
+                        sign.clear();
+                        setState(() {
+                          siteRepresentativeSignature = null;
+                        });
+                        debugPrint("cleared");
+                      },
+                    ),
+                  ],
+                ),
+              if (siteRepresentativeSignature == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            color = color == Colors.green ? Colors.red : Colors.green;
+                          });
+                          debugPrint("change color");
+                        },
+                        child: Text("Change color")),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            int min = 1;
+                            int max = 10;
+                            int selection = min + (Random().nextInt(max - min));
+                            strokeWidth = selection.roundToDouble();
+                            debugPrint("change stroke width to $selection");
+                          });
+                        },
+                        child: Text("Change stroke width")),
+                  ],
+                ),
+              Container(height: 30),
+              if (foodDepositoryMonitorSignature != null && siteRepresentativeSignature != null)
+                FlatButton(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                    child: Text(
+                      "Success! Go to the Inspection Certificate",
+                      style: ColorDefs.textBodyWhite30,
+                    ),
+                  ),
+                  color: Colors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                      side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
-                // color: Colors.green,
-                onPressed: () {
-                  Provider.of<AuditData>(context, listen: false).updateGoToVerificationGoodPage(true);
-                },
-                // child: Text(
-                //   "Success! Go to the Inspection Certificate",
-                //   style: ColorDefs.textBodyWhite30,
-                // )
-              ),
+                  // color: Colors.green,
+                  onPressed: () {
+                    Provider.of<AuditData>(context, listen: false).updateGoToVerificationGoodPage(true);
+                  },
+                  // child: Text(
+                  //   "Success! Go to the Inspection Certificate",
+                  //   style: ColorDefs.textBodyWhite30,
+                  // )
+                ),
 
-            Container(
-              height: 300,
-            )
-          ],
+              Container(
+                height: 300,
+              )
+            ],
+          ),
         ),
       )),
     );

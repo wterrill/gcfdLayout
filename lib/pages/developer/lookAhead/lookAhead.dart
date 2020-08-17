@@ -16,8 +16,7 @@ class _LookAheadState extends State<LookAhead> {
 
   @override
   Widget build(BuildContext context) {
-    List<List<dynamic>> sites = Provider.of<SiteData>(context)
-        .rowsAsListOfValues; //as List<List<dynamic>>;
+    List<List<dynamic>> sites = Provider.of<SiteData>(context).rowsAsListOfValues; //as List<List<dynamic>>;
     print("sites type: ${sites.runtimeType}");
     return Scaffold(
       appBar: AppBar(
@@ -41,8 +40,7 @@ class _LookAheadState extends State<LookAhead> {
                 print(sitename);
                 return sitename.contains(pattern);
               });
-              Iterable<String> subsubsites =
-                  subsites.map((subsite) => subsite[1] as String);
+              Iterable<String> subsubsites = subsites.map((subsite) => subsite[1] as String);
               return subsubsites;
             },
             itemBuilder: (context, suggestion) {

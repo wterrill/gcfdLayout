@@ -117,7 +117,7 @@ class AuditData with ChangeNotifier {
           (activeAudit.calendarResult.auditType == "Follow Up" &&
               verificationSection.status != Status.selected &&
               verificationSection.status != Status.completed)) {
-        verificationSection.status = Status.available;
+        if (verificationSection.status != Status.selected) verificationSection.status = Status.available;
       }
 
       if (!checkAllSectionsDone() &&

@@ -7,8 +7,7 @@ class Question extends HiveObject {
   String text;
 
   @HiveField(1)
-  String
-      typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display, issuesNoIssues
+  String typeOfQuestion; // yesNo, yesNoNa, fillIn, dropDown, date, display, issuesNoIssues
 
   @HiveField(2)
   dynamic userResponse; // what the user reponsed on the questionnaire
@@ -52,6 +51,9 @@ class Question extends HiveObject {
   @HiveField(15)
   bool hideNa = false;
 
+  @HiveField(16)
+  bool highlight = false;
+
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;
@@ -61,7 +63,7 @@ class Question extends HiveObject {
     if (questionMap['type'] != "fillIn") {
       textBoxRollOut = false;
     } else {
-      textBoxRollOut = true;
+      textBoxRollOut = false;
     }
     happyPathResponse = questionMap['happyPathResponse'] as List<String>;
     actionItem = questionMap['actionItem'] as String;

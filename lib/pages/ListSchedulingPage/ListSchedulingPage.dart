@@ -96,10 +96,15 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                               child: FaIcon(FontAwesomeIcons.sync, size: 35),
                                               onTap: () async {
                                                 var connectivityResult = await (Connectivity().checkConnectivity());
+                                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                                if (!currentFocus.hasPrimaryFocus) {
+                                                  currentFocus.unfocus();
+                                                }
                                                 if (connectivityResult == ConnectivityResult.mobile ||
                                                     connectivityResult == ConnectivityResult.wifi) {
                                                   // I am connected to a mobile network. or a wifi network
                                                   print("######### CONNECTED site sync #########");
+
                                                   await totalDataSync(context);
                                                 } else {
                                                   fToast.showToast(
@@ -198,6 +203,10 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
                                               //             context,
                                               //             listen: false)
                                               //         .siteList;
+                                              FocusScopeNode currentFocus = FocusScope.of(context);
+                                              if (!currentFocus.hasPrimaryFocus) {
+                                                currentFocus.unfocus();
+                                              }
                                               Dialogs.showSites(context: context);
                                             },
                                           )

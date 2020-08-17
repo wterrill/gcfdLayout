@@ -12,9 +12,10 @@ import 'package:auditor/buildTime/flutterDate.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:typed_data';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'SiteClasses/SiteList.dart';
 import 'colorDefs.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Dialogs {
   static void showAlertDialog(BuildContext context) {
@@ -123,14 +124,14 @@ class Dialogs {
       ),
       actions: <Widget>[
         new FlatButton(
-          child: new Text("Continue"),
+          child: new Text("Yes"),
           onPressed: () {
             continueCallBack();
             Navigator.of(context).pop(true);
           },
         ),
         new FlatButton(
-          child: Text("Cancel"),
+          child: Text("No"),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
@@ -207,23 +208,35 @@ class Dialogs {
 
   static void failedAuthentication(BuildContext context) {
     AlertDialog alert = AlertDialog(
+      backgroundColor: ColorDefs.colorAudit1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
       elevation: 6.0,
-      content: Column(
+      content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Username or password is not correct.  Please try again.'),
+          FaIcon(FontAwesomeIcons.exclamationCircle, color: ColorDefs.colorTopHeader, size: 60),
+          Container(
+            width: 40,
+          ),
+          Expanded(
+            child: Text(
+              'Username or password is not correct.  Please try again.',
+              style: ColorDefs.textBodyWhite25,
+              maxLines: 2,
+            ),
+          ),
         ],
       ),
     );
-    showDialog<void>(
-      barrierDismissible: true,
-      context: context,
-      builder: (_) {
-        return alert;
-      },
-    );
+    // showDialog<void>(
+    //   barrierDismissible: true,
+    //   context: context,
+    //   builder: (_) {
+    //     return alert;
+    //   },
+    // );
+    showToast(context, alert);
   }
 
   static void mustBeNumber(BuildContext context) {
@@ -517,7 +530,7 @@ class Dialogs {
                   shape: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
                   title: (followup) //&& calendarResult.auditType == "Follow Up"
                       ? Text('Schedule Follow Up', style: ColorDefs.textGreen40)
-                      : Text('Edit Audit', style: ColorDefs.textGreen40),
+                      : Text('Revise Audit', style: ColorDefs.textGreen40),
                   content: selectWidget(auditAlreadyStarted, rescheduleFollowUp)),
             ),
           );
@@ -529,5 +542,14 @@ class Dialogs {
         pageBuilder: (context, animation1, animation2) {
           return Text("Beer?");
         });
+  }
+
+  static void showToast(BuildContext context, Widget toast) {
+    // fToast = FToast(context);
+    FToast(context).showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 3),
+    );
   }
 }

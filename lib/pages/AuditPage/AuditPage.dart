@@ -95,267 +95,263 @@ class _AuditPageState extends State<AuditPage> {
         body: SafeArea(
           child: Center(
             child: Container(
-                decoration: BoxDecoration(
-                    color: ColorDefs.colorTopHeader,
-                    borderRadius: BorderRadius.circular(25.0),
-                    border: Border.all(width: 2.0, color: Colors.grey)),
-                height: mediaHeight * 0.95,
-                width: mediaWidth * 0.9,
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(child: SectionButtons(activeAudit: activeAudit)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Divider(
-                          color: ColorDefs.colorAlternatingDark,
-                          thickness: 1,
-                        ),
+              decoration: BoxDecoration(
+                  color: ColorDefs.colorTopHeader,
+                  borderRadius: BorderRadius.circular(25.0),
+                  border: Border.all(width: 2.0, color: Colors.grey)),
+              height: mediaHeight * 0.95,
+              width: mediaWidth * 0.9,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(child: SectionButtons(activeAudit: activeAudit)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Divider(
+                        color: ColorDefs.colorAlternatingDark,
+                        thickness: 1,
                       ),
-                      if (activeSection?.name == "Review")
-                        ReviewPage(
-                          activeAudit: activeAudit,
+                    ),
+                    if (activeSection?.name == "Review")
+                      ReviewPage(
+                        activeAudit: activeAudit,
+                      ),
+                    if (activeSection?.name == "Follow Up Review")
+                      FollowUpReviewPage(
+                        activeAudit: activeAudit,
+                      ),
+                    if (activeSection?.name == "Photos")
+                      PhotoPage(
+                        activeAudit: activeAudit,
+                      ),
+                    if (activeSection?.name == "Verification" && activeAudit.citations.length == 0 ||
+                        Provider.of<AuditData>(context).goToVerificationGoodPage &&
+                            activeSection?.name == "Verification")
+                      VerificationGoodPage(
+                        activeAudit: activeAudit,
+                      ),
+                    if (activeSection?.name == "Verification" &&
+                        activeAudit.citations.length != 0 &&
+                        !Provider.of<AuditData>(context).goToVerificationGoodPage)
+                      VerificationBadPage(
+                        activeAudit: activeAudit,
+                      ),
+                    // if (activeSection?.name == "*Developer*") DeveloperPage(),
+                    if (activeSection?.name != "Review" &&
+                        activeSection?.name != "Verification" &&
+                        activeSection?.name != "Follow Up Review")
+                      if (activeSection?.name != "Photos")
+                        Container(
+                          child:
+                              AuditQuestions(activeSection: activeSection, activecalendarResult: activeCalendarResult),
                         ),
-                      if (activeSection?.name == "Follow Up Review")
-                        FollowUpReviewPage(
-                          activeAudit: activeAudit,
-                        ),
-                      if (activeSection?.name == "Photos")
-                        PhotoPage(
-                          activeAudit: activeAudit,
-                        ),
-                      if (activeSection?.name == "Verification" && activeAudit.citations.length == 0 ||
-                          Provider.of<AuditData>(context).goToVerificationGoodPage &&
-                              activeSection?.name == "Verification")
-                        VerificationGoodPage(
-                          activeAudit: activeAudit,
-                        ),
-                      if (activeSection?.name == "Verification" &&
-                          activeAudit.citations.length != 0 &&
-                          !Provider.of<AuditData>(context).goToVerificationGoodPage)
-                        VerificationBadPage(
-                          activeAudit: activeAudit,
-                        ),
-                      // if (activeSection?.name == "*Developer*") DeveloperPage(),
-                      if (activeSection?.name != "Review" &&
-                          activeSection?.name != "Verification" &&
-                          activeSection?.name != "Follow Up Review")
-                        if (activeSection?.name != "Photos")
-                          Container(
-                            child: AuditQuestions(
-                                activeSection: activeSection, activecalendarResult: activeCalendarResult),
-                          ),
 
-                      //),
+                    //),
 
-                      if (activeSection?.name == "Verification")
-                        if (showSubmitButton)
+                    if (activeSection?.name == "Verification")
+                      if (showSubmitButton)
+                        FlatButton(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                              child: Text("Submit Audit", style: ColorDefs.textBodyBlack30),
+                            ),
+                            color: Colors.green,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(50),
+                                ),
+                                side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                            disabledColor: ColorDefs.colorButtonNeutral,
+                            // color: Colors.blue,
+                            // textColor: Colors.black,
+                            // child: Text("Submit Audit", style: ColorDefs.textBodyBlack20),
+                            onPressed: (() async {
+                              // Save Date time
+                              activeAudit.calendarResult.endDateTime = DateTime.now();
+                              // this is done to prevent "Verification" from showing as selected when opening again.
+                              for (var i = activeAudit.sections.length - 1; i > -1; i--) {
+                                if (activeAudit.sections[i].name == "Verification") {
+                                  activeAudit.sections[i].status = Status.completed;
+                                  break;
+                                }
+                              }
+                              // Save citations, and update status
+                              activeAudit.citations = Provider.of<AuditData>(context, listen: false).citations;
+                              activeAudit.previousCitations = Provider.of<AuditData>(context, listen: false).citations;
+                              String status = "Completed";
+                              if (activeAudit.siteVisitRequired == true) {
+                                status = "Site Visit Req.";
+                              }
+
+                              activeAudit.calendarResult.status = status;
+                              Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
+                              // the calendar item needs to be updated due to the status change.
+                              Provider.of<ListCalendarData>(context, listen: false)
+                                  .addCalendarItem(activeAudit.calendarResult);
+                              Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                              Provider.of<AuditData>(context, listen: false).saveAuditToSend(activeAudit);
+
+                              await Dialogs.showSuccess(context);
+                              Navigator.of(context).pop();
+                              // Navigator.of(context).pop();
+                              Provider.of<AuditData>(context, listen: false).resetAudit();
+                            })),
+                    if (activeAudit?.calendarResult?.status == 0)
+                      FlatButton(
+                        color: Colors.blue,
+                        textColor: Colors.black,
+                        child: Text("Cancel Audit", style: ColorDefs.textBodyBlack20),
+                        onPressed: () {
+                          Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+                          Provider.of<AuditData>(context, listen: false).resetAudit();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    Container(height: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
+                        color: ColorDefs.colorAlternateDark,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
                           FlatButton(
+                            disabledColor: ColorDefs.colorButtonNeutral,
+                            color: ColorDefs.colorAnotherDarkGreen,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0),
+                                side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                              child: Text("Save and Close", style: ColorDefs.textBodyWhite20),
+                            ),
+                            onPressed: () {
+                              Provider.of<AuditData>(context, listen: false).toggleStartAudit();
+                              Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
+                              Provider.of<AuditData>(context, listen: false).resetAudit();
+
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          if (activeSection?.name == "Confirm Details" &&
+                              activeAudit.detailsConfirmed == false &&
+                              activeAudit.calendarResult.status != "Completed")
+                            FlatButton(
+                              // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                child: Text("Submit Audit", style: ColorDefs.textBodyBlack30),
+                                child: Text("Confirm", style: ColorDefs.textBodyBlack20),
                               ),
-                              color: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(50),
-                                  ),
-                                  side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
                               disabledColor: ColorDefs.colorButtonNeutral,
-                              // color: Colors.blue,
-                              // textColor: Colors.black,
-                              // child: Text("Submit Audit", style: ColorDefs.textBodyBlack20),
-                              onPressed: (() async {
-                                // Save Date time
-                                activeAudit.calendarResult.endDateTime = DateTime.now();
-                                // this is done to prevent "Verification" from showing as selected when opening again.
-                                for (var i = activeAudit.sections.length - 1; i > -1; i--) {
-                                  if (activeAudit.sections[i].name == "Verification") {
-                                    activeAudit.sections[i].status = Status.completed;
-                                    break;
-                                  }
-                                }
-                                // Save citations, and update status
-                                activeAudit.citations = Provider.of<AuditData>(context, listen: false).citations;
-                                activeAudit.previousCitations =
-                                    Provider.of<AuditData>(context, listen: false).citations;
-                                String status = "Completed";
-                                if (activeAudit.siteVisitRequired == true) {
-                                  status = "Site Visit Req.";
-                                }
-
-                                activeAudit.calendarResult.status = status;
-                                Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
-                                // the calendar item needs to be updated due to the status change.
-                                Provider.of<ListCalendarData>(context, listen: false)
-                                    .addCalendarItem(activeAudit.calendarResult);
-                                Provider.of<AuditData>(context, listen: false).notifyTheListeners();
-                                Provider.of<AuditData>(context, listen: false).saveAuditToSend(activeAudit);
-
-                                await Dialogs.showSuccess(context);
-                                Navigator.of(context).pop();
-                                // Navigator.of(context).pop();
-                                Provider.of<AuditData>(context, listen: false).resetAudit();
-                              })),
-                      if (activeAudit?.calendarResult?.status == 0)
-                        FlatButton(
-                          color: Colors.blue,
-                          textColor: Colors.black,
-                          child: Text("Cancel Audit", style: ColorDefs.textBodyBlack20),
-                          onPressed: () {
-                            Provider.of<AuditData>(context, listen: false).toggleStartAudit();
-                            Provider.of<AuditData>(context, listen: false).resetAudit();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      Container(height: 10),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
-                          color: ColorDefs.colorAlternateDark,
-                          // border: Border(top: BorderSide(width: 2.0, color: Colors.green))
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            FlatButton(
-                              disabledColor: ColorDefs.colorButtonNeutral,
-                              color: ColorDefs.colorAnotherDarkGreen,
+                              color: ColorDefs.colorTopHeader,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                   side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
-                              // color: Colors.blue,
-                              // textColor: Colors.black,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                child: Text("Save and Close", style: ColorDefs.textBodyWhite20),
-                              ),
-                              onPressed: () {
-                                Provider.of<AuditData>(context, listen: false).toggleStartAudit();
-                                Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
-                                Provider.of<AuditData>(context, listen: false).resetAudit();
-
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            if (activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false)
-                              FlatButton(
-                                // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                  child: Text("Confirm", style: ColorDefs.textBodyBlack20),
-                                ),
-                                disabledColor: ColorDefs.colorButtonNeutral,
-                                color: ColorDefs.colorTopHeader,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                                // disabledTextColor: Colors.blue,
-                                onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
-                                    ? null
-                                    : () {
-                                        activeAudit.detailsConfirmed = true;
+                              // disabledTextColor: Colors.blue,
+                              onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
+                                  ? null
+                                  : () {
+                                      activeAudit.detailsConfirmed = true;
+                                      for (Section section in activeAudit.sections) {
+                                        section.status = Status.available;
+                                        section.lastStatus = Status.available;
+                                        activeSection.status = Status.completed;
+                                        activeSection.lastStatus = Status.completed;
+                                        if (activeAudit.calendarResult.auditType != "Follow Up") {
+                                          if (section.name == "Review") break;
+                                        }
+                                      }
+                                      setState(() {});
+                                      if (activeAudit.calendarResult.auditType == "Follow Up") {
+                                        Provider.of<AuditData>(context, listen: false).makeCitations();
+                                        Section goToSection;
                                         for (Section section in activeAudit.sections) {
-                                          section.status = Status.available;
-                                          section.lastStatus = Status.available;
-                                          activeSection.status = Status.completed;
-                                          activeSection.lastStatus = Status.completed;
-                                          if (activeAudit.calendarResult.auditType != "Follow Up") {
-                                            if (section.name == "Review") break;
+                                          if (section.name == "Follow Up Review") {
+                                            goToSection = section;
                                           }
                                         }
-                                        setState(() {});
-                                        if (activeAudit.calendarResult.auditType == "Follow Up") {
-                                          Provider.of<AuditData>(context, listen: false).makeCitations();
-                                          Section goToSection;
-                                          for (Section section in activeAudit.sections) {
-                                            if (section.name == "Follow Up Review") {
-                                              goToSection = section;
-                                            }
-                                          }
-                                          Provider.of<AuditData>(context, listen: false)
-                                              .updateActiveSection(goToSection);
-                                        }
-                                      },
-                              ),
-                            if (!(activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false))
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    width: 160,
-                                    child: FlatButton(
-                                      disabledColor: ColorDefs.colorButtonNeutral,
-                                      color: ColorDefs.colorTopHeader,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50.0),
-                                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                                        Provider.of<AuditData>(context, listen: false).updateActiveSection(goToSection);
+                                      }
+                                    },
+                            ),
+                          if (!(activeSection?.name == "Confirm Details" &&
+                              activeAudit.detailsConfirmed == false &&
+                              activeAudit.calendarResult.status != "Completed"))
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 160,
+                                  child: FlatButton(
+                                    disabledColor: ColorDefs.colorButtonNeutral,
+                                    color: ColorDefs.colorTopHeader,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50.0),
+                                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
 
-                                      // color: Colors.blue,
-                                      // textColor: Colors.black,
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                        child: Text("Previous", style: ColorDefs.textBodyBlack20),
-                                      ),
-                                      onPressed: () {
-                                        Section nextSection =
-                                            Provider.of<AuditData>(context, listen: false).cycleSections(-1);
-                                        if (Status.values.indexOf(nextSection.status) >=
-                                            Status.values.indexOf(Status.available)) {
-                                          Provider.of<AuditData>(context, listen: false)
-                                              .updateActiveSection(nextSection);
-                                          Provider.of<AuditData>(context, listen: false).saveActiveAudit();
-                                          Provider.of<AuditData>(context, listen: false).makeCitations();
-                                        }
+                                    // color: Colors.blue,
+                                    // textColor: Colors.black,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                      child: Text("Previous", style: ColorDefs.textBodyBlack20),
+                                    ),
+                                    onPressed: () {
+                                      Section nextSection =
+                                          Provider.of<AuditData>(context, listen: false).cycleSections(-1);
+                                      if (Status.values.indexOf(nextSection.status) >=
+                                          Status.values.indexOf(Status.available)) {
+                                        Provider.of<AuditData>(context, listen: false).updateActiveSection(nextSection);
+                                        Provider.of<AuditData>(context, listen: false).saveActiveAudit();
+                                        Provider.of<AuditData>(context, listen: false).makeCitations();
+                                      }
 
-                                        // TODO
-                                      },
+                                      // TODO
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  width: 160,
+                                  child: FlatButton(
+                                    disabledColor: ColorDefs.colorButtonNeutral,
+                                    color: ColorDefs.colorTopHeader,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50.0),
+                                        side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                      child: Text("Next", style: ColorDefs.textBodyBlack20),
                                     ),
+                                    onPressed: () {
+                                      Section nextSection =
+                                          Provider.of<AuditData>(context, listen: false).cycleSections(1);
+                                      if (Status.values.indexOf(nextSection.status) >=
+                                          Status.values.indexOf(Status.available)) {
+                                        Provider.of<AuditData>(context, listen: false)
+                                            .updateActiveSectionNext(nextSection);
+                                        Provider.of<AuditData>(context, listen: false).saveActiveAudit();
+                                        Provider.of<AuditData>(context, listen: false).makeCitations();
+                                      }
+                                    },
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 160,
-                                    child: FlatButton(
-                                      disabledColor: ColorDefs.colorButtonNeutral,
-                                      color: ColorDefs.colorTopHeader,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50.0),
-                                          side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                        child: Text("Next", style: ColorDefs.textBodyBlack20),
-                                      ),
-                                      onPressed: () {
-                                        Section nextSection =
-                                            Provider.of<AuditData>(context, listen: false).cycleSections(1);
-                                        if (Status.values.indexOf(nextSection.status) >=
-                                            Status.values.indexOf(Status.available)) {
-                                          Provider.of<AuditData>(context, listen: false)
-                                              .updateActiveSectionNext(nextSection);
-                                          Provider.of<AuditData>(context, listen: false).saveActiveAudit();
-                                          Provider.of<AuditData>(context, listen: false).makeCitations();
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ],
-                        ),
+                                ),
+                              ],
+                            )
+                        ],
                       ),
-
-                      // Container(height: 10)
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
