@@ -3,6 +3,7 @@ import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
 import 'package:auditor/pages/developer/hiveTroubleshooting/hiveTroubleshooting.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 import 'package:auditor/pages/developer/scrollStuff/scrollStuff.dart';
+import 'package:auditor/pages/developer/textTesting/textTesting.dart';
 import 'package:auditor/providers/GeneralData.dart';
 // import 'package:auditor/pages/developer/pdf/showPdfDocument.dart';
 // import 'package:auditor/pages/developer/pdf/writePdfDocument.dart';
@@ -35,8 +36,7 @@ class DeveloperMenu extends StatelessWidget {
                   Navigator.of(context).pop();
                   Navigator.push<dynamic>(
                     context,
-                    MaterialPageRoute<dynamic>(
-                        builder: (context) => ListSchedulingPage()),
+                    MaterialPageRoute<dynamic>(builder: (context) => ListSchedulingPage()),
                   );
                 }),
           ),
@@ -120,6 +120,19 @@ class DeveloperMenu extends StatelessWidget {
 
           FlatButton(
             color: Colors.red,
+            child: Text("TextTesting"),
+            onPressed: () async {
+              // Navigator.push(TextTest());
+
+              Navigator.push<dynamic>(
+                context,
+                MaterialPageRoute<dynamic>(builder: (context) => TestAuthentication()),
+              );
+            },
+          ),
+
+          FlatButton(
+            color: Colors.red,
             child: Text("Time picker"),
             onPressed: () async {
               TimeOfDay selectedTimeRTL = await showTimePicker(
@@ -175,8 +188,7 @@ class DeveloperMenu extends StatelessWidget {
             onPressed: () {
               Navigator.push<dynamic>(
                 context,
-                MaterialPageRoute<dynamic>(
-                    builder: (context) => TestAuthentication()),
+                MaterialPageRoute<dynamic>(builder: (context) => TestAuthentication()),
               );
             },
           ),
@@ -184,8 +196,7 @@ class DeveloperMenu extends StatelessWidget {
             color: Colors.red,
             child: Text("show device ID"),
             onPressed: () {
-              String deviceid =
-                  Provider.of<GeneralData>(context, listen: false).deviceid;
+              String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;
               Dialogs.showid(context, deviceid);
             },
           ),
@@ -193,8 +204,7 @@ class DeveloperMenu extends StatelessWidget {
               onPressed: () {
                 Navigator.push<dynamic>(
                   context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => HiveTroubleShooting()),
+                  MaterialPageRoute<dynamic>(builder: (context) => HiveTroubleShooting()),
                 );
               },
               child: Text("Hive Troubleshooting")),
@@ -202,8 +212,7 @@ class DeveloperMenu extends StatelessWidget {
               onPressed: () {
                 Navigator.push<dynamic>(
                   context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => ProductDetails()),
+                  MaterialPageRoute<dynamic>(builder: (context) => ProductDetails()),
                 );
               },
               child: Text("Scroll changes testing")),
@@ -211,8 +220,7 @@ class DeveloperMenu extends StatelessWidget {
               onPressed: () {
                 Navigator.push<dynamic>(
                   context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => ClayContainerEx()),
+                  MaterialPageRoute<dynamic>(builder: (context) => ClayContainerEx()),
                 );
               },
               child: Text("Clay Container testing")),
