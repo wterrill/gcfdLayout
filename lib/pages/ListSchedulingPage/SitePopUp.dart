@@ -126,9 +126,10 @@ class _SitePopUpState extends State<SitePopUp> {
                                 side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
                               ),
                               onPressed: () {
-                                selectedSite = null;
+                                // selectedSite = null;
                                 Navigator.of(context).pop();
                                 Dialogs.showScheduledAudit(context: context, siteFromLookupScreen: selectedSite);
+                                selectedSite = null;
                               },
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),

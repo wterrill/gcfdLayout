@@ -115,12 +115,12 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               ),
             ),
 
-            if (Provider.of<GeneralData>(context, listen: true).syncInProgress) CircularProgressIndicator(),
-            if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
-              Text(
-                Provider.of<GeneralData>(context).syncMessage,
-                style: ColorDefs.textBodyBlack10,
-              ),
+            // if (Provider.of<GeneralData>(context, listen: true).syncInProgress) CircularProgressIndicator(),
+            // if (Provider.of<GeneralData>(context, listen: true).syncInProgress)
+            //   Text(
+            //     Provider.of<GeneralData>(context).syncMessage,
+            //     style: ColorDefs.textBodyBlack10,
+            //   ),
             PopupMenuButton<String>(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 5.0),

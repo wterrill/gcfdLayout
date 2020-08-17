@@ -9,7 +9,7 @@ import 'dart:typed_data';
 import 'package:photo_view/photo_view.dart';
 import 'dart:async';
 import 'package:flutter_appavailability/flutter_appavailability.dart';
-
+import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
 class PhotoPage extends StatefulWidget {
@@ -46,21 +46,23 @@ class _PhotoPageState extends State<PhotoPage> {
                 child: Text("Add picture", style: ColorDefs.textBodyWhite20),
               ),
             ),
-            Container(
-              child: RaisedButton(
-                color: ColorDefs.colorAudit3,
-                onPressed: () async {
-                  AppAvailability.launchApp("Camera").then((_) {
-                    print("launched");
-                  }).catchError((dynamic err) {
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Container(height: 40, child: Center(child: Text("Camera App not found!")))));
-                    print(err);
-                  });
-                },
-                child: Text("Launch Camera", style: ColorDefs.textBodyWhite20),
-              ),
-            ),
+            // Container(
+            //   child: RaisedButton(
+            //     color: ColorDefs.colorAudit3,
+            //     onPressed: () async {
+            //       dynamic cameras = await availableCameras();
+
+            //       AppAvailability.launchApp("com.apple.avfoundation.avcapturedevice.built-in_video").then((_) {
+            //         print("launched");
+            //       }).catchError((dynamic err) {
+            //         Scaffold.of(context).showSnackBar(
+            //             SnackBar(content: Container(height: 40, child: Center(child: Text("Camera App not found!")))));
+            //         print(err);
+            //       });
+            //     },
+            //     child: Text("Launch Camera", style: ColorDefs.textBodyWhite20),
+            //   ),
+            // ),
             GridView.builder(
               shrinkWrap: true,
               primary: false,

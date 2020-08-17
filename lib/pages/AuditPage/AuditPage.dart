@@ -238,7 +238,9 @@ class _AuditPageState extends State<AuditPage> {
                               Navigator.of(context).pop();
                             },
                           ),
-                          if (activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false)
+                          if (activeSection?.name == "Confirm Details" &&
+                              activeAudit.detailsConfirmed == false &&
+                              activeAudit.calendarResult.status != "Completed")
                             FlatButton(
                               // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
                               child: Padding(
@@ -278,7 +280,9 @@ class _AuditPageState extends State<AuditPage> {
                                       }
                                     },
                             ),
-                          if (!(activeSection?.name == "Confirm Details" && activeAudit.detailsConfirmed == false))
+                          if (!(activeSection?.name == "Confirm Details" &&
+                              activeAudit.detailsConfirmed == false &&
+                              activeAudit.calendarResult.status != "Completed"))
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [

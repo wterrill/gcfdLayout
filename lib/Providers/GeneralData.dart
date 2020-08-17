@@ -29,22 +29,6 @@ class GeneralData with ChangeNotifier {
     initializeApp();
   }
 
-  void setRememberMe(bool value) {
-    rememberMe = value;
-    if (rememberMe) {
-      generalBox.put('rememberMe', "true");
-    } else {
-      generalBox.put('rememberMe', "false");
-    }
-    print("****  rememberME  ****");
-    print(rememberMe);
-    print(generalBox.get('rememberMe'));
-  }
-
-  void toggleShowTopDrawer() {
-    showTopDrawer = !showTopDrawer;
-  }
-
   void initializeApp() async {
     initHive();
     backgroundDisable = false;
@@ -69,11 +53,37 @@ class GeneralData with ChangeNotifier {
       String rememberMeString = generalBox.get('rememberMe') as String;
       if (rememberMeString == "true") {
         rememberMe = true;
+        username = generalBox.get('username') as String;
       } else {
         rememberMe = false;
       }
       notifyListeners();
     });
+  }
+
+  void setRememberMe(bool value) {
+    rememberMe = value;
+    if (rememberMe) {
+      generalBox.put('rememberMe', "true");
+      // generalBox.put('username', username);
+    } else {
+      generalBox.put('rememberMe', "false");
+      generalBox.delete('username');
+    }
+    print("****  rememberME  ****");
+    print(rememberMe);
+    print(generalBox.get('rememberMe'));
+  }
+
+  void saveUsername(String username) {
+    // use,/rname = username;
+    if (rememberMe) {
+      generalBox.put('username', username);
+    }
+  }
+
+  void toggleShowTopDrawer() {
+    showTopDrawer = !showTopDrawer;
   }
 
   void updateNumberOfDaysShown(int number) {

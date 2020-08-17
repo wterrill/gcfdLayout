@@ -267,6 +267,7 @@ class _LoginFormState extends State<LoginForm> {
         }
 
         isAuthenticated = await Authentication.authenticate(username: _username, password: _password);
+        Provider.of<GeneralData>(context, listen: false).saveUsername(_username);
       } catch (error) {
         print(error);
         isAuthenticated = false;
@@ -286,6 +287,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
         );
       } else {
+        Provider.of<GeneralData>(context, listen: false).saveUsername("");
         Navigator.of(context).pop();
         if (!isError) {
           Dialogs.failedAuthentication(context);
