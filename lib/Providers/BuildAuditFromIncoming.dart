@@ -17,8 +17,7 @@ import 'dart:io';
 import 'AuditData.dart';
 import 'GeneralData.dart';
 
-Future<dynamic> buildAuditFromIncoming(
-    dynamic fromServer, SiteList siteList) async {
+Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) async {
   List<Audit> newAudits = [];
   Audit newAudit;
   for (dynamic event in fromServer) {
@@ -26,32 +25,25 @@ Future<dynamic> buildAuditFromIncoming(
     String auditTypeKey;
     if (convertNumberToProgramType(event['ProgramType'] as int) == "Pantry") {
       auditTypeKey = "PantryDetail";
-    } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
-        "Congregate") {
+    } else if (convertNumberToProgramType(event['ProgramType'] as int) == "Congregate") {
       auditTypeKey = "CongregateDetail";
-    } else if (convertNumberToProgramType(event['ProgramType'] as int) ==
-            "Healthy Student Market" ||
-        convertNumberToProgramType(event['ProgramType'] as int) ==
-            "Senior Adults Program") {
+    } else if (convertNumberToProgramType(event['ProgramType'] as int) == "Healthy Student Market" ||
+        convertNumberToProgramType(event['ProgramType'] as int) == "Senior Adults Program") {
       auditTypeKey = "PPCDetail";
     }
 
-    Map<String, dynamic> incomingAudit =
-        receivedAudit[auditTypeKey] as Map<String, dynamic>;
+    Map<String, dynamic> incomingAudit = receivedAudit[auditTypeKey] as Map<String, dynamic>;
 
     if (incomingAudit != null && receivedAudit['StartTime'] != null) {
       CalendarResult newCalendarResult = CalendarResult(
         programType: convertNumberToProgramType(event['ProgramType'] as int),
         message: "",
-        siteInfo: siteList.getSiteFromAgencyNumber(
-            agencyNumber: event['AgencyNumber'] as String),
+        siteInfo: siteList.getSiteFromAgencyNumber(agencyNumber: event['AgencyNumber'] as String),
         agencyNum: event['AgencyNumber'] as String,
         programNum: event['ProgramNumber'] as String,
-        agencyName: siteList
-            .agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
+        agencyName: siteList.agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
         auditType: convertNumberToAuditType(event['AuditType'] as int),
-        startTime:
-            DateTime.parse(receivedAudit['StartTime'] as String).toString(),
+        startTime: DateTime.parse(receivedAudit['StartTime'] as String).toString(),
         status: convertNumberToStatus(receivedAudit['Status'] as int),
         auditor: event['Auditor'] as String,
         deviceid: event['DeviceId'] as String,
@@ -59,22 +51,16 @@ Future<dynamic> buildAuditFromIncoming(
       print(event['DeviceId']);
 
       if (newCalendarResult.programType == "Pantry") {
-        newAudit = Audit(
-            calendarResult: newCalendarResult,
-            questionnaire: pantryAuditSectionsQuestions);
+        newAudit = Audit(calendarResult: newCalendarResult, questionnaire: pantryAuditSectionsQuestions);
       }
 
       if (newCalendarResult.programType == "Congregate") {
-        newAudit = Audit(
-            calendarResult: newCalendarResult,
-            questionnaire: congregateAuditSectionsQuestions);
+        newAudit = Audit(calendarResult: newCalendarResult, questionnaire: congregateAuditSectionsQuestions);
       }
 
       if (newCalendarResult.programType == "Healthy Student Market" ||
           newCalendarResult.programType == "Senior Adults Program") {
-        newAudit = Audit(
-            calendarResult: newCalendarResult,
-            questionnaire: pPCAuditSectionsQuestions);
+        newAudit = Audit(calendarResult: newCalendarResult, questionnaire: pPCAuditSectionsQuestions);
       }
 
       List<String> missingDBVar = [];
@@ -83,8 +69,7 @@ Future<dynamic> buildAuditFromIncoming(
         citationsMap = receivedAudit["PantryCitations"] as Map<String, dynamic>;
       }
       if (newAudit.calendarResult.programType == "Congregate") {
-        citationsMap =
-            receivedAudit["CongregateCitations"] as Map<String, dynamic>;
+        citationsMap = receivedAudit["CongregateCitations"] as Map<String, dynamic>;
       }
 
       if (newAudit.calendarResult.programType == "Healthy Student Market" ||
@@ -96,8 +81,7 @@ Future<dynamic> buildAuditFromIncoming(
       // also, let's get a list of the databaseVars
       List<String> citationDatabaseVarsList = [];
       if (citationsMap != null) {
-        citationsMap
-            .removeWhere((key, dynamic value) => key == null || value == null);
+        citationsMap.removeWhere((key, dynamic value) => key == null || value == null);
 
         for (String key in citationsMap.keys) {
           if (key.contains("Flag")) {
@@ -131,8 +115,7 @@ Future<dynamic> buildAuditFromIncoming(
             question.fromSectionName = section.name;
 
             // question.unflagged = !question.unflagged;
-            question.actionItem =
-                citationsMap[databaseVar + "ActionItem"] as String;
+            question.actionItem = citationsMap[databaseVar + "ActionItem"] as String;
             citations.add(question);
           }
 
@@ -154,26 +137,20 @@ Future<dynamic> buildAuditFromIncoming(
                   print('yesNo');
                   print(incomingAudit[databaseVar]);
                   try {
-                    question.userResponse =
-                        incomingAudit[databaseVar] as bool ? "Yes" : "No";
+                    question.userResponse = incomingAudit[databaseVar] as bool ? "Yes" : "No";
                   } catch (err) {
-                    question.userResponse =
-                        incomingAudit[databaseVar] as String;
+                    question.userResponse = incomingAudit[databaseVar] as String;
                   }
 
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
                 case ("issuesNoIssues"):
                   print(question.text);
                   print('issuesNoIssues');
                   print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as bool
-                      ? "No Issues"
-                      : "Issues";
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.userResponse = incomingAudit[databaseVar] as bool ? "No Issues" : "Issues";
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
 
@@ -182,8 +159,7 @@ Future<dynamic> buildAuditFromIncoming(
                   print('fillIn');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as String;
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
 
                   break;
 
@@ -192,9 +168,8 @@ Future<dynamic> buildAuditFromIncoming(
                   print('fillInInterview');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as String;
-                  Provider.of<GeneralData>(navigatorKey.currentContext,
-                          listen: false)
-                      .personInterviewed = question.userResponse as String;
+                  Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).personInterviewed =
+                      question.userResponse as String;
 
                   break;
                 case ("fillInEmail"):
@@ -202,9 +177,8 @@ Future<dynamic> buildAuditFromIncoming(
                   print('fillInInterview');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as String;
-                  Provider.of<AuditData>(navigatorKey.currentContext,
-                          listen: false)
-                      .contactEmail = question.userResponse as String;
+                  Provider.of<AuditData>(navigatorKey.currentContext, listen: false).contactEmail =
+                      question.userResponse as String;
 
                   break;
 
@@ -216,8 +190,10 @@ Future<dynamic> buildAuditFromIncoming(
                   print('fillInNum');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as int;
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  if (question.userResponse == 0) {
+                    question.userResponse = "0";
+                  }
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("dropDown"):
@@ -226,17 +202,14 @@ Future<dynamic> buildAuditFromIncoming(
                   print(incomingAudit[databaseVar]);
                   if (incomingAudit[databaseVar] != null) {
                     try {
-                      question.userResponse =
-                          incomingAudit[databaseVar] as String;
+                      question.userResponse = incomingAudit[databaseVar] as String;
                     } catch (err) {
-                      question.userResponse = question
-                          .dropDownMenu[incomingAudit[databaseVar] as int];
+                      question.userResponse = question.dropDownMenu[incomingAudit[databaseVar] as int];
                     }
                   } else {
                     question.userResponse = 'Select';
                   }
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("yesNoNa"):
@@ -244,25 +217,38 @@ Future<dynamic> buildAuditFromIncoming(
                   print('yesNoNa');
                   print(incomingAudit[databaseVar]);
                   if (incomingAudit[databaseVar] != null) {
-                    if (incomingAudit[databaseVar] as int == 1) {
-                      question.userResponse = "Yes";
-                    }
-                    if (incomingAudit[databaseVar] as int == 0) {
-                      question.userResponse = "No";
-                    }
-                    if (incomingAudit[databaseVar] as int == -1) {
-                      question.userResponse = 'NA';
+                    // if (incomingAudit[databaseVar] as int == 1) {
+                    //   question.userResponse = "Yes";
+                    // }
+                    // if (incomingAudit[databaseVar] as int == 0) {
+                    //   question.userResponse = "No";
+                    // }
+                    // if (incomingAudit[databaseVar] as int == -1) {
+                    //   question.userResponse = 'N/A';
+                    //   // question.dd
+                    // }
+
+                    try {
+                      question.userResponse = incomingAudit[databaseVar] as bool ? "Yes" : "No";
+                    } catch (err) {
+                      try {
+                        if (incomingAudit[databaseVar] as int == -1) {
+                          question.userResponse = 'N/A';
+                          // question.dd
+                        } else {
+                          print(incomingAudit[databaseVar]);
+                        }
+                      } catch (err) {
+                        print(err);
+                      }
+                      // question.userResponse = incomingAudit[databaseVar] as String;
                     }
 
-                    (question.userResponse =
-                            incomingAudit[databaseVar] as int == 1)
-                        ? "Yes"
-                        : "No";
+                    // (question.userResponse = incomingAudit[databaseVar] as int == 1) ? "Yes" : "No";
                   } else {
-                    question.userResponse = null;
+                    question.userResponse = "N/A";
                   }
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
                   break;
 
                 case ("date"):
@@ -270,8 +256,7 @@ Future<dynamic> buildAuditFromIncoming(
                   print('date');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as String;
-                  question.optionalComment =
-                      incomingAudit[databaseVar + "Comments"] as String;
+                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
                   break;
               }
             }
@@ -284,26 +269,22 @@ Future<dynamic> buildAuditFromIncoming(
       // finally, add the citations created above.
       newAudit.citations = citations;
 
-      if (incomingAudit['CertRepresentativeSignature'] != "" &&
-          incomingAudit['CertRepresentativeSignature'] != null)
-        newAudit.photoSig['certRepresentativeSignature'] = Base64Decoder()
-            .convert(incomingAudit['CertRepresentativeSignature'] as String);
+      if (incomingAudit['CertRepresentativeSignature'] != "" && incomingAudit['CertRepresentativeSignature'] != null)
+        newAudit.photoSig['certRepresentativeSignature'] =
+            Base64Decoder().convert(incomingAudit['CertRepresentativeSignature'] as String);
       if (incomingAudit['FoodDepositoryMonitorSignature'] != "" &&
           incomingAudit['FoodDepositoryMonitorSignature'] != null)
-        newAudit.photoSig['foodDepositoryMonitorSignature'] = Base64Decoder()
-            .convert(incomingAudit['FoodDepositoryMonitorSignature'] as String);
-      if (incomingAudit['SiteRepresentativeSignature'] != "" &&
-          incomingAudit['SiteRepresentativeSignature'] != null)
-        newAudit.photoSig['siteRepresentativeSignature'] = Base64Decoder()
-            .convert(incomingAudit['SiteRepresentativeSignature'] as String);
+        newAudit.photoSig['foodDepositoryMonitorSignature'] =
+            Base64Decoder().convert(incomingAudit['FoodDepositoryMonitorSignature'] as String);
+      if (incomingAudit['SiteRepresentativeSignature'] != "" && incomingAudit['SiteRepresentativeSignature'] != null)
+        newAudit.photoSig['siteRepresentativeSignature'] =
+            Base64Decoder().convert(incomingAudit['SiteRepresentativeSignature'] as String);
 
       if (incomingAudit['CorrectiveActionPlanDueDate'] != null) {
-        newAudit.correctiveActionPlanDueDate = DateTime.parse(
-            incomingAudit['CorrectiveActionPlanDueDate'] as String);
+        newAudit.correctiveActionPlanDueDate = DateTime.parse(incomingAudit['CorrectiveActionPlanDueDate'] as String);
       }
       if (incomingAudit['ImmediateHold'] != null) {
-        newAudit.putProgramOnImmediateHold =
-            incomingAudit['ImmediateHold'] as bool;
+        newAudit.putProgramOnImmediateHold = incomingAudit['ImmediateHold'] as bool;
       }
 
       print(missingDBVar);

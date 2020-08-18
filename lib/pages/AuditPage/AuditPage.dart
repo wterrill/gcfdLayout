@@ -209,14 +209,13 @@ class _AuditPageState extends State<AuditPage> {
                           Navigator.of(context).pop();
                         },
                       ),
-                    Container(height: 10),
+                    // Container(height: 10),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 5.0),
                       decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
-                        color: ColorDefs.colorAlternateDark,
-                      ),
+                          borderRadius:
+                              BorderRadius.only(bottomLeft: Radius.circular(25.0), bottomRight: Radius.circular(25.0)),
+                          color: ColorDefs.colorCalendarHeader),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -244,14 +243,21 @@ class _AuditPageState extends State<AuditPage> {
                             FlatButton(
                               // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                child: Text("Confirm", style: ColorDefs.textBodyBlack20),
-                              ),
-                              disabledColor: ColorDefs.colorButtonNeutral,
+                                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                                  child: Text(
+                                    "Confirm",
+                                    style: TextStyle(fontSize: 20),
+                                  )),
+                              disabledColor: ColorDefs.colorTopHeader,
+                              disabledTextColor: ColorDefs.colorChatNeutral,
                               color: ColorDefs.colorTopHeader,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0),
-                                  side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+                                  side: BorderSide(
+                                      color: Provider.of<GeneralData>(context).confirmButtonEnabled
+                                          ? ColorDefs.colorAnotherDarkGreen
+                                          : ColorDefs.colorButtonNeutral,
+                                      width: 3.0)),
 
                               // disabledTextColor: Colors.blue,
                               onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)

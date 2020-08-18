@@ -46,7 +46,7 @@ flutter build ios --release
 
 # echo "DEPLOYING ON :90 THE TEST SERVER"
 # echo "replacing :88 with :90"
-# sed -i '' "s/:88/:90/g" lib/pages/developer/authenticationEndpoint.dart
+# sed -i '' "s/:88/:90/g" lib/pages/developer/authenticationEndpoint.dart/testAuthentication.dart
 # sed -i '' "s/:88/:90/g" lib/communications/Comms.dart
 # echo "building web version"
 # flutter build web --release

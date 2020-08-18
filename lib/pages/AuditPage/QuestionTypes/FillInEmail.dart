@@ -15,8 +15,7 @@ class FillInEmail extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInEmail({Key key, this.index, this.activeSection, this.questionAutoGroup})
-      : super(key: key);
+  FillInEmail({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
 
   @override
   _FillInEmailState createState() => _FillInEmailState();
@@ -36,17 +35,14 @@ class _FillInEmailState extends State<FillInEmail> {
       List<String> emailList = emailString.split(";");
       for (String email in emailList) {
         email = email.replaceAll(" ", "");
-        if ((!email.contains(RegExp(
-                r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')) &&
-            email != "")) {
+        if ((!email.contains(RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')) && email != "")) {
           emailValidated = false;
         }
       }
       print(emailList);
       print("wtf?");
       print(emailValidated);
-      Provider.of<GeneralData>(context, listen: false).emailValidated =
-          emailValidated;
+      Provider.of<GeneralData>(context, listen: false).emailValidated = emailValidated;
       return emailValidated;
     }
 
@@ -55,8 +51,7 @@ class _FillInEmailState extends State<FillInEmail> {
     TextEditingController controller = TextEditingController();
     if (widget.activeSection.questions[index].userResponse != "" &&
         widget.activeSection.questions[index].userResponse != null) {
-      controller.text =
-          widget.activeSection.questions[index].userResponse as String;
+      controller.text = widget.activeSection.questions[index].userResponse as String;
     }
 
     return Column(
@@ -66,72 +61,50 @@ class _FillInEmailState extends State<FillInEmail> {
             Expanded(
               flex: 2,
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 1,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 1, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             Expanded(
               flex: 3,
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen, width: 3),
+                        borderSide: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide:
-                            BorderSide(color: ColorDefs.colorAudit2, width: 3),
+                        borderSide: BorderSide(color: ColorDefs.colorAudit2, width: 3),
                       ),
                       border: InputBorder.none,
                       // focusedBorder: InputBorder.none,
                       // enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 11, top: 11, right: 15),
-                      hintText: (widget.activeSection.questions[index].text ==
-                              "Person Interviewed:")
+                      contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                      hintText: (widget.activeSection.questions[index].text == "Person Interviewed:")
                           ? "Enter Person Interviewed for this Audit "
                           : "Enter Site Contact Email(s) separated by ';'"),
                   controller: controller,
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
 
-                    Provider.of<AuditData>(context, listen: false)
-                        .contactEmail = value;
+                    Provider.of<AuditData>(context, listen: false).contactEmail = value;
 
                     if (value.length > 0) {
-                      if (Provider.of<GeneralData>(context, listen: false)
-                              .confirmButtonEnabled ==
-                          false) {
-                        if (Provider.of<GeneralData>(context, listen: false)
-                                    .personInterviewed !=
-                                null &&
-                            Provider.of<GeneralData>(context, listen: false)
-                                    .personInterviewed !=
-                                "") {
-                          Provider.of<GeneralData>(context, listen: false)
-                              .enableConfirmButton();
+                      if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
+                        if (Provider.of<GeneralData>(context, listen: false).personInterviewed != null &&
+                            Provider.of<GeneralData>(context, listen: false).personInterviewed != "") {
+                          Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
                         }
                       }
                     }
                     if ((!emailValidated(value) &&
-                            Provider.of<GeneralData>(context, listen: false)
-                                    .confirmButtonEnabled ==
-                                true) ||
-                        Provider.of<AuditData>(context, listen: false)
-                                .activeAudit
-                                .calendarResult
-                                .status !=
+                            Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == true) ||
+                        Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
                             "Scheduled") {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .disableConfirmButton();
+                      Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
                     }
                   },
                 ),
@@ -153,7 +126,7 @@ class _FillInEmailState extends State<FillInEmail> {
             //       String result = setQuestionValue(
             //           widget.activeSection.questions[index].userResponse
             //               as String,
-            //           'NA');
+            //           'N/A');
             //       widget.activeSection.questions[index].userResponse = result;
             //       Provider.of<AuditData>(context, listen: false)
             //           .updateSectionStatus(
@@ -172,7 +145,7 @@ class _FillInEmailState extends State<FillInEmail> {
             //       margin: EdgeInsets.symmetric(horizontal: 4.0),
             //       decoration: BoxDecoration(
             //         color: buttonColorPicker(
-            //             widget.activeSection.questions[index], 'NA'),
+            //             widget.activeSection.questions[index], 'N/A'),
             //         borderRadius: BorderRadius.circular(20.0),
             //         // border:
             //         //     Border.all(width: 2.0, color: Colors.grey)

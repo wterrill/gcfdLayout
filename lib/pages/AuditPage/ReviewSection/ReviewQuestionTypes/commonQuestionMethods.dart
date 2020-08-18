@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 Color buttonColorPicker(Question questionData, String buttonText) {
   Color finalButtonColor;
-  if (questionData.userResponse == null ||
-      questionData.userResponse != buttonText) {
+  if (questionData.userResponse == null || questionData.userResponse != buttonText) {
     finalButtonColor = ColorDefs.colorButtonNeutral;
   }
   if (questionData.userResponse == buttonText && buttonText == "Yes") {
@@ -17,7 +16,7 @@ Color buttonColorPicker(Question questionData, String buttonText) {
     finalButtonColor = ColorDefs.colorButtonNo;
   }
 
-  if (questionData.userResponse == buttonText && buttonText == 'NA') {
+  if (questionData.userResponse == buttonText && buttonText == 'N/A') {
     finalButtonColor = ColorDefs.colorChatNeutral;
   }
   return finalButtonColor;
@@ -44,8 +43,7 @@ Status checkSectionDone(Section activeSection) {
 
   for (Question question in activeSection.questions) {
     //TODO This needs to be completed... NOT userResponse because it has to be checked with the happypath
-    if (question.userResponse == null &&
-        question.typeOfQuestion.toLowerCase() != "display") {
+    if (question.userResponse == null && question.typeOfQuestion.toLowerCase() != "display") {
       done = false;
     } else {
       numComplete += 1;

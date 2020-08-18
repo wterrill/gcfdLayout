@@ -48,6 +48,10 @@ class SiteData with ChangeNotifier {
     });
   }
 
+  void notifyTheListeners() {
+    notifyListeners();
+  }
+
   void siteSync() async {
     print("sync");
     dynamic result = null;

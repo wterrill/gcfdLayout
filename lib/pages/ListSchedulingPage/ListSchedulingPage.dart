@@ -24,7 +24,7 @@ class ListSchedulingPage extends StatefulWidget {
   _ListSchedulingPageState createState() => _ListSchedulingPageState();
 }
 
-class _ListSchedulingPageState extends State<ListSchedulingPage> {
+class _ListSchedulingPageState extends State<ListSchedulingPage> with WidgetsBindingObserver {
   bool backgroundDisable = false;
   bool startSync = false;
   FToast fToast;
@@ -33,12 +33,19 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     // syncIfYouCan();
     // WidgetsBinding.instance
     // .addPostFrameCallback((_) => syncIfYouCan());
 
     print("ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ& STARTUP!!!!");
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void syncIfYouCan() async {
@@ -59,6 +66,29 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> {
   //   filterTextController.dispose();
   //   super.dispose();
   // }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    // bool startSync = false;
+    if (state == AppLifecycleState.resumed) {
+      print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  RESUMED!!!!");
+      if (!kIsWeb) {
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+          // I am connected to a mobile network. or a wifi network
+          print("######### CONNECTED total data sync #########");
+          await totalDataSync(context);
+        }
+      }
+
+      print("sync done");
+    }
+
+    if (state == AppLifecycleState.paused) {
+      print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  PAUSED!!!!");
+      // await totalDataSync(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

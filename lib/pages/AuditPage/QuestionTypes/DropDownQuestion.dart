@@ -20,6 +20,7 @@ class DropDownQuestion extends StatefulWidget {
 }
 
 class _DropDownQuestionState extends State<DropDownQuestion> {
+  bool myBubbleOn = false;
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
@@ -45,7 +46,7 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                           dismissable: true);
                     } else {
                       String result =
-                          setQuestionValue(widget.activeSection.questions[index].userResponse as String, 'NA');
+                          setQuestionValue(widget.activeSection.questions[index].userResponse as String, 'N/A');
                       widget.activeSection.questions[index].userResponse = result;
                       Provider.of<AuditData>(context, listen: false)
                           .updateSectionStatus(checkSectionDone(widget.activeSection));
@@ -59,7 +60,7 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 4.0),
                       decoration: BoxDecoration(
-                        color: buttonColorPicker(widget.activeSection.questions[index], 'NA'),
+                        color: buttonColorPicker(widget.activeSection.questions[index], 'N/A'),
                         borderRadius: BorderRadius.circular(20.0),
                         // border:
                         //     Border.all(width: 2.0, color: Colors.grey)
@@ -114,15 +115,30 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Icon(Icons.chat_bubble,
-                      color: widget.activeSection.questions[index].optionalComment == null
-                          ? ColorDefs.colorChatNeutral
-                          : ColorDefs.colorChatSelected),
+                      color: myBubbleOn ? ColorDefs.colorChatSelected : ColorDefs.colorChatNeutral),
+                  // Icon(Icons.chat_bubble,
+                  //     color: widget.activeSection.questions[index].optionalComment == null
+                  //         ? ColorDefs.colorChatNeutral
+                  //         : ColorDefs.colorChatSelected),
                 ),
               ),
             ],
           ),
           CommentSection(
-              index: index, activeSection: activeSection, key: UniqueKey(), numKeyboard: false, mandatory: false)
+            index: index,
+            activeSection: activeSection,
+            numKeyboard: false,
+            mandatory: false,
+            bubbleCallback: (String val) {
+              setState(() {
+                if (val.length > 0) {
+                  myBubbleOn = true;
+                } else {
+                  myBubbleOn = false;
+                }
+              });
+            },
+          )
         ],
       ),
     );

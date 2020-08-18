@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:photo_view/photo_view.dart';
 import 'dart:async';
+// import 'package:flutter_appavailability/flutter_appavailability.dart';
+// import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
 class PhotoPage extends StatefulWidget {

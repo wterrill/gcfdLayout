@@ -6,24 +6,19 @@ import 'package:flutter/material.dart';
 
 Color buttonColorPicker(Question questionData, String buttonText) {
   Color finalButtonColor;
-  if (questionData.userResponse == null || questionData.userResponse != buttonText) {
+  if (((questionData.userResponse == null || questionData.userResponse != buttonText) &&
+          questionData.questionMap['type'] != "fillInNum") ||
+      (questionData.questionMap['type'] == "fillInNum" && questionData.userResponse == null)) {
     finalButtonColor = ColorDefs.colorButtonNeutral;
-  }
-  if (questionData.userResponse == buttonText && buttonText == "Yes" ||
+  } else if (questionData.userResponse == buttonText && buttonText == "Yes" ||
       questionData.userResponse == buttonText && buttonText == "No Issues") {
     finalButtonColor = ColorDefs.colorButtonYes;
-  }
-
-  if (questionData.userResponse == buttonText && buttonText == "No" ||
+  } else if (questionData.userResponse == buttonText && buttonText == "No" ||
       questionData.userResponse == buttonText && buttonText == "Issues") {
     finalButtonColor = ColorDefs.colorButtonNo;
-  }
-
-  if (questionData.userResponse == buttonText && buttonText == 'NA') {
+  } else if (questionData.userResponse == buttonText && buttonText == 'N/A') {
     finalButtonColor = ColorDefs.colorChatNeutral;
-  }
-
-  if (questionData.userResponse == "0" && buttonText == 'NA') {
+  } else if (questionData.userResponse == "0" && buttonText == 'N/A') {
     finalButtonColor = ColorDefs.colorChatNeutral;
   }
   print(finalButtonColor);

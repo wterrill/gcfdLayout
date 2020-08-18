@@ -92,7 +92,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+class _MyAppState extends State<MyApp> {
   // bool _enabled = true;
   // int _status = 0;
   // List<DateTime> _events = [];
@@ -100,7 +100,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
 
     // initPlatformState();
   }
@@ -177,34 +176,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   });
   // }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    // bool startSync = false;
-    if (state == AppLifecycleState.resumed) {
-      print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  RESUMED!!!!");
-      if (!kIsWeb) {
-        var connectivityResult = await (Connectivity().checkConnectivity());
-        if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
-          // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED total data sync #########");
-          await totalDataSync(context);
-        }
-      }
-
-      print("sync done");
-    }
-
-    if (state == AppLifecycleState.paused) {
-      print("&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&ˆ&^  PAUSED!!!!");
-      // await totalDataSync(context);
-    }
-  }
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

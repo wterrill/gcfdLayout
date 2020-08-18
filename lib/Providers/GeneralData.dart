@@ -61,6 +61,10 @@ class GeneralData with ChangeNotifier {
     });
   }
 
+  void notifyTheListeners() {
+    notifyListeners();
+  }
+
   void setRememberMe(bool value) {
     rememberMe = value;
     if (rememberMe) {
@@ -108,11 +112,6 @@ class GeneralData with ChangeNotifier {
 
   void toggleSyncInProgressOff() {
     syncInProgress = false;
-    notifyListeners();
-  }
-
-  void updateSyncMessage(String message) {
-    syncMessage = message;
     notifyListeners();
   }
 }

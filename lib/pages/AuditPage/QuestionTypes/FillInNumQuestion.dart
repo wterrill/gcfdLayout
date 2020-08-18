@@ -5,6 +5,7 @@ import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'CommentSection.dart';
@@ -21,15 +22,23 @@ class FillInNumQuestion extends StatefulWidget {
 }
 
 class _FillInNumQuestionState extends State<FillInNumQuestion> {
+  bool myBubbleOn = false;
+
   @override
   void initState() {
     super.initState();
-    widget.activeSection.questions[widget.index].textBoxRollOut = true;
+    // widget.activeSection.questions[widget.index].textBoxRollOut = true;
   }
 
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
+    if (widget.activeSection.questions[index].userResponse == null ||
+        widget.activeSection.questions[index].userResponse == "") {
+      myBubbleOn = false;
+    } else {
+      myBubbleOn = true;
+    }
     Section activeSection = widget.activeSection;
 
     return Container(
@@ -50,7 +59,8 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                         message: "This audit has already been submitted, and cannot be edited",
                         dismissable: true);
                   } else {
-                    String result = setQuestionValue(widget.activeSection.questions[index].userResponse as String, "0");
+                    String result =
+                        setQuestionValue(widget.activeSection.questions[index].userResponse.toString(), "0");
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
@@ -64,7 +74,7 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 4.0),
                     decoration: BoxDecoration(
-                      color: buttonColorPicker(widget.activeSection.questions[index], 'NA'),
+                      color: buttonColorPicker(widget.activeSection.questions[index], 'N/A'),
                       borderRadius: BorderRadius.circular(20.0),
                       // border:
                       //     Border.all(width: 2.0, color: Colors.grey)
@@ -84,17 +94,32 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Icon(Icons.chat_bubble,
-                      color: widget.activeSection.questions[index].userResponse == null
-                          ? ColorDefs.colorChatRequired
-                          // : ColorDefs.colorChatSelected),
-                          : ColorDefs.colorButtonYes),
+                  child: FaIcon(FontAwesomeIcons.solidCommentDots,
+                      color: myBubbleOn ? ColorDefs.colorButtonYes : ColorDefs.colorChatRequired),
+                  // Icon(Icons.chat_bubble,
+                  //     color: widget.activeSection.questions[index].userResponse == null
+                  //         ? ColorDefs.colorChatRequired
+                  //         // : ColorDefs.colorChatSelected),
+                  //         : ColorDefs.colorButtonYes),
                 ),
               ),
             ],
           ),
           CommentSection(
-              index: index, activeSection: activeSection, mandatory: true, numKeyboard: true, key: UniqueKey())
+            index: index,
+            activeSection: activeSection,
+            mandatory: true,
+            numKeyboard: true,
+            bubbleCallback: (String val) {
+              setState(() {
+                if (val.length > 0) {
+                  myBubbleOn = true;
+                } else {
+                  myBubbleOn = false;
+                }
+              });
+            },
+          )
         ],
       ),
     );

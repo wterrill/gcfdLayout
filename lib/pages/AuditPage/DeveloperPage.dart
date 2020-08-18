@@ -13,8 +13,7 @@ class DeveloperPage extends StatelessWidget {
   Widget build(BuildContext context) {
     void fillOutAngryAudit() {
       print("filled");
-      Audit activeAudit =
-          Provider.of<AuditData>(context, listen: false).activeAudit;
+      Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
       Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
@@ -35,37 +34,29 @@ class DeveloperPage extends StatelessWidget {
               case ("yesNo"):
                 print("yesNo");
                 try {
-                  String answer =
-                      question.happyPathResponse.contains("No") ? "Yes" : "No";
+                  String answer = question.happyPathResponse.contains("No") ? "Yes" : "No";
                   question.userResponse = answer;
                 } catch (err) {
                   question.userResponse = "Yes";
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("issuesNoIssues"):
                 print("issuesNoIssues");
                 try {
-                  String answer =
-                      question.happyPathResponse.contains("No Issues")
-                          ? "Issues"
-                          : "No Issues";
+                  String answer = question.happyPathResponse.contains("No Issues") ? "Issues" : "No Issues";
                   question.userResponse = answer;
                 } catch (err) {
                   question.userResponse = "No Issues";
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("fillIn"):
                 print("fillIn");
-                if (!question.text
-                    .contains("If yes, how many and from where")) {
-                  question.userResponse = question.text +
-                      " This, right here, is a mandatory comment";
+                if (!question.text.contains("If yes, how many and from where")) {
+                  question.userResponse = question.text + " This, right here, is a mandatory comment";
                 } else {
                   question.userResponse = "Illinois and Wisconsin";
                 }
@@ -93,22 +84,19 @@ class DeveloperPage extends StatelessWidget {
                 } catch (err) {
                   question.userResponse = question.dropDownMenu[1];
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("yesNoNa"):
                 print("yesNoNa");
                 try {
-                  String answer =
-                      question.happyPathResponse.contains("No") ? "Yes" : "No";
+                  String answer = question.happyPathResponse.contains("No") ? "Yes" : "No";
                   question.userResponse = answer;
                 } catch (err) {
-                  question.userResponse = 'NA';
+                  question.userResponse = 'N/A';
                 }
 
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("date"):
@@ -116,8 +104,7 @@ class DeveloperPage extends StatelessWidget {
                 print(question.userResponse);
                 print(DateTime.now().toString());
                 question.userResponse = DateTime.now().toString();
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
             }
           }
@@ -128,8 +115,7 @@ class DeveloperPage extends StatelessWidget {
 
     void fillOutHappyAudit() {
       print("filled");
-      Audit activeAudit =
-          Provider.of<AuditData>(context, listen: false).activeAudit;
+      Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
       Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
@@ -154,8 +140,7 @@ class DeveloperPage extends StatelessWidget {
                 } catch (err) {
                   question.userResponse = "No";
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("issuesNoIssues"):
@@ -165,16 +150,13 @@ class DeveloperPage extends StatelessWidget {
                 } catch (err) {
                   question.userResponse = "No Issues";
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("fillIn"):
                 print("fillIn");
-                if (!question.text
-                    .contains("If yes, how many and from where")) {
-                  question.userResponse = question.text +
-                      " This, right here, is a mandatory comment";
+                if (!question.text.contains("If yes, how many and from where")) {
+                  question.userResponse = question.text + " This, right here, is a mandatory comment";
                 } else {
                   question.userResponse = "Illinois and Wisconsin";
                 }
@@ -198,8 +180,7 @@ class DeveloperPage extends StatelessWidget {
                 } catch (err) {
                   question.userResponse = question.dropDownMenu[1];
                 }
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("yesNoNa"):
@@ -207,11 +188,10 @@ class DeveloperPage extends StatelessWidget {
                 try {
                   question.userResponse = question?.happyPathResponse[0];
                 } catch (err) {
-                  question.userResponse = 'NA';
+                  question.userResponse = 'N/A';
                 }
 
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
 
               case ("date"):
@@ -219,8 +199,7 @@ class DeveloperPage extends StatelessWidget {
                 print(question.userResponse);
                 print(DateTime.now().toString());
                 question.userResponse = DateTime.now().toString();
-                question.optionalComment =
-                    question.text + " This, right here, is an optional comment";
+                question.optionalComment = question.text + " This, right here, is an optional comment";
                 break;
             }
           }
@@ -237,15 +216,13 @@ class DeveloperPage extends StatelessWidget {
         RaisedButton(
             onPressed: () {
               fillOutHappyAudit();
-              Provider.of<AuditData>(context, listen: false)
-                  .saveAuditLocally(activeAudit);
+              Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
             },
             child: Text("Fill out Audit -> Happy Path")),
         RaisedButton(
             onPressed: () {
               fillOutAngryAudit();
-              Provider.of<AuditData>(context, listen: false)
-                  .saveAuditLocally(activeAudit);
+              Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
             },
             child: Text("Fill out Audit -> Angry Path"))
       ],

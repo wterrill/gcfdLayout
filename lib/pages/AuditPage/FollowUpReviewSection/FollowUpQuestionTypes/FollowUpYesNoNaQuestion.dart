@@ -22,8 +22,7 @@ class FollowUpYesNoNaQuestion extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FollowUpYesNoNaQuestionState createState() =>
-      _FollowUpYesNoNaQuestionState();
+  _FollowUpYesNoNaQuestionState createState() => _FollowUpYesNoNaQuestionState();
 }
 
 class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
@@ -37,25 +36,17 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
           children: [
             Expanded(
               child: AutoSizeText(widget.citations[index].text,
-                  maxLines: 3,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 3, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             GestureDetector(
               onTap: () {
-                if (Provider.of<AuditData>(context, listen: false)
-                        .activeAudit
-                        .calendarResult
-                        .status !=
-                    "Scheduled") {
+                if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
                   Dialogs.showMessage(
                       context: context,
-                      message:
-                          "This audit has already been submitted, and cannot be edited",
+                      message: "This audit has already been submitted, and cannot be edited",
                       dismissable: true);
                 } else {
-                  String result = setQuestionValue(
-                      widget.citations[index].userResponse as String, "Yes");
+                  String result = setQuestionValue(widget.citations[index].userResponse as String, "Yes");
                   widget.citations[index].userResponse = result;
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
@@ -75,25 +66,18 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 width: 80,
-                child: Center(
-                    child: Text("Yes", style: ColorDefs.textBodyBlack20)),
+                child: Center(child: Text("Yes", style: ColorDefs.textBodyBlack20)),
               ),
             ),
             GestureDetector(
               onTap: () {
-                if (Provider.of<AuditData>(context, listen: false)
-                        .activeAudit
-                        .calendarResult
-                        .status !=
-                    "Scheduled") {
+                if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
                   Dialogs.showMessage(
                       context: context,
-                      message:
-                          "This audit has already been submitted, and cannot be edited",
+                      message: "This audit has already been submitted, and cannot be edited",
                       dismissable: true);
                 } else {
-                  String result = setQuestionValue(
-                      widget.citations[index].userResponse as String, "No");
+                  String result = setQuestionValue(widget.citations[index].userResponse as String, "No");
                   widget.citations[index].userResponse = result;
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
@@ -115,25 +99,18 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
                   //     Border.all(width: 2.0, color: Colors.grey)
                 ),
                 width: 80,
-                child:
-                    Center(child: Text("No", style: ColorDefs.textBodyBlack20)),
+                child: Center(child: Text("No", style: ColorDefs.textBodyBlack20)),
               ),
             ),
             GestureDetector(
               onTap: () {
-                if (Provider.of<AuditData>(context, listen: false)
-                        .activeAudit
-                        .calendarResult
-                        .status !=
-                    "Scheduled") {
+                if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
                   Dialogs.showMessage(
                       context: context,
-                      message:
-                          "This audit has already been submitted, and cannot be edited",
+                      message: "This audit has already been submitted, and cannot be edited",
                       dismissable: true);
                 } else {
-                  String result = setQuestionValue(
-                      widget.citations[index].userResponse as String, 'NA');
+                  String result = setQuestionValue(widget.citations[index].userResponse as String, 'N/A');
                   widget.citations[index].userResponse = result;
                   // Provider.of<AuditData>(context, listen: false)
                   //     .updateSectionStatus(
@@ -149,20 +126,18 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
-                  color: buttonColorPicker(widget.citations[index], 'NA'),
+                  color: buttonColorPicker(widget.citations[index], 'N/A'),
                   borderRadius: BorderRadius.circular(20.0),
                   // border:
                   //     Border.all(width: 2.0, color: Colors.grey)
                 ),
                 width: 80,
-                child: Center(
-                    child: Text("N/A", style: ColorDefs.textBodyBlack20)),
+                child: Center(child: Text("N/A", style: ColorDefs.textBodyBlack20)),
               ),
             ),
             GestureDetector(
               onTap: () {
-                widget.citations[index].textBoxRollOut =
-                    !widget.citations[index].textBoxRollOut;
+                widget.citations[index].textBoxRollOut = !widget.citations[index].textBoxRollOut;
                 setState(() {});
               },
               child: Padding(
@@ -176,11 +151,7 @@ class _FollowUpYesNoNaQuestionState extends State<FollowUpYesNoNaQuestion> {
           ],
         ),
         FollowUpCommentSection(
-            index: index,
-            citations: widget.citations,
-            key: UniqueKey(),
-            numKeyboard: false,
-            mandatory: false)
+            index: index, citations: widget.citations, key: UniqueKey(), numKeyboard: false, mandatory: false)
       ],
     );
   }

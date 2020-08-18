@@ -51,53 +51,63 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                         children: [
                           if (widget.activeSection?.questions[index].typeOfQuestion == "display")
                             Display(
+                              key: UniqueKey(),
                               index: index,
                               activeSection: widget.activeSection,
                               activeCalendarResult: widget.activecalendarResult,
                             ),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "yesNo")
                             YesNoQuestion(
+                              key: UniqueKey(),
                               index: index,
                               activeSection: widget.activeSection,
                             ),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "issuesNoIssues")
                             IssuesNoIssuesQuestion(
+                              key: UniqueKey(),
                               index: index,
                               activeSection: widget.activeSection,
                             ),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "fillIn")
                             FillInQuestion(
+                                key: UniqueKey(),
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "fillInInterview")
                             FillInInterview(
+                                key: UniqueKey(),
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmail")
                             FillInEmail(
+                                key: UniqueKey(),
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "fillInNum")
                             FillInNumQuestion(
+                                key: UniqueKey(),
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "dropDown")
                             DropDownQuestion(
+                                key: UniqueKey(),
                                 index: index,
                                 activeSection: widget.activeSection,
                                 questionAutoGroup: questionAutoGroup),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "date")
                             DateQuestion(
+                              key: UniqueKey(),
                               index: index,
                               activeSection: widget.activeSection,
                               questionAutoGroup: questionAutoGroup,
                             ),
                           if (widget.activeSection?.questions[index].typeOfQuestion == "yesNoNa")
                             YesNoNaQuestion(
+                              key: UniqueKey(),
                               index: index,
                               activeSection: widget.activeSection,
                               questionAutoGroup: questionAutoGroup,

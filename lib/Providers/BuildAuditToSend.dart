@@ -25,6 +25,7 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
         if (qtype == "int") {
           try {
             resultMap[name] = question.userResponse as int;
+            print(question.userResponse);
           } catch (err) {
             resultMap[name] = 0;
           }
@@ -45,7 +46,7 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
             resultMap[name] = 0;
           } else if (question.userResponse == "No Issues")
             resultMap[name] = 1;
-          else if (question.userResponse == 'NA') {
+          else if (question.userResponse == 'N/A') {
             resultMap[name] = -1;
           } else {
             resultMap[name] = null;
@@ -140,6 +141,9 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
     }
   }
 
+  if (outgoingAudit.siteVisitRequired == null) {
+    outgoingAudit.siteVisitRequired = false;
+  }
   resultMap['SiteVisitRequired'] = outgoingAudit.siteVisitRequired;
 
   resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
