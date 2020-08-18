@@ -15,9 +15,7 @@ class FillInInterview extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInInterview(
-      {Key key, this.index, this.activeSection, this.questionAutoGroup})
-      : super(key: key);
+  FillInInterview({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
 
   @override
   _FillInInterviewState createState() => _FillInInterviewState();
@@ -37,8 +35,7 @@ class _FillInInterviewState extends State<FillInInterview> {
     TextEditingController controller = TextEditingController();
     if (widget.activeSection.questions[index].userResponse != "" &&
         widget.activeSection.questions[index].userResponse != null) {
-      controller.text =
-          widget.activeSection.questions[index].userResponse as String;
+      controller.text = widget.activeSection.questions[index].userResponse as String;
     }
 
     return Column(
@@ -48,76 +45,50 @@ class _FillInInterviewState extends State<FillInInterview> {
             Expanded(
               flex: 2,
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 1,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 1, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             Expanded(
               flex: 3,
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(
-                            color: ColorDefs.colorAnotherDarkGreen, width: 3),
+                        borderSide: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide:
-                            BorderSide(color: ColorDefs.colorAudit2, width: 3),
+                        borderSide: BorderSide(color: ColorDefs.colorAudit2, width: 3),
                       ),
                       border: InputBorder.none,
                       // focusedBorder: InputBorder.none,
                       // enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 11, top: 11, right: 15),
-                      hintText: (widget.activeSection.questions[index].text ==
-                              "Person Interviewed:")
+                      contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                      hintText: (widget.activeSection.questions[index].text == "Person Interviewed:")
                           ? "Enter Person Interviewed for this Audit "
                           : "Enter Site Contact Email"),
                   controller: controller,
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
 
-                    Provider.of<GeneralData>(context, listen: false)
-                        .personInterviewed = value;
+                    Provider.of<GeneralData>(context, listen: false).personInterviewed = value;
 
-                    if (value.length > 0 &&
-                        Provider.of<GeneralData>(context, listen: false)
-                            .emailValidated) {
-                      if (Provider.of<GeneralData>(context, listen: false)
-                              .confirmButtonEnabled ==
-                          false) {
-                        if (Provider.of<AuditData>(context, listen: false)
-                                    .contactEmail !=
-                                null &&
-                            Provider.of<AuditData>(context, listen: false)
-                                    .contactEmail !=
-                                "") {
-                          if (Provider.of<AuditData>(context, listen: false)
-                                  .activeAudit
-                                  .calendarResult
-                                  .status ==
-                              "Scheduled")
-                            Provider.of<GeneralData>(context, listen: false)
-                                .enableConfirmButton();
+                    if (value.length > 0 && Provider.of<GeneralData>(context, listen: false).emailValidated) {
+                      if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
+                        if (Provider.of<AuditData>(context, listen: false).contactEmail != null &&
+                            Provider.of<AuditData>(context, listen: false).contactEmail != "") {
+                          if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status ==
+                              "Scheduled") Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
                         }
                       }
                     }
                     if (value.length == 0 ||
-                        Provider.of<AuditData>(context, listen: false)
-                                .activeAudit
-                                .calendarResult
-                                .status !=
+                        Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
                             "Scheduled") {
-                      Provider.of<GeneralData>(context, listen: false)
-                          .disableConfirmButton();
+                      Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
                     }
                   },
                 ),
@@ -139,7 +110,7 @@ class _FillInInterviewState extends State<FillInInterview> {
             //       String result = setQuestionValue(
             //           widget.activeSection.questions[index].userResponse
             //               as String,
-            //           'NA');
+            //           'N/A');
             //       widget.activeSection.questions[index].userResponse = result;
             //       Provider.of<AuditData>(context, listen: false)
             //           .updateSectionStatus(
@@ -158,7 +129,7 @@ class _FillInInterviewState extends State<FillInInterview> {
             //       margin: EdgeInsets.symmetric(horizontal: 4.0),
             //       decoration: BoxDecoration(
             //         color: buttonColorPicker(
-            //             widget.activeSection.questions[index], 'NA'),
+            //             widget.activeSection.questions[index], 'N/A'),
             //         borderRadius: BorderRadius.circular(20.0),
             //         // border:
             //         //     Border.all(width: 2.0, color: Colors.grey)

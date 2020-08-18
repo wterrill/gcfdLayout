@@ -70,7 +70,9 @@ class _CommentSectionState extends State<CommentSection> {
             if (widget.mandatory) {
               if (widget.numKeyboard) {
                 try {
-                  widget.activeSection.questions[index].userResponse = int.parse(value);
+                  if (value != "") {
+                    widget.activeSection.questions[index].userResponse = int.parse(value);
+                  }
                 } catch (error) {
                   Dialogs.mustBeNumber(context);
                 }

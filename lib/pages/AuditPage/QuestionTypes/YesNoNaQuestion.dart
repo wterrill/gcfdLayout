@@ -108,7 +108,7 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
                         dismissable: true);
                   } else {
                     String result =
-                        setQuestionValue(widget.activeSection.questions[index].userResponse as String, 'NA');
+                        setQuestionValue(widget.activeSection.questions[index].userResponse as String, 'N/A');
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
@@ -120,7 +120,7 @@ class _YesNoNaQuestionState extends State<YesNoNaQuestion> {
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 4.0),
                   decoration: BoxDecoration(
-                    color: buttonColorPicker(widget.activeSection.questions[index], 'NA'),
+                    color: buttonColorPicker(widget.activeSection.questions[index], 'N/A'),
                     borderRadius: BorderRadius.circular(20.0),
                     // border:
                     //     Border.all(width: 2.0, color: Colors.grey)
