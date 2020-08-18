@@ -60,11 +60,12 @@ class Question extends HiveObject {
     if (questionMap['type'] == "dropDown") {
       dropDownMenu = questionMap['menuItems'] as List<String>;
     }
-    if (questionMap['type'] != "fillIn") {
-      textBoxRollOut = false;
-    } else {
-      textBoxRollOut = false;
-    }
+    // if (questionMap['type'] != "fillIn") {
+    //   textBoxRollOut = false;
+    // } else {
+    //   textBoxRollOut = true;
+    // }
+    textBoxRollOut = false;
     happyPathResponse = questionMap['happyPathResponse'] as List<String>;
     actionItem = questionMap['actionItem'] as String;
     if (questionMap['hideNa'] == 'true') {

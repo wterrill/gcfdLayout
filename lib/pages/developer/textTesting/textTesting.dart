@@ -55,23 +55,31 @@ class _TextTestState extends State<TextTest> {
   bool setColor = false;
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(height: 100, width: 300, color: setColor ? Colors.blue : Colors.red),
-      Container(
-          child: TextField(
-              controller: controller,
-              onChanged: (value) {
-                if (value.length > 2) {
-                  setState(() {
-                    setColor = true;
-                  });
-                }
-                if (value.length < 2) {
-                  setState(() {
-                    setColor = false;
-                  });
-                }
-              }))
-    ]);
+    return Scaffold(
+      body: Container(
+        child: Column(children: [
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(height: 100, width: 300, color: setColor ? Colors.blue : Colors.red)),
+          Container(
+              child: TextField(
+                  controller: controller,
+                  onChanged: (value) {
+                    if (value.length > 2) {
+                      setState(() {
+                        setColor = true;
+                      });
+                    }
+                    if (value.length < 2) {
+                      setState(() {
+                        setColor = false;
+                      });
+                    }
+                  }))
+        ]),
+      ),
+    );
   }
 }

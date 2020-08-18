@@ -20,6 +20,7 @@ class DropDownQuestion extends StatefulWidget {
 }
 
 class _DropDownQuestionState extends State<DropDownQuestion> {
+  bool myBubbleOn = false;
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
@@ -114,15 +115,30 @@ class _DropDownQuestionState extends State<DropDownQuestion> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Icon(Icons.chat_bubble,
-                      color: widget.activeSection.questions[index].optionalComment == null
-                          ? ColorDefs.colorChatNeutral
-                          : ColorDefs.colorChatSelected),
+                      color: myBubbleOn ? ColorDefs.colorChatSelected : ColorDefs.colorChatNeutral),
+                  // Icon(Icons.chat_bubble,
+                  //     color: widget.activeSection.questions[index].optionalComment == null
+                  //         ? ColorDefs.colorChatNeutral
+                  //         : ColorDefs.colorChatSelected),
                 ),
               ),
             ],
           ),
           CommentSection(
-              index: index, activeSection: activeSection, key: UniqueKey(), numKeyboard: false, mandatory: false)
+            index: index,
+            activeSection: activeSection,
+            numKeyboard: false,
+            mandatory: false,
+            bubbleCallback: (String val) {
+              setState(() {
+                if (val.length > 0) {
+                  myBubbleOn = true;
+                } else {
+                  myBubbleOn = false;
+                }
+              });
+            },
+          )
         ],
       ),
     );

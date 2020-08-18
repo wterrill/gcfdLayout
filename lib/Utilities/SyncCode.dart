@@ -14,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 void totalDataSync(BuildContext context) async {
   try {
-    Future.delayed(Duration(milliseconds: 300), () => true);
+    // Future.delayed(Duration(milliseconds: 300), () => true);
 
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
@@ -30,7 +30,6 @@ void totalDataSync(BuildContext context) async {
     } catch (err) {
       print(err);
     }
-    Provider.of<GeneralData>(context, listen: false).updateSyncMessage("Syncing");
     print("deviceid");
     String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;
     print("siteSync");

@@ -1,6 +1,8 @@
 import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
+import 'package:auditor/providers/SiteData.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
@@ -14,12 +16,14 @@ class CommentSection extends StatefulWidget {
   final Section activeSection;
   final bool mandatory;
   final bool numKeyboard;
+  final Function bubbleCallback;
   CommentSection(
       {Key key,
       @required this.index,
       @required this.activeSection,
       @required this.mandatory,
-      @required this.numKeyboard})
+      @required this.numKeyboard,
+      @required this.bubbleCallback})
       : super(key: key);
 
   @override
@@ -52,7 +56,7 @@ class _CommentSectionState extends State<CommentSection> {
     return AnimatedContainer(
       decoration: BoxDecoration(color: ColorDefs.colorTopHeader, borderRadius: BorderRadius.all(Radius.circular(25.0))),
       height: widget.activeSection.questions[index].textBoxRollOut ? 80 : 0,
-      duration: Duration(milliseconds: 150),
+      duration: Duration(milliseconds: 300),
       child: TextField(
         keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
@@ -88,7 +92,8 @@ class _CommentSectionState extends State<CommentSection> {
 
             Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
             Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
-            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+            // Provider.of<SiteData>(context, listen: false).notifyTheListeners();
+            widget.bubbleCallback(value);
           }
         },
         maxLines: null,
@@ -110,10 +115,10 @@ class _CommentSectionState extends State<CommentSection> {
                   )
                 : null,
             border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
+            // focusedBorder: InputBorder.none,
+            // enabledBorder: InputBorder.none,
+            // errorBorder: InputBorder.none,
+            // disabledBorder: InputBorder.none,
             contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
             hintText: "Enter comments "),
       ),

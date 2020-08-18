@@ -6,6 +6,7 @@ import 'package:auditor/pages/AuditPage/QuestionTypes/commonQuestionMethods.dart
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'CommentSection.dart';
@@ -24,12 +25,20 @@ class _FillInQuestionState extends State<FillInQuestion> {
   @override
   void initState() {
     super.initState();
-    widget.activeSection.questions[widget.index].textBoxRollOut = true;
+    // widget.activeSection.questions[widget.index].textBoxRollOut = false;
   }
+
+  bool myBubbleOn = false;
 
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
+    if (widget.activeSection.questions[index].userResponse == null ||
+        widget.activeSection.questions[index].userResponse == "") {
+      myBubbleOn = false;
+    } else {
+      myBubbleOn = true;
+    }
     Section activeSection = widget.activeSection;
 
     return Container(
@@ -81,24 +90,40 @@ class _FillInQuestionState extends State<FillInQuestion> {
                 onTap: () {
                   widget.activeSection.questions[index].textBoxRollOut =
                       !widget.activeSection.questions[index].textBoxRollOut;
+                  print('textBoxRollOut: ${widget.activeSection.questions[index].textBoxRollOut}');
                   Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                   Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
-                  Provider.of<AuditData>(context, listen: false).updateSectionStatus(checkSectionDone(activeSection));
+                  // Provider.of<AuditData>(context, listen: false).updateSectionStatus(checkSectionDone(activeSection));
                   setState(() {});
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Icon(Icons.chat_bubble,
-                      color: widget.activeSection.questions[index].userResponse == null
-                          ? ColorDefs.colorChatRequired
-                          // : ColorDefs.colorChatSelected),
-                          : ColorDefs.colorButtonYes),
+                  child: FaIcon(FontAwesomeIcons.solidCommentDots,
+                      color: myBubbleOn ? ColorDefs.colorButtonYes : ColorDefs.colorChatRequired),
+                  // Icon(Icons.chat_bubble,
+                  //     color: widget.activeSection.questions[index].userResponse == null
+                  //         ? ColorDefs.colorChatRequired
+                  //         // : ColorDefs.colorChatSelected),
+                  //         : ColorDefs.colorButtonYes),
                 ),
               ),
             ],
           ),
           CommentSection(
-              index: index, activeSection: activeSection, mandatory: true, numKeyboard: false, key: UniqueKey())
+            index: index,
+            activeSection: activeSection,
+            mandatory: true,
+            numKeyboard: false,
+            bubbleCallback: (String val) {
+              setState(() {
+                if (val.length > 0) {
+                  myBubbleOn = true;
+                } else {
+                  myBubbleOn = false;
+                }
+              });
+            },
+          )
         ],
       ),
     );
