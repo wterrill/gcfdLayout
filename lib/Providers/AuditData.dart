@@ -36,6 +36,7 @@ class AuditData with ChangeNotifier {
   List<Question> previousCitations = [];
   bool goToVerificationGoodPage = false;
   String contactEmail = "";
+  String personInterviewed = "";
 
   AuditData() {
     initialize();

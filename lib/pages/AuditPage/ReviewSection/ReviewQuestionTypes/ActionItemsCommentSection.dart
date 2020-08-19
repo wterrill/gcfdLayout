@@ -56,7 +56,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
         ? Container()
         : Card(
             child: AnimatedContainer(
-              padding: widget.questions[index].unflagged ? EdgeInsets.all(0.0) : EdgeInsets.all(8.0),
+              padding: widget.questions[index].unflagged ? EdgeInsets.all(0.0) : EdgeInsets.all(0.0),
               height: widget.questions[index].unflagged ? 0 : 67,
               color: ColorDefs.colorAudit2, // ACTION ITEM
               duration: Duration(milliseconds: 300),

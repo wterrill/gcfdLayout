@@ -31,9 +31,7 @@ class _FollowupActionItems2State extends State<FollowupActionItems2> {
       itemCount: citations.length,
       itemBuilder: (context, index) {
         return Container(
-          color: index.isEven
-              ? ColorDefs.colorAlternateDark
-              : ColorDefs.colorAlternateLight,
+          color: index.isEven ? ColorDefs.colorAlternateDark : ColorDefs.colorAlternateLight,
           child: Container(
             child: Column(
               children: [

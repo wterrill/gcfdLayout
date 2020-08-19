@@ -7,11 +7,16 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Site address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
+// The following three fields MUST be in this order
+  // 1. fillInEmailInterview
+  // 2. FillInEmail
+  // 3. FillInInterview
+  // This is due to the FillInEmailInterview field on the Confirm Details screen
   <String, dynamic>{
-    'text': 'Person Interviewed:',
-    'type': 'fillInInterview',
-    'databaseVar': 'PersonInterviewed',
-    'databaseVarType': 'string'
+    // 'text': 'Email Contact and Person Interview:',
+    // 'textEmail': 'Email Contact:',
+    // 'textInterview': "Person Interviewed",
+    'type': 'fillInEmailInterview',
   },
   <String, dynamic>{
     'text': 'Email Contact:',
@@ -19,13 +24,18 @@ List<Map<String, dynamic>> confirmDetails = [
     'databaseVar': 'ContactEmail',
     'databaseVarType': 'string'
   },
+  <String, dynamic>{
+    'text': 'Person Interviewed:',
+    'type': 'fillInInterview',
+    'databaseVar': 'PersonInterviewed',
+    'databaseVarType': 'string'
+  },
   <String, dynamic>{'text': 'Program Operating Hours:', 'type': 'display'},
 ];
 
 List<Map<String, dynamic>> audit3Section1Questions = [
   <String, dynamic>{
-    'text':
-        'Does Site ensure safe and sanitary conditions are followed? (wearing gloves)',
+    'text': 'Does Site ensure safe and sanitary conditions are followed? (wearing gloves)',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'EnsuresSafety',
@@ -34,26 +44,22 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'actionItem': 'Site must ensure safe and sanitary procedures are followed '
   },
   <String, dynamic>{
-    'text':
-        'Does Site distribute proper allocation of produce items, dry items and boxes if applicable?',
+    'text': 'Does Site distribute proper allocation of produce items, dry items and boxes if applicable?',
     'type': 'yesNoNa',
     'happyPathResponse': ['Yes', 'Na'],
     'databaseVar': 'DistributesProperAllocation',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DistributesProperAllocationComments',
-    'actionItem':
-        'Site must ensure proper allocations of produce, dry items and boxes are being conducted  '
+    'actionItem': 'Site must ensure proper allocations of produce, dry items and boxes are being conducted  '
   },
   <String, dynamic>{
-    'text':
-        'Does Site follow proper intake procedures? (checking ID, roster, etc.)',
+    'text': 'Does Site follow proper intake procedures? (checking ID, roster, etc.)',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'FollowsProperIntake',
     'databaseVarType': 'bool',
     'databaseOptCom': 'FollowsProperIntakeComments',
-    'actionItem':
-        'Site must ensure proper intake procedures are being followed '
+    'actionItem': 'Site must ensure proper intake procedures are being followed '
   },
   <String, dynamic>{
     'text': 'Does Site maintain proper program records on site?',
@@ -65,15 +71,13 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'actionItem': 'Site must ensure program records are kept on site '
   },
   <String, dynamic>{
-    'text':
-        'Does Site have adequate storage for left over dry items or boxes, if applicable?',
+    'text': 'Does Site have adequate storage for left over dry items or boxes, if applicable?',
     'type': 'yesNoNa',
     'happyPathResponse': ['Yes', 'Na'],
     'databaseVar': 'HasAdequateStorage',
     'databaseVarType': 'bool',
     'databaseOptCom': 'HasAdequateStorageComments',
-    'actionItem':
-        'Site must ensure adequate storage is utilized for leftover dry items and boxes '
+    'actionItem': 'Site must ensure adequate storage is utilized for leftover dry items and boxes '
   },
   <String, dynamic>{
     'text': 'Does Site have proper staff oversight of distribution?',
@@ -112,8 +116,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'actionItem': 'Site must operate under the client choice model '
   },
   <String, dynamic>{
-    'text':
-        'Is Site distributing flyers advertising distribution date and time?',
+    'text': 'Is Site distributing flyers advertising distribution date and time?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'DistributesFlyers',
@@ -122,15 +125,13 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'actionItem': 'Site must ensure flyers are being distributed '
   },
   <String, dynamic>{
-    'text':
-        'Is the Food Depository contact information posted at distribution?',
+    'text': 'Is the Food Depository contact information posted at distribution?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'DepositoryContactIsPosted',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DepositoryContactIsPostedComments',
-    'actionItem':
-        'Site must post Food Depository contact information at distribution '
+    'actionItem': 'Site must post Food Depository contact information at distribution '
   },
   <String, dynamic>{
     'text': 'Are only eligible clients participating in distribution?',
@@ -139,8 +140,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'OnlyEligibleClients',
     'databaseVarType': 'bool',
     'databaseOptCom': 'OnlyEligibleClientsComments',
-    'actionItem':
-        'Site must ensure only eligible clients participate in distribution '
+    'actionItem': 'Site must ensure only eligible clients participate in distribution '
   },
   <String, dynamic>{
     'text': 'Are Proxy forms used when appropriate?',
@@ -158,19 +158,16 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'DoesNotSolicit',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DoesNotSolicitComments',
-    'actionItem':
-        'Site must ensure no soliciting of donations, services and or memberships are conducted'
+    'actionItem': 'Site must ensure no soliciting of donations, services and or memberships are conducted'
   },
   <String, dynamic>{
-    'text':
-        'Are eligible volunteers receiving food at the end of the distribution?',
+    'text': 'Are eligible volunteers receiving food at the end of the distribution?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'databaseVar': 'VolunteersReceiveFood',
     'databaseVarType': 'bool',
     'databaseOptCom': 'VolunteersReceiveFoodComments',
-    'actionItem':
-        'Site must ensure eligible volunteers are receiving food at the end of distribution'
+    'actionItem': 'Site must ensure eligible volunteers are receiving food at the end of distribution'
   },
   <String, dynamic>{
     'text': 'Are monthly surveys up to date?',

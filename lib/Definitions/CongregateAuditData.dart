@@ -20,16 +20,27 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Site address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
+  // The following three fields MUST be in this order
+  // 1. fillInEmailInterview
+  // 2. FillInEmail
+  // 3. FillInInterview
+  // This is due to the FillInEmailInterview field on the Confirm Details screen
   <String, dynamic>{
-    'text': 'Person Interviewed:',
-    'type': 'fillInInterview',
-    'databaseVar': 'PersonInterviewed',
-    'databaseVarType': 'string'
+    // 'text': 'Email Contact and Person Interview:',
+    // 'textEmail': 'Email Contact:',
+    // 'textInterview': "Person Interviewed",
+    'type': 'fillInEmailInterview',
   },
   <String, dynamic>{
     'text': 'Email Contact:',
     'type': 'fillInEmail',
     'databaseVar': 'ContactEmail',
+    'databaseVarType': 'string'
+  },
+  <String, dynamic>{
+    'text': 'Person Interviewed:',
+    'type': 'fillInInterview',
+    'databaseVar': 'PersonInterviewed',
     'databaseVarType': 'string'
   },
   <String, dynamic>{'text': 'Program Operating Hours:', 'type': 'display'},

@@ -502,10 +502,10 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         .auditorList
                         .getFirstAndLastFromUser(widget.activeAudit.calendarResult.auditor)),
               if (siteRepresentativeSignature == null &&
-                  Provider.of<GeneralData>(context, listen: false).personInterviewed != null)
-                Text("Agency Representative: " + (Provider.of<GeneralData>(context, listen: false).personInterviewed) ??
+                  Provider.of<AuditData>(context, listen: false).personInterviewed != null)
+                Text("Agency Representative: " + (Provider.of<AuditData>(context, listen: false).personInterviewed) ??
                     ""),
-              if (Provider.of<GeneralData>(context, listen: false).personInterviewed == null)
+              if (Provider.of<AuditData>(context, listen: false).personInterviewed == null)
                 Text("Agency Representative"),
 //////////////  SECOND SIGNATURE /////////////////////////////
               siteRepresentativeSignature == null
@@ -520,7 +520,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                           child: Image.memory(siteRepresentativeSignature.buffer.asUint8List()))),
               if (siteRepresentativeSignature != null)
                 Text("Agency Representative: " +
-                    (Provider.of<GeneralData>(context, listen: false).personInterviewed ?? "")),
+                    (Provider.of<AuditData>(context, listen: false).personInterviewed ?? "")),
               if (siteRepresentativeSignature == null)
                 Container(
                   width: double.infinity,

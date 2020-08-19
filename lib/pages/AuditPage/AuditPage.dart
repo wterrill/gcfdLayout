@@ -56,7 +56,7 @@ class _AuditPageState extends State<AuditPage> {
     }
     activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
     if (activeAudit.calendarResult.siteInfo.contactEmail != "") {
-      Provider.of<GeneralData>(context, listen: false).emailValidated = true;
+      // Provider.of<GeneralData>(context, listen: false).emailValidated = true;
     }
     activeSection = Provider.of<AuditData>(context, listen: false).activeSection;
     Provider.of<AuditData>(context, listen: false).citations = activeAudit.citations;
@@ -237,55 +237,55 @@ class _AuditPageState extends State<AuditPage> {
                               Navigator.of(context).pop();
                             },
                           ),
-                          if (activeSection?.name == "Confirm Details" &&
-                              activeAudit.detailsConfirmed == false &&
-                              activeAudit.calendarResult.status != "Completed")
-                            FlatButton(
-                              // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                              child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                                  child: Text(
-                                    "Confirm",
-                                    style: TextStyle(fontSize: 20),
-                                  )),
-                              disabledColor: ColorDefs.colorTopHeader,
-                              disabledTextColor: ColorDefs.colorChatNeutral,
-                              color: ColorDefs.colorTopHeader,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  side: BorderSide(
-                                      color: Provider.of<GeneralData>(context).confirmButtonEnabled
-                                          ? ColorDefs.colorAnotherDarkGreen
-                                          : ColorDefs.colorButtonNeutral,
-                                      width: 3.0)),
+                          // if (activeSection?.name == "Confirm Details" &&
+                          //     activeAudit.detailsConfirmed == false &&
+                          //     activeAudit.calendarResult.status != "Completed")
+                          // FlatButton(
+                          //   // padding: EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                          //   child: Padding(
+                          //       padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                          //       child: Text(
+                          //         "Confirm",
+                          //         style: TextStyle(fontSize: 20),
+                          //       )),
+                          //   disabledColor: ColorDefs.colorTopHeader,
+                          //   disabledTextColor: ColorDefs.colorChatNeutral,
+                          //   color: ColorDefs.colorTopHeader,
+                          //   shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(50.0),
+                          //       side: BorderSide(
+                          //           color: Provider.of<GeneralData>(context).confirmButtonEnabled
+                          //               ? ColorDefs.colorAnotherDarkGreen
+                          //               : ColorDefs.colorButtonNeutral,
+                          //           width: 3.0)),
 
-                              // disabledTextColor: Colors.blue,
-                              onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
-                                  ? null
-                                  : () {
-                                      activeAudit.detailsConfirmed = true;
-                                      for (Section section in activeAudit.sections) {
-                                        section.status = Status.available;
-                                        section.lastStatus = Status.available;
-                                        activeSection.status = Status.completed;
-                                        activeSection.lastStatus = Status.completed;
-                                        if (activeAudit.calendarResult.auditType != "Follow Up") {
-                                          if (section.name == "Review") break;
-                                        }
-                                      }
-                                      setState(() {});
-                                      if (activeAudit.calendarResult.auditType == "Follow Up") {
-                                        Provider.of<AuditData>(context, listen: false).makeCitations();
-                                        Section goToSection;
-                                        for (Section section in activeAudit.sections) {
-                                          if (section.name == "Follow Up Review") {
-                                            goToSection = section;
-                                          }
-                                        }
-                                        Provider.of<AuditData>(context, listen: false).updateActiveSection(goToSection);
-                                      }
-                                    },
-                            ),
+                          //   // disabledTextColor: Colors.blue,
+                          //   onPressed: (!Provider.of<GeneralData>(context).confirmButtonEnabled)
+                          //       ? null
+                          //       : () {
+                          //           activeAudit.detailsConfirmed = true;
+                          //           for (Section section in activeAudit.sections) {
+                          //             section.status = Status.available;
+                          //             section.lastStatus = Status.available;
+                          //             activeSection.status = Status.completed;
+                          //             activeSection.lastStatus = Status.completed;
+                          //             if (activeAudit.calendarResult.auditType != "Follow Up") {
+                          //               if (section.name == "Review") break;
+                          //             }
+                          //           }
+                          //           setState(() {});
+                          //           if (activeAudit.calendarResult.auditType == "Follow Up") {
+                          //             Provider.of<AuditData>(context, listen: false).makeCitations();
+                          //             Section goToSection;
+                          //             for (Section section in activeAudit.sections) {
+                          //               if (section.name == "Follow Up Review") {
+                          //                 goToSection = section;
+                          //               }
+                          //             }
+                          //             Provider.of<AuditData>(context, listen: false).updateActiveSection(goToSection);
+                          //           }
+                          //         },
+                          // ),
                           if (!(activeSection?.name == "Confirm Details" &&
                               activeAudit.detailsConfirmed == false &&
                               activeAudit.calendarResult.status != "Completed"))

@@ -10,6 +10,7 @@ import 'QuestionTypes/DateQuestion.dart';
 import 'QuestionTypes/Display.dart';
 import 'QuestionTypes/DropDownQuestion.dart';
 import 'QuestionTypes/FillInEmail.dart';
+import 'QuestionTypes/FillInEmailInterview.dart';
 import 'QuestionTypes/FillInInterview.dart';
 import 'QuestionTypes/FillInNumQuestion.dart';
 import 'QuestionTypes/FillInQuestion.dart';
@@ -43,79 +44,88 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                 controller: _scrollController,
                 itemCount: widget.activeSection?.questions?.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    color: index.isEven ? ColorDefs.colorAlternateDark : ColorDefs.colorAlternateLight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "display")
-                            Display(
-                              key: UniqueKey(),
-                              index: index,
-                              activeSection: widget.activeSection,
-                              activeCalendarResult: widget.activecalendarResult,
+                  return (widget.activeSection?.questions[index].typeOfQuestion != "fillInEmail" &&
+                          widget.activeSection?.questions[index].typeOfQuestion != "fillInInterview")
+                      ? Container(
+                          color: index.isEven ? ColorDefs.colorAlternateDark : ColorDefs.colorAlternateLight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "display")
+                                  Display(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                    activeCalendarResult: widget.activecalendarResult,
+                                  ),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "yesNo")
+                                  YesNoQuestion(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                  ),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "issuesNoIssues")
+                                  IssuesNoIssuesQuestion(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                  ),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "fillIn")
+                                  FillInQuestion(
+                                      key: UniqueKey(),
+                                      index: index,
+                                      activeSection: widget.activeSection,
+                                      questionAutoGroup: questionAutoGroup),
+                                // if (widget.activeSection?.questions[index].typeOfQuestion == "fillInInterview")
+                                //   FillInInterview(
+                                //       key: UniqueKey(),
+                                //       index: index,
+                                //       activeSection: widget.activeSection,
+                                //       questionAutoGroup: questionAutoGroup),
+                                // if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmail")
+                                //   FillInEmail(
+                                //       key: UniqueKey(),
+                                //       index: index,
+                                //       activeSection: widget.activeSection,
+                                //       questionAutoGroup: questionAutoGroup),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "fillInNum")
+                                  FillInNumQuestion(
+                                      key: UniqueKey(),
+                                      index: index,
+                                      activeSection: widget.activeSection,
+                                      questionAutoGroup: questionAutoGroup),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "dropDown")
+                                  DropDownQuestion(
+                                      key: UniqueKey(),
+                                      index: index,
+                                      activeSection: widget.activeSection,
+                                      questionAutoGroup: questionAutoGroup),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "date")
+                                  DateQuestion(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                    questionAutoGroup: questionAutoGroup,
+                                  ),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "yesNoNa")
+                                  YesNoNaQuestion(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                    questionAutoGroup: questionAutoGroup,
+                                  ),
+                                if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmailInterview")
+                                  FillInEmailInterview(
+                                    key: UniqueKey(),
+                                    index: index,
+                                    activeSection: widget.activeSection,
+                                    questionAutoGroup: questionAutoGroup,
+                                  ),
+                              ],
                             ),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "yesNo")
-                            YesNoQuestion(
-                              key: UniqueKey(),
-                              index: index,
-                              activeSection: widget.activeSection,
-                            ),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "issuesNoIssues")
-                            IssuesNoIssuesQuestion(
-                              key: UniqueKey(),
-                              index: index,
-                              activeSection: widget.activeSection,
-                            ),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillIn")
-                            FillInQuestion(
-                                key: UniqueKey(),
-                                index: index,
-                                activeSection: widget.activeSection,
-                                questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInInterview")
-                            FillInInterview(
-                                key: UniqueKey(),
-                                index: index,
-                                activeSection: widget.activeSection,
-                                questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmail")
-                            FillInEmail(
-                                key: UniqueKey(),
-                                index: index,
-                                activeSection: widget.activeSection,
-                                questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "fillInNum")
-                            FillInNumQuestion(
-                                key: UniqueKey(),
-                                index: index,
-                                activeSection: widget.activeSection,
-                                questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "dropDown")
-                            DropDownQuestion(
-                                key: UniqueKey(),
-                                index: index,
-                                activeSection: widget.activeSection,
-                                questionAutoGroup: questionAutoGroup),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "date")
-                            DateQuestion(
-                              key: UniqueKey(),
-                              index: index,
-                              activeSection: widget.activeSection,
-                              questionAutoGroup: questionAutoGroup,
-                            ),
-                          if (widget.activeSection?.questions[index].typeOfQuestion == "yesNoNa")
-                            YesNoNaQuestion(
-                              key: UniqueKey(),
-                              index: index,
-                              activeSection: widget.activeSection,
-                              questionAutoGroup: questionAutoGroup,
-                            ),
-                        ],
-                      ),
-                    ),
-                  );
+                          ))
+                      : Container(color: Colors.blue);
                 },
               ),
             ),

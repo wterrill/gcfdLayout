@@ -42,7 +42,7 @@ class _FillInEmailState extends State<FillInEmail> {
       print(emailList);
       print("wtf?");
       print(emailValidated);
-      Provider.of<GeneralData>(context, listen: false).emailValidated = emailValidated;
+      // Provider.of<GeneralData>(context, listen: false).emailValidated = emailValidated;
       return emailValidated;
     }
 
@@ -88,24 +88,24 @@ class _FillInEmailState extends State<FillInEmail> {
                           : "Enter Site Contact Email(s) separated by ';'"),
                   controller: controller,
                   onChanged: (value) {
-                    widget.activeSection.questions[index].userResponse = value;
+                    // widget.activeSection.questions[index].userResponse = value;
 
-                    Provider.of<AuditData>(context, listen: false).contactEmail = value;
+                    // Provider.of<AuditData>(context, listen: false).contactEmail = value;
 
-                    if (value.length > 0) {
-                      if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
-                        if (Provider.of<GeneralData>(context, listen: false).personInterviewed != null &&
-                            Provider.of<GeneralData>(context, listen: false).personInterviewed != "") {
-                          Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
-                        }
-                      }
-                    }
-                    if ((!emailValidated(value) &&
-                            Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == true) ||
-                        Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
-                            "Scheduled") {
-                      Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
-                    }
+                    // if (value.length > 0) {
+                    //   if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
+                    //     if (Provider.of<GeneralData>(context, listen: false).personInterviewed != null &&
+                    //         Provider.of<GeneralData>(context, listen: false).personInterviewed != "") {
+                    //       Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
+                    //     }
+                    //   }
+                    // }
+                    // if ((!emailValidated(value) &&
+                    //         Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == true) ||
+                    //     Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
+                    //         "Scheduled") {
+                    //   Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
+                    // }
                   },
                 ),
               ),

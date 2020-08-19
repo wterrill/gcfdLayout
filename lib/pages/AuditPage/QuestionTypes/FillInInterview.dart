@@ -15,7 +15,9 @@ class FillInInterview extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInInterview({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
+  final Function interviewCallback;
+  FillInInterview({Key key, this.index, this.activeSection, this.questionAutoGroup, this.interviewCallback})
+      : super(key: key);
 
   @override
   _FillInInterviewState createState() => _FillInInterviewState();
@@ -71,25 +73,33 @@ class _FillInInterviewState extends State<FillInInterview> {
                           ? "Enter Person Interviewed for this Audit "
                           : "Enter Site Contact Email"),
                   controller: controller,
+                  onEditingComplete: () {
+                    setState(() {});
+                    print("DDDDOOOONNNNEEEE");
+                  },
                   onChanged: (value) {
                     widget.activeSection.questions[index].userResponse = value;
 
-                    Provider.of<GeneralData>(context, listen: false).personInterviewed = value;
+                    // Provider.of<GeneralData>(context, listen: false).personInterviewed = value;
 
-                    if (value.length > 0 && Provider.of<GeneralData>(context, listen: false).emailValidated) {
-                      if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
-                        if (Provider.of<AuditData>(context, listen: false).contactEmail != null &&
-                            Provider.of<AuditData>(context, listen: false).contactEmail != "") {
-                          if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status ==
-                              "Scheduled") Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
-                        }
-                      }
-                    }
-                    if (value.length == 0 ||
-                        Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
-                            "Scheduled") {
-                      Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
-                    }
+                    // if (value.length > 0 && Provider.of<GeneralData>(context, listen: false).emailValidated) {
+                    //   if (Provider.of<GeneralData>(context, listen: false).confirmButtonEnabled == false) {
+                    //     if (Provider.of<AuditData>(context, listen: false).contactEmail != null &&
+                    //         Provider.of<AuditData>(context, listen: false).contactEmail != "") {
+                    //       if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status ==
+                    //           "Scheduled") {
+                    //         Provider.of<GeneralData>(context, listen: false).enableConfirmButton();
+                    //         widget.interviewCallback(true);
+                    //       }
+                    //     }
+                    //   }
+                    // }
+                    // if (value.length == 0 ||
+                    //     Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status !=
+                    //         "Scheduled") {
+                    //   Provider.of<GeneralData>(context, listen: false).disableConfirmButton();
+                    //   widget.interviewCallback(false);
+                    // }
                   },
                 ),
               ),

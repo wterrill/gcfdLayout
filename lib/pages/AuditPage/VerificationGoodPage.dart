@@ -78,8 +78,8 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                               )),
                               child: Image.memory(certRepresentativeSignature.buffer.asUint8List()))),
                     ),
-              Text("Agency Representative: " +
-                  (Provider.of<GeneralData>(context, listen: false).personInterviewed ?? "")),
+              Text(
+                  "Agency Representative: " + (Provider.of<AuditData>(context, listen: false).personInterviewed ?? "")),
 
               // : LimitedBox(
               //     maxHeight: 200.0,

@@ -11,11 +11,11 @@ class GeneralData with ChangeNotifier {
   Size mediaArea;
   int numberOfDaysShown;
   String deviceid;
-  bool confirmButtonEnabled = false;
-  String personInterviewed;
+  // bool confirmButtonEnabled = false;
+
   bool syncInProgress = false;
   String syncMessage = "";
-  bool emailValidated = false;
+  // bool emailValidated = false;
   bool showTopDrawer = false;
   bool rememberMe = false;
   Box generalBox;
@@ -95,15 +95,15 @@ class GeneralData with ChangeNotifier {
     notifyListeners();
   }
 
-  void enableConfirmButton() {
-    confirmButtonEnabled = true;
-    notifyListeners();
-  }
+  // void enableConfirmButton() {
+  //   confirmButtonEnabled = true;
+  //   notifyListeners();
+  // }
 
-  void disableConfirmButton() {
-    confirmButtonEnabled = false;
-    notifyListeners();
-  }
+  // void disableConfirmButton() {
+  //   confirmButtonEnabled = false;
+  //   notifyListeners();
+  // }
 
   void toggleSyncInProgressOn() {
     syncInProgress = true;

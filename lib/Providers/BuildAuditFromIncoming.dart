@@ -168,7 +168,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
                   print('fillInInterview');
                   print(incomingAudit[databaseVar]);
                   question.userResponse = incomingAudit[databaseVar] as String;
-                  Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).personInterviewed =
+                  Provider.of<AuditData>(navigatorKey.currentContext, listen: false).personInterviewed =
                       question.userResponse as String;
 
                   break;
@@ -179,6 +179,12 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
                   question.userResponse = incomingAudit[databaseVar] as String;
                   Provider.of<AuditData>(navigatorKey.currentContext, listen: false).contactEmail =
                       question.userResponse as String;
+
+                  break;
+
+                case ("fillInEmailInterview"):
+                  print(question.text);
+                  print('fillInEmailInterview');
 
                   break;
 
