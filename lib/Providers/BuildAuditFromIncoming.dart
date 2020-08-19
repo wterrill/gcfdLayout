@@ -234,7 +234,6 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
                       try {
                         if (incomingAudit[databaseVar] as int == -1) {
                           question.userResponse = 'N/A';
-                          // question.dd
                         } else {
                           print(incomingAudit[databaseVar]);
                         }

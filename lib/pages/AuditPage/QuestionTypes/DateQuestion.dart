@@ -87,10 +87,6 @@ class _DateQuestionState extends State<DateQuestion> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Icon(Icons.chat_bubble,
                       color: myBubbleOn ? ColorDefs.colorChatSelected : ColorDefs.colorChatNeutral),
-                  // Icon(Icons.chat_bubble,
-                  //     color: widget.activeSection.questions[index].optionalComment == null
-                  //         ? ColorDefs.colorChatNeutral
-                  //         : ColorDefs.colorChatSelected),
                 ),
               ),
             ],
