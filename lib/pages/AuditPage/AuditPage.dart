@@ -197,6 +197,7 @@ class _AuditPageState extends State<AuditPage> {
                               // Navigator.of(context).pop();
                               Provider.of<AuditData>(context, listen: false).resetAudit();
                             })),
+                    Container(height: 10),
                     if (activeAudit?.calendarResult?.status == 0)
                       FlatButton(
                         color: Colors.blue,

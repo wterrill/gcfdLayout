@@ -368,8 +368,9 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                           Map<String, dynamic> oldAuditCitationsObject = widget.calendarResult.citationsToFollowUp;
 
                           if (validated && timeInPastOK) {
-                            Provider.of<ListCalendarData>(context, listen: false)
-                                .deleteCalendarItem(widget.calendarResult);
+                            if (widget.calendarResult.auditType != "Follow Up")
+                              Provider.of<ListCalendarData>(context, listen: false)
+                                  .deleteCalendarItem(widget.calendarResult);
 
                             DateTime selectedDateTime = DateTime(selectedDate.year, selectedDate.month,
                                 selectedDate.day, selectedTime.hour, selectedTime.minute);
@@ -402,6 +403,19 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                               };
                             }
 
+                            if (oldAuditCitationsObject != null &&
+                                oldAuditCitationsObject['PreviousEvent']['AuditType'] == "Follow Up") {
+                              oldAuditCitationsObject['PreviousEvent'] = {
+                                'StartTime': selectedDateTime.toString(),
+                                'AgencyName': alreadyExistedCalendarResult.agencyName,
+                                'AgencyNumber': alreadyExistedCalendarResult.agencyNum,
+                                'ProgramNumber': alreadyExistedCalendarResult.programNum,
+                                'AuditType': alreadyExistedCalendarResult.auditType,
+                                'ProgramType': alreadyExistedCalendarResult.programType.toString(),
+                                'Auditor': selectedAuditor,
+                              };
+                            }
+
                             Map<String, dynamic> newEvent = <String, dynamic>{
                               'startTime': selectedDateTime.toString(),
                               'message': '',
@@ -415,6 +429,10 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                               'deviceid': deviceid,
                               'citationsToFollowUp': oldAuditCitationsObject
                             };
+
+                            if (widget.auditAlreadyStarted) {
+                              oldAuditCitationsObject = newEvent;
+                            }
 
                             bool exists = Provider.of<ListCalendarData>(context, listen: false).checkBoxEvent(
                               event: newEvent,
@@ -440,6 +458,9 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                                     DateTime.parse(newEvent['startTime'] as String);
 
                                 Provider.of<AuditData>(context, listen: false).saveAuditLocally(copy_retrieved);
+                                if (widget.calendarResult.auditType == "Follow Up")
+                                  Provider.of<ListCalendarData>(context, listen: false)
+                                      .deleteCalendarItem(widget.calendarResult);
 
                                 print("#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#");
                               }
