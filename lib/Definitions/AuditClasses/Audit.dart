@@ -62,7 +62,6 @@ class Audit extends HiveObject {
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));
-      print(sections);
       name = convertProgramTypeToOfficial(calendarResult.programType);
       photoList = [];
     }
@@ -88,8 +87,7 @@ class Audit extends HiveObject {
   }
 
   Audit clone() {
-    Audit clonedAudit =
-        Audit(calendarResult: calendarResult, questionnaire: questionnaire);
+    Audit clonedAudit = Audit(calendarResult: calendarResult, questionnaire: questionnaire);
     clonedAudit.name = name;
     clonedAudit.sections = List.from(sections);
     clonedAudit.completed = completed;

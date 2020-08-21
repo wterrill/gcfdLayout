@@ -567,6 +567,7 @@ class AuditData with ChangeNotifier {
     List<dynamic> dynKeys = auditBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
+      print(toBeSentKeys[i]);
       Audit preResult = auditBox.get(toBeSentKeys[i]) as Audit;
       Audit anotherEvent = preResult.clone();
 
@@ -583,9 +584,10 @@ class AuditData with ChangeNotifier {
     List<String> toBeSentKeys = List<String>.from(dynKeys);
     for (var i = 0; i < toBeSentKeys.length; i++) {
       Audit result = auditOutBox.get(toBeSentKeys[i]) as Audit;
-
+      print(toBeSentKeys[i]);
+      print("before build");
       Map<String, dynamic> mainBody = buildAuditToSend(result, deviceidProvider);
-
+      print("after build");
       bool successful = false;
       try {
         // import 'package:connectivity/connectivity.dart';

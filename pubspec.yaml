@@ -59,6 +59,9 @@ dependencies:
   fluttertoast: ^7.0.2
   flutter_appavailability: ^0.0.21
   camera: ^0.5.8+5
+  sentry: ">=3.0.0 <4.0.0"
+
+ 
 
 dev_dependencies:
   flutter_test:

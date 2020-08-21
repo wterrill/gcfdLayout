@@ -126,9 +126,8 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 5.0),
                 child: Container(
                   // decoration: BoxDecoration(
-                  //   border: Border.all(
-                  //       color: ColorDefs.colorUserAccent, width: 1.0),
-                  //   borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                  //   border: Border.all(color: ColorDefs.colorUserAccent, width: 1.0),
+                  //   borderRadius: BorderRadius.all(Radius.circular(25.0)),
                   // ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,9 +154,8 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                   ),
                 ),
               ),
-              color: ColorDefs.colorAlternatingDark,
-              elevation: 3,
-              offset: Offset(0, 43),
+              elevation: 16,
+              offset: Offset(0, 90),
               onSelected: (dynamic result) {
                 Provider.of<GeneralData>(context, listen: false).setRememberMe(false);
                 Navigator.of(context).pop();
@@ -167,7 +165,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                 );
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: "logout",
                   child: Text('Logout'),
                 ),

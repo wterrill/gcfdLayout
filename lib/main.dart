@@ -27,8 +27,12 @@ import 'package:auditor/pages/developer/hiveTest/Contact.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity/connectivity.dart';
 // import 'package:background_fetch/background_fetch.dart';
+import 'package:sentry/sentry.dart';
+import 'dart:async';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+final SentryClient sentry =
+    SentryClient(dsn: 'https://cd836d0fb8ca4376b30917eef5b32517@o436899.ingest.sentry.io/5398676');
 
 /// This "Headless Task" is run when app is terminated.
 // void backgroundFetchHeadlessTask(String taskId) async {
@@ -37,6 +41,15 @@ final navigatorKey = GlobalKey<NavigatorState>();
 // }
 
 void main() async {
+  try {
+    throw new StateError('This is a Dart exception.');
+  } catch (error, stackTrace) {
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     final dynamic appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();

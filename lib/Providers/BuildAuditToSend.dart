@@ -90,12 +90,17 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
   String dateOfSiteVisit = outgoingAudit.calendarResult.startDateTime.toString();
 
   String startOfAudit = DateFormat("HH:mm:ss.000").format(outgoingAudit.calendarResult.startDateTime);
-
-  String endOfAudit = DateFormat("HH:mm:ss.000").format(outgoingAudit.calendarResult.endDateTime);
+  try {
+    String endOfAudit = DateFormat("HH:mm:ss.000").format(outgoingAudit.calendarResult.endDateTime);
+    resultMap["EndOfAudit"] = endOfAudit;
+  } catch (err) {
+    print(err);
+    print("error in end of audit");
+  }
 
   resultMap["DateOfSiteVisit"] = dateOfSiteVisit;
   resultMap["StartOfAudit"] = startOfAudit;
-  resultMap["EndOfAudit"] = endOfAudit;
+
   resultMap["GCFDAuditorID"] = outgoingAudit.calendarResult.auditor;
   resultMap['ProgramContact'] = outgoingAudit.sections[0].questions[7].userResponse;
   resultMap['PersonInterviewed'] = outgoingAudit.sections[0].questions[8].userResponse;
