@@ -103,4 +103,11 @@ class Audit extends HiveObject {
     clonedAudit.previousCitations = List.from(previousCitations);
     return clonedAudit;
   }
+
+  @override
+  String toString() {
+    print(
+        '''calendarResult: ${calendarResult.toString()} \n citations: ${citations.toString()} \n previous citations: ${previousCitations.toString()} status: ${calendarResult.status}''');
+    return '''calendarResult: ${calendarResult.toString()} \n citations: ${citations.toString()} \n previous citations: ${previousCitations.toString()} status: ${calendarResult.status}''';
+  }
 }

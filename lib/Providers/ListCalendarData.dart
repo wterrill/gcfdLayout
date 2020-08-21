@@ -324,16 +324,19 @@ class ListCalendarData with ChangeNotifier {
 
   void addCalendarItem(CalendarResult calendarItem) {
     // print(calendarBox.keys);
+    CalendarResult clonedCalendarResult = calendarItem.clone();
     CalendarResult retrievedCalendarItem = calendarBox.get(
-            '${calendarItem.startTime}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}')
+            '${clonedCalendarResult.startTime}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}')
         as CalendarResult;
     if (retrievedCalendarItem != null) {
-      if (convertStatusToNumber(retrievedCalendarItem.status) <= convertStatusToNumber(calendarItem.status)) {
+      if (convertStatusToNumber(retrievedCalendarItem.status) <= convertStatusToNumber(clonedCalendarResult.status)) {
         //this gets rid of the "T"
-        DateTime temp = DateTime.parse(calendarItem.startTime);
+        DateTime temp = DateTime.parse(clonedCalendarResult.startTime);
+        // calendarBox.delete(
+        //     '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
         calendarBox.put(
-            '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
-            calendarItem);
+            '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}',
+            clonedCalendarResult);
         // print(calendarBox.keys);
         newEventAdded = true;
         notifyListeners();
@@ -371,14 +374,15 @@ class ListCalendarData with ChangeNotifier {
 
   void deleteCalendarItem(CalendarResult calendarResult) {
     //temp gets rid of the "T"
-    DateTime temp = DateTime.parse(calendarResult.startTime);
+    CalendarResult clonedCalendarResult = calendarResult.clone();
+    DateTime temp = DateTime.parse(clonedCalendarResult.startTime);
     calendarBox.delete(
-        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
     calendarOutBox.delete(
-        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
     calendarDeleteBox.put(
-        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
-        calendarResult);
+        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}',
+        clonedCalendarResult);
     newEventAdded = true;
     notifyListeners();
   }

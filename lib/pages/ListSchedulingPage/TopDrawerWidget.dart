@@ -1,5 +1,6 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
+import 'package:auditor/pages/developer/DatabaseDetails/DatabaseDetails.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:auditor/providers/AuditData.dart';
 import 'package:auditor/providers/GeneralData.dart';
@@ -51,7 +52,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
             offset: Offset((animation.value * (210 / 180)), 0.0),
             child: Container(
               // top drawer container
-              height: 425,
+              height: 525,
               width: 210,
               color: ColorDefs.colorTopDrawerBackground,
               child: Column(
@@ -374,6 +375,34 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                         children: <Widget>[
                           Icon(Icons.perm_data_setting, color: ColorDefs.colorAudit2),
                           Center(child: Text("DataBase Index", style: ColorDefs.textBodyBlue20)),
+                          Container(
+                            height: 20,
+                            width: 20,
+                            child: startSync
+                                ? CircularProgressIndicator()
+                                : Icon(Icons.sync, color: ColorDefs.colorTopDrawerBackground),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
+                  GestureDetector(
+                    onTap: () async {
+                      Dialogs.showWidget(context: context, widget: DatabaseDetails(), dismissable: true);
+                    },
+                    child: Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.perm_data_setting, color: ColorDefs.colorAudit2),
+                          Center(child: Text("DataBase Details", style: ColorDefs.textBodyBlue20)),
                           Container(
                             height: 20,
                             width: 20,

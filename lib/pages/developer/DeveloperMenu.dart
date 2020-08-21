@@ -1,5 +1,6 @@
 import 'package:auditor/Definitions/Dialogs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
+import 'package:auditor/pages/developer/DatabaseDetails/DatabaseDetails.dart';
 import 'package:auditor/pages/developer/hiveTroubleshooting/hiveTroubleshooting.dart';
 import 'package:auditor/pages/developer/pdf/PdfDemo.dart';
 import 'package:auditor/pages/developer/scrollStuff/scrollStuff.dart';
@@ -208,6 +209,14 @@ class DeveloperMenu extends StatelessWidget {
                 );
               },
               child: Text("Hive Troubleshooting")),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => DatabaseDetails()),
+                );
+              },
+              child: Text("Database Details")),
           RaisedButton(
               onPressed: () {
                 Navigator.push<dynamic>(

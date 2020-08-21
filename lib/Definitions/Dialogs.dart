@@ -81,6 +81,20 @@ class Dialogs {
     );
   }
 
+  static void showWidget({@required BuildContext context, @required Widget widget, @required bool dismissable}) {
+    AlertDialog alert = AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+        elevation: 6.0,
+        content: widget);
+    showDialog<void>(
+      barrierDismissible: dismissable,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   static void showPicture({BuildContext context, Uint8List image, bool dismissable}) {
     showDialog<void>(
       context: context,

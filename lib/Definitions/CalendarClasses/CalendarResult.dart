@@ -89,5 +89,16 @@ class CalendarResult extends HiveObject {
         citationsToFollowUp: citationsToFollowUp);
   }
 
+  String toString() {
+    return ''' $startTime ,
+      $agencyName,
+      $agencyNum,
+      $auditType,
+      $programNum,
+      $programType,
+      $auditor,
+      $status,''';
+  }
+
   bool selected = false;
 }

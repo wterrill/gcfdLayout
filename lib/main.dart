@@ -41,14 +41,14 @@ final SentryClient sentry =
 // }
 
 void main() async {
-  try {
-    throw new StateError('This is a Dart exception.');
-  } catch (error, stackTrace) {
-    await sentry.captureException(
-      exception: error,
-      stackTrace: stackTrace,
-    );
-  }
+  // try {
+  //   throw new StateError('This is a Dart exception.');
+  // } catch (error, stackTrace) {
+  //   await sentry.captureException(
+  //     exception: error,
+  //     stackTrace: stackTrace,
+  //   );
+  // }
 
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {

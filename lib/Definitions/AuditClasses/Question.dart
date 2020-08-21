@@ -72,4 +72,8 @@ class Question extends HiveObject {
       hideNa = true;
     }
   }
+
+  String toString() {
+    return text;
+  }
 }

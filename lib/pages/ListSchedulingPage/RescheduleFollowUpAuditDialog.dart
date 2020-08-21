@@ -40,7 +40,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
   void initState() {
     super.initState();
     if (widget.calendarResult != null) {
-      alreadyExistedCalendarResult = widget.calendarResult;
+      alreadyExistedCalendarResult = widget.calendarResult.clone();
 
       this.selectedAuditType = widget.calendarResult.auditType; //"Follow Up";
 
@@ -381,14 +381,14 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                             // Map<String, dynamic> oldAuditCitationsObject;
                             String deviceid = Provider.of<GeneralData>(context, listen: false).deviceid;
                             // if (widget.followup) {
-                            //   oldAuditCitationsObject =
-                            //       Provider.of<AuditData>(context, listen: false)
-                            //           .getAuditCitationsObject(
-                            //               newCalendarResult: widget.calendarResult);
+                            //   // oldAuditCitationsObject =
+                            //   //     Provider.of<AuditData>(context, listen: false)
+                            //   //         .getAuditCitationsObject(
+                            //   //             newCalendarResult: widget.calendarResult);
 
-                            //   Provider.of<ListCalendarData>(context, listen: false)
-                            //       .updateStatusOnScheduleToCompleted(
-                            //           alreadyExistedCalendarResult);
+                            if (alreadyExistedCalendarResult.status == "Site Visit Req.")
+                              Provider.of<ListCalendarData>(context, listen: false)
+                                  .updateStatusOnScheduleToCompleted(alreadyExistedCalendarResult);
                             // }
 
                             if (oldAuditCitationsObject != null) {
@@ -460,7 +460,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                                 Provider.of<AuditData>(context, listen: false).saveAuditLocally(copy_retrieved);
                                 if (widget.calendarResult.auditType == "Follow Up")
                                   Provider.of<ListCalendarData>(context, listen: false)
-                                      .deleteCalendarItem(widget.calendarResult);
+                                      .deleteCalendarItem(alreadyExistedCalendarResult);
 
                                 print("#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#");
                               }

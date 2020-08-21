@@ -22,30 +22,16 @@ class _FillInEmailInterviewState extends State<FillInEmailInterview> {
   bool confirmButtonEnabled = false;
   String personInterviewed = "";
   String contactEmail = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController interviewController = TextEditingController();
+
+  int index;
 
   @override
-  Widget build(BuildContext context) {
-    Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
-    bool emailValidated(String emailString) {
-      bool emailValidated = true;
-      List<String> emailList = emailString.split(";");
-      for (String email in emailList) {
-        email = email.replaceAll(" ", "");
-        if ((!email.contains(RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')) && email != "")) {
-          emailValidated = false;
-        }
-      }
-      print(emailList);
-      print("wtf?");
-      print(emailValidated);
-      // Provider.of<GeneralData>(context, listen: false).emailValidated = emailValidated;
-      return emailValidated;
-    }
+  void initState() {
+    super.initState();
+    index = widget.index;
 
-    int index = widget.index;
-    // Section activeSection = widget.activeSection;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController interviewController = TextEditingController();
     if (widget.activeSection.questions[index + 1].userResponse != "" &&
         widget.activeSection.questions[index + 1].userResponse != null) {
       emailController.text = widget.activeSection.questions[index + 1].userResponse as String;
@@ -61,6 +47,28 @@ class _FillInEmailInterviewState extends State<FillInEmailInterview> {
     if (personInterviewed.length > 0 && emailValidated(contactEmail)) {
       confirmButtonEnabled = true;
     }
+  }
+
+  bool emailValidated(String emailString) {
+    bool emailValidated = true;
+    if (emailString == "") emailValidated = false;
+    List<String> emailList = emailString.split(";");
+    for (String email in emailList) {
+      email = email.replaceAll(" ", "");
+      if ((!email.contains(RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')) && email != "")) {
+        emailValidated = false;
+      }
+    }
+    print(emailList);
+    print("wtf?");
+    print(emailValidated);
+    // Provider.of<GeneralData>(context, listen: false).emailValidated = emailValidated;
+    return emailValidated;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
 
     return Column(
       children: [
@@ -76,6 +84,8 @@ class _FillInEmailInterviewState extends State<FillInEmailInterview> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
+                  readOnly: activeAudit.detailsConfirmed ? true : false,
+                  enableInteractiveSelection: true,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
@@ -129,6 +139,8 @@ class _FillInEmailInterviewState extends State<FillInEmailInterview> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
+                  readOnly: activeAudit.detailsConfirmed ? true : false,
+                  enableInteractiveSelection: true,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
