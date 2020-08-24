@@ -317,7 +317,8 @@ class AuditInfoDialog extends StatelessWidget {
                               side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
                             ),
                             onPressed: () {
-                              Dialogs.showSites(context: context, agencyNum: calendarResult.agencyNum);
+                              Dialogs.showSites(
+                                  context: context, agencyNum: calendarResult.agencyNum, singleSite: true);
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),

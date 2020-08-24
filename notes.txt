@@ -72,7 +72,7 @@ keyboard covering tasks
 
 ________-
 Logout button
-Site Information -> hide search and schedule button
-ordering on table view
-visual contrast on parallel lines (audit)
+--Site Information -> hide search and schedule button
+--ordering on table view
+--visual contrast on parallel lines (audit)
 clicking 'schedule' without choosing time

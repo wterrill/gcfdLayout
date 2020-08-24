@@ -25,8 +25,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
     // });
   }
 
-  CalendarResultsDataSource _calendarResultsDataSource =
-      CalendarResultsDataSource([]);
+  CalendarResultsDataSource _calendarResultsDataSource = CalendarResultsDataSource([]);
 
   bool isLoaded = false;
   String lastFilterText = "";
@@ -35,8 +34,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
   int _sortColumnIndex = 0;
   bool _sortAscending = false;
 
-  void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex,
-      bool ascending) {
+  void _sort<T>(Comparable<T> getField(CalendarResult d), int columnIndex, bool ascending) {
     print('columnIndex: $columnIndex');
     print('ascending: $ascending');
     _calendarResultsDataSource.sort<T>(getField, ascending);
@@ -60,8 +58,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> filteredCalendarResults = filter(calendarResults);
 
     calendarResults = filterTimeApply(filteredCalendarResults);
-    bool newEventAdded =
-        Provider.of<ListCalendarData>(context, listen: false).newEventAdded;
+    bool newEventAdded = Provider.of<ListCalendarData>(context, listen: false).newEventAdded;
 
     bool firstload_or_StartFiltering_or_DeleteFilter_or_AddEvent = !isLoaded ||
         (lastFilterText != filterText && filterText != "") ||
@@ -72,10 +69,8 @@ class _ApptDataTableState extends State<ApptDataTable> {
       // setState(() {
       _calendarResultsDataSource = CalendarResultsDataSource(calendarResults);
       isLoaded = true;
-      Provider.of<ListCalendarData>(context, listen: false).lastFilterValue =
-          filterText;
-      Provider.of<ListCalendarData>(context, listen: false).newEventAdded =
-          false;
+      Provider.of<ListCalendarData>(context, listen: false).lastFilterValue = filterText;
+      Provider.of<ListCalendarData>(context, listen: false).newEventAdded = false;
       // });
     }
   }
@@ -84,13 +79,9 @@ class _ApptDataTableState extends State<ApptDataTable> {
     List<CalendarResult> filteredResults = [];
     if (filterText != "") {
       for (CalendarResult result in listToFilter) {
-        if (result.agencyName
-            .toLowerCase()
-            .contains(filterText.toLowerCase())) {
+        if (result.agencyName.toLowerCase().contains(filterText.toLowerCase())) {
           filteredResults.add(result);
-        } else if (result.programNum
-            .toLowerCase()
-            .contains(filterText.toLowerCase())) {
+        } else if (result.programNum.toLowerCase().contains(filterText.toLowerCase())) {
           filteredResults.add(result);
         }
       }
@@ -113,8 +104,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
       Map<String, DateTime> range = getTimeRange();
       for (CalendarResult result in listToFilter) {
         DateTime resultTime = result.startDateTime;
-        if (resultTime.isAfter(range['past']) &&
-            resultTime.isBefore(range['future'])) {
+        if (resultTime.isAfter(range['past']) && resultTime.isBefore(range['future'])) {
           filteredResults.add(result);
         }
       }
@@ -126,19 +116,16 @@ class _ApptDataTableState extends State<ApptDataTable> {
   @override
   Widget build(BuildContext context) {
     bool initializedx = Provider.of<ListCalendarData>(context).initializedx;
-    filterTimeToggle =
-        Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
+    filterTimeToggle = Provider.of<ListCalendarData>(context, listen: false).filterTimeToggle;
 
-    lastFilterText =
-        Provider.of<ListCalendarData>(context, listen: false).lastFilterValue;
-    filterText =
-        Provider.of<ListCalendarData>(context, listen: false).filterValue;
+    lastFilterText = Provider.of<ListCalendarData>(context, listen: false).lastFilterValue;
+    filterText = Provider.of<ListCalendarData>(context, listen: false).filterValue;
     print("building paginated data table");
     Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
     getData(calendarBox);
     print("BUILD PAGINATEDDATATABLE2");
-    _sort<String>((CalendarResult d) => d.startDateTime.toString(),
-        _sortColumnIndex, _sortAscending);
+    // _sort<String>((CalendarResult d) => d.startDateTime.toString(),
+    //     _sortColumnIndex, _sortAscending);
     return !initializedx
         ? (Text("Initializing..."))
         : Expanded(
@@ -154,8 +141,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                   onRowsPerPageChanged: (int value) {
                     setState(() {
                       print("value: $value");
-                      print(
-                          "_calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}");
+                      print("_calendarResultsDataSource.rowCount: ${_calendarResultsDataSource.rowCount}");
                       _rowsPerPage = value;
                       print(_rowsPerPage);
                     });
@@ -173,11 +159,7 @@ class _ApptDataTableState extends State<ApptDataTable> {
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>(
-                                (CalendarResult d) =>
-                                    d.startDateTime.toString(),
-                                columnIndex,
-                                ascending)),
+                            _sort<String>((CalendarResult d) => d.startDateTime.toString(), columnIndex, ascending)),
                     CustomDataColumn(
                       label: Padding(
                         padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
@@ -185,39 +167,32 @@ class _ApptDataTableState extends State<ApptDataTable> {
                       ),
                       numeric: false,
                       onSort: (int columnIndex, bool ascending) =>
-                          _sort<String>((CalendarResult d) => d.startTime,
-                              columnIndex, ascending),
+                          _sort<String>((CalendarResult d) => d.startTime, columnIndex, ascending),
                     ),
                     CustomDataColumn(
                         label: Padding(
                           padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child:
-                              Text('Agency', style: ColorDefs.textBodyWhite20),
+                          child: Text('Agency', style: ColorDefs.textBodyWhite20),
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.agencyName,
-                                columnIndex, ascending)),
+                            _sort<String>((CalendarResult d) => d.agencyName, columnIndex, ascending)),
                     CustomDataColumn(
                         label: Padding(
                           padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child:
-                              Text('Prog #', style: ColorDefs.textBodyWhite20),
+                          child: Text('Prog #', style: ColorDefs.textBodyWhite20),
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.programNum,
-                                columnIndex, ascending)),
+                            _sort<String>((CalendarResult d) => d.programNum, columnIndex, ascending)),
                     CustomDataColumn(
                         label: Padding(
                           padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child: Text('Audit Type',
-                              style: ColorDefs.textBodyWhite20),
+                          child: Text('Audit Type', style: ColorDefs.textBodyWhite20),
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.auditType,
-                                columnIndex, ascending)),
+                            _sort<String>((CalendarResult d) => d.auditType, columnIndex, ascending)),
                     // DataColumn(
                     //     label: Expanded(
                     //         child: Center(
@@ -230,23 +205,19 @@ class _ApptDataTableState extends State<ApptDataTable> {
                     CustomDataColumn(
                         label: Padding(
                           padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child:
-                              Text('Auditor', style: ColorDefs.textBodyWhite20),
+                          child: Text('Auditor', style: ColorDefs.textBodyWhite20),
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.auditor,
-                                columnIndex, ascending)),
+                            _sort<String>((CalendarResult d) => d.auditor, columnIndex, ascending)),
                     CustomDataColumn(
                         label: Padding(
                           padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child:
-                              Text('Status', style: ColorDefs.textBodyWhite20),
+                          child: Text('Status', style: ColorDefs.textBodyWhite20),
                         ),
                         numeric: false,
                         onSort: (int columnIndex, bool ascending) =>
-                            _sort<String>((CalendarResult d) => d.status,
-                                columnIndex, ascending)),
+                            _sort<String>((CalendarResult d) => d.status, columnIndex, ascending)),
                   ],
                 ),
               ),

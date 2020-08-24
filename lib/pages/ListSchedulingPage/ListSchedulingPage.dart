@@ -237,7 +237,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> with WidgetsBin
                                               if (!currentFocus.hasPrimaryFocus) {
                                                 currentFocus.unfocus();
                                               }
-                                              Dialogs.showSites(context: context);
+                                              Dialogs.showSites(context: context, singleSite: false);
                                             },
                                           )
                                         ],

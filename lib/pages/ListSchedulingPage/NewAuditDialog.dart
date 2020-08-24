@@ -149,10 +149,12 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
     bool pastTimeWarning() {
       bool pastTime = false;
-      DateTime enteredTime =
-          DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
-      if (DateTime.now().isAfter(enteredTime)) {
-        pastTime = true;
+      if (selectedDate != null && selectedTime != null) {
+        DateTime enteredTime =
+            DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
+        if (DateTime.now().isAfter(enteredTime)) {
+          pastTime = true;
+        }
       }
       return pastTime;
     }
@@ -292,7 +294,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                               ),
                             ),
                             child: Text(
-                              DateFormat('EEE MM-dd-yyyy').format(selectedDate),
+                              DateFormat('EEE MM-dd-yyyy')?.format(selectedDate) ?? "",
                               style: ColorDefs.textGreen25,
                             ),
                           ),
@@ -325,7 +327,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                                 bottom: BorderSide(width: 2.0, color: ColorDefs.colorAnotherDarkGreen),
                               ),
                             ),
-                            child: Text(selectedTime.format(context).toString(), style: ColorDefs.textGreen25)),
+                            child: Text(selectedTime?.format(context).toString() ?? "", style: ColorDefs.textGreen25)),
                   ),
                 ],
               ),
@@ -376,7 +378,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           print(selectedDate);
-                          print(selectedTime.format(context).toString());
+                          // print(selectedTime.format(context).toString());
                           bool validateDateTime = pastTimeWarning();
                           if (validateDateTime) {
                             Function callBack = () {
@@ -456,7 +458,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
                             if (!exists) {
                               Navigator.of(context).pop();
-                              Navigator.of(context).pop();
+                              if (newEvent['auditType'] == "Follow Up") {
+                                Navigator.of(context).pop();
+                              }
                             }
                             if (alreadyExisted) {
                               Navigator.of(context).pop();
@@ -518,7 +522,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               print(selectedDate);
-                              print(selectedTime.format(context).toString());
+                              // print(selectedTime.format(context).toString());
 
                               Provider.of<ListCalendarData>(context, listen: false)
                                   .deleteCalendarItem(widget.calendarResult);

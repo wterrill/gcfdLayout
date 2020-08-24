@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 import 'LookAhead.dart';
 
 class SitePopUp extends StatefulWidget {
-  const SitePopUp({Key key, this.agencyNum}) : super(key: key);
+  const SitePopUp({Key key, @required this.agencyNum, @required this.singleSite}) : super(key: key);
   final String agencyNum;
+  final bool singleSite;
 
   @override
   _SitePopUpState createState() => _SitePopUpState();
@@ -43,25 +44,26 @@ class _SitePopUpState extends State<SitePopUp> {
                   "Agency Directory",
                   style: ColorDefs.textGreen40,
                 )),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 24, 25.0, 25),
-              child: LookAhead(
-                  disable: false,
-                  // setValue: selectedSiteName,
-                  // programNumber: (widget.followup) ? selectedProgramNumber : null,
-                  lookAheadCallback: (List<String> val) {
-                    String selectedSiteName = val[0];
-                    String selectedProgramNumber = val[1];
-                    String selectedAgencyNumber = val[2];
+            if (!widget.singleSite)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 24, 25.0, 25),
+                child: LookAhead(
+                    disable: false,
+                    // setValue: selectedSiteName,
+                    // programNumber: (widget.followup) ? selectedProgramNumber : null,
+                    lookAheadCallback: (List<String> val) {
+                      String selectedSiteName = val[0];
+                      String selectedProgramNumber = val[1];
+                      String selectedAgencyNumber = val[2];
 
-                    // Site selectedSite =
-                    String selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
-                    print(selectedAgencyNum);
-                    setState(() {
-                      selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNum);
-                    });
-                  }),
-            ),
+                      // Site selectedSite =
+                      String selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
+                      print(selectedAgencyNum);
+                      setState(() {
+                        selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNum);
+                      });
+                    }),
+              ),
             if (selectedSite != null)
               Expanded(
                 child: Scrollbar(
@@ -119,23 +121,24 @@ class _SitePopUpState extends State<SitePopUp> {
                                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
                               ),
                             Text(""),
-                            FlatButton(
-                              color: ColorDefs.colorTopHeader,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
+                            if (!widget.singleSite)
+                              FlatButton(
+                                color: ColorDefs.colorTopHeader,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: BorderSide(color: ColorDefs.colorLogoLightGreen, width: 3.0),
+                                ),
+                                onPressed: () {
+                                  // selectedSite = null;
+                                  Navigator.of(context).pop();
+                                  Dialogs.showScheduledAudit(context: context, siteFromLookupScreen: selectedSite);
+                                  selectedSite = null;
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
+                                  child: Text("Schedule Audit", style: ColorDefs.textBodyBlack20),
+                                ),
                               ),
-                              onPressed: () {
-                                // selectedSite = null;
-                                Navigator.of(context).pop();
-                                Dialogs.showScheduledAudit(context: context, siteFromLookupScreen: selectedSite);
-                                selectedSite = null;
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),
-                                child: Text("Schedule Audit", style: ColorDefs.textBodyBlack20),
-                              ),
-                            ),
                             Container(height: 10),
                             if (selectedSite.operateHours != null)
                               Text("Hours of Operation:", style: ColorDefs.textBodyBlack30),

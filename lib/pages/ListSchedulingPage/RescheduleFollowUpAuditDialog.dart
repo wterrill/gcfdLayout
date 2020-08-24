@@ -126,10 +126,12 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
 
     bool pastTimeWarning() {
       bool pastTime = false;
-      DateTime enteredTime =
-          DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
-      if (DateTime.now().isAfter(enteredTime)) {
-        pastTime = true;
+      if (selectedDate != null && selectedTime != null) {
+        DateTime enteredTime =
+            DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedTime.minute);
+        if (DateTime.now().isAfter(enteredTime)) {
+          pastTime = true;
+        }
       }
       return pastTime;
     }
