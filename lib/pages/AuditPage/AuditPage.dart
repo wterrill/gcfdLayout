@@ -183,6 +183,10 @@ class _AuditPageState extends State<AuditPage> {
                               if (activeAudit.siteVisitRequired == true) {
                                 status = "Site Visit Req.";
                               }
+                              if (status == "Completed") {
+                                Provider.of<ListCalendarData>(context, listen: false)
+                                    .updateStatusOnScheduleToCompleted(activeAudit.calendarResult);
+                              }
 
                               activeAudit.calendarResult.status = status;
                               Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);

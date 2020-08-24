@@ -297,20 +297,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                           .toList()
                           .toString()
                           .replaceAll(",", "\n");
-                      String calendarDeleteBoxKeys = Provider.of<ListCalendarData>(context, listen: false)
-                          .calendarDeleteBox
-                          .keys
-                          .toList()
-                          .toString()
-                          .replaceAll(",", "\n");
-                      String calendarEditOutBoxKeys = Provider.of<ListCalendarData>(context, listen: false)
-                          .calendarEditOutBox
-                          .keys
-                          .toList()
-                          .toString()
-                          .replaceAll(",", "\n");
-                      String calendarOutBoxKeys = Provider.of<ListCalendarData>(context, listen: false)
-                          .calendarOutBox
+                      String calendarOrderedOutBoxKeys = Provider.of<ListCalendarData>(context, listen: false)
+                          .calendarOrderedOutBox
                           .keys
                           .toList()
                           .toString()
@@ -328,12 +316,6 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                           .toList()
                           .toString()
                           .replaceAll(",", "\n");
-                      // String auditToSendKeys = Provider.of<AuditData>(context, listen: false)
-                      //     .auditsToSendBox
-                      //     .keys
-                      //     .toList()
-                      //     .toString()
-                      //     .replaceAll(",", "\n");
 
                       String databaseInfo = '''
                       Calendar Boxes:
@@ -341,14 +323,9 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       calendarBox: 
                       $calendarBoxKeys
                       
-                      calendarDeleteBox: 
-                      $calendarDeleteBoxKeys
-
-                      calendarEditOutBox: 
-                      $calendarEditOutBoxKeys
 
                       calendarOutBoxKeys: 
-                      $calendarOutBoxKeys
+                      $calendarOrderedOutBoxKeys
                       ------------
                       Audit Boxes:
 

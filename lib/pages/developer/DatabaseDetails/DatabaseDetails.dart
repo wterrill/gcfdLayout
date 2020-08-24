@@ -16,9 +16,7 @@ class DatabaseDetails extends StatelessWidget {
     Box auditOutBox = Provider.of<AuditData>(context).auditOutBox;
 
     Box calendarBox = Provider.of<ListCalendarData>(context).calendarBox;
-    Box calendarDeleteBox = Provider.of<ListCalendarData>(context).calendarDeleteBox;
-    Box calendarEditOutBox = Provider.of<ListCalendarData>(context).calendarEditOutBox;
-    Box calendarOutBox = Provider.of<ListCalendarData>(context).calendarOutBox;
+    Box calendarOrderedOutBox = Provider.of<ListCalendarData>(context).calendarOrderedOutBox;
 
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
@@ -29,7 +27,6 @@ class DatabaseDetails extends StatelessWidget {
             Text("auditBox"),
             Expanded(
               child: ListView.builder(
-                  // controller: _scrollController,
                   itemCount: auditBox.keys.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
@@ -71,49 +68,22 @@ class DatabaseDetails extends StatelessWidget {
                         child: Text(calendarBox.keys.toList()[index].toString()));
                   }),
             ),
-            Text("calendarDeleteBox"),
+            Text("calendarOrderedOutBox"),
             Expanded(
               child: ListView.builder(
                   // controller: _scrollController,
-                  itemCount: calendarDeleteBox.keys.length,
+                  itemCount: calendarOrderedOutBox.keys.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          CalendarResult gotIt = calendarDeleteBox
-                              .get(calendarDeleteBox.keys.toList()[index].toString()) as CalendarResult;
-                          Dialogs.showMessage(context: context, message: gotIt.toString(), dismissable: true);
+                          Map<String, dynamic> gotIt = calendarOrderedOutBox
+                              .get(calendarOrderedOutBox.keys.toList()[index].toString()) as Map<String, dynamic>;
+                          Dialogs.showMessage(
+                              context: context,
+                              message: ((gotIt['type'] as String) + " " + (gotIt['calendarResult'].toString())),
+                              dismissable: true);
                         },
-                        child: Text(calendarDeleteBox.keys.toList()[index].toString()));
-                  }),
-            ),
-            Text("calendarEditOutBox"),
-            Expanded(
-              child: ListView.builder(
-                  // controller: _scrollController,
-                  itemCount: calendarEditOutBox.keys.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                          CalendarResult gotIt = calendarEditOutBox
-                              .get(calendarEditOutBox.keys.toList()[index].toString()) as CalendarResult;
-                          Dialogs.showMessage(context: context, message: gotIt.toString(), dismissable: true);
-                        },
-                        child: Text(calendarEditOutBox.keys.toList()[index].toString()));
-                  }),
-            ),
-            Text("calendarOutBox"),
-            Expanded(
-              child: ListView.builder(
-                  // controller: _scrollController,
-                  itemCount: calendarOutBox.keys.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                          CalendarResult gotIt =
-                              calendarOutBox.get(calendarOutBox.keys.toList()[index].toString()) as CalendarResult;
-                          Dialogs.showMessage(context: context, message: gotIt.toString(), dismissable: true);
-                        },
-                        child: Text(calendarOutBox.keys.toList()[index].toString()));
+                        child: Text(calendarOrderedOutBox.keys.toList()[index].toString()));
                   }),
             ),
           ],

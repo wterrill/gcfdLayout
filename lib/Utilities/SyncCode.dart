@@ -53,6 +53,9 @@ void totalDataSync(BuildContext context) async {
     await Provider.of<AuditData>(context, listen: false)
         .dataSync(context: context, siteList: siteList, deviceid: deviceid, fullSync: false);
 
+    print("making final edits");
+    await Provider.of<ListCalendarData>(context, listen: false).sendOrderedEditsToCloud(deviceid);
+
     /// Done with sync
     _showToast(context, "Synced Successfully", Icon(Icons.check));
   } catch (err) {

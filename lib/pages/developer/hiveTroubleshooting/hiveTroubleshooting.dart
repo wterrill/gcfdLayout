@@ -41,31 +41,6 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
             },
           ),
           RaisedButton(
-            child: Text("calendar toSendKeys"),
-            onPressed: () {
-              result = Provider.of<ListCalendarData>(context, listen: false).calendarOutBox.keys.toList();
-              setState(() {});
-            },
-          ),
-          RaisedButton(
-            child: Text("calendar toDeleteKeys"),
-            onPressed: () {
-              result = Provider.of<ListCalendarData>(context, listen: false).calendarDeleteBox.keys.toList();
-              setState(() {});
-            },
-          ),
-          RaisedButton(
-            child: Text("calendarEditOutBoxKeys"),
-            onPressed: () {
-              Box calendarEditOutBox = Provider.of<ListCalendarData>(context, listen: false).calendarEditOutBox;
-              result = calendarEditOutBox.keys.toList();
-              for (dynamic key in result) {
-                print(key);
-              }
-              setState(() {});
-            },
-          ),
-          RaisedButton(
             color: Colors.red,
             child: Text("auditData keys"),
             onPressed: () {
@@ -111,12 +86,14 @@ class _HiveTroubleShootingState extends State<HiveTroubleShooting> {
                 String keyString = key as String;
                 Provider.of<ListCalendarData>(context, listen: false).calendarBox.delete(keyString);
               }
-              result = Provider.of<ListCalendarData>(context, listen: false).calendarOutBox.keys.toList();
+
+              result = Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.keys.toList();
 
               for (dynamic key in result) {
                 String keyString = key as String;
-                Provider.of<ListCalendarData>(context, listen: false).calendarOutBox.delete(keyString);
+                Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.delete(keyString);
               }
+
               result = <String>["All calendar data deleted"];
               setState(() {});
             },

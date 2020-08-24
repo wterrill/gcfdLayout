@@ -456,6 +456,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
 
                             if (!exists) {
                               Navigator.of(context).pop();
+                              Navigator.of(context).pop();
                             }
                             if (alreadyExisted) {
                               Navigator.of(context).pop();

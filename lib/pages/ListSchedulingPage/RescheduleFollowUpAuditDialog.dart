@@ -463,6 +463,10 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                                       .deleteCalendarItem(alreadyExistedCalendarResult);
 
                                 print("#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#");
+                              } else {
+                                if (widget.calendarResult.auditType == "Follow Up")
+                                  Provider.of<ListCalendarData>(context, listen: false)
+                                      .deleteCalendarItem(alreadyExistedCalendarResult);
                               }
                             } else {
                               Dialogs.showMessage(

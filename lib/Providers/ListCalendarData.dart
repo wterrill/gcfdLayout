@@ -43,10 +43,9 @@ class ListCalendarData with ChangeNotifier {
   Box box;
   bool initializedx = false;
   Box calendarBox;
-  Box calendarOutBox;
-  Box calendarDeleteBox;
+
   Box auditorsListBox;
-  Box calendarEditOutBox;
+  Box calendarOrderedOutBox;
   String deviceidProvider;
 
   AuditorList auditorList;
@@ -69,38 +68,38 @@ class ListCalendarData with ChangeNotifier {
 
     await getAuditors();
 
-    await deleteFromCloud(deviceid);
-
-    await sendEditedScheduledToCloud(deviceid);
-
-    await sendScheduledToCloud(deviceid);
+    await sendOrderedToCloud(deviceid);
 
     await getScheduledFromCloud(context: context, siteList: siteList, fullSync: fullSync);
   }
 
-  void forceScheduleDataUpload({String deviceid}) {
-    List<dynamic> dynKeys = calendarBox.keys.toList();
+  void sendOrderedToCloud(String deviceid) async {
+    List<dynamic> dynKeys = calendarOrderedOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
+    List<String> added = [];
+    List<String> edited = [];
+    List<String> deleted = [];
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      CalendarResult preResult = calendarBox.get(toBeSentKeys[i]) as CalendarResult;
-      CalendarResult anotherEvent = preResult.clone();
-
-      DateTime temp = DateTime.parse(anotherEvent.startTime);
-      calendarOutBox.put(
-          '${temp.toString()}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}-${anotherEvent.auditType}',
-          anotherEvent);
+      Map<String, dynamic> packaged = calendarOrderedOutBox.get(toBeSentKeys[i]) as Map<String, dynamic>;
+      String type = packaged['type'] as String;
+      switch (type) {
+        case ("Add"):
+          added.add(toBeSentKeys[i]);
+          break;
+        case ("Edit"):
+          edited.add(toBeSentKeys[i]);
+          break;
+        case ("Delete"):
+          deleted.add(toBeSentKeys[i]);
+          break;
+      }
     }
-    sendScheduledToCloud(deviceid);
-  }
 
-  void sendScheduledToCloud(String deviceid) async {
-    List<dynamic> dynKeys = calendarOutBox.keys.toList();
-    List<String> toBeSentKeys = List<String>.from(dynKeys);
-    for (var i = 0; i < toBeSentKeys.length; i++) {
-      CalendarResult preResult = calendarOutBox.get(toBeSentKeys[i]) as CalendarResult;
+// Add
+    for (String indexString in added) {
+      CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
       String jsonResult = buildScheduledToSend(preResult, "A", deviceid);
       dynamic successful = false;
-
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -115,24 +114,20 @@ class ListCalendarData with ChangeNotifier {
         print(err);
         successful = false;
       }
-      if (successful as bool) calendarOutBox.delete(toBeSentKeys[i]);
+      if (successful as bool) calendarOrderedOutBox.delete(indexString);
     }
-  }
 
-  void sendEditedScheduledToCloud(String deviceid) async {
-    List<dynamic> dynKeys = calendarEditOutBox.keys.toList();
-    List<String> toBeSentKeys = List<String>.from(dynKeys);
-    for (var i = 0; i < toBeSentKeys.length; i++) {
-      CalendarResult preResult = calendarEditOutBox.get(toBeSentKeys[i]) as CalendarResult;
-      String jsonResult = buildScheduledToSend(preResult, "E", deviceid);
+//Delete
+    for (String indexString in deleted) {
+      CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
+      String jsonResult = buildScheduledToSend(preResult, "D", deviceid);
       dynamic successful = false;
-
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
           // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED schedul audit  list #########");
+          print("######### CONNECTED scheduleAudit list #########");
         } else {
           throw ("No internet connection found");
         }
@@ -141,40 +136,69 @@ class ListCalendarData with ChangeNotifier {
         print(err);
         successful = false;
       }
-      if (successful as bool) calendarEditOutBox.delete(toBeSentKeys[i]);
+      if (successful as bool) calendarOrderedOutBox.delete(indexString);
     }
   }
 
-  void deleteFromCloud(String deviceid) async {
-    List<dynamic> dynKeys = calendarDeleteBox.keys.toList();
-
+  void sendOrderedEditsToCloud(String deviceid) async {
+    List<dynamic> dynKeys = calendarOrderedOutBox.keys.toList();
     List<String> toBeSentKeys = List<String>.from(dynKeys);
-
+    List<String> added = [];
+    List<String> edited = [];
+    List<String> deleted = [];
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      // print(calToBeDeletedBox.keys);
-      CalendarResult result = calendarDeleteBox.get(toBeSentKeys[i]) as CalendarResult;
-      result.deviceid = deviceidProvider;
-      String jsonResult = buildScheduledToSend(result, "D", deviceid);
-      dynamic successful = false;
+      Map<String, dynamic> packaged = calendarOrderedOutBox.get(toBeSentKeys[i]) as Map<String, dynamic>;
+      String type = packaged['type'] as String;
+      switch (type) {
+        case ("Add"):
+          added.add(toBeSentKeys[i]);
+          break;
+        case ("Edit"):
+          edited.add(toBeSentKeys[i]);
+          break;
+        case ("Delete"):
+          deleted.add(toBeSentKeys[i]);
+          break;
+      }
+    }
 
+    if (added.length > 0 || deleted.length > 0) {
+      print("Crap");
+    }
+// Edit
+    for (String indexString in edited) {
+      CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
+      String jsonResult = buildScheduledToSend(preResult, "E", deviceid);
+      dynamic successful = false;
       try {
+        // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
           // I am connected to a mobile network. or a wifi network
-          print("######### CONNECTED schedule audit  #########");
+          print("######### CONNECTED scheduleAudit list #########");
         } else {
           throw ("No internet connection found");
         }
-
         successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
       } catch (err) {
         print(err);
         successful = false;
       }
-      // print(calToBeDeletedBox.keys);
-      if (successful as bool) calendarDeleteBox.delete(toBeSentKeys[i]);
-      // print(calToBeDeletedBox.keys);
+      if (successful as bool) calendarOrderedOutBox.delete(indexString);
     }
+  }
+
+  void forceScheduleDataUpload({String deviceid}) {
+    List<dynamic> dynKeys = calendarBox.keys.toList();
+    List<String> toBeSentKeys = List<String>.from(dynKeys);
+    for (var i = 0; i < toBeSentKeys.length; i++) {
+      CalendarResult preResult = calendarBox.get(toBeSentKeys[i]) as CalendarResult;
+      CalendarResult anotherEvent = preResult.clone();
+
+      DateTime temp = DateTime.parse(anotherEvent.startTime);
+      addCalendarOrderedItem(anotherEvent, "Add");
+    }
+    // sendScheduledToCloud(deviceid); /  / / / / / / / / / / / / / / / / / / / / / / /  <<<<<<<
   }
 
   void getScheduledFromCloud({BuildContext context, SiteList siteList, bool fullSync}) async {
@@ -301,21 +325,21 @@ class ListCalendarData with ChangeNotifier {
     Future calEventToBeDeletedFuture = Hive.openBox<CalendarResult>('calToBeDeletedBox');
     Future auditorsListBoxFuture = Hive.openBox<AuditorList>('auditorsListBox');
     Future calendarEditOutBoxFuture = Hive.openBox<CalendarResult>('calendarEditOutBox');
+    Future calendarOrderedOutBoxFuture = Hive.openBox<Map<String, dynamic>>('calendarOrderedOutBox');
     Future.wait<dynamic>([
       calendarFuture,
       calToBeSentBoxFuture,
       calEventToBeDeletedFuture,
       auditorsListBoxFuture,
-      calendarEditOutBoxFuture
+      calendarEditOutBoxFuture,
+      calendarOrderedOutBoxFuture
     ]).then((List<dynamic> value) {
       print("HIVE INTIALIZED");
       print(value);
       print(value.runtimeType);
       calendarBox = Hive.box<CalendarResult>('calendarBox');
-      calendarOutBox = Hive.box<CalendarResult>('calToBeSentBox');
-      calendarDeleteBox = Hive.box<CalendarResult>('calToBeDeletedBox');
       auditorsListBox = Hive.box<AuditorList>('auditorsListBox');
-      calendarEditOutBox = Hive.box<CalendarResult>('calendarEditOutBox');
+      calendarOrderedOutBox = Hive.box<Map<String, dynamic>>('calendarOrderedOutBox');
       loadAuditorsFromBox();
       initializedx = true;
       notifyListeners();
@@ -353,13 +377,22 @@ class ListCalendarData with ChangeNotifier {
     }
   }
 
-  void addCalendarEditItem(CalendarResult calendarItem) {
+  void addCalendarOrderedItem(CalendarResult calendarItem, String typeOfOperation) {
     CalendarResult calendarResult = calendarItem.clone();
     //temp gets rid of the "T"
-    DateTime temp = DateTime.parse(calendarItem.startTime);
-    calendarEditOutBox.put(
-        '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
-        calendarResult);
+    DateTime temp = DateTime.parse(calendarResult.startTime);
+    Map<String, dynamic> packaged = <String, dynamic>{"type": typeOfOperation}; // Add, Delete, Edit
+    packaged['calendarResult'] = calendarResult;
+    print(packaged);
+    calendarOrderedOutBox.put(
+        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::$typeOfOperation',
+        packaged);
+    print(calendarOrderedOutBox.keys.toList());
+    Map<String, dynamic> test = calendarOrderedOutBox.get(
+            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
+        as Map<String, dynamic>;
+    print(typeOfOperation);
+    print(test);
   }
 
   void saveAuditors(AuditorList auditorsList) {
@@ -376,13 +409,11 @@ class ListCalendarData with ChangeNotifier {
     //temp gets rid of the "T"
     CalendarResult clonedCalendarResult = calendarResult.clone();
     DateTime temp = DateTime.parse(clonedCalendarResult.startTime);
-    calendarBox.delete(
-        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
-    calendarOutBox.delete(
-        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
-    calendarDeleteBox.put(
-        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}',
-        clonedCalendarResult);
+    String index =
+        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}';
+    calendarBox.delete(index);
+
+    addCalendarOrderedItem(calendarResult.clone(), "Delete");
     newEventAdded = true;
     notifyListeners();
   }
@@ -398,12 +429,17 @@ class ListCalendarData with ChangeNotifier {
         as CalendarResult;
     // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
     if (retrievedSchedule != null) {
-      CalendarResult retrievedScheduleToSend = calendarOutBox.get(
-              '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
-          as CalendarResult;
+      Map<String, dynamic> retrievedScheduleToSend = calendarOrderedOutBox.get(
+              '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Add')
+          as Map<String, dynamic>;
+      if (retrievedScheduleToSend == null) {
+        retrievedScheduleToSend = calendarOrderedOutBox.get(
+                '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Edit')
+            as Map<String, dynamic>;
+      }
       if (retrievedSchedule.status != "Completed") {
         retrievedSchedule.status = "Completed";
-        addCalendarEditItem(retrievedSchedule);
+        addCalendarOrderedItem(retrievedSchedule.clone(), "Edit");
 
         //temp gets rid of the "T"
         DateTime temp = DateTime.parse(calendarResult.startTime);
@@ -414,14 +450,10 @@ class ListCalendarData with ChangeNotifier {
         notifyListeners();
       }
       try {
-        retrievedScheduleToSend.status = "Completed";
+        retrievedScheduleToSend['calendarResult'].status = "Completed";
 
-        //temp gets rid of the "T"
-        DateTime temp = DateTime.parse(calendarResult.startTime);
-
-        calendarOutBox.put(
-            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
-            retrievedScheduleToSend);
+        CalendarResult retrievedToSend = retrievedScheduleToSend['calendarResult'] as CalendarResult;
+        addCalendarOrderedItem(retrievedToSend, "Add");
       } catch (err) {
         print("audit not waiting to be sent");
       }
@@ -466,9 +498,7 @@ class ListCalendarData with ChangeNotifier {
       calendarBox.put(
           '${temp.toString()}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}',
           newEvent);
-      calendarOutBox.put(
-          '${temp.toString()}-${anotherEvent.agencyName}-${anotherEvent.programNum}-${anotherEvent.auditor}-${anotherEvent.auditType}',
-          anotherEvent);
+      addCalendarOrderedItem(anotherEvent, "Add");
       newEventAdded = true;
       if (notify) notifyListeners();
     }
