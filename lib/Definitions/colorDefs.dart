@@ -39,7 +39,9 @@ class ColorDefs {
   static Color colorButtonNeutral = Color(0xFFe7e7e7);
   static Color colorButtonYes = Color(0xFF66c360);
   static Color colorButtonNo = Color(0xFFbc484a);
-  static Color colorChatNeutral = Color(0xFFc6c6c6);
+  // static Color colorChatNeutral = Color(0xFFc6c6c6);
+  static Color colorChatNeutral = Color(0xFF999999);
+
   static Color colorChatSelected = Color(0xFF4eadb4);
   static Color colorChatRequired = Colors.red;
 

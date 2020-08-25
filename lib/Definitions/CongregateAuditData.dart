@@ -129,7 +129,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'What is the number of deliveries per month?',
     'type': 'dropDown',
-    'menuItems': ['Select', '1', '2', '3', '4', '5', 'N/A'],
+    'menuItems': ['Select', '1', '2', '3', '4', '5'],
     'databaseVar': 'NumberOfDeliveriesPerMonth',
     'databaseOptCom':
         'NumberOfDeliveriesPerMonthComments', //not finding a comment field on the Congregate Audit data def but format is same as Pantry which does have this on the configuration file
@@ -149,7 +149,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'Is information on our Agency Locator accurate?',
     'type': 'dropDown',
-    'menuItems': ['Select', 'Yes', 'No', 'Closed Program', 'N/A'],
+    'menuItems': ['Select', 'Yes', 'No', 'Closed Program'],
     // 'happyPathResponse': ['Yes', 'No', 'Closed Program'],
     'databaseVar': 'AgencyLocatorAccurate',
     'databaseVarType': 'string',
@@ -290,16 +290,14 @@ List<Map<String, dynamic>> audit2Section3Questions = [
   <String, dynamic>{
     'text': "Volunteer disposition",
     'type': 'fillIn',
-    'databaseVar': 'VolunteerDisposition', //<------->
+    'databaseVar': 'VolunteerDisposition',
     'databaseVarType': 'string',
   },
   <String, dynamic>{
     'text': "# of Intake Volunteers",
-    'type': 'dropDown',
-    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50', 'N/A'],
-    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50', 'N/A'],
+    'type': 'fillInNum',
     'databaseVar': 'NumberOfIntakeVolunteers',
-    'databaseVarType': 'string',
+    'databaseVarType': 'int',
   },
   // <String, dynamic>{
   //   'text': "# of Meal Distribution volunteers:",
@@ -310,12 +308,9 @@ List<Map<String, dynamic>> audit2Section3Questions = [
 
   <String, dynamic>{
     'text': "# of Meal Distribution volunteers:",
-    'type': 'dropDown',
-    'menuItems': ['Select', '1-10', '11-20', '21-30', '31-40', '41-50', 'N/A'],
-    'happyPathResponse': ['1-10', '11-20', '21-30', '31-40', '41-50', 'N/A'],
+    'type': 'fillInNum',
     'databaseVar': 'NumberOfDistributionVolunteers',
-    'databaseVarType': 'string',
-    'databaseOptCom': 'NumberOfDistributionVolunteersComments'
+    'databaseVarType': 'int',
   },
 
   <String, dynamic>{
@@ -327,8 +322,8 @@ List<Map<String, dynamic>> audit2Section3Questions = [
   <String, dynamic>{
     'text': "Distribution style:",
     'type': 'dropDown',
-    'menuItems': ['Select', 'Cafeteria', 'Restaurant', 'Other', 'N/A'],
-    'happyPathResponse': ['Cafeteria', 'Restaurant', 'Other', 'N/A'],
+    'menuItems': ['Select', 'Cafeteria', 'Restaurant', 'Other'],
+    'happyPathResponse': ['Cafeteria', 'Restaurant', 'Other'],
     'databaseVar': 'DistributionStyle',
     'databaseVarType': 'string',
     'databaseOptCom': 'DistributionStyleOther'
@@ -466,8 +461,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of dry food in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'N/A'],
-    // 'happyPathResponse': ['1-300', '300-500', '500-1000', 'N/A'],
+    'menuItems': ['Select', '1-25', '26-50', '51-150', '150+'],
     'databaseVar': 'NumCasesOfDryFood',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfDryFoodComments'
@@ -483,8 +477,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of meat in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'N/A'],
-    'happyPathResponse': ['1-300', '300-500', '500-1000', 'N/A'],
+    'menuItems': ['Select', '1-25', '26-50', '51-150', '150+'],
     'databaseVar': 'NumCasesOfMeat',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfMeatComments'
@@ -498,8 +491,7 @@ List<Map<String, dynamic>> audit2Section4Questions = [
   <String, dynamic>{
     'text': "# of cases of perishable items in inventory:",
     'type': 'dropDown',
-    'menuItems': ['Select', '1-300', '300-500', '500-1000', 'N/A'],
-    'happyPathResponse': ['1-300', '300-500', '500-1000', 'N/A'],
+    'menuItems': ['Select', '1-25', '26-50', '51-150', '150+'],
     'databaseVar': 'NumCasesOfPerishableItems',
     'databaseVarType': 'string',
     'databaseOptCom': 'NumCasesOfPerishableItemsComments'
