@@ -235,7 +235,7 @@ class ListCalendarData with ChangeNotifier {
           DateTime.parse(pastEvent['StartTime'] as String).toString()
         ];
         for (CalendarResult result in downloadedCalendarResults) {
-          List<String> newEvent = [result.agencyNum, result.programNum, result.startDateTime.toString()];
+          List<String> newEvent = [result.agencyNumber, result.programNum, result.startDateTime.toString()];
           if (newEvent.toString().compareTo(oldEvent.toString()) == 0) {
             // we found a match, update status to complete
             result.status = "Completed";
@@ -260,7 +260,7 @@ class ListCalendarData with ChangeNotifier {
         CalendarResult junkCalendarResult = CalendarResult(
           startTime: pastEvent['StartTime'] as String,
           agencyName: pastEvent['AgencyName'] as String,
-          agencyNum: pastEvent['AgencyNumber'] as String,
+          agencyNumber: pastEvent['AgencyNumber'] as String,
           auditType: auditTypeString,
           programNum: pastEvent['ProgramNumber'] as String,
           programType: programTypeString,
@@ -512,7 +512,7 @@ class ListCalendarData with ChangeNotifier {
     CalendarResult created = CalendarResult(
       startTime: result['startTime'] as String,
       agencyName: result['agencyName'] as String,
-      agencyNum: result['agencyNum'] as String,
+      agencyNumber: result['agencyNumber'] as String,
       auditType: result['auditType'] as String,
       programNum: result['programNum'] as String,
       programType: result['programType'] as String,
@@ -522,7 +522,7 @@ class ListCalendarData with ChangeNotifier {
       deviceid: deviceidProvider,
       siteInfo: Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
           .siteList
-          .getSiteFromAgencyNumber(agencyNumber: result['agencyNum'] as String),
+          .getSiteFromAgencyNumber(agencyNumber: result['agencyNumber'] as String),
       citationsToFollowUp: result['citationsToFollowUp'] as Map<String, dynamic>,
     );
     return created;
@@ -543,7 +543,7 @@ class ListCalendarData with ChangeNotifier {
       print(startTime);
       Site randomSite = siteList.getRandom();
       String agency = randomSite.agencyName;
-      String agencyNum = randomSite.agencyNumber;
+      String agencyNumber = randomSite.agencyNumber;
       List<String> programlist = randomSite.programDisplayName.split(" - ");
       String programNum = programlist[programlist.length - 1];
 
@@ -561,7 +561,7 @@ class ListCalendarData with ChangeNotifier {
       addBoxEvent(event: <String, dynamic>{
         'startTime': startTime,
         'agencyName': agency,
-        'agencyNum': agencyNum,
+        'agencyNumber': agencyNumber,
         'auditType': auditType,
         'programNum': programNum,
         'programType': programType,

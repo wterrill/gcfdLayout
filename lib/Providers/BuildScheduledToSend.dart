@@ -4,8 +4,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-String buildScheduledToSend(
-    CalendarResult calendarResult, String addDelete, String deviceid) {
+String buildScheduledToSend(CalendarResult calendarResult, String addDelete, String deviceid) {
   String key;
   if (calendarResult.programType == "Pantry") {
     key = "PantryFollowUp";
@@ -51,7 +50,7 @@ String buildScheduledToSend(
 
   String body = jsonEncode(<String, dynamic>{
     'AED': addDelete,
-    'AgencyNumber': calendarResult.agencyNum,
+    'AgencyNumber': calendarResult.agencyNumber,
     'ProgramNumber': calendarResult.programNum,
     'ProgramType': convertProgramTypeToNumber(calendarResult.programType),
     'Auditor': calendarResult.auditor,

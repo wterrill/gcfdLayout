@@ -19,7 +19,7 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
     return CalendarResult(
         startTime: fields[0] as String,
         agencyName: fields[1] as String,
-        agencyNum: fields[2] as String,
+        agencyNumber: fields[2] as String,
         auditType: fields[3] as String,
         programNum: fields[4] as String,
         programType: fields[5] as String,
@@ -43,7 +43,7 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       ..writeByte(1)
       ..write(obj.agencyName)
       ..writeByte(2)
-      ..write(obj.agencyNum)
+      ..write(obj.agencyNumber)
       ..writeByte(3)
       ..write(obj.auditType)
       ..writeByte(4)

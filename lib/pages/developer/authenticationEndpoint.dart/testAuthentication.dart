@@ -49,8 +49,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 //ios
       File _image;
       final picker = ImagePicker();
-      PickedFile fromPicker =
-          await picker.getImage(source: ImageSource.gallery);
+      PickedFile fromPicker = await picker.getImage(source: ImageSource.gallery);
       pickedImage = await fromPicker.readAsBytes();
       setState(() {});
     }
@@ -60,7 +59,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       String base64Image = base64Encode(pickedImage);
 
       String body = jsonEncode(<String, dynamic>{
-        "AgencyNumber": "A00078",
+        "agencyNumber": "A00078",
         "ProgramNumber": "PY00002",
         "ProgramType": "1",
         "Auditor": "jchang",
@@ -68,29 +67,17 @@ class _TestAuthenticationState extends State<TestAuthentication> {
         "StartTime": "2020-05-29T13:00:00.000Z",
         "DeviceId": "aaabbbccc",
         "Files": [
-          {
-            "Filename": "snail",
-            "FileExtension": ".png",
-            "FileContent": "$base64Image"
-          }
+          {"Filename": "snail", "FileExtension": ".png", "FileContent": "$base64Image"}
         ]
       });
 
       print(body);
       if (isNtlm) {
         sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
-            body: body,
-            headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json'
-            });
+            body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       } else {
         sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
-            body: body,
-            headers: {
-              'Content-type': 'application/json',
-              'Accept': 'application/json'
-            });
+            body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       }
       sender.then((http.Response res) {
         print(res.statusCode);
@@ -180,7 +167,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
       // String body = jsonEncode(<String, dynamic>{
       //   'AED': 'A',
-      //   'AgencyNumber': 'A00091',
+      //   'agencyNumber': 'A00091',
       //   'ProgramNumber': 'PY00005',
       //   'ProgramType': 1,
       //   'Auditor': 'MXOTestAud1',
@@ -260,8 +247,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
             body: body as String);
       } else {
-        sender = http.post(
-            'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -295,8 +281,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
             },
             body: body);
       } else {
-        sender = http.post(
-            'https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -480,12 +465,8 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                       },
                       child: Text("delete same audit"),
                     ),
-                    RaisedButton(
-                        onPressed: () => pickImage(),
-                        child: Text("pick Image")),
-                    RaisedButton(
-                        onPressed: () => uploadPic(),
-                        child: Text("send Image upload2")),
+                    RaisedButton(onPressed: () => pickImage(), child: Text("pick Image")),
+                    RaisedButton(onPressed: () => uploadPic(), child: Text("send Image upload2")),
                     RaisedButton(
                         onPressed: () {
                           downloadSched();
@@ -514,18 +495,16 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                     Navigator.of(context).pop();
                     Navigator.push<dynamic>(
                       context,
-                      MaterialPageRoute<dynamic>(
-                          builder: (context) => ListSchedulingPage()),
+                      MaterialPageRoute<dynamic>(builder: (context) => ListSchedulingPage()),
                     );
                   },
                   child: Text("Go to scheduling page")),
               Container(
                 height: 800,
                 width: 600,
-                child: ListView(scrollDirection: Axis.vertical, children: [
-                  Container(
-                      child: Text(result, style: ColorDefs.textBodyWhite20))
-                ]),
+                child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [Container(child: Text(result, style: ColorDefs.textBodyWhite20))]),
               ),
               RaisedButton(
                   color: Colors.red,
@@ -536,8 +515,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                              'This will delete all data in the remote database.  Are you sure you want to do this?'),
+                          Text('This will delete all data in the remote database.  Are you sure you want to do this?'),
                         ],
                       ),
                       actions: <Widget>[

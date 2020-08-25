@@ -204,13 +204,13 @@ class Dialogs {
     );
   }
 
-  static void showSites({BuildContext context, String agencyNum, @required bool singleSite}) {
+  static void showSites({BuildContext context, String agencyNumber, @required bool singleSite}) {
     AlertDialog alert = AlertDialog(
         contentPadding: EdgeInsets.all(0.0),
         backgroundColor: Colors.green,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
         elevation: 0.0,
-        content: SitePopUp(agencyNum: agencyNum, singleSite: singleSite));
+        content: SitePopUp(agencyNumber: agencyNumber, singleSite: singleSite));
     showDialog<void>(
       barrierDismissible: true,
       context: context,

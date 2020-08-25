@@ -33,7 +33,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   TimeOfDay selectedTime; // = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
-  String selectedAgencyNum;
+  String selectedAgencyNumber;
   String selectedAuditor = "Select";
   bool alreadyExisted = false;
   CalendarResult alreadyExistedCalendarResult;
@@ -54,7 +54,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       this.selectedSiteName = widget.calendarResult.agencyName;
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
-      this.selectedAgencyNum = widget.calendarResult.agencyNum;
+      this.selectedAgencyNumber = widget.calendarResult.agencyNumber;
       if (widget.calendarResult.status != "Site Visit Req.") {
         alreadyExisted = true;
       }
@@ -63,7 +63,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       selectedSiteName = widget.loadSite.agencyName;
 
       selectedProgramNumber = widget.loadSite.programNumber;
-      selectedAgencyNum = widget.loadSite.agencyNumber;
+      selectedAgencyNumber = widget.loadSite.agencyNumber;
     }
 
     auditorDropDownMenu = Provider.of<ListCalendarData>(context, listen: false).auditorList.getAuditorDropDown();
@@ -192,8 +192,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                 lookAheadCallback: (List<String> val) {
                   selectedSiteName = val[0];
                   selectedProgramNumber = val[1];
-                  selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
-                  print(selectedAgencyNum);
+                  selectedAgencyNumber = siteList.agencyNumberFromAgencyName(selectedSiteName);
+                  print(selectedAgencyNumber);
                 },
               ),
               Row(
@@ -417,7 +417,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                               oldAuditCitationsObject['PreviousEvent'] = {
                                 'StartTime': alreadyExistedCalendarResult.startTime,
                                 'AgencyName': alreadyExistedCalendarResult.agencyName,
-                                'AgencyNumber': alreadyExistedCalendarResult.agencyNum,
+                                'AgencyNumber': alreadyExistedCalendarResult.agencyNumber,
                                 'ProgramNumber': alreadyExistedCalendarResult.programNum,
                                 'AuditType': alreadyExistedCalendarResult.auditType,
                                 'ProgramType': alreadyExistedCalendarResult.programType.toString(),
@@ -429,7 +429,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                               'startTime': selectedDateTime.toString(),
                               'message': '',
                               'agencyName': selectedSiteName,
-                              'agencyNum': selectedAgencyNum,
+                              'agencyNumber': selectedAgencyNumber,
                               'auditType': selectedAuditType,
                               'programNum': selectedProgramNumber,
                               'programType': selectedProgType,

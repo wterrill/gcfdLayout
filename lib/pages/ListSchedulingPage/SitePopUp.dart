@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 import 'LookAhead.dart';
 
 class SitePopUp extends StatefulWidget {
-  const SitePopUp({Key key, @required this.agencyNum, @required this.singleSite}) : super(key: key);
-  final String agencyNum;
+  const SitePopUp({Key key, @required this.agencyNumber, @required this.singleSite}) : super(key: key);
+  final String agencyNumber;
   final bool singleSite;
 
   @override
@@ -23,8 +23,8 @@ class _SitePopUpState extends State<SitePopUp> {
   @override
   Widget build(BuildContext context) {
     SiteList siteList = Provider.of<SiteData>(context, listen: false).siteList;
-    if (widget.agencyNum != null) {
-      selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: widget.agencyNum);
+    if (widget.agencyNumber != null) {
+      selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: widget.agencyNumber);
     }
     return Theme(
       data: ThemeData(
@@ -57,10 +57,10 @@ class _SitePopUpState extends State<SitePopUp> {
                       String selectedAgencyNumber = val[2];
 
                       // Site selectedSite =
-                      String selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
-                      print(selectedAgencyNum);
+                      selectedAgencyNumber = siteList.agencyNumberFromAgencyName(selectedSiteName);
+                      print(selectedAgencyNumber);
                       setState(() {
-                        selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNum);
+                        selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNumber);
                       });
                     }),
               ),

@@ -66,7 +66,7 @@ class _SectionButtonsState extends State<SectionButtons> {
                             Row(
                               children: [
                                 Text(
-                                  widget.activeAudit?.calendarResult?.agencyNum ?? "",
+                                  widget.activeAudit?.calendarResult?.agencyNumber ?? "",
                                   style: ColorDefs.textGreen25,
                                 ),
                                 Text(

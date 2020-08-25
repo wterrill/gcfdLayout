@@ -39,7 +39,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
         programType: convertNumberToProgramType(event['ProgramType'] as int),
         message: "",
         siteInfo: siteList.getSiteFromAgencyNumber(agencyNumber: event['AgencyNumber'] as String),
-        agencyNum: event['AgencyNumber'] as String,
+        agencyNumber: event['AgencyNumber'] as String,
         programNum: event['ProgramNumber'] as String,
         agencyName: siteList.agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
         auditType: convertNumberToAuditType(event['AuditType'] as int),

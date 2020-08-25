@@ -31,7 +31,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
   TimeOfDay selectedTime; // = TimeOfDay(hour: 10, minute: 0);
   String selectedSiteName;
   String selectedProgramNumber;
-  String selectedAgencyNum;
+  String selectedAgencyNumber;
   String selectedAuditor = "Select";
   bool alreadyExisted = false;
   CalendarResult alreadyExistedCalendarResult;
@@ -50,7 +50,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
       this.selectedSiteName = widget.calendarResult.agencyName;
       this.selectedProgramNumber = widget.calendarResult.programNum;
       this.selectedAuditor = widget.calendarResult.auditor;
-      this.selectedAgencyNum = widget.calendarResult.agencyNum;
+      this.selectedAgencyNumber = widget.calendarResult.agencyNumber;
       auditTypeDropDownMenuFollowUp = [widget.calendarResult.auditType];
       programTypeDropDownMenu = [widget.calendarResult.programType];
 
@@ -169,8 +169,8 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                   lookAheadCallback: (List<String> val) {
                     selectedSiteName = val[0];
                     selectedProgramNumber = val[1];
-                    selectedAgencyNum = siteList.agencyNumFromAgencyName(selectedSiteName);
-                    print(selectedAgencyNum);
+                    selectedAgencyNumber = siteList.agencyNumberFromAgencyName(selectedSiteName);
+                    print(selectedAgencyNumber);
                   },
                 ),
                 Row(
@@ -397,7 +397,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                               oldAuditCitationsObject['PreviousEvent'] = {
                                 'StartTime': alreadyExistedCalendarResult.startTime,
                                 'AgencyName': alreadyExistedCalendarResult.agencyName,
-                                'AgencyNumber': alreadyExistedCalendarResult.agencyNum,
+                                'AgencyNumber': alreadyExistedCalendarResult.agencyNumber,
                                 'ProgramNumber': alreadyExistedCalendarResult.programNum,
                                 'AuditType': alreadyExistedCalendarResult.auditType,
                                 'ProgramType': alreadyExistedCalendarResult.programType.toString(),
@@ -410,7 +410,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                               oldAuditCitationsObject['PreviousEvent'] = {
                                 'StartTime': selectedDateTime.toString(),
                                 'AgencyName': alreadyExistedCalendarResult.agencyName,
-                                'AgencyNumber': alreadyExistedCalendarResult.agencyNum,
+                                'AgencyNumber': alreadyExistedCalendarResult.agencyNumber,
                                 'ProgramNumber': alreadyExistedCalendarResult.programNum,
                                 'AuditType': alreadyExistedCalendarResult.auditType,
                                 'ProgramType': alreadyExistedCalendarResult.programType.toString(),
@@ -422,7 +422,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                               'startTime': selectedDateTime.toString(),
                               'message': '',
                               'agencyName': selectedSiteName,
-                              'agencyNum': selectedAgencyNum,
+                              'agencyNumber': selectedAgencyNumber,
                               'auditType': selectedAuditType,
                               'programNum': selectedProgramNumber,
                               'programType': selectedProgType,

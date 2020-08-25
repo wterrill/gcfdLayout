@@ -11,13 +11,13 @@ class SiteList extends HiveObject {
 
   SiteList({this.siteList}) {}
 
-  String agencyNumFromAgencyName(String agencyName) {
+  String agencyNumberFromAgencyName(String agencyName) {
     for (Site site in siteList) {
       if (site.agencyName == agencyName) {
         return site.agencyNumber;
       }
     }
-    return "SITE NOT FOUND: agencyNumFromAgencyName";
+    return "SITE NOT FOUND: agencyNumberFromAgencyName";
   }
 
   String agencyNameFromAgencyNumber(String agencyNumber) {
@@ -71,18 +71,4 @@ class SiteList extends HiveObject {
     Site site = siteList[random.nextInt(siteList.length)];
     return site;
   }
-
-  // Site getSiteFromProgramORAgencyNumber(
-  //     {String programNumber, String agencyNumber}) {
-  //   Site site;
-  //   // site = getSiteFromProgramNumber(programNumber);
-  //   if (site == null) {
-  //     site = getSiteFromAgencyNumber(agencyNumber);
-  //   }
-  //   if (site == null) {
-  //     print(
-  //         "ERROR IN PROGRAM LOOKUP FOR SITE getSiteFromProgramORAgencyNumber");
-  //   }
-  //   return site;
-  // }
 }

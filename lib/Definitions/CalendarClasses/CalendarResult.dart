@@ -13,7 +13,7 @@ class CalendarResult extends HiveObject {
   @HiveField(1)
   final String agencyName;
   @HiveField(2)
-  final String agencyNum;
+  final String agencyNumber;
   @HiveField(3)
   String auditType;
   @HiveField(4)
@@ -44,7 +44,7 @@ class CalendarResult extends HiveObject {
   CalendarResult(
       {@required this.startTime,
       @required this.agencyName,
-      @required this.agencyNum,
+      @required this.agencyNumber,
       @required this.auditType,
       @required this.programNum,
       @required this.programType,
@@ -77,7 +77,7 @@ class CalendarResult extends HiveObject {
     return CalendarResult(
         startTime: startTime,
         agencyName: agencyName,
-        agencyNum: agencyNum,
+        agencyNumber: agencyNumber,
         auditType: auditType,
         programNum: programNum,
         programType: programType,
@@ -92,7 +92,7 @@ class CalendarResult extends HiveObject {
   String toString() {
     return ''' $startTime ,
       $agencyName,
-      $agencyNum,
+      $agencyNumber,
       $auditType,
       $programNum,
       $programType,

@@ -318,7 +318,7 @@ class AuditInfoDialog extends StatelessWidget {
                             ),
                             onPressed: () {
                               Dialogs.showSites(
-                                  context: context, agencyNum: calendarResult.agencyNum, singleSite: true);
+                                  context: context, agencyNumber: calendarResult.agencyNumber, singleSite: true);
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(5.0, 12.0, 5.0, 12.0),

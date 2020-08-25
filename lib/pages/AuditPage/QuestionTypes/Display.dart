@@ -46,7 +46,7 @@ class _DisplayState extends State<Display> {
           widget = Text(activeCalendarResult?.agencyName?.titleCase, style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency/Program Number:"):
-          widget = Text('${activeCalendarResult?.agencyNum}/${activeCalendarResult?.programNum}',
+          widget = Text('${activeCalendarResult?.agencyNumber}/${activeCalendarResult?.programNum}',
               style: ColorDefs.textBodyBlack20);
           break;
         case ("Site Address:"):

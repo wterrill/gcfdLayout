@@ -283,7 +283,7 @@ class AuditData with ChangeNotifier {
     CalendarResult created = CalendarResult(
       startTime: result['StartTime'],
       agencyName: result['AgencyName'],
-      agencyNum: result['AgencyNumber'],
+      agencyNumber: result['AgencyNumber'],
       auditType: result['AuditType'],
       programNum: result['ProgramNumber'],
       programType: result['ProgramType'],
@@ -548,7 +548,7 @@ class AuditData with ChangeNotifier {
     List<dynamic> files = getPicList(photoList);
 
     String json = jsonEncode(<String, dynamic>{
-      "AgencyNumber": audit.calendarResult.agencyNum,
+      "AgencyNumber": audit.calendarResult.agencyNumber,
       "ProgramNumber": audit.calendarResult.programNum,
       "ProgramType": convertProgramTypeToNumber(audit.calendarResult.programType),
       "Auditor": audit.calendarResult.auditor,

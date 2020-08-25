@@ -154,7 +154,7 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
   resultMap['ImmediateHold'] = outgoingAudit.putProgramOnImmediateHold;
 
   Map<String, dynamic> mainBody = <String, dynamic>{
-    "AgencyNumber": outgoingAudit.calendarResult.agencyNum,
+    "AgencyNumber": outgoingAudit.calendarResult.agencyNumber,
     "ProgramNumber": outgoingAudit.calendarResult.programNum,
     "ProgramType": convertProgramTypeToNumber(outgoingAudit.calendarResult.programType),
     "Auditor": outgoingAudit.calendarResult.auditor,
