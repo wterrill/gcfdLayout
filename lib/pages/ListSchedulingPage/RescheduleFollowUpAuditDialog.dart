@@ -248,7 +248,7 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                           fieldHintText: "fieldHintText",
                           fieldLabelText: "fieldLabelText",
                           context: context,
-                          initialDate: DateTime.now(),
+                          initialDate: (selectedDate != null) ? selectedDate : DateTime.now(),
                           firstDate: DateTime(2018),
                           lastDate: DateTime(2030),
                         );
@@ -282,7 +282,9 @@ class _RescheduleFollowUpAuditDialogState extends State<RescheduleFollowUpAuditD
                     Text("Start Time:", style: ColorDefs.textGreen25),
                     GestureDetector(
                       onTap: () async {
-                        TimeOfDay fromTimeSelector = await showTimePicker(context: context, initialTime: selectedTime
+                        TimeOfDay fromTimeSelector = await showTimePicker(
+                            context: context,
+                            initialTime: (selectedTime != null) ? selectedTime : TimeOfDay(hour: 10, minute: 0)
                             // builder: (BuildContext context, Widget child) {
                             //   return Directionality(
                             //     // textDirection: TextDirection.LTR,

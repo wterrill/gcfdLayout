@@ -121,6 +121,8 @@ class _FillInQuestionState extends State<FillInQuestion> {
                 } else {
                   myBubbleOn = false;
                 }
+                Provider.of<AuditData>(context, listen: false)
+                    .updateSectionStatus(checkSectionDone(widget.activeSection));
               });
             },
           )

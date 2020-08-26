@@ -12,9 +12,7 @@ class ReviewDateQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  ReviewDateQuestion(
-      {Key key, this.index, this.activeSection, this.questionAutoGroup})
-      : super(key: key);
+  ReviewDateQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
 
   @override
   _ReviewDateQuestionState createState() => _ReviewDateQuestionState();
@@ -22,6 +20,7 @@ class ReviewDateQuestion extends StatefulWidget {
 
 class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
   @override
+  DateTime selectedDate;
   Widget build(BuildContext context) {
     int index = widget.index;
     // Section activeSection = widget.activeSection;
@@ -31,24 +30,20 @@ class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
           children: [
             Expanded(
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 3,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 3, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             (widget.activeSection.questions[index].userResponse != null)
                 ? Text(
                     DateFormat.yMMMMd('en_US')
-                        .format(DateTime.parse(widget.activeSection
-                            .questions[index].userResponse as String))
+                        .format(DateTime.parse(widget.activeSection.questions[index].userResponse as String))
                         .toString(),
                   )
                 : Text(""),
             FlatButton(
                 onPressed: () async {
-                  DateTime selectedDate;
                   selectedDate = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: (selectedDate != null) ? selectedDate : DateTime.now(),
                     firstDate: DateTime(2018),
                     lastDate: DateTime(2030),
                     builder: (BuildContext context, Widget child) {
@@ -58,24 +53,15 @@ class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
                       );
                     },
                   );
-                  widget.activeSection.questions[index].userResponse =
-                      selectedDate.toString();
+                  widget.activeSection.questions[index].userResponse = selectedDate.toString();
                   Provider.of<AuditData>(context, listen: false)
-                      .updateSectionStatus(
-                          checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
+                      .updateSectionStatus(checkSectionDone(widget.activeSection));
+                  Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+                  Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                   setState(() {});
                 },
                 child: Icon(Icons.calendar_today,
-                    color:
-                        (widget.activeSection.questions[index].userResponse ==
-                                null)
-                            ? Colors.red
-                            : Colors.green)),
+                    color: (widget.activeSection.questions[index].userResponse == null) ? Colors.red : Colors.green)),
             GestureDetector(
               onTap: () {
                 widget.activeSection.questions[index].textBoxRollOut =
@@ -85,11 +71,9 @@ class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Icon(Icons.chat_bubble,
-                    color:
-                        widget.activeSection.questions[index].optionalComment ==
-                                null
-                            ? ColorDefs.colorChatNeutral
-                            : ColorDefs.colorChatSelected),
+                    color: widget.activeSection.questions[index].optionalComment == null
+                        ? ColorDefs.colorChatNeutral
+                        : ColorDefs.colorChatSelected),
               ),
             ),
           ],

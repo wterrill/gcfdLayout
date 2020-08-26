@@ -350,16 +350,16 @@ class ListCalendarData with ChangeNotifier {
     // print(calendarBox.keys);
     CalendarResult clonedCalendarResult = calendarItem.clone();
     CalendarResult retrievedCalendarItem = calendarBox.get(
-            '${clonedCalendarResult.startTime}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}')
+            '${clonedCalendarResult.startTime}-${clonedCalendarResult.agencyNumber}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}')
         as CalendarResult;
     if (retrievedCalendarItem != null) {
       if (convertStatusToNumber(retrievedCalendarItem.status) <= convertStatusToNumber(clonedCalendarResult.status)) {
         //this gets rid of the "T"
         DateTime temp = DateTime.parse(clonedCalendarResult.startTime);
         // calendarBox.delete(
-        //     '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
+        //     '${temp.toString()}-${clonedCalendarResult.agencyNumber}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}');
         calendarBox.put(
-            '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}',
+            '${temp.toString()}-${clonedCalendarResult.agencyNumber}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}',
             clonedCalendarResult);
         // print(calendarBox.keys);
         newEventAdded = true;
@@ -369,7 +369,7 @@ class ListCalendarData with ChangeNotifier {
       //temp gets rid of the "T"
       DateTime temp = DateTime.parse(calendarItem.startTime);
       calendarBox.put(
-          '${temp.toString()}-${calendarItem.agencyName}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
+          '${temp.toString()}-${calendarItem.agencyNumber}-${calendarItem.programNum}-${calendarItem.auditor}-${calendarItem.auditType}',
           calendarItem);
       // print(calendarBox.keys);
       newEventAdded = true;
@@ -385,11 +385,11 @@ class ListCalendarData with ChangeNotifier {
     packaged['calendarResult'] = calendarResult;
     print(packaged);
     calendarOrderedOutBox.put(
-        '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::$typeOfOperation',
+        '${temp.toString()}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::$typeOfOperation',
         packaged);
     print(calendarOrderedOutBox.keys.toList());
     Map<String, dynamic> test = calendarOrderedOutBox.get(
-            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
+            '${temp.toString()}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Map<String, dynamic>;
     print(typeOfOperation);
     print(test);
@@ -410,7 +410,7 @@ class ListCalendarData with ChangeNotifier {
     CalendarResult clonedCalendarResult = calendarResult.clone();
     DateTime temp = DateTime.parse(clonedCalendarResult.startTime);
     String index =
-        '${temp.toString()}-${clonedCalendarResult.agencyName}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}';
+        '${temp.toString()}-${clonedCalendarResult.agencyNumber}-${clonedCalendarResult.programNum}-${clonedCalendarResult.auditor}-${clonedCalendarResult.auditType}';
     calendarBox.delete(index);
 
     addCalendarOrderedItem(calendarResult.clone(), "Delete");
@@ -425,16 +425,16 @@ class ListCalendarData with ChangeNotifier {
 
   void updateStatusOnScheduleToCompleted(CalendarResult calendarResult) {
     CalendarResult retrievedSchedule = calendarBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
+            '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as CalendarResult;
     // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
     if (retrievedSchedule != null) {
       Map<String, dynamic> retrievedScheduleToSend = calendarOrderedOutBox.get(
-              '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Add')
+              '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Add')
           as Map<String, dynamic>;
       if (retrievedScheduleToSend == null) {
         retrievedScheduleToSend = calendarOrderedOutBox.get(
-                '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Edit')
+                '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Edit')
             as Map<String, dynamic>;
       }
       if (retrievedSchedule.status != "Completed") {
@@ -445,7 +445,7 @@ class ListCalendarData with ChangeNotifier {
         DateTime temp = DateTime.parse(calendarResult.startTime);
 
         calendarBox.put(
-            '${temp.toString()}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
+            '${temp.toString()}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}',
             retrievedSchedule);
         notifyListeners();
       }
@@ -473,7 +473,7 @@ class ListCalendarData with ChangeNotifier {
 
     CalendarResult newEvent = convertMapToCalendarResult(event);
     CalendarResult retrievedEvent = calendarBox.get(
-            '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}')
+            '${newEvent.startTime}-${newEvent.agencyNumber}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}')
         as CalendarResult;
     if (retrievedEvent != null) {
       exists = true;
@@ -489,14 +489,14 @@ class ListCalendarData with ChangeNotifier {
     CalendarResult anotherEvent = convertMapToCalendarResult(event);
     // Map<String,dynamic> anotherEvent = JSON.decode(JSON.encode(newEvent));
     CalendarResult retrievedEvent = calendarBox.get(
-            '${newEvent.startTime}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}')
+            '${newEvent.startTime}-${newEvent.agencyNumber}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}')
         as CalendarResult;
     if (retrievedEvent == null) {
       //temp gets rid of the "T"
       DateTime temp = DateTime.parse(newEvent.startTime);
 
       calendarBox.put(
-          '${temp.toString()}-${newEvent.agencyName}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}',
+          '${temp.toString()}-${newEvent.agencyNumber}-${newEvent.programNum}-${newEvent.auditor}-${newEvent.auditType}',
           newEvent);
       addCalendarOrderedItem(anotherEvent, "Add");
       newEventAdded = true;
@@ -542,7 +542,7 @@ class ListCalendarData with ChangeNotifier {
       String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000').format(DateTime.parse(randomDate.toString()));
       print(startTime);
       Site randomSite = siteList.getRandom();
-      String agency = randomSite.agencyName;
+      String agency = randomSite.agencyNumber;
       String agencyNumber = randomSite.agencyNumber;
       List<String> programlist = randomSite.programDisplayName.split(" - ");
       String programNum = programlist[programlist.length - 1];

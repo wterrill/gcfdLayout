@@ -74,7 +74,7 @@ class AuditData with ChangeNotifier {
   void deleteAudit(CalendarResult calendarResult) {
     print(auditBox.keys.length);
     auditBox.delete(
-        '${calendarResult.startDateTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
+        '${calendarResult.startDateTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}');
     print(auditBox.keys.length);
   }
 
@@ -84,7 +84,7 @@ class AuditData with ChangeNotifier {
     }
     if (incomingAudit != null) {
       Audit retrievedAudit = auditBox.get(
-              '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}')
+              '${incomingAudit.calendarResult.startTime}-${incomingAudit.calendarResult.agencyNumber}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}')
           as Audit;
       if (retrievedAudit != null) {
         // only the put if the status is higher than what we already have:
@@ -93,14 +93,14 @@ class AuditData with ChangeNotifier {
           DateTime temp = DateTime.parse(incomingAudit.calendarResult.startTime);
 
           auditBox.put(
-              '${temp.toString()}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+              '${temp.toString()}-${incomingAudit.calendarResult.agencyNumber}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
               incomingAudit);
         }
       } else {
         //this gets rid of the "T"
         DateTime temp = DateTime.parse(incomingAudit.calendarResult.startTime);
         auditBox.put(
-            '${temp.toString()}-${incomingAudit.calendarResult.agencyName}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
+            '${temp.toString()}-${incomingAudit.calendarResult.agencyNumber}-${incomingAudit.calendarResult.programNum}-${incomingAudit.calendarResult.auditor}-${incomingAudit.calendarResult.auditType}',
             incomingAudit);
       }
     }
@@ -155,7 +155,7 @@ class AuditData with ChangeNotifier {
 
   Audit getAuditFromBox(CalendarResult calendarResult) {
     Audit retrievedAudit = auditBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
+            '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Audit;
     return retrievedAudit;
   }
@@ -174,7 +174,7 @@ class AuditData with ChangeNotifier {
           as Audit;
     } else {
       retrievedAudit = auditBox.get(
-              '${newCalendarResult.startTime}-${newCalendarResult.agencyName}-${newCalendarResult.programNum}-${newCalendarResult.auditor}-${newCalendarResult.auditType}')
+              '${newCalendarResult.startTime}-${newCalendarResult.agencyNumber}-${newCalendarResult.programNum}-${newCalendarResult.auditor}-${newCalendarResult.auditType}')
           as Audit;
     }
     Map<String, dynamic> citationsMap = <String, dynamic>{};
@@ -201,13 +201,13 @@ class AuditData with ChangeNotifier {
     DateTime temp = DateTime.parse(outgoingAudit.calendarResult.startTime);
 
     auditOutBox.put(
-        '${temp.toString()}-${clonedOutgoingAudit.calendarResult.agencyName}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
+        '${temp.toString()}-${clonedOutgoingAudit.calendarResult.agencyNumber}-${clonedOutgoingAudit.calendarResult.programNum}-${clonedOutgoingAudit.calendarResult.auditor}-${clonedOutgoingAudit.calendarResult.auditType}',
         clonedOutgoingAudit);
   }
 
   bool auditExists(CalendarResult calendarResult) {
     retrievedAudit = auditBox.get(
-            '${calendarResult.startTime}-${calendarResult.agencyName}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
+            '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Audit;
     print(retrievedAudit);
     if (retrievedAudit == null) {
@@ -573,7 +573,7 @@ class AuditData with ChangeNotifier {
 
       DateTime temp = DateTime.parse(anotherEvent.calendarResult.startTime);
       auditOutBox.put(
-          '${temp.toString()}-${anotherEvent.calendarResult.agencyName}-${anotherEvent.calendarResult.programNum}-${anotherEvent.calendarResult.auditor}-${anotherEvent.calendarResult.auditType}',
+          '${temp.toString()}-${anotherEvent.calendarResult.agencyNumber}-${anotherEvent.calendarResult.programNum}-${anotherEvent.calendarResult.auditor}-${anotherEvent.calendarResult.auditType}',
           anotherEvent);
     }
     sendAuditsToCloud(deviceid);

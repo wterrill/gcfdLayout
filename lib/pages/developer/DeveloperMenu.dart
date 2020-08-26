@@ -25,6 +25,8 @@ class DeveloperMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDate;
+    TimeOfDay selectedTime;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -102,10 +104,9 @@ class DeveloperMenu extends StatelessWidget {
             color: Colors.red,
             child: Text("Date picker"),
             onPressed: () async {
-              DateTime selectedDate;
               selectedDate = await showDatePicker(
                 context: context,
-                initialDate: DateTime.now(),
+                initialDate: (selectedDate != null) ? selectedDate : DateTime.now(),
                 firstDate: DateTime(2018),
                 lastDate: DateTime(2030),
                 builder: (BuildContext context, Widget child) {
@@ -136,9 +137,9 @@ class DeveloperMenu extends StatelessWidget {
             color: Colors.red,
             child: Text("Time picker"),
             onPressed: () async {
-              TimeOfDay selectedTimeRTL = await showTimePicker(
+              selectedTime = await showTimePicker(
                 context: context,
-                initialTime: TimeOfDay.now(),
+                initialTime: (selectedTime != null) ? selectedTime : TimeOfDay(hour: 10, minute: 0),
                 builder: (BuildContext context, Widget child) {
                   return Directionality(
                     textDirection: TextDirection.ltr,
@@ -146,7 +147,7 @@ class DeveloperMenu extends StatelessWidget {
                   );
                 },
               );
-              print(selectedTimeRTL);
+              print(selectedTime);
             },
           ),
 

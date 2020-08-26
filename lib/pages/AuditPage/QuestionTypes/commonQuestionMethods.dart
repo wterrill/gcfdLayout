@@ -46,7 +46,8 @@ Status checkSectionDone(Section activeSection) {
   int numQuestions = activeSection.questions.length;
 
   for (Question question in activeSection.questions) {
-    if (question.userResponse == null && question.typeOfQuestion.toLowerCase() != "display") {
+    if ((question.userResponse == null || question.userResponse == "") &&
+        question.typeOfQuestion.toLowerCase() != "display") {
       done = false;
     } else {
       numComplete += 1;

@@ -75,7 +75,7 @@ Logout button
 --Site Information -> hide search and schedule button
 --ordering on table view
 --visual contrast on parallel lines (audit)
-clicking 'schedule' without choosing time
-date picker should default to the selected date
+--clicking 'schedule' without choosing time
+--date picker should default to the selected date
 entering text as last fillIn doesn't trigger nav button change
-colors
+--colors

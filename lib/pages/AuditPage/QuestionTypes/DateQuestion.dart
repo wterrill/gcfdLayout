@@ -22,6 +22,7 @@ class DateQuestion extends StatefulWidget {
 
 class _DateQuestionState extends State<DateQuestion> {
   bool myBubbleOn = false;
+  DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
@@ -52,10 +53,9 @@ class _DateQuestionState extends State<DateQuestion> {
                           message: "This audit has already been submitted, and cannot be edited",
                           dismissable: true);
                     } else {
-                      DateTime selectedDate;
                       selectedDate = await showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialDate: (selectedDate != null) ? selectedDate : DateTime.now(),
                         firstDate: DateTime(2018),
                         lastDate: DateTime(2030),
                         builder: (BuildContext context, Widget child) {

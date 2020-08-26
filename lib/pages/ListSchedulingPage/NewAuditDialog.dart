@@ -274,7 +274,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                         fieldHintText: "fieldHintText",
                         fieldLabelText: "fieldLabelText",
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialDate: (selectedDate != null) ? selectedDate : DateTime.now(),
                         firstDate: DateTime(2018),
                         lastDate: DateTime(2030),
                       );
@@ -311,8 +311,9 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      TimeOfDay fromTimeSelector =
-                          await showTimePicker(context: context, initialTime: TimeOfDay(hour: 10, minute: 0));
+                      TimeOfDay fromTimeSelector = await showTimePicker(
+                          context: context,
+                          initialTime: (selectedTime != null) ? selectedTime : TimeOfDay(hour: 10, minute: 0));
                       setState(() {
                         if (fromTimeSelector != null) {
                           selectedTime = fromTimeSelector;
