@@ -394,6 +394,29 @@ class AuditData with ChangeNotifier {
     }
   }
 
+  void tallyScore(int index) {
+    dynamic userResponse = activeSection.questions[index].userResponse;
+    List<String> happyPath = activeSection.questions[index].happyPathResponse;
+    int hasScore = activeSection.questions[index].scoring;
+    if (hasScore != null) {
+      if (happyPath.contains(userResponse)) {
+        if (!activeSection.questions[index].scoreAdded) {
+          activeSection.currentPoints += hasScore;
+          activeAudit.currentPoints += hasScore;
+        }
+        activeSection.questions[index].scoreAdded = true;
+      } else {
+        if (activeSection.questions[index].scoreAdded) {
+          activeSection.currentPoints -= hasScore;
+          activeAudit.currentPoints -= hasScore;
+        }
+        activeSection.questions[index].scoreAdded = false;
+      }
+    }
+    if (activeAudit.maxPoints != 0) activeAudit.auditScore = 100 * activeAudit.currentPoints / activeAudit.maxPoints;
+    print(activeAudit.currentPoints);
+  }
+
   void initialize() {
     print("initialized AuditData");
   }
@@ -455,6 +478,20 @@ class AuditData with ChangeNotifier {
         print("email updated");
       }
     }
+    if (calendarResult.programType != "Senior Adults Program" && calendarResult.programType != "Healthy Student Market")
+      activeAudit.maxPoints = 0;
+    activeAudit.currentPoints = 0;
+    activeAudit.auditScore = 0.0;
+    for (Section section in activeAudit.sections) {
+      section.maxPoints = 0;
+      section.currentPoints = 0;
+      section.sectionScore = 0.0;
+      for (Question question in section.questions) {
+        if (question.scoring != null) section.maxPoints += question.scoring;
+      }
+      activeAudit.maxPoints += section.maxPoints;
+    }
+    activeAudit.maxPoints += 30;
   }
 
   Section cycleSections(int offset) {

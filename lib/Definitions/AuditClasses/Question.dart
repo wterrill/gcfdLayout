@@ -54,6 +54,12 @@ class Question extends HiveObject {
   @HiveField(16)
   bool highlight = false;
 
+  @HiveField(17)
+  int scoring;
+
+  @HiveField(18)
+  bool scoreAdded = false;
+
   Question({this.questionMap}) {
     text = questionMap['text'] as String;
     typeOfQuestion = questionMap['type'] as String;
@@ -70,6 +76,9 @@ class Question extends HiveObject {
     actionItem = questionMap['actionItem'] as String;
     if (questionMap['hideNa'] == 'true') {
       hideNa = true;
+    }
+    if (questionMap['scoring'] != null) {
+      scoring = questionMap['scoring'] as int;
     }
   }
 

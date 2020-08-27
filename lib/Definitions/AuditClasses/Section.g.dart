@@ -61,22 +61,22 @@ class SectionAdapter extends TypeAdapter<Section> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Section(
-      section: (fields[0] as Map)?.map((dynamic k, dynamic v) => MapEntry(
-          k as String,
-          (v as List)
-              ?.map((dynamic e) => (e as Map)?.cast<String, dynamic>())
-              ?.toList())),
+      section: (fields[0] as Map)?.map((dynamic k, dynamic v) =>
+          MapEntry(k as String, (v as List)?.map((dynamic e) => (e as Map)?.cast<String, dynamic>())?.toList())),
     )
       ..name = fields[1] as String
       ..questions = (fields[2] as List)?.cast<Question>()
       ..status = fields[3] as Status
-      ..lastStatus = fields[4] as Status;
+      ..lastStatus = fields[4] as Status
+      ..maxPoints = fields[5] as int
+      ..currentPoints = fields[6] as int
+      ..sectionScore = fields[7] as double;
   }
 
   @override
   void write(BinaryWriter writer, Section obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.section)
       ..writeByte(1)
@@ -86,6 +86,12 @@ class SectionAdapter extends TypeAdapter<Section> {
       ..writeByte(3)
       ..write(obj.status)
       ..writeByte(4)
-      ..write(obj.lastStatus);
+      ..write(obj.lastStatus)
+      ..writeByte(5)
+      ..write(obj.maxPoints)
+      ..writeByte(6)
+      ..write(obj.currentPoints)
+      ..writeByte(7)
+      ..write(obj.sectionScore);
   }
 }

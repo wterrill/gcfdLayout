@@ -64,6 +64,7 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
+                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                     setState(() {});

@@ -21,7 +21,7 @@ class Audit extends HiveObject {
   bool completed;
 
   @HiveField(3)
-  List<MetaData> metadata;
+  List<String> metadata; // <-- this does nothing now.
 
   @HiveField(4)
   List<Map<String, List<Map<String, dynamic>>>> questionnaire;
@@ -58,6 +58,15 @@ class Audit extends HiveObject {
 
   @HiveField(15)
   List<Question> previousCitations = [];
+
+  @HiveField(16)
+  int maxPoints;
+
+  @HiveField(17)
+  int currentPoints;
+
+  @HiveField(18)
+  double auditScore;
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {

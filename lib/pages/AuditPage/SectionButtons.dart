@@ -35,6 +35,17 @@ class _SectionButtonsState extends State<SectionButtons> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle getScoreColor(double auditScore) {
+      TextStyle scoreStyle = ColorDefs.textRedScore;
+      if (auditScore > 30) {
+        scoreStyle = ColorDefs.textOrangeScore;
+      }
+      if (auditScore > 60) {
+        scoreStyle = ColorDefs.textGreenScore;
+      }
+      return scoreStyle;
+    }
+
     print("building SectionButtons");
     AutoSizeGroup buttonAutoGroup = AutoSizeGroup();
     Widget built;
@@ -56,41 +67,68 @@ class _SectionButtonsState extends State<SectionButtons> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.activeAudit?.calendarResult?.agencyName ?? "",
-                              style: ColorDefs.textGreen25,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  widget.activeAudit?.calendarResult?.agencyNumber ?? "",
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 500,
+                                child: Text(
+                                  widget.activeAudit?.calendarResult?.agencyName ?? "",
                                   style: ColorDefs.textGreen25,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Text(
-                                  "/",
-                                  style: ColorDefs.textGreen25,
-                                ),
-                                Text(
-                                  widget.activeAudit?.calendarResult?.programNum ?? "",
-                                  style: ColorDefs.textGreen25,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              widget.activeAudit?.name ?? "",
-                              style: ColorDefs.textBodyBlack20,
-                            ),
-                          ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        widget.activeAudit?.calendarResult?.agencyNumber ?? "",
+                                        style: ColorDefs.textGreen25,
+                                      ),
+                                      Text(
+                                        "/",
+                                        style: ColorDefs.textGreen25,
+                                      ),
+                                      Text(
+                                        widget.activeAudit?.calendarResult?.programNum ?? "",
+                                        style: ColorDefs.textGreen25,
+                                      ),
+                                    ],
+                                  ),
+                                  // Container(
+                                  //   width: 302,
+                                  // ),
+                                  // Text('Score: ${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}%',
+                                  //     style: getScoreColor(widget.activeAudit.auditScore)),
+                                ],
+                              ),
+                              Text(
+                                widget.activeAudit?.name ?? "",
+                                style: ColorDefs.textBodyBlack20,
+                              ),
+                            ],
+                          ),
                         ),
-                      )
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Points ${widget.activeAudit?.currentPoints?.toString() ?? ""}',
+                              style: ColorDefs.textBodyBlue20),
+                          Text('maxPoints ${widget.activeAudit?.maxPoints?.toString() ?? ""}',
+                              style: ColorDefs.textBodyBlue20),
+                          Text('Score: ${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}%',
+                              style: getScoreColor(widget.activeAudit.auditScore)),
+                        ],
+                      ),
                     ],
                   ),
                 ),
                 Container(
-                  height: 100,
+                  height: 101,
                   child: ListView.separated(
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,

@@ -12,9 +12,7 @@ class ReviewDropDownQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  ReviewDropDownQuestion(
-      {Key key, this.index, this.activeSection, this.questionAutoGroup})
-      : super(key: key);
+  ReviewDropDownQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
   @override
   _ReviewDropDownQuestionState createState() => _ReviewDropDownQuestionState();
 }
@@ -30,24 +28,17 @@ class _ReviewDropDownQuestionState extends State<ReviewDropDownQuestion> {
           children: [
             Expanded(
               child: AutoSizeText(widget.activeSection.questions[index].text,
-                  maxLines: 3,
-                  group: widget.questionAutoGroup,
-                  style: ColorDefs.textBodyBlack20),
+                  maxLines: 3, group: widget.questionAutoGroup, style: ColorDefs.textBodyBlack20),
             ),
             DropdownButton<String>(
-              value: widget.activeSection.questions[index].userResponse
-                      as String ??
-                  "Select",
+              value: widget.activeSection.questions[index].userResponse as String ?? "Select",
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
               style: ColorDefs.textBodyBlack20,
               underline: Container(
                 height: 2,
-                color: (widget.activeSection.questions[index].userResponse ==
-                        "Select")
-                    ? Colors.red
-                    : Colors.green,
+                color: (widget.activeSection.questions[index].userResponse == "Select") ? Colors.red : Colors.green,
               ),
               onChanged: (String newValue) {
                 setState(() {
@@ -56,17 +47,13 @@ class _ReviewDropDownQuestionState extends State<ReviewDropDownQuestion> {
                     widget.activeSection.questions[index].textBoxRollOut = true;
                   }
                   Provider.of<AuditData>(context, listen: false)
-                      .updateSectionStatus(
-                          checkSectionDone(widget.activeSection));
-                  Audit thisAudit =
-                      Provider.of<AuditData>(context, listen: false)
-                          .activeAudit;
-                  Provider.of<AuditData>(context, listen: false)
-                      .saveAuditLocally(thisAudit);
+                      .updateSectionStatus(checkSectionDone(widget.activeSection));
+                  Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                  Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+                  Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                 });
               },
-              items: widget.activeSection.questions[index].dropDownMenu
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: widget.activeSection.questions[index].dropDownMenu.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -82,11 +69,9 @@ class _ReviewDropDownQuestionState extends State<ReviewDropDownQuestion> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Icon(Icons.chat_bubble,
-                    color:
-                        widget.activeSection.questions[index].optionalComment ==
-                                null
-                            ? ColorDefs.colorChatNeutral
-                            : ColorDefs.colorChatSelected),
+                    color: widget.activeSection.questions[index].optionalComment == null
+                        ? ColorDefs.colorChatNeutral
+                        : ColorDefs.colorChatSelected),
               ),
             ),
           ],

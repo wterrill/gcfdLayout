@@ -33,6 +33,15 @@ class Section extends HiveObject {
   @HiveField(4)
   Status lastStatus;
 
+  @HiveField(5)
+  int maxPoints;
+
+  @HiveField(6)
+  int currentPoints;
+
+  @HiveField(7)
+  double sectionScore;
+
   Section({this.section}) {
     List<Map<String, dynamic>> questionsList = section.values.toList()[0];
     questions = questionsList.map<Question>((question) {

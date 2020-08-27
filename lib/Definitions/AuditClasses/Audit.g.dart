@@ -19,18 +19,14 @@ class AuditAdapter extends TypeAdapter<Audit> {
     return Audit(
       questionnaire: (fields[4] as List)
           ?.map((dynamic e) => (e as Map)?.map((dynamic k, dynamic v) =>
-              MapEntry(
-                  k as String,
-                  (v as List)
-                      ?.map((dynamic e) => (e as Map)?.cast<String, dynamic>())
-                      ?.toList())))
+              MapEntry(k as String, (v as List)?.map((dynamic e) => (e as Map)?.cast<String, dynamic>())?.toList())))
           ?.toList(),
       calendarResult: fields[5] as CalendarResult,
     )
       ..name = fields[0] as String
       ..sections = (fields[1] as List)?.cast<Section>()
       ..completed = fields[2] as bool
-      ..metadata = (fields[3] as List)?.cast<MetaData>()
+      ..metadata = (fields[3] as List)?.cast<String>()
       ..citations = (fields[6] as List)?.cast<Question>()
       ..putProgramOnImmediateHold = fields[7] as bool
       ..photoSig = (fields[8] as Map)?.cast<String, Uint8List>()
@@ -40,13 +36,16 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..detailsConfirmed = fields[12] as bool
       ..activateConfirmDetails = fields[13] as bool
       ..actionItemList = (fields[14] as List)?.cast<String>()
-      ..previousCitations = (fields[15] as List)?.cast<Question>();
+      ..previousCitations = (fields[15] as List)?.cast<Question>()
+      ..maxPoints = fields[16] as int
+      ..currentPoints = fields[17] as int
+      ..auditScore = fields[18] as double;
   }
 
   @override
   void write(BinaryWriter writer, Audit obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -78,6 +77,12 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..writeByte(14)
       ..write(obj.actionItemList)
       ..writeByte(15)
-      ..write(obj.citations);
+      ..write(obj.previousCitations) // <-- this was citiations
+      ..writeByte(16)
+      ..write(obj.maxPoints)
+      ..writeByte(17)
+      ..write(obj.currentPoints)
+      ..writeByte(18)
+      ..write(obj.auditScore);
   }
 }

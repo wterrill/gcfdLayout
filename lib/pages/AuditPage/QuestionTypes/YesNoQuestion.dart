@@ -60,6 +60,7 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
+                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                     setState(() {});
@@ -88,6 +89,7 @@ class _YesNoQuestionState extends State<YesNoQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
+                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                     setState(() {});

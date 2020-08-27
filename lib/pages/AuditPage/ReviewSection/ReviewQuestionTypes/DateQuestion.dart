@@ -56,6 +56,7 @@ class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
                   widget.activeSection.questions[index].userResponse = selectedDate.toString();
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(checkSectionDone(widget.activeSection));
+                  Provider.of<AuditData>(context, listen: false).tallyScore(index);
                   Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                   Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                   setState(() {});

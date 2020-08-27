@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class HoursOfOperation {
-  String dayOfWeek;
-  TimeOfDay programOperatingHoursStart;
-  TimeOfDay programOperatingHoursEnd;
-}
+// class HoursOfOperation {
+//   String dayOfWeek;
+//   TimeOfDay programOperatingHoursStart;
+//   TimeOfDay programOperatingHoursEnd;
+// }

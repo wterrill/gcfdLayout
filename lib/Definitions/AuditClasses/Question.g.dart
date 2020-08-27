@@ -34,13 +34,15 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..actionItem = fields[13] as String
       ..hideFollowUpActionItem = fields[14] as bool
       ..hideNa = fields[15] as bool
-      ..highlight = fields[16] as bool;
+      ..highlight = fields[16] as bool
+      ..scoring = fields[17] as int
+      ..scoreAdded = fields[18] as bool;
   }
 
   @override
   void write(BinaryWriter writer, Question obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
@@ -74,6 +76,10 @@ class QuestionAdapter extends TypeAdapter<Question> {
       ..writeByte(15)
       ..write(obj.hideNa)
       ..writeByte(16)
-      ..write(obj.highlight);
+      ..write(obj.highlight)
+      ..writeByte(17)
+      ..write(obj.scoring)
+      ..writeByte(18)
+      ..write(obj.scoreAdded);
   }
 }

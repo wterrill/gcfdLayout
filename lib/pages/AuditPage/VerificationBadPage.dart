@@ -37,6 +37,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   Uint8List foodDepositoryMonitorSignature = null;
   List<String> actionItems;
   int followupReqVal;
+  int scoringReqVal = -1;
   String affectedIssues = "";
 
   DateTime selectedDate;
@@ -240,10 +241,25 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                       onChanged: (int newValue) {
                         setState(() {
                           print(newValue);
+                          if (newValue != scoringReqVal) {
+                            if (newValue == 0) {
+                              widget.activeAudit.currentPoints += 10;
+                              widget.activeAudit.auditScore =
+                                  100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                            }
+                            if (newValue == 1) {
+                              widget.activeAudit.currentPoints -= 10;
+                              widget.activeAudit.auditScore =
+                                  100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                            }
+                          }
+
                           followupReqVal = newValue;
+                          scoringReqVal = newValue;
                           print(followupReqVal);
                           Provider.of<AuditData>(context, listen: false).activeAudit.siteVisitRequired =
                               newValue == 0 ? false : true;
+                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                         });
                       },
                       items: [
@@ -315,8 +331,16 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                         setState(() {
                           if (widget.activeAudit.putProgramOnImmediateHold == null) {
                             widget.activeAudit.putProgramOnImmediateHold = false;
+                            widget.activeAudit.currentPoints += 20;
+                            widget.activeAudit.auditScore =
+                                100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                           } else {
                             widget.activeAudit.putProgramOnImmediateHold = null;
+                            widget.activeAudit.currentPoints -= 20;
+                            widget.activeAudit.auditScore =
+                                100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                           }
                         });
                       },

@@ -128,9 +128,13 @@ class _SectionButtonState extends State<SectionButton> {
 
               //Clay
               //Clay
+              (widget.section.maxPoints != 0)
+                  ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
+                  : Text(""),
+
               Container(
                 width: 111,
-                height: 70,
+                height: 60,
                 child: FlatButton(
                   color: buttonColor,
                   shape: RoundedRectangleBorder(
