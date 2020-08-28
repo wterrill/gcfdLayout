@@ -53,6 +53,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'type': 'yesNo',
     'databaseVar': 'AlsoOperatesAsFoodPantry',
     'databaseVarType': 'bool',
+    'databaseOptCom': 'AlsoOperatesAsFoodPantryComments',
   },
   <String, dynamic>{
     'text': 'If yes, is the food properly separated and tracked for the two programs?',
@@ -61,6 +62,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'scoring': 1,
     'databaseVar': 'FoodSeparatedForTwoPrograms',
     'databaseVarType': 'bool',
+    'databaseOptCom': 'FoodSeparatedForTwoProgramsComments',
     'actionItem': 'Ensure food is properly separated and tracked by each program '
   },
   <String, dynamic>{
@@ -107,6 +109,17 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'databaseVar': 'OnFoodRescueAgencyEnabled',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProgramOnFoodRescue',
+  },
+  <String, dynamic>{
+    'text': 'Does site have Food Service Sanitation Managers?',
+    'type': 'yesNoNa',
+    'happyPathResponse': ['Yes', 'Na'],
+    'scoring': 1,
+    'databaseVar': 'SiteHaveManager',
+    'databaseVarType': 'bool',
+    'databaseOptCom': 'SiteHaveManagerComments',
+    'actionItem':
+        'Submit copy of Food Service Sanitation Manager Certificates (City of Chicago)/ServSafe Certificates (State of Illinois)'
   },
   <String, dynamic>{
     'text': 'Food Service Sanitation Manager Certificates (at least two are required)',
@@ -212,6 +225,7 @@ List<Map<String, dynamic>> audit2Section2Questions = [
   <String, dynamic>{
     'text': "Is the 'And Justice for All' poster accesible to guests?",
     'type': 'yesNoNa',
+    'scoring': 1,
     'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'AndJusticeForAllPostersAccessible',
     'databaseVarType': 'bool',
@@ -261,7 +275,7 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'actionItem': 'Ensure activities pertaining to distribution are conducted only'
   },
   <String, dynamic>{
-    'text': "Guest disposition",
+    'text': "Guest disposition:",
     'type': 'fillIn',
     'databaseVar': 'GuestDisposition',
     'databaseVarType': 'string',
@@ -305,7 +319,8 @@ List<Map<String, dynamic>> audit2Section3Questions = [
     'databaseVarType': 'string',
   },
   <String, dynamic>{
-    'text': "# of Intake Volunteers",
+    'text': "# of Intake Volunteers:",
+    'hideNa': 'true',
     'type': 'fillInNum',
     'databaseVar': 'NumberOfIntakeVolunteers',
     'databaseVarType': 'int',
@@ -318,8 +333,9 @@ List<Map<String, dynamic>> audit2Section3Questions = [
   // },
 
   <String, dynamic>{
-    'text': "# of Meal Distribution volunteers:",
+    'text': "# of Meal Distribution Volunteers:",
     'type': 'fillInNum',
+    'hideNa': 'true',
     'databaseVar': 'NumberOfDistributionVolunteers',
     'databaseVarType': 'int',
   },
@@ -1736,23 +1752,35 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Food Depository Comments',
+    'text': 'Food Depository Comments:',
     'type': 'fillIn',
     'databaseVar': 'FoodDepositoryComments',
     'databaseVarType': 'string'
   },
   <String, dynamic>{
-    'text': 'Donors',
+    'text': 'Donors:',
     'type': 'fillIn',
     'databaseVarType': 'string',
     'databaseVar': 'Donors',
   },
+  // <String, dynamic>{
+  //   'text': 'Date Tax Exemption Verified:',
+  //   'type': 'date',
+  //   'databaseVarType': 'date',
+  //   'databaseVar': 'DateTaxExemptionVerified',
+  // },
+
   <String, dynamic>{
-    'text': 'Date Tax Exemption Verified',
-    'type': 'date',
-    'databaseVarType': 'date',
-    'databaseVar': 'DateTaxExemptionVerified',
+    'text': 'Tax Exemption Verified:',
+    'type': 'yesNo',
+    'happyPathResponse': ['Yes'],
+    'scoring': 5,
+    'databaseVar': 'TaxExemptionVerified',
+    'databaseVarType': 'bool',
+    'databaseOptCom': 'TaxExemptionVerifiedComments',
+    'actionItem': 'Provide documentation showing good standing with IRS or provide an updated active 501c3'
   },
+
   <String, dynamic>{
     'text': 'Re-verified by:',
     'type': 'fillIn',
@@ -1760,13 +1788,13 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVar': 'ReVerifiedBy',
   },
   <String, dynamic>{
-    'text': 'GCFD Monitor',
+    'text': 'GCFD Monitor:',
     'type': 'fillIn',
     'databaseVarType': 'string',
     'databaseVar': 'GCFDMonitor',
   },
   <String, dynamic>{
-    'text': 'Reviewed by',
+    'text': 'Reviewed by:',
     'type': 'fillIn',
     'databaseVarType': 'string',
     'databaseVar': 'ReviewedBy',

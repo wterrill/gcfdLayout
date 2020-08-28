@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/AuditClasses/Section.dart';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/providers/AuditData.dart';
@@ -10,12 +11,10 @@ import 'package:clay_containers/clay_containers.dart';
 class SectionButton extends StatefulWidget {
   final Section section;
   final AutoSizeGroup buttonAutoGroup;
+  final Audit activeAudit;
 
-  SectionButton({
-    Key key,
-    this.section,
-    this.buttonAutoGroup,
-  }) : super(key: key);
+  SectionButton({Key key, @required this.section, @required this.buttonAutoGroup, @required this.activeAudit})
+      : super(key: key);
 
   @override
   _SectionButtonState createState() => _SectionButtonState();
@@ -128,12 +127,14 @@ class _SectionButtonState extends State<SectionButton> {
 
               //Clay
               //Clay
-              (widget.section.maxPoints != 0)
+              (widget.section.maxPoints != 0 &&
+                      widget.activeAudit.calendarResult.programType != "Senior Adults Program" &&
+                      widget.activeAudit.calendarResult.programType != "Healthy Student Market")
                   ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
                   : Text(""),
 
               Container(
-                width: 111,
+                width: 122,
                 height: 60,
                 child: FlatButton(
                   color: buttonColor,

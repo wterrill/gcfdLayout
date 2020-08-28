@@ -37,10 +37,10 @@ class _SectionButtonsState extends State<SectionButtons> {
   Widget build(BuildContext context) {
     TextStyle getScoreColor(double auditScore) {
       TextStyle scoreStyle = ColorDefs.textRedScore;
-      if (auditScore > 30) {
+      if (auditScore >= 40) {
         scoreStyle = ColorDefs.textOrangeScore;
       }
-      if (auditScore > 60) {
+      if (auditScore > 70) {
         scoreStyle = ColorDefs.textGreenScore;
       }
       return scoreStyle;
@@ -72,7 +72,7 @@ class _SectionButtonsState extends State<SectionButtons> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 500,
+                                width: MediaQuery.of(context).size.width * 0.5,
                                 child: Text(
                                   widget.activeAudit?.calendarResult?.agencyName ?? "",
                                   style: ColorDefs.textGreen25,
@@ -113,17 +113,19 @@ class _SectionButtonsState extends State<SectionButtons> {
                           ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Points ${widget.activeAudit?.currentPoints?.toString() ?? ""}',
-                              style: ColorDefs.textBodyBlue20),
-                          Text('maxPoints ${widget.activeAudit?.maxPoints?.toString() ?? ""}',
-                              style: ColorDefs.textBodyBlue20),
-                          Text('Score: ${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}%',
-                              style: getScoreColor(widget.activeAudit.auditScore)),
-                        ],
-                      ),
+                      if (widget.activeAudit.calendarResult.programType != "Senior Adults Program" &&
+                          widget.activeAudit.calendarResult.programType != "Healthy Student Market")
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Points ${widget.activeAudit?.currentPoints?.toString() ?? ""}',
+                                style: ColorDefs.textBodyBlue20),
+                            Text('maxPoints ${widget.activeAudit?.maxPoints?.toString() ?? ""}',
+                                style: ColorDefs.textBodyBlue20),
+                            Text('Internal:${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}',
+                                style: getScoreColor(widget.activeAudit.auditScore)),
+                          ],
+                        ),
                     ],
                   ),
                 ),
@@ -136,8 +138,10 @@ class _SectionButtonsState extends State<SectionButtons> {
                     separatorBuilder: (context, index) => Container(width: 5, color: Colors.transparent),
                     itemCount: widget.activeAudit.sections.length,
                     itemBuilder: (context, index) {
-                      SectionButton sectionButton =
-                          SectionButton(section: widget.activeAudit.sections[index], buttonAutoGroup: buttonAutoGroup);
+                      SectionButton sectionButton = SectionButton(
+                          section: widget.activeAudit.sections[index],
+                          buttonAutoGroup: buttonAutoGroup,
+                          activeAudit: widget.activeAudit);
                       if (index == 0) return Padding(padding: EdgeInsets.only(left: 10.0), child: sectionButton);
                       if (index == widget.activeAudit.sections.length - 1)
                         return Padding(padding: EdgeInsets.only(right: 10.0), child: sectionButton);

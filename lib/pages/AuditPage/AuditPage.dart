@@ -298,7 +298,7 @@ class _AuditPageState extends State<AuditPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
-                                  width: 160,
+                                  width: 180,
                                   child: FlatButton(
                                     disabledColor: ColorDefs.colorButtonNeutral,
                                     color: ColorDefs.colorTopHeader,
@@ -330,7 +330,7 @@ class _AuditPageState extends State<AuditPage> {
                                   width: 20,
                                 ),
                                 Container(
-                                  width: 160,
+                                  width: 180,
                                   child: FlatButton(
                                     disabledColor: ColorDefs.colorButtonNeutral,
                                     color: ColorDefs.colorTopHeader,

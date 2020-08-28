@@ -113,7 +113,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'IsClientChoiceModel',
     'databaseVarType': 'bool',
     'databaseOptCom': 'IsClientChoiceModelComments',
-    'actionItem': 'Site must operate under the client choice model '
+    'actionItem': 'Site must operate under the client choice model'
   },
   <String, dynamic>{
     'text': 'Is Site distributing flyers advertising distribution date and time?',
@@ -122,7 +122,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'DistributesFlyers',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DistributesFlyersComments',
-    'actionItem': 'Site must ensure flyers are being distributed '
+    'actionItem': 'Site must ensure flyers are being distributed'
   },
   <String, dynamic>{
     'text': 'Is the Food Depository contact information posted at distribution?',
@@ -131,7 +131,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'DepositoryContactIsPosted',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DepositoryContactIsPostedComments',
-    'actionItem': 'Site must post Food Depository contact information at distribution '
+    'actionItem': 'Site must post Food Depository contact information at distribution'
   },
   <String, dynamic>{
     'text': 'Are only eligible clients participating in distribution?',
@@ -140,7 +140,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVar': 'OnlyEligibleClients',
     'databaseVarType': 'bool',
     'databaseOptCom': 'OnlyEligibleClientsComments',
-    'actionItem': 'Site must ensure only eligible clients participate in distribution '
+    'actionItem': 'Site must ensure only eligible clients participate in distribution'
   },
   <String, dynamic>{
     'text': 'Are Proxy forms used when appropriate?',
@@ -194,40 +194,40 @@ List<Map<String, dynamic>> audit3Section1Questions = [
     'databaseVarType': 'string',
   },
   <String, dynamic>{
-    'text': 'Does site provide resources? ',
+    'text': 'Does site provide resources?',
     'type': 'yesNo',
     'databaseVar': 'SiteProvidesResources',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SiteProvidesResourcesComments',
   },
   <String, dynamic>{
-    'text': 'Does site have a waiting area?  ',
+    'text': 'Does site have a waiting area?',
     'type': 'yesNo',
     'databaseVar': 'HasWaitingArea',
     'databaseVarType': 'bool',
     'databaseOptCom': 'HasWaitingAreaComments',
   },
   <String, dynamic>{
-    'text': 'If Site has a waiting area, where:  ',
+    'text': 'If Site has a waiting area, where:',
     'type': 'fillIn',
     'databaseVar': 'SiteWaitingAreaLocation',
     'databaseVarType': 'string',
   },
   <String, dynamic>{
-    'text': 'Where is the distribution done?   ',
+    'text': 'Where is the distribution done?',
     'type': 'fillIn',
     'databaseVar': 'DistributionLocation',
     'databaseVarType': 'string',
   },
   <String, dynamic>{
-    'text': 'Is the site media ready?   ',
+    'text': 'Is the site media ready?',
     'type': 'yesNo',
     'databaseVar': 'SiteMediaIsReady',
     'databaseVarType': 'bool',
     'databaseOptCom': 'SiteMediaIsReadyComments',
   },
   <String, dynamic>{
-    'text': 'General Comments:   ',
+    'text': 'General Comments:',
     'type': 'fillIn',
     'databaseVar': 'Comments',
     'databaseVarType': 'string',

@@ -43,6 +43,17 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
   DateTime selectedDate;
   @override
   Widget build(BuildContext context) {
+    TextStyle getScoreColor(double auditScore) {
+      TextStyle scoreStyle = ColorDefs.textRedScore;
+      if (auditScore >= 40) {
+        scoreStyle = ColorDefs.textOrangeScore;
+      }
+      if (auditScore > 70) {
+        scoreStyle = ColorDefs.textGreenScore;
+      }
+      return scoreStyle;
+    }
+
     followupReqVal = 0;
     if (widget.activeAudit.siteVisitRequired != null) {
       if (widget.activeAudit.siteVisitRequired == true) {
@@ -242,12 +253,12 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         setState(() {
                           print(newValue);
                           if (newValue != scoringReqVal) {
-                            if (newValue == 0) {
+                            if (newValue == 0 && widget.activeAudit.auditScore != null) {
                               widget.activeAudit.currentPoints += 10;
                               widget.activeAudit.auditScore =
                                   100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                             }
-                            if (newValue == 1) {
+                            if (newValue == 1 && widget.activeAudit.auditScore != null) {
                               widget.activeAudit.currentPoints -= 10;
                               widget.activeAudit.auditScore =
                                   100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
@@ -326,35 +337,44 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                     ),
                   if (widget.activeAudit.putProgramOnImmediateHold == null ||
                       widget.activeAudit.putProgramOnImmediateHold == false)
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (widget.activeAudit.putProgramOnImmediateHold == null) {
-                            widget.activeAudit.putProgramOnImmediateHold = false;
-                            widget.activeAudit.currentPoints += 20;
-                            widget.activeAudit.auditScore =
-                                100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
-                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
-                          } else {
-                            widget.activeAudit.putProgramOnImmediateHold = null;
-                            widget.activeAudit.currentPoints -= 20;
-                            widget.activeAudit.auditScore =
-                                100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
-                            Provider.of<AuditData>(context, listen: false).notifyTheListeners();
-                          }
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: ColorDefs.colorButtonNeutral, borderRadius: BorderRadius.all(Radius.circular(25.0))),
-                        height: 70,
-                        width: 70,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.check_circle, color: Colors.green, size: 40),
-                            Text("No", style: ColorDefs.textBodyBlack20)
-                          ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (widget.activeAudit.putProgramOnImmediateHold == null) {
+                              widget.activeAudit.putProgramOnImmediateHold = false;
+
+                              if (widget.activeAudit.auditScore != null) {
+                                widget.activeAudit.currentPoints += 20;
+                                widget.activeAudit.auditScore =
+                                    100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                                Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                              }
+                            } else {
+                              widget.activeAudit.putProgramOnImmediateHold = null;
+                              if (widget.activeAudit.auditScore != null) {
+                                widget.activeAudit.currentPoints -= 20;
+                                widget.activeAudit.auditScore =
+                                    100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
+                                Provider.of<AuditData>(context, listen: false).notifyTheListeners();
+                              }
+                            }
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: ColorDefs.colorButtonNeutral,
+                              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                          height: 70,
+                          width: 70,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check_circle, color: Colors.green, size: 40),
+                              Text("No", style: ColorDefs.textBodyBlack20)
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -363,9 +383,42 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
-                    '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when Printed  
+                    '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when printed  
  '''),
               ),
+
+              // Column(
+              //   children: [
+              //     Container(
+              //       height: 30,
+              //     ),
+              //     Text("This Audit's Final Score is: ", style: getScoreColor(widget.activeAudit.auditScore)),
+              //     Container(
+              //       height: 15,
+              //     ),
+              //     Text(widget.activeAudit.auditScore.toStringAsFixed(2),
+              //         style: getScoreColor(widget.activeAudit.auditScore)),
+              //     Container(
+              //       height: 15,
+              //     ),
+              //     FlatButton(
+              //       disabledColor: ColorDefs.colorButtonNeutral,
+              //       color: ColorDefs.colorTopHeader,
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(50.0),
+              //           side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
+              //       child: Padding(
+              //         padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+              //         child: Text("Show Scoring Details"),
+              //       ),
+              //       onPressed: () async {
+              //         Dialogs.showScoring(context: context, audit: widget.activeAudit);
+              //       },
+              //     ),
+              //     Container(
+              //       height: 30,
+              //     ),
+              //   ],
               // ),
 
               if (foodDepositoryMonitorSignature == null)

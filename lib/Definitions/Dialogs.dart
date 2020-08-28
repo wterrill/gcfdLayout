@@ -1,4 +1,5 @@
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
+import 'package:auditor/pages/AuditPage/ScoringPopUp.dart';
 import 'package:auditor/pages/ListSchedulingPage/ApptDataTable/AuditInfoDialog.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/pages/ListSchedulingPage/NewAuditDialog.dart';
@@ -13,6 +14,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:typed_data';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'AuditClasses/Audit.dart';
 import 'SiteClasses/SiteList.dart';
 import 'colorDefs.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -211,6 +213,22 @@ class Dialogs {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
         elevation: 0.0,
         content: SitePopUp(agencyNumber: agencyNumber, singleSite: singleSite));
+    showDialog<void>(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static void showScoring({BuildContext context, Audit audit}) {
+    AlertDialog alert = AlertDialog(
+        contentPadding: EdgeInsets.all(0.0),
+        backgroundColor: Colors.green,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+        elevation: 0.0,
+        content: ScoringPopUp(audit: audit));
     showDialog<void>(
       barrierDismissible: true,
       context: context,

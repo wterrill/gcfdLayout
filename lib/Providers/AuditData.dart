@@ -390,7 +390,7 @@ class AuditData with ChangeNotifier {
     if (status != activeSection.status) {
       // activeSection.status = status;
       activeSection.lastStatus = status;
-      notifyListeners();
+      // notifyListeners();
     }
   }
 
@@ -478,20 +478,46 @@ class AuditData with ChangeNotifier {
         print("email updated");
       }
     }
-    if (calendarResult.programType != "Senior Adults Program" && calendarResult.programType != "Healthy Student Market")
+    if (calendarResult.programType != "Senior Adults Program" &&
+        calendarResult.programType != "Healthy Student Market" &&
+        calendarResult.auditType != "Follow Up") {
       activeAudit.maxPoints = 0;
-    activeAudit.currentPoints = 0;
-    activeAudit.auditScore = 0.0;
-    for (Section section in activeAudit.sections) {
-      section.maxPoints = 0;
-      section.currentPoints = 0;
-      section.sectionScore = 0.0;
-      for (Question question in section.questions) {
-        if (question.scoring != null) section.maxPoints += question.scoring;
+      activeAudit.currentPoints = 0;
+      activeAudit.auditScore = 0.0;
+      for (Section section in activeAudit.sections) {
+        section.maxPoints = 0;
+        section.currentPoints = 0;
+        section.sectionScore = 0.0;
+        for (Question question in section.questions) {
+          if (question.scoring != null) section.maxPoints += question.scoring;
+        }
+        activeAudit.maxPoints += section.maxPoints;
       }
-      activeAudit.maxPoints += section.maxPoints;
+      activeAudit.maxPoints += 30;
     }
-    activeAudit.maxPoints += 30;
+    if (calendarResult.programType != "Senior Adults Program" &&
+        calendarResult.programType != "Healthy Student Market" &&
+        calendarResult.auditType == "Follow Up") {
+      activeAudit.maxPoints = 0;
+      activeAudit.currentPoints = 0;
+      activeAudit.auditScore = 0.0;
+      for (Section section in activeAudit.sections) {
+        section.maxPoints = 0;
+        section.currentPoints = 0;
+        section.sectionScore = 0.0;
+        for (Question question in section.questions) {
+          if (question.scoring != null) section.maxPoints += question.scoring;
+          for (Question citation in activeAudit.previousCitations) {
+            if (question.text == citation.text) {
+              print(question.text);
+            }
+            ;
+          }
+        }
+        activeAudit.maxPoints += section.maxPoints;
+      }
+      activeAudit.maxPoints += 30;
+    }
   }
 
   Section cycleSections(int offset) {
