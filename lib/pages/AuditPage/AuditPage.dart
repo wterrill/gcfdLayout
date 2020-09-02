@@ -66,6 +66,7 @@ class _AuditPageState extends State<AuditPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController _scrollController = Provider.of<GeneralData>(context).questionScrollController;
     print("building AuditPage");
 
     Audit activeAudit = Provider.of<AuditData>(context).activeAudit;
@@ -342,6 +343,11 @@ class _AuditPageState extends State<AuditPage> {
                                       child: Text("Next", style: ColorDefs.textBodyBlack20),
                                     ),
                                     onPressed: () {
+                                      try {
+                                        _scrollController.jumpTo(-10);
+                                      } catch (err) {
+                                        // this is not an error
+                                      }
                                       Section nextSection =
                                           Provider.of<AuditData>(context, listen: false).cycleSections(1);
                                       if (Status.values.indexOf(nextSection.status) >=

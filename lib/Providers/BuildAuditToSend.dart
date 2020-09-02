@@ -103,10 +103,12 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
 
   resultMap["GCFDAuditorID"] = outgoingAudit.calendarResult.auditor;
   resultMap['ProgramContact'] = outgoingAudit.sections[0].questions[7].userResponse;
-  resultMap['PersonInterviewed'] = outgoingAudit.sections[0].questions[8].userResponse;
+  // resultMap['PersonInterviewed'] = outgoingAudit.sections[0].questions[8].userResponse;
+
   resultMap['ContactEmail'] = outgoingAudit.sections[0].questions[9].userResponse;
+  resultMap['PersonInterviewed'] = outgoingAudit.sections[0].questions[10].userResponse;
   try {
-    resultMap['ServiceArea'] = outgoingAudit.sections[0].questions[10].userResponse;
+    resultMap['ServiceArea'] = outgoingAudit.sections[0].questions[11].userResponse;
   } catch (err) {
     print(err);
   }

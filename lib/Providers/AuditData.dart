@@ -390,7 +390,7 @@ class AuditData with ChangeNotifier {
     if (status != activeSection.status) {
       // activeSection.status = status;
       activeSection.lastStatus = status;
-      // notifyListeners();
+      notifyListeners();
     }
   }
 
@@ -413,6 +413,14 @@ class AuditData with ChangeNotifier {
         activeSection.questions[index].scoreAdded = false;
       }
     }
+    if (activeAudit.maxPoints == null) {
+      calculatePoints(activeAudit.calendarResult);
+      if (activeAudit.maxPoints == null) {
+        activeAudit.maxPoints = -1;
+        activeAudit.currentPoints = 0;
+      }
+    }
+
     if (activeAudit.maxPoints != 0) activeAudit.auditScore = 100 * activeAudit.currentPoints / activeAudit.maxPoints;
     print(activeAudit.currentPoints);
   }
@@ -448,6 +456,10 @@ class AuditData with ChangeNotifier {
     certRepresentativeSignature = activeAudit.photoSig['certRepresentativeSignature'];
     siteRepresentativeSignature = activeAudit.photoSig['siteRepresentativeSignature'];
     foodDepositoryMonitorSignature = activeAudit.photoSig['foodDepositoryMonitorSignature'];
+    calculatePoints(activeAudit.calendarResult);
+    for (int i = 0; i < activeAudit.sections.length; i++) {
+      tallyScore(i);
+    }
   }
 
   void createAuditClass(CalendarResult calendarResult) {
@@ -478,6 +490,10 @@ class AuditData with ChangeNotifier {
         print("email updated");
       }
     }
+    calculatePoints(calendarResult);
+  }
+
+  void calculatePoints(CalendarResult calendarResult) {
     if (calendarResult.programType != "Senior Adults Program" &&
         calendarResult.programType != "Healthy Student Market" &&
         calendarResult.auditType != "Follow Up") {

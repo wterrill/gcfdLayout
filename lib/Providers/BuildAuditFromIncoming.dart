@@ -235,7 +235,13 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
                     // }
 
                     try {
-                      question.userResponse = incomingAudit[databaseVar] as bool ? "Yes" : "No";
+                      if (incomingAudit[databaseVar] as int == 1) {
+                        question.userResponse = "Yes";
+                      } else if (incomingAudit[databaseVar] as int == 0) {
+                        question.userResponse = "No";
+                      } else if (incomingAudit[databaseVar] as int == -1) {
+                        question.userResponse = "N/A";
+                      }
                     } catch (err) {
                       try {
                         if (incomingAudit[databaseVar] as int == -1) {

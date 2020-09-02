@@ -343,6 +343,7 @@ List<Map<String, dynamic>> audit2Section3Questions = [
   <String, dynamic>{
     'text': "Today's meal",
     'type': 'fillIn',
+    'hideNa': 'true',
     'databaseVar': 'TodaysMeal',
     'databaseVarType': 'string',
   },

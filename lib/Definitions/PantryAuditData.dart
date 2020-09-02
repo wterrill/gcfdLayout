@@ -94,7 +94,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
     'text': 'Are referrals from an outside agency required to receive food?',
     'type': 'yesNo',
     'scoring': 1,
-    'happyPathResponse': ['Yes'],
+    'happyPathResponse': ['No'],
     'databaseVar': 'ReferralsRequired',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ReferralsRequiredComments',
@@ -103,7 +103,7 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'Are appointments required to receive food?',
     'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
+    'happyPathResponse': ['No'],
     'scoring': 1,
     'databaseVar': 'AppointmentsRequired',
     'databaseVarType': 'bool',
@@ -357,7 +357,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
     'databaseVar': 'GuestSignsEvenForPrivateDonation',
     'databaseVarType': 'bool',
     'databaseOptCom': 'GuestSignsEvenForPrivateDonationComments',
-    'actionItem': 'Proxy forms must be signed in the presence of a pantry personnel'
+    'actionItem': 'Site must ensure signatures are collected for all food items distributed'
   },
   <String, dynamic>{
     'text': "Are original DHS signature documents and surveys submitted to the Food Depository monthly?",

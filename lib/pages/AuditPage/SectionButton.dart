@@ -145,7 +145,7 @@ class _SectionButtonState extends State<SectionButton> {
                   // color: buttonColor,
                   onPressed: () {
                     try {
-                      _scrollController.jumpTo(0);
+                      _scrollController.jumpTo(-10);
                     } catch (err) {
                       // this is not an error
                     }

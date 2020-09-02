@@ -53,103 +53,104 @@ class _SectionButtonsState extends State<SectionButtons> {
         ? built = Text("")
         : built = Padding(
             padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      LimitedBox(
-                        maxHeight: 80,
-                        child: Image(
-                          image: AssetImage('assets/images/GCFD_Logo_vertical.png'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Text(
-                                  widget.activeAudit?.calendarResult?.agencyName ?? "",
-                                  style: ColorDefs.textGreen25,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        widget.activeAudit?.calendarResult?.agencyNumber ?? "",
-                                        style: ColorDefs.textGreen25,
-                                      ),
-                                      Text(
-                                        "/",
-                                        style: ColorDefs.textGreen25,
-                                      ),
-                                      Text(
-                                        widget.activeAudit?.calendarResult?.programNum ?? "",
-                                        style: ColorDefs.textGreen25,
-                                      ),
-                                    ],
-                                  ),
-                                  // Container(
-                                  //   width: 302,
-                                  // ),
-                                  // Text('Score: ${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}%',
-                                  //     style: getScoreColor(widget.activeAudit.auditScore)),
-                                ],
-                              ),
-                              Text(
-                                widget.activeAudit?.name ?? "",
-                                style: ColorDefs.textBodyBlack20,
-                              ),
-                            ],
+            child: Container(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        LimitedBox(
+                          maxHeight: 80,
+                          child: Image(
+                            image: AssetImage('assets/images/GCFD_Logo_vertical.png'),
                           ),
                         ),
-                      ),
-                      if (widget.activeAudit.calendarResult.programType != "Senior Adults Program" &&
-                          widget.activeAudit.calendarResult.programType != "Healthy Student Market")
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Points ${widget.activeAudit?.currentPoints?.toString() ?? ""}',
-                                style: ColorDefs.textBodyBlue20),
-                            Text('maxPoints ${widget.activeAudit?.maxPoints?.toString() ?? ""}',
-                                style: ColorDefs.textBodyBlue20),
-                            Text('Internal:${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}',
-                                style: getScoreColor(widget.activeAudit.auditScore)),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.65,
+                                  child: Text(
+                                    widget.activeAudit?.calendarResult?.agencyName ?? "",
+                                    style: ColorDefs.textGreen25,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          widget.activeAudit?.calendarResult?.agencyNumber ?? "",
+                                          style: ColorDefs.textGreen25,
+                                        ),
+                                        Text(
+                                          "/",
+                                          style: ColorDefs.textGreen25,
+                                        ),
+                                        Text(
+                                          widget.activeAudit?.calendarResult?.programNum ?? "",
+                                          style: ColorDefs.textGreen25,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  widget.activeAudit?.name ?? "",
+                                  style: ColorDefs.textBodyBlack20,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                    ],
+                        if (widget.activeAudit.calendarResult.programType != "Senior Adults Program" &&
+                            widget.activeAudit.calendarResult.programType != "Healthy Student Market")
+                          Container(
+                            // height: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Internal", style: ColorDefs.textBodyBlack20),
+                                Text('${widget.activeAudit?.auditScore?.toStringAsFixed(2) ?? ""}',
+                                    style: getScoreColor(widget.activeAudit.auditScore)),
+                                Text(
+                                    '${widget.activeAudit?.currentPoints?.toString() ?? ""} / ${widget.activeAudit?.maxPoints?.toString() ?? ""}',
+                                    style: ColorDefs.textBodyBlack20),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 101,
-                  child: ListView.separated(
-                    physics: ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) => Container(width: 5, color: Colors.transparent),
-                    itemCount: widget.activeAudit.sections.length,
-                    itemBuilder: (context, index) {
-                      SectionButton sectionButton = SectionButton(
-                          section: widget.activeAudit.sections[index],
-                          buttonAutoGroup: buttonAutoGroup,
-                          activeAudit: widget.activeAudit);
-                      if (index == 0) return Padding(padding: EdgeInsets.only(left: 10.0), child: sectionButton);
-                      if (index == widget.activeAudit.sections.length - 1)
-                        return Padding(padding: EdgeInsets.only(right: 10.0), child: sectionButton);
-                      return sectionButton;
-                    },
+                  Container(
+                    height: 101,
+                    child: ListView.separated(
+                      physics: ClampingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) => Container(width: 5, color: Colors.transparent),
+                      itemCount: widget.activeAudit.sections.length,
+                      itemBuilder: (context, index) {
+                        SectionButton sectionButton = SectionButton(
+                            section: widget.activeAudit.sections[index],
+                            buttonAutoGroup: buttonAutoGroup,
+                            activeAudit: widget.activeAudit);
+                        if (index == 0) return Padding(padding: EdgeInsets.only(left: 10.0), child: sectionButton);
+                        if (index == widget.activeAudit.sections.length - 1)
+                          return Padding(padding: EdgeInsets.only(right: 10.0), child: sectionButton);
+                        return sectionButton;
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
     return built;

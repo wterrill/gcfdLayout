@@ -82,11 +82,11 @@ class ColorDefs {
   static TextStyle textBlackTerminal = TextStyle(color: Colors.black, fontSize: 12.0, fontFamily: 'Courier');
 
   static TextStyle textRedScore =
-      TextStyle(color: colorChatRequired, fontSize: 20.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
+      TextStyle(color: colorChatRequired, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
   static TextStyle textOrangeScore =
-      TextStyle(color: colorAudit4, fontSize: 20.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
+      TextStyle(color: colorAudit4, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
   static TextStyle textGreenScore =
-      TextStyle(color: colorAudit3, fontSize: 20.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
+      TextStyle(color: colorAudit3, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
 
   static TextStyle textGreenLogoLight30 =
       TextStyle(color: colorLogoLightGreen, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
