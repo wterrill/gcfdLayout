@@ -14,12 +14,9 @@ class IssuesNoIssuesQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  IssuesNoIssuesQuestion({
-    Key key,
-    this.index,
-    this.activeSection,
-    this.questionAutoGroup,
-  }) : super(key: key);
+  final Audit activeAudit;
+  IssuesNoIssuesQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup, @required this.activeAudit})
+      : super(key: key);
 
   @override
   _IssuesNoIssuesQuestionState createState() => _IssuesNoIssuesQuestionState();
@@ -57,7 +54,8 @@ class _IssuesNoIssuesQuestionState extends State<IssuesNoIssuesQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
-                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                    Provider.of<AuditData>(context, listen: false)
+                        .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
 
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
@@ -90,7 +88,8 @@ class _IssuesNoIssuesQuestionState extends State<IssuesNoIssuesQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
-                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                    Provider.of<AuditData>(context, listen: false)
+                        .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                     setState(() {});

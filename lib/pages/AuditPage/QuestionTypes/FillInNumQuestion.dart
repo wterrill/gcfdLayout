@@ -15,7 +15,9 @@ class FillInNumQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  FillInNumQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
+  final Audit activeAudit;
+  FillInNumQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup, @required this.activeAudit})
+      : super(key: key);
 
   @override
   _FillInNumQuestionState createState() => _FillInNumQuestionState();
@@ -64,7 +66,8 @@ class _FillInNumQuestionState extends State<FillInNumQuestion> {
                     widget.activeSection.questions[index].userResponse = result;
                     Provider.of<AuditData>(context, listen: false)
                         .updateSectionStatus(checkSectionDone(widget.activeSection));
-                    Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                    Provider.of<AuditData>(context, listen: false)
+                        .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
                     Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                     Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                     setState(() {});

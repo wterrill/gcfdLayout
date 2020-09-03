@@ -144,8 +144,11 @@ class _AuditPageState extends State<AuditPage> {
                         activeSection?.name != "Follow Up Review")
                       if (activeSection?.name != "Photos")
                         Container(
-                          child:
-                              AuditQuestions(activeSection: activeSection, activecalendarResult: activeCalendarResult),
+                          child: AuditQuestions(
+                            activeSection: activeSection,
+                            activecalendarResult: activeCalendarResult,
+                            activeAudit: activeAudit,
+                          ),
                         ),
 
                     //),
@@ -314,6 +317,11 @@ class _AuditPageState extends State<AuditPage> {
                                       child: Text("Previous", style: ColorDefs.textBodyBlack20),
                                     ),
                                     onPressed: () {
+                                      try {
+                                        _scrollController.jumpTo(-10);
+                                      } catch (err) {
+                                        // this is not an error
+                                      }
                                       Section nextSection =
                                           Provider.of<AuditData>(context, listen: false).cycleSections(-1);
                                       if (Status.values.indexOf(nextSection.status) >=

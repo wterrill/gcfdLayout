@@ -273,7 +273,8 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
             }
           }
         }
-      }
+      } // end of questions
+
       dynamic temp = incomingAudit['SiteVisitRequired'];
       newAudit.siteVisitRequired = temp as bool;
 
@@ -315,6 +316,11 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
     } catch (err) {
       print(err);
       print("no pics");
+    }
+
+    newAudit.detailsConfirmed = true;
+    for (int i = 0; i < newAudit.sections.length; i++) {
+      newAudit.sections[i].status = Status.completed;
     }
 
     if (newAudit != null) {

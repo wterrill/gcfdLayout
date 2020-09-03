@@ -12,7 +12,9 @@ class ReviewDropDownQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  ReviewDropDownQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
+  final Audit activeAudit;
+  ReviewDropDownQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup, @required this.activeAudit})
+      : super(key: key);
   @override
   _ReviewDropDownQuestionState createState() => _ReviewDropDownQuestionState();
 }
@@ -48,7 +50,8 @@ class _ReviewDropDownQuestionState extends State<ReviewDropDownQuestion> {
                   }
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(checkSectionDone(widget.activeSection));
-                  Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                  Provider.of<AuditData>(context, listen: false)
+                      .tallySingleQuestion(index: index, section: widget.activeSection, audit: widget.activeAudit);
                   Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                   Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                 });

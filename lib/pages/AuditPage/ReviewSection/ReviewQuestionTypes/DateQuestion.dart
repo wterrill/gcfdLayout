@@ -12,7 +12,9 @@ class ReviewDateQuestion extends StatefulWidget {
   final int index;
   final Section activeSection;
   final AutoSizeGroup questionAutoGroup;
-  ReviewDateQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup}) : super(key: key);
+  final Audit activeAudit;
+  ReviewDateQuestion({Key key, this.index, this.activeSection, this.questionAutoGroup, @required this.activeAudit})
+      : super(key: key);
 
   @override
   _ReviewDateQuestionState createState() => _ReviewDateQuestionState();
@@ -56,7 +58,8 @@ class _ReviewDateQuestionState extends State<ReviewDateQuestion> {
                   widget.activeSection.questions[index].userResponse = selectedDate.toString();
                   Provider.of<AuditData>(context, listen: false)
                       .updateSectionStatus(checkSectionDone(widget.activeSection));
-                  Provider.of<AuditData>(context, listen: false).tallyScore(index);
+                  Provider.of<AuditData>(context, listen: false)
+                      .tallySingleQuestion(index: index, section: widget.activeSection, audit: widget.activeAudit);
                   Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                   Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
                   setState(() {});

@@ -118,7 +118,9 @@ class AuditData with ChangeNotifier {
           (activeAudit.calendarResult.auditType == "Follow Up" &&
               verificationSection.status != Status.selected &&
               verificationSection.status != Status.completed)) {
-        if (verificationSection.status != Status.selected) verificationSection.status = Status.available;
+        if (verificationSection.status != Status.selected) {
+          verificationSection.status = Status.available;
+        }
       }
 
       if (!checkAllSectionsDone() &&
@@ -132,6 +134,12 @@ class AuditData with ChangeNotifier {
   bool checkAllSectionsDone() {
     bool allQuestionsDone = true;
     for (Section section in activeAudit.sections) {
+      if (section.name == "Confirm Details") {
+        if (activeAudit.detailsConfirmed == true) {
+          section.status = Status.completed;
+        }
+        break;
+      }
       if (section.name == "Photos") {
         break;
       }
@@ -394,37 +402,6 @@ class AuditData with ChangeNotifier {
     }
   }
 
-  void tallyScore(int index) {
-    dynamic userResponse = activeSection.questions[index].userResponse;
-    List<String> happyPath = activeSection.questions[index].happyPathResponse;
-    int hasScore = activeSection.questions[index].scoring;
-    if (hasScore != null) {
-      if (happyPath.contains(userResponse)) {
-        if (!activeSection.questions[index].scoreAdded) {
-          activeSection.currentPoints += hasScore;
-          activeAudit.currentPoints += hasScore;
-        }
-        activeSection.questions[index].scoreAdded = true;
-      } else {
-        if (activeSection.questions[index].scoreAdded) {
-          activeSection.currentPoints -= hasScore;
-          activeAudit.currentPoints -= hasScore;
-        }
-        activeSection.questions[index].scoreAdded = false;
-      }
-    }
-    if (activeAudit.maxPoints == null) {
-      calculatePoints(activeAudit.calendarResult);
-      if (activeAudit.maxPoints == null) {
-        activeAudit.maxPoints = -1;
-        activeAudit.currentPoints = 0;
-      }
-    }
-
-    if (activeAudit.maxPoints != 0) activeAudit.auditScore = 100 * activeAudit.currentPoints / activeAudit.maxPoints;
-    print(activeAudit.currentPoints);
-  }
-
   void initialize() {
     print("initialized AuditData");
   }
@@ -456,10 +433,16 @@ class AuditData with ChangeNotifier {
     certRepresentativeSignature = activeAudit.photoSig['certRepresentativeSignature'];
     siteRepresentativeSignature = activeAudit.photoSig['siteRepresentativeSignature'];
     foodDepositoryMonitorSignature = activeAudit.photoSig['foodDepositoryMonitorSignature'];
-    calculatePoints(activeAudit.calendarResult);
-    for (int i = 0; i < activeAudit.sections.length; i++) {
-      tallyScore(i);
+    if ((calendarResult.programType != "Senior Adults Program" &&
+        calendarResult.programType != "Healthy Student Market" &&
+        calendarResult.auditType != "Follow Up")) {
+      if (activeAudit.maxPoints == null) {
+        updateMaxPoints(activeAudit);
+        updateAuditScoring(activeAudit);
+      }
     }
+
+    print(activeAudit);
   }
 
   void createAuditClass(CalendarResult calendarResult) {
@@ -490,51 +473,166 @@ class AuditData with ChangeNotifier {
         print("email updated");
       }
     }
-    calculatePoints(calendarResult);
+    // calculatePoints(calendarResult);
+    updateMaxPoints(activeAudit);
   }
 
-  void calculatePoints(CalendarResult calendarResult) {
-    if (calendarResult.programType != "Senior Adults Program" &&
-        calendarResult.programType != "Healthy Student Market" &&
-        calendarResult.auditType != "Follow Up") {
-      activeAudit.maxPoints = 0;
-      activeAudit.currentPoints = 0;
-      activeAudit.auditScore = 0.0;
-      for (Section section in activeAudit.sections) {
+  // void calculatePoints(CalendarResult calendarResult) {
+  //   if (calendarResult.programType != "Senior Adults Program" &&
+  //       calendarResult.programType != "Healthy Student Market" &&
+  //       calendarResult.auditType != "Follow Up") {
+  //     activeAudit.maxPoints = 0;
+  //     activeAudit.currentPoints = 0;
+  //     activeAudit.auditScore = 0.0;
+  //     for (Section section in activeAudit.sections) {
+  //       section.maxPoints = 0;
+  //       section.currentPoints = 0;
+  //       section.sectionScore = 0.0;
+  //       for (Question question in section.questions) {
+  //         if (question.scoring != null) {
+  //           section.maxPoints += question.scoring;
+  //         }
+  //       }
+  //       activeAudit.maxPoints += section.maxPoints;
+  //     }
+  //     activeAudit.maxPoints += 30;
+  //   }
+  //   if (calendarResult.programType != "Senior Adults Program" &&
+  //       calendarResult.programType != "Healthy Student Market" &&
+  //       calendarResult.auditType == "Follow Up") {
+  //     activeAudit.maxPoints = 0;
+  //     activeAudit.currentPoints = 0;
+  //     activeAudit.auditScore = 0.0;
+  //     for (Section section in activeAudit.sections) {
+  //       section.maxPoints = 0;
+  //       section.currentPoints = 0;
+  //       section.sectionScore = 0.0;
+  //       for (Question question in section.questions) {
+  //         if (question.scoring != null) section.maxPoints += question.scoring;
+  //         for (Question citation in activeAudit.previousCitations) {
+  //           if (question.text == citation.text) {
+  //             print(question.text);
+  //           }
+  //           ;
+  //         }
+  //       }
+  //       activeAudit.maxPoints += section.maxPoints;
+  //     }
+  //     activeAudit.maxPoints += 30;
+  //   }
+  // }
+
+  void updateMaxPoints(Audit audit) {
+    if (audit.calendarResult.programType != "Senior Adults Program" &&
+        audit.calendarResult.programType != "Healthy Student Market" &&
+        audit.calendarResult.auditType != "Follow Up") {
+      audit.maxPoints = 0;
+      audit.currentPoints = 0;
+      audit.auditScore = 0.0;
+      for (Section section in audit.sections) {
         section.maxPoints = 0;
         section.currentPoints = 0;
         section.sectionScore = 0.0;
-        for (Question question in section.questions) {
-          if (question.scoring != null) section.maxPoints += question.scoring;
-        }
-        activeAudit.maxPoints += section.maxPoints;
-      }
-      activeAudit.maxPoints += 30;
-    }
-    if (calendarResult.programType != "Senior Adults Program" &&
-        calendarResult.programType != "Healthy Student Market" &&
-        calendarResult.auditType == "Follow Up") {
-      activeAudit.maxPoints = 0;
-      activeAudit.currentPoints = 0;
-      activeAudit.auditScore = 0.0;
-      for (Section section in activeAudit.sections) {
-        section.maxPoints = 0;
-        section.currentPoints = 0;
-        section.sectionScore = 0.0;
-        for (Question question in section.questions) {
-          if (question.scoring != null) section.maxPoints += question.scoring;
-          for (Question citation in activeAudit.previousCitations) {
-            if (question.text == citation.text) {
-              print(question.text);
-            }
-            ;
+        for (int i = 0; i < section.questions.length; i++) {
+          if (section.questions[i].scoring != null) {
+            section.maxPoints += section.questions[i].scoring;
           }
         }
-        activeAudit.maxPoints += section.maxPoints;
+        audit.maxPoints += section.maxPoints;
       }
-      activeAudit.maxPoints += 30;
+      audit.maxPoints += 30;
     }
   }
+
+  void updateAuditScoring(Audit audit) {
+    for (Section section in audit.sections) {
+      for (int i = 0; i < section.questions.length; i++) {
+        if (section.questions[i].scoring != null) {
+          print(i);
+          tallySingleQuestion(index: i, section: section, audit: audit);
+        }
+      }
+    }
+
+    if (!(audit.siteVisitRequired ?? false)) {
+      audit.currentPoints += 10;
+    }
+    if (!(audit.putProgramOnImmediateHold ?? false)) {
+      audit.currentPoints += 20;
+    }
+    if (audit.maxPoints != 0) audit.auditScore = 100 * audit.currentPoints / audit.maxPoints;
+  }
+
+  void tallySingleQuestion({@required int index, @required Section section, @required Audit audit}) {
+    dynamic userResponse = section.questions[index].userResponse;
+    List<String> happyPath = section.questions[index].happyPathResponse;
+    int hasScore = section.questions[index].scoring;
+    if (hasScore != null) {
+      if (happyPath.contains(userResponse)) {
+        if (!section.questions[index].scoreAdded) {
+          section.currentPoints += hasScore;
+          audit.currentPoints += hasScore;
+          print('section currentPoints: ${section.currentPoints}');
+          print('section maxPoints: ${section.maxPoints}');
+        }
+        section.questions[index].scoreAdded = true;
+      } else {
+        if (section.questions[index].scoreAdded) {
+          section.currentPoints -= hasScore;
+          audit.currentPoints -= hasScore;
+        }
+        section.questions[index].scoreAdded = false;
+      }
+    }
+    // if (audit.maxPoints == null) {
+    //   calculatePoints(audit.calendarResult);
+    //   if (activeAudit.maxPoints == null) {
+    //     activeAudit.maxPoints = -1;
+    //     activeAudit.currentPoints = 0;
+    //   }
+    // }
+
+    if (audit.maxPoints != 0) audit.auditScore = 100 * audit.currentPoints / audit.maxPoints;
+    print('currentPoints: ${audit.currentPoints}');
+    print('score: ${audit.maxPoints}');
+    print('score: ${audit.auditScore}');
+  }
+
+  void tallyScoreSectionNew(Section section) {
+    for (int index = 0; index < section.questions.length; index++) {
+      dynamic userResponse = section.questions[index].userResponse;
+      List<String> happyPath = section.questions[index].happyPathResponse;
+      int hasScore = activeSection.questions[index].scoring;
+      if (hasScore != null) {
+        if (happyPath.contains(userResponse)) {
+          if (!activeSection.questions[index].scoreAdded) {
+            activeSection.currentPoints += hasScore;
+            activeAudit.currentPoints += hasScore;
+          }
+          activeSection.questions[index].scoreAdded = true;
+        } else {
+          if (activeSection.questions[index].scoreAdded) {
+            activeSection.currentPoints -= hasScore;
+            activeAudit.currentPoints -= hasScore;
+          }
+          activeSection.questions[index].scoreAdded = false;
+        }
+      }
+    }
+  }
+
+  // void auditScoreNew(Audit audit) {
+  //   if (audit.maxPoints == null) {
+  //     calculatePointsNew(audit);
+  //     if (audit.maxPoints == null) {
+  //       audit.maxPoints = -1;
+  //       audit.currentPoints = 0;
+  //     }
+  //   }
+
+  //   if (activeAudit.maxPoints != 0) activeAudit.auditScore = 100 * activeAudit.currentPoints / activeAudit.maxPoints;
+  //   print(activeAudit.currentPoints);
+  // }
 
   Section cycleSections(int offset) {
     int index = getSectionIndex(activeSection);

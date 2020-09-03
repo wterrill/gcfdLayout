@@ -1,3 +1,4 @@
+import 'package:auditor/Definitions/AuditClasses/Audit.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/providers/GeneralData.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -19,9 +20,11 @@ import 'QuestionTypes/YesNoNaQuestion.dart';
 import 'QuestionTypes/YesNoQuestion.dart';
 
 class AuditQuestions extends StatefulWidget {
-  AuditQuestions({Key key, this.activeSection, this.activecalendarResult}) : super(key: key);
+  AuditQuestions({Key key, this.activeSection, this.activecalendarResult, @required this.activeAudit})
+      : super(key: key);
   final Section activeSection;
   final CalendarResult activecalendarResult;
+  final Audit activeAudit;
 
   @override
   _AuditQuestionsState createState() => _AuditQuestionsState();
@@ -61,21 +64,22 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                                   ),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "yesNo")
                                   YesNoQuestion(
-                                    key: UniqueKey(),
-                                    index: index,
-                                    activeSection: widget.activeSection,
-                                  ),
+                                      key: UniqueKey(),
+                                      index: index,
+                                      activeSection: widget.activeSection,
+                                      activeAudit: widget.activeAudit),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "issuesNoIssues")
                                   IssuesNoIssuesQuestion(
-                                    key: UniqueKey(),
-                                    index: index,
-                                    activeSection: widget.activeSection,
-                                  ),
+                                      key: UniqueKey(),
+                                      index: index,
+                                      activeSection: widget.activeSection,
+                                      activeAudit: widget.activeAudit),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "fillIn")
                                   FillInQuestion(
                                       key: UniqueKey(),
                                       index: index,
                                       activeSection: widget.activeSection,
+                                      activeAudit: widget.activeAudit,
                                       questionAutoGroup: questionAutoGroup),
                                 // if (widget.activeSection?.questions[index].typeOfQuestion == "fillInInterview")
                                 //   FillInInterview(
@@ -94,18 +98,21 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                                       key: UniqueKey(),
                                       index: index,
                                       activeSection: widget.activeSection,
+                                      activeAudit: widget.activeAudit,
                                       questionAutoGroup: questionAutoGroup),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "dropDown")
                                   DropDownQuestion(
                                       key: UniqueKey(),
                                       index: index,
                                       activeSection: widget.activeSection,
+                                      activeAudit: widget.activeAudit,
                                       questionAutoGroup: questionAutoGroup),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "date")
                                   DateQuestion(
                                     key: UniqueKey(),
                                     index: index,
                                     activeSection: widget.activeSection,
+                                    activeAudit: widget.activeAudit,
                                     questionAutoGroup: questionAutoGroup,
                                   ),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "yesNoNa")
@@ -113,6 +120,7 @@ class _AuditQuestionsState extends State<AuditQuestions> {
                                     key: UniqueKey(),
                                     index: index,
                                     activeSection: widget.activeSection,
+                                    activeAudit: widget.activeAudit,
                                     questionAutoGroup: questionAutoGroup,
                                   ),
                                 if (widget.activeSection?.questions[index].typeOfQuestion == "fillInEmailInterview")

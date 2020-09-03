@@ -333,6 +333,7 @@ List<Map<String, dynamic>> audit1Section3Questions = [
   <String, dynamic>{
     'text': "Is the address recorded upon receipt?",
     'type': 'yesNo',
+    'scoring': 1,
     'happyPathResponse': ['Yes'],
     'databaseVar': 'AddressRecordedUponReceipt',
     'databaseVarType': 'bool',
@@ -624,6 +625,7 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'text': 'Are proper temperatures for dry food storage maintained?',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
+    'scoring': 1,
     'databaseVar': 'ProperTempForDryFood',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProperTempForDryFoodComments',

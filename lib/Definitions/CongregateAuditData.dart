@@ -258,6 +258,7 @@ List<Map<String, dynamic>> audit2Section3Questions = [
   <String, dynamic>{
     'text': "Are other activities unrelated to TEFAP disrupting distribution?",
     'type': 'yesNo',
+    'scoring': 1,
     'happyPathResponse': ['No'],
     'databaseVar': 'ActivitiesOtherThanTEFAPDisrupting',
     'databaseVarType': 'bool',
@@ -682,6 +683,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
   <String, dynamic>{
     'text': 'Are refrigerated items kept at temperatures between 35-40 degrees Fahrenheit?',
     'type': 'yesNo',
+    'scoring': 1,
     'happyPathResponse': ['Yes'],
     'databaseVar': 'RefrigeratedItemsCorrectTemp',
     'databaseVarType': 'bool',
@@ -691,6 +693,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
   <String, dynamic>{
     'text': 'Are frozen items kept at a temperature below zero degrees Fahrenheit?',
     'type': 'yesNo',
+    'scoring': 1,
     'happyPathResponse': ['Yes'],
     'databaseVar': 'FrozenItemsCorrectTemp',
     'databaseVarType': 'bool',
