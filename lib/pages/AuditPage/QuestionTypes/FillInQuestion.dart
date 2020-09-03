@@ -97,7 +97,11 @@ class _FillInQuestionState extends State<FillInQuestion> {
                   print('textBoxRollOut: ${widget.activeSection.questions[index].textBoxRollOut}');
                   Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
                   Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
-                  // Provider.of<AuditData>(context, listen: false).updateSectionStatus(checkSectionDone(activeSection));
+
+                  Provider.of<AuditData>(context, listen: false)
+                      .updateSectionStatus(checkSectionDone(widget.activeSection));
+                  Provider.of<AuditData>(context, listen: false)
+                      .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
                   setState(() {});
                 },
                 child: Padding(
@@ -125,10 +129,10 @@ class _FillInQuestionState extends State<FillInQuestion> {
                 } else {
                   myBubbleOn = false;
                 }
-                Provider.of<AuditData>(context, listen: false)
-                    .updateSectionStatus(checkSectionDone(widget.activeSection));
-                Provider.of<AuditData>(context, listen: false)
-                    .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
+                // Provider.of<AuditData>(context, listen: false)
+                //     .updateSectionStatus(checkSectionDone(widget.activeSection));
+                // Provider.of<AuditData>(context, listen: false)
+                //     .tallySingleQuestion(index: index, section: activeSection, audit: widget.activeAudit);
               });
             },
           )

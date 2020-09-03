@@ -138,22 +138,22 @@ class AuditData with ChangeNotifier {
         if (activeAudit.detailsConfirmed == true) {
           section.status = Status.completed;
         }
-        break;
-      }
-      if (section.name == "Photos") {
-        break;
-      }
-      print(section.name);
-      print(section.status);
-      if (section.status != Status.selected) {
-        if (section.status != Status.completed) {
-          allQuestionsDone = false;
-          print("changed to false 1st");
-        }
       } else {
-        if (section.lastStatus != Status.completed) {
-          allQuestionsDone = false;
-          print("changed to false 2nd");
+        if (section.name == "Photos") {
+          break;
+        }
+        print(section.name);
+        print(section.status);
+        if (section.status != Status.selected) {
+          if (section.status != Status.completed) {
+            allQuestionsDone = false;
+            print("changed to false 1st");
+          }
+        } else {
+          if (section.lastStatus != Status.completed) {
+            allQuestionsDone = false;
+            print("changed to false 2nd");
+          }
         }
       }
     }
