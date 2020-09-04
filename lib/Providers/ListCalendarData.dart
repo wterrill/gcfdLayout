@@ -31,7 +31,7 @@ List<String> auditTypes = [
   "Grant"
 ];
 
-List<String> programTypes = ["Healthy Student Market", "Senior Adults Program", "Pantry", "Congregate"];
+List<String> programTypes = ["Healthy Student Market", "Older Adults Program", "Pantry", "Congregate"];
 
 class ListCalendarData with ChangeNotifier {
   String filterValue = "";

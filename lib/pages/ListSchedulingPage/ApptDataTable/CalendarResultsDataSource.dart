@@ -38,7 +38,7 @@ class CalendarResultsDataSource extends CustomDataTableSource {
       if (programType == "Healthy Student Market") {
         color = ColorDefs.colorAudit1;
       }
-      if (programType == "Senior Adults Program") {
+      if (programType == "Older Adults Program") {
         color = ColorDefs.colorAudit2;
       }
       if (programType == "Pantry") {
@@ -56,44 +56,35 @@ class CalendarResultsDataSource extends CustomDataTableSource {
         onSelectChanged: (bool value) {
           print(value);
           print(calendarResult.agencyName);
-          Dialogs.showAuditInfo(
-              navigatorKey.currentState.overlay.context, calendarResult);
+          Dialogs.showAuditInfo(navigatorKey.currentState.overlay.context, calendarResult);
         },
         cells: <CustomDataCell>[
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                  child: Text('${calendarResult.getDateFormatted()}',
-                      style: ColorDefs.textBodyWhite15),
+                  child: Text('${calendarResult.getDateFormatted()}', style: ColorDefs.textBodyWhite15),
                 ),
               ))),
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                  child: Text('${calendarResult.getStartTimeFormatted()}',
-                      style: ColorDefs.textBodyWhite15),
+                  child: Text('${calendarResult.getStartTimeFormatted()}', style: ColorDefs.textBodyWhite15),
                 ),
               ))),
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: ConstrainedBox(
@@ -101,31 +92,25 @@ class CalendarResultsDataSource extends CustomDataTableSource {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                     child: Text('${calendarResult.agencyName}',
-                        style: ColorDefs.textBodyWhite15,
-                        overflow: TextOverflow.ellipsis),
+                        style: ColorDefs.textBodyWhite15, overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ))),
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                  child: Text('${calendarResult.programNum}',
-                      style: ColorDefs.textBodyWhite15),
+                  child: Text('${calendarResult.programNum}', style: ColorDefs.textBodyWhite15),
                 ),
               ))),
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -134,13 +119,11 @@ class CalendarResultsDataSource extends CustomDataTableSource {
                   decoration: BoxDecoration(
                       color: selectColor(calendarResult.programType),
                       borderRadius: BorderRadius.circular(20.0),
-                      border: Border.all(
-                          width: 4.0, color: ColorDefs.colorLogoLightGreen)),
+                      border: Border.all(width: 4.0, color: ColorDefs.colorLogoLightGreen)),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
-                      child: Text('${calendarResult.auditType}',
-                          style: ColorDefs.textBodyWhite15),
+                      child: Text('${calendarResult.auditType}', style: ColorDefs.textBodyWhite15),
                     ),
                   ),
                 ),
@@ -160,28 +143,22 @@ class CalendarResultsDataSource extends CustomDataTableSource {
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                    child: Text('${calendarResult.auditor}',
-                        style: ColorDefs.textBodyWhite15),
+                    child: Text('${calendarResult.auditor}', style: ColorDefs.textBodyWhite15),
                   )))),
           CustomDataCell(Container(
               height: double.infinity,
               width: double.infinity,
-              color: index.isEven
-                  ? ColorDefs.colorAlternatingDark
-                  : ColorDefs.colorDarkBackground,
+              color: index.isEven ? ColorDefs.colorAlternatingDark : ColorDefs.colorDarkBackground,
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                    child: Text('${calendarResult.status}',
-                        style: ColorDefs.textBodyWhite15),
+                    child: Text('${calendarResult.status}', style: ColorDefs.textBodyWhite15),
                   )))),
         ]);
   }

@@ -58,7 +58,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'If yes, is the food properly separated and tracked for the two programs?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'scoring': 1,
     'databaseVar': 'FoodSeparatedForTwoPrograms',
     'databaseVarType': 'bool',
@@ -113,7 +113,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   <String, dynamic>{
     'text': 'Does site have Food Service Sanitation Managers?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'scoring': 1,
     'databaseVar': 'SiteHaveManager',
     'databaseVarType': 'bool',
@@ -128,7 +128,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
     'databaseVarType': 'string',
   },
   <String, dynamic>{
-    'text': 'Remove:',
+    'text': 'Names and expiration dtes of FSSM certificates',
     'type': 'fillIn',
     'databaseVar': 'RemoveField',
     'databaseVarType': 'string',
@@ -1050,37 +1050,13 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'actionItem': 'For Cold Storage Unit 15: Maintain temperature in the correct range'
   },
   <String, dynamic>{
-    'text': 'Walk in:',
+    'text': 'Walk in #1:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler', 'N/A'],
     'databaseVar': 'WalkInFreezerCoolerOne',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerOneComments'
   },
-  <String, dynamic>{
-    'text': 'USDA Tag # ',
-    'type': 'fillInNum',
-    'databaseVar': 'USDATagNumberOne',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Serial # ',
-    'type': 'fillInNum',
-    'databaseVar': 'SerialNumberOne',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Type ',
-    'type': 'fillIn',
-    'databaseVar': 'TypeOne',
-    'databaseVarType': 'string',
-  },
-  // <String, dynamic>{
-  //   'text': 'Temperature for Cooler/Freezer ',
-  //   'type': 'fillIn',
-  //   'databaseVar': 'TempOne',
-  //   'databaseVarType': 'string',
-  // },
   <String, dynamic>{
     'text': "Walk in #1 Cooler/Freezer ",
     'type': 'dropDown',
@@ -1098,37 +1074,13 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempOneComments'
   },
   <String, dynamic>{
-    'text': 'Walk in:',
+    'text': 'Walk in #2:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler', 'N/A'],
     'databaseVar': 'WalkInFreezerCoolerTwo',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerTwoComments'
   },
-  <String, dynamic>{
-    'text': 'USDA Tag # ',
-    'type': 'fillInNum',
-    'databaseVar': 'USDATagNumberTwo',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Serial # ',
-    'type': 'fillInNum',
-    'databaseVar': 'SerialNumberTwo',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Type ',
-    'type': 'fillIn',
-    'databaseVar': 'TypeTwo',
-    'databaseVarType': 'string',
-  },
-  // <String, dynamic>{
-  //   'text': 'Temperature for Cooler/Freezer ',
-  //   'type': 'fillIn',
-  //   'databaseVar': 'TempTwo',
-  //   'databaseVarType': 'string',
-  // },
   <String, dynamic>{
     'text': "Walk in #2 Cooler/Freezer ",
     'type': 'dropDown',
@@ -1146,37 +1098,13 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempTwoComments'
   },
   <String, dynamic>{
-    'text': 'Walk in:',
+    'text': 'Walk in #3:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler', 'N/A'],
     'databaseVar': 'WalkInFreezerCoolerThree',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerThreeComments'
   },
-  <String, dynamic>{
-    'text': 'USDA Tag # ',
-    'type': 'fillInNum',
-    'databaseVar': 'USDATagNumberThree',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Serial # ',
-    'type': 'fillInNum',
-    'databaseVar': 'SerialNumberThree',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Type ',
-    'type': 'fillIn',
-    'databaseVar': 'TypeThree',
-    'databaseVarType': 'string',
-  },
-  // <String, dynamic>{
-  //   'text': 'Temperature for Cooler/Freezer ',
-  //   'type': 'fillIn',
-  //   'databaseVar': 'TempThree',
-  //   'databaseVarType': 'string',
-  // },
   <String, dynamic>{
     'text': "Walk in #3 Cooler/Freezer ",
     'type': 'dropDown',
@@ -1194,37 +1122,13 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempThreeComments'
   },
   <String, dynamic>{
-    'text': 'Walk in:',
+    'text': 'Walk in #4:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler', 'N/A'],
     'databaseVar': 'WalkInFreezerCoolerFour',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerFourComments'
   },
-  <String, dynamic>{
-    'text': 'USDA Tag # ',
-    'type': 'fillInNum',
-    'databaseVar': 'USDATagNumberFour',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Serial # ',
-    'type': 'fillInNum',
-    'databaseVar': 'SerialNumberFour',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Type ',
-    'type': 'fillIn',
-    'databaseVar': 'TypeFour',
-    'databaseVarType': 'string',
-  },
-  // <String, dynamic>{
-  //   'text': 'Temperature for Cooler/Freezer ',
-  //   'type': 'fillIn',
-  //   'databaseVar': 'TempFour',
-  //   'databaseVarType': 'string',
-  // },
   <String, dynamic>{
     'text': "Walk in #4 Cooler/Freezer ",
     'type': 'dropDown',
@@ -1242,37 +1146,13 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseOptCom': 'TempFourComments'
   },
   <String, dynamic>{
-    'text': 'Walk in:',
+    'text': 'Walk in #5:',
     'type': 'dropDown',
     'menuItems': ['Select', 'Freezer', 'Cooler', 'N/A'],
     'databaseVar': 'WalkInFreezerCoolerFive',
     'databaseVarType': 'string',
     'databaseOptCom': 'WalkInFreezerCoolerFiveComments'
   },
-  <String, dynamic>{
-    'text': 'USDA Tag # ',
-    'type': 'fillInNum',
-    'databaseVar': 'USDATagNumberFive',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Serial # ',
-    'type': 'fillInNum',
-    'databaseVar': 'SerialNumberFive',
-    'databaseVarType': 'int',
-  },
-  <String, dynamic>{
-    'text': 'Type ',
-    'type': 'fillIn',
-    'databaseVar': 'TypeFive',
-    'databaseVarType': 'string',
-  },
-  // <String, dynamic>{
-  //   'text': 'Temperature for Cooler/Freezer ',
-  //   'type': 'fillIn',
-  //   'databaseVar': 'TempFive',
-  //   'databaseVarType': 'string',
-  // },
   <String, dynamic>{
     'text': "Walk in #5 Cooler/Freezer ",
     'type': 'dropDown',
@@ -1288,6 +1168,97 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempFive',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempFiveComments'
+  },
+
+  <String, dynamic>{
+    'text': 'USDA Tag Unit #1',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberOne',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial Unit #1',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberOne',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Unit #1 Type ',
+    'type': 'fillIn',
+    'databaseVar': 'TypeOne',
+    'databaseVarType': 'string',
+  },
+  <String, dynamic>{
+    'text': 'USDA Tag Unit #2',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberTwo',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial Unit #2',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberTwo',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Unit #2 Type ',
+    'type': 'fillIn',
+    'databaseVar': 'TypeTwo',
+    'databaseVarType': 'string',
+  },
+  <String, dynamic>{
+    'text': 'USDA Tag Unit #3',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberThree',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial Unit #3',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberThree',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Unit #3 Type ',
+    'type': 'fillIn',
+    'databaseVar': 'TypeThree',
+    'databaseVarType': 'string',
+  },
+  <String, dynamic>{
+    'text': 'USDA Tag Unit #4',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberFour',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial Unit #4',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberFour',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Unit #4 Type',
+    'type': 'fillIn',
+    'databaseVar': 'TypeFour',
+    'databaseVarType': 'string',
+  },
+  <String, dynamic>{
+    'text': 'USDA Tag #5',
+    'type': 'fillInNum',
+    'databaseVar': 'USDATagNumberFive',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Serial #5',
+    'type': 'fillInNum',
+    'databaseVar': 'SerialNumberFive',
+    'databaseVarType': 'int',
+  },
+  <String, dynamic>{
+    'text': 'Unit #5 Type',
+    'type': 'fillIn',
+    'databaseVar': 'TypeFive',
+    'databaseVarType': 'string',
   },
   <String, dynamic>{
     'text': '*Units should not be shared with other programs ',
@@ -1791,25 +1762,25 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVarType': 'string',
     'databaseVar': 'ReVerifiedBy',
   },
-  <String, dynamic>{
-    'text': 'GCFD Monitor:',
-    'type': 'fillIn',
-    'databaseVarType': 'string',
-    'databaseVar': 'GCFDMonitor',
-  },
+  // <String, dynamic>{
+  //   'text': 'GCFD Monitor:',
+  //   'type': 'fillIn',
+  //   'databaseVarType': 'string',
+  //   'databaseVar': 'GCFDMonitor',
+  // },
   <String, dynamic>{
     'text': 'Reviewed by:',
     'type': 'fillIn',
     'databaseVarType': 'string',
     'databaseVar': 'ReviewedBy',
   },
-  <String, dynamic>{
-    'text': 'Findings Found:',
-    'type': 'yesNo',
-    'databaseVarType': 'bool',
-    'databaseVar': 'FindingsFound',
-    'databaseOptCom': 'FindingsFoundComments'
-  },
+  // <String, dynamic>{
+  //   'text': 'Findings Found:',
+  //   'type': 'yesNo',
+  //   'databaseVarType': 'bool',
+  //   'databaseVar': 'FindingsFound',
+  //   'databaseOptCom': 'FindingsFoundComments'
+  // },
 ];
 
 List<Map<String, dynamic>> photoData = [

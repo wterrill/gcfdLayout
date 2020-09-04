@@ -46,7 +46,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
   <String, dynamic>{
     'text': 'Does Site distribute proper allocation of produce items, dry items and boxes if applicable?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'DistributesProperAllocation',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DistributesProperAllocationComments',
@@ -73,7 +73,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
   <String, dynamic>{
     'text': 'Does Site have adequate storage for left over dry items or boxes, if applicable?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'HasAdequateStorage',
     'databaseVarType': 'bool',
     'databaseOptCom': 'HasAdequateStorageComments',
@@ -90,8 +90,8 @@ List<Map<String, dynamic>> audit3Section1Questions = [
   },
   <String, dynamic>{
     'text': 'Does Site properly discard extra produce after distribution?',
-    'type': 'yesNo',
-    'happyPathResponse': ['Yes'],
+    'type': 'yesNoNa',
+    'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'DiscardsExtraProduce',
     'databaseVarType': 'bool',
     'databaseOptCom': 'DiscardsExtraProduceComments',
@@ -145,7 +145,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
   <String, dynamic>{
     'text': 'Are Proxy forms used when appropriate?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'ProxyFormsUsed',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ProxyFormsUsedComments',
@@ -181,7 +181,7 @@ List<Map<String, dynamic>> audit3Section1Questions = [
   <String, dynamic>{
     'text': 'Is the Contact person information up to date?',
     'type': 'yesNoNa',
-    'happyPathResponse': ['Yes', 'Na'],
+    'happyPathResponse': ['Yes', 'N/A'],
     'databaseVar': 'ContactPersonIsUpToDate',
     'databaseVarType': 'bool',
     'databaseOptCom': 'ContactPersonIsUpToDateComments',

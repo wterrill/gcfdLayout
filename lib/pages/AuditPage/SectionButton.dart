@@ -128,7 +128,7 @@ class _SectionButtonState extends State<SectionButton> {
               //Clay
               //Clay
               (widget.section.maxPoints != 0 &&
-                      widget.activeAudit.calendarResult.programType != "Senior Adults Program" &&
+                      widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
                       widget.activeAudit.calendarResult.programType != "Healthy Student Market")
                   ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
                   : Text(""),

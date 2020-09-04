@@ -105,7 +105,7 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
   List<String> programTypeDropDownMenu = [
     "Select",
     "Healthy Student Market",
-    "Senior Adults Program",
+    "Older Adults Program",
     "Pantry",
     "Congregate"
   ];

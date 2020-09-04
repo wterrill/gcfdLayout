@@ -23,9 +23,6 @@ class DeveloperPage extends StatelessWidget {
             section.name == "Verification" ||
             section.name == "*Developer*")) {
           for (Question question in section.questions) {
-            if (question.text.contains("Findings Found:")) {
-              print("this one");
-            }
             switch (question.typeOfQuestion) {
               case ("display"):
                 print("display");
@@ -125,9 +122,6 @@ class DeveloperPage extends StatelessWidget {
             section.name == "Verification" ||
             section.name == "*Developer*")) {
           for (Question question in section.questions) {
-            if (question.text.contains("Findings Found:")) {
-              print("this one");
-            }
             switch (question.typeOfQuestion) {
               case ("display"):
                 print("display");

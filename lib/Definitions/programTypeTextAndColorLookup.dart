@@ -11,7 +11,7 @@ Map<String, dynamic> programTypeTextAndColorLookup(String site) {
       endColorText = <String, dynamic>{'color': ColorDefs.colorAudit3, 'text': ColorDefs.textBodyWhite20};
       break;
 
-    case ("Senior Adults Program"):
+    case ("Older Adults Program"):
       endColorText = <String, dynamic>{'color': ColorDefs.colorAudit2, 'text': ColorDefs.textBodyBlack20};
       break;
 

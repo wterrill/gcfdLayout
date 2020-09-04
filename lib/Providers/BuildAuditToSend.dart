@@ -181,7 +181,7 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
     mainBody['CongregateCitations'] = citationsMap;
   }
   if (outgoingAudit.calendarResult.programType == "Healthy Student Market" ||
-      outgoingAudit.calendarResult.programType == "Senior Adults Program") {
+      outgoingAudit.calendarResult.programType == "Older Adults Program") {
     mainBody['PPCCitations'] = citationsMap;
   }
 

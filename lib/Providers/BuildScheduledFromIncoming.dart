@@ -31,7 +31,7 @@ List<CalendarResult> buildScheduledFromIncoming(
           key = "CongregateFollowUp";
         } else if (programType == "Healthy Student Market") {
           key = "PPCFollowUp";
-        } else if (programType == "Senior Adults Program") {
+        } else if (programType == "Older Adults Program") {
           key = "PPCFollowUp";
         }
       }

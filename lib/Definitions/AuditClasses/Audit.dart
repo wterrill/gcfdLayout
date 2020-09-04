@@ -85,7 +85,7 @@ class Audit extends HiveObject {
       case ("Congregate"):
         value = "Congregate Policy Checklist";
         break;
-      case ("Senior Adults Program"):
+      case ("Older Adults Program"):
         value = "Senior Adults Policy Checklist";
         break;
       case ("Healthy Student Market"):

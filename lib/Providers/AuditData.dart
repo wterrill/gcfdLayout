@@ -433,7 +433,7 @@ class AuditData with ChangeNotifier {
     certRepresentativeSignature = activeAudit.photoSig['certRepresentativeSignature'];
     siteRepresentativeSignature = activeAudit.photoSig['siteRepresentativeSignature'];
     foodDepositoryMonitorSignature = activeAudit.photoSig['foodDepositoryMonitorSignature'];
-    if ((calendarResult.programType != "Senior Adults Program" &&
+    if ((calendarResult.programType != "Older Adults Program" &&
         calendarResult.programType != "Healthy Student Market" &&
         calendarResult.auditType != "Follow Up")) {
       if (activeAudit.maxPoints == null) {
@@ -457,7 +457,7 @@ class AuditData with ChangeNotifier {
       activeCalendarResult = calendarResult;
     }
 
-    if (calendarResult.programType == "Senior Adults Program" ||
+    if (calendarResult.programType == "Older Adults Program" ||
         calendarResult.programType == "Healthy Student Market") {
       activeAudit = Audit(questionnaire: pPCAuditSectionsQuestions, calendarResult: calendarResult);
       activeSection = activeAudit.sections[0];
@@ -478,7 +478,7 @@ class AuditData with ChangeNotifier {
   }
 
   // void calculatePoints(CalendarResult calendarResult) {
-  //   if (calendarResult.programType != "Senior Adults Program" &&
+  //   if (calendarResult.programType != "Older Adults Program" &&
   //       calendarResult.programType != "Healthy Student Market" &&
   //       calendarResult.auditType != "Follow Up") {
   //     activeAudit.maxPoints = 0;
@@ -497,7 +497,7 @@ class AuditData with ChangeNotifier {
   //     }
   //     activeAudit.maxPoints += 30;
   //   }
-  //   if (calendarResult.programType != "Senior Adults Program" &&
+  //   if (calendarResult.programType != "Older Adults Program" &&
   //       calendarResult.programType != "Healthy Student Market" &&
   //       calendarResult.auditType == "Follow Up") {
   //     activeAudit.maxPoints = 0;
@@ -523,7 +523,7 @@ class AuditData with ChangeNotifier {
   // }
 
   void updateMaxPoints(Audit audit) {
-    if (audit.calendarResult.programType != "Senior Adults Program" &&
+    if (audit.calendarResult.programType != "Older Adults Program" &&
         audit.calendarResult.programType != "Healthy Student Market" &&
         audit.calendarResult.auditType != "Follow Up") {
       audit.maxPoints = 0;

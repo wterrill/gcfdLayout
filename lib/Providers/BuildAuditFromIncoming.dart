@@ -28,7 +28,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
     } else if (convertNumberToProgramType(event['ProgramType'] as int) == "Congregate") {
       auditTypeKey = "CongregateDetail";
     } else if (convertNumberToProgramType(event['ProgramType'] as int) == "Healthy Student Market" ||
-        convertNumberToProgramType(event['ProgramType'] as int) == "Senior Adults Program") {
+        convertNumberToProgramType(event['ProgramType'] as int) == "Older Adults Program") {
       auditTypeKey = "PPCDetail";
     }
 
@@ -59,7 +59,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
       }
 
       if (newCalendarResult.programType == "Healthy Student Market" ||
-          newCalendarResult.programType == "Senior Adults Program") {
+          newCalendarResult.programType == "Older Adults Program") {
         newAudit = Audit(calendarResult: newCalendarResult, questionnaire: pPCAuditSectionsQuestions);
       }
 
@@ -73,7 +73,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
       }
 
       if (newAudit.calendarResult.programType == "Healthy Student Market" ||
-          newAudit.calendarResult.programType == "Senior Adults Program") {
+          newAudit.calendarResult.programType == "Older Adults Program") {
         citationsMap = receivedAudit["PPCCitations"] as Map<String, dynamic>;
       }
 

@@ -113,7 +113,7 @@ int convertProgramTypeToNumber(String programType) {
     case ("Congregate"):
       value = 2;
       break;
-    case ("Senior Adults Program"):
+    case ("Older Adults Program"):
       value = 3;
       break;
     case ("Healthy Student Market"):
@@ -133,7 +133,7 @@ String convertNumberToProgramType(int number) {
       value = "Congregate";
       break;
     case (3):
-      value = "Senior Adults Program";
+      value = "Older Adults Program";
       break;
     case (4):
       value = "Healthy Student Market";

@@ -16,7 +16,7 @@ String buildScheduledToSend(CalendarResult calendarResult, String addDelete, Str
   if (calendarResult.programType == "Healthy Student Market") {
     key = "PPCFollowUp";
   }
-  if (calendarResult.programType == "Senior Adults Program") {
+  if (calendarResult.programType == "Older Adults Program") {
     key = "PPCFollowUp";
   }
 
