@@ -20,7 +20,7 @@ List<CalendarResult> buildScheduledFromIncoming(
       String auditType = convertNumberToAuditType(event['AuditType'] as int);
       String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000').format(DateTime.parse(event['StartTime'] as String));
       String status = convertNumberToStatus(event['Status'] as int);
-      Site siteInfo = siteList.getSiteFromAgencyNumber(agencyNumber: event['AgencyNumber'] as String);
+      Site siteInfo = siteList.getSiteFromProgramNumber(programNumber: event['ProgramNumber'] as String);
       siteInfo.agencyNumber ??= event['AgencyNumber'] as String;
       String siteidreceived = event['DeviceId'] as String;
       String key;

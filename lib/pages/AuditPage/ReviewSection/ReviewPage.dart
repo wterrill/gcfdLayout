@@ -15,28 +15,24 @@ class ReviewPage extends StatelessWidget {
       child: ListView(
         // mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Audit Summary",
-              style: ColorDefs.textBodyBlack20, textAlign: TextAlign.center),
+          Text("Audit Summary", style: ColorDefs.textBodyBlack20, textAlign: TextAlign.center),
           Container(
             height: MediaQuery.of(context).size.height * 0.65,
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: activeAudit.sections.length -
-                  4, //TODO this should be 4 after "*Developer*" is taken away
+              itemCount:
+                  activeAudit.sections.length - 5, //TODO this should be 4 after "*Developer*" is taken away (5 with)
               itemBuilder: (context, i) {
                 return Container(
                   decoration: BoxDecoration(
                       color: ColorDefs.colorAlternateLight,
-                      border: Border.all(
-                          color: ColorDefs.colorAlternateDark, width: 3)),
+                      border: Border.all(color: ColorDefs.colorAlternateDark, width: 3)),
                   child: ExpansionTile(
                     trailing: Icon(Icons.arrow_drop_down),
                     backgroundColor: ColorDefs.colorChatSelected,
-                    title: Text(activeAudit.sections[i + 1].name,
-                        style: ColorDefs.textBodyBlack20),
+                    title: Text(activeAudit.sections[i + 1].name, style: ColorDefs.textBodyBlack20),
                     children: <Widget>[
-                      ExpandableReviewContent(
-                          sectionData: activeAudit.sections[i + 1]),
+                      ExpandableReviewContent(sectionData: activeAudit.sections[i + 1]),
                     ],
                   ),
                 );

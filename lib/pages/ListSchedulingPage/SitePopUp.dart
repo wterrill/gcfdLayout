@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 import 'LookAhead.dart';
 
 class SitePopUp extends StatefulWidget {
-  const SitePopUp({Key key, @required this.agencyNumber, @required this.singleSite}) : super(key: key);
-  final String agencyNumber;
+  const SitePopUp({Key key, @required this.programNumber, @required this.singleSite}) : super(key: key);
+  final String programNumber;
   final bool singleSite;
 
   @override
@@ -23,8 +23,11 @@ class _SitePopUpState extends State<SitePopUp> {
   @override
   Widget build(BuildContext context) {
     SiteList siteList = Provider.of<SiteData>(context, listen: false).siteList;
-    if (widget.agencyNumber != null) {
-      selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: widget.agencyNumber);
+    if (widget.programNumber != null) {
+      selectedSite = siteList.getSiteFromProgramNumber(programNumber: widget.programNumber);
+    }
+    if (widget.programNumber != null) {
+      selectedSite = siteList.getSiteFromProgramNumber(programNumber: widget.programNumber);
     }
     return Theme(
       data: ThemeData(
@@ -57,10 +60,13 @@ class _SitePopUpState extends State<SitePopUp> {
                       String selectedAgencyNumber = val[2];
 
                       // Site selectedSite =
-                      selectedAgencyNumber = siteList.agencyNumberFromAgencyName(selectedSiteName);
+                      if (selectedAgencyNumber != null) {
+                        selectedAgencyNumber = siteList.agencyNumberFromAgencyName(selectedSiteName);
+                      }
                       print(selectedAgencyNumber);
                       setState(() {
-                        selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNumber);
+                        selectedSite = siteList.getSiteFromProgramNumber(programNumber: selectedProgramNumber);
+                        // selectedSite = siteList.getSiteFromAgencyNumber(agencyNumber: selectedAgencyNumber);
                       });
                     }),
               ),

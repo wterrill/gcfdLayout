@@ -38,7 +38,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
       CalendarResult newCalendarResult = CalendarResult(
         programType: convertNumberToProgramType(event['ProgramType'] as int),
         message: "",
-        siteInfo: siteList.getSiteFromAgencyNumber(agencyNumber: event['AgencyNumber'] as String),
+        siteInfo: siteList.getSiteFromProgramNumber(programNumber: event['ProgramNumber'] as String),
         agencyNumber: event['AgencyNumber'] as String,
         programNum: event['ProgramNumber'] as String,
         agencyName: siteList.agencyNameFromAgencyNumber(event['AgencyNumber'] as String),

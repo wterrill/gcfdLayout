@@ -14,6 +14,7 @@ class DeveloperPage extends StatelessWidget {
     void fillOutAngryAudit() {
       print("filled");
       Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+      Provider.of<AuditData>(context, listen: false).updateMaxPoints(activeAudit);
       Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
@@ -107,12 +108,14 @@ class DeveloperPage extends StatelessWidget {
           }
         }
       }
+      Provider.of<AuditData>(context, listen: false).updateAuditScoring(activeAudit);
       Provider.of<AuditData>(context, listen: false).notifyTheListeners();
     }
 
     void fillOutHappyAudit() {
       print("filled");
       Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+      Provider.of<AuditData>(context, listen: false).updateMaxPoints(activeAudit);
       Provider.of<AuditData>(context, listen: false).citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
@@ -199,6 +202,7 @@ class DeveloperPage extends StatelessWidget {
           }
         }
       }
+      Provider.of<AuditData>(context, listen: false).updateAuditScoring(activeAudit);
       Provider.of<AuditData>(context, listen: false).notifyTheListeners();
     }
 

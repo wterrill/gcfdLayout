@@ -52,16 +52,30 @@ class SiteList extends HiveObject {
   //   return site;
   // }
 
-  Site getSiteFromAgencyNumber({String agencyNumber}) {
+  // Site getSiteFromAgencyNumber({String agencyNumber}) {
+  //   Site site;
+  //   for (Site site in siteList) {
+  //     if (site.agencyNumber == agencyNumber) {
+  //       site = site;
+  //       return site;
+  //     }
+  //   }
+  //   if (site == null) {
+  //     print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE getSiteFromAgencyNumber");
+  //   }
+  //   return site;
+  // }
+
+  Site getSiteFromProgramNumber({String programNumber}) {
     Site site;
     for (Site site in siteList) {
-      if (site.agencyNumber == agencyNumber) {
+      if (site.programNumber == programNumber) {
         site = site;
         return site;
       }
     }
     if (site == null) {
-      print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE getSiteFromAgencyNumber");
+      print("ERROR IN PROGRAM NUMBER LOOKUP FOR SITE getSiteFromProgramNumber");
     }
     return site;
   }

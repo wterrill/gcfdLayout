@@ -522,7 +522,7 @@ class ListCalendarData with ChangeNotifier {
       deviceid: deviceidProvider,
       siteInfo: Provider.of<SiteData>(navigatorKey.currentContext, listen: false)
           .siteList
-          .getSiteFromAgencyNumber(agencyNumber: result['agencyNumber'] as String),
+          .getSiteFromProgramNumber(programNumber: result['programNum'] as String),
       citationsToFollowUp: result['citationsToFollowUp'] as Map<String, dynamic>,
     );
     return created;

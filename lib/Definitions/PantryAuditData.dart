@@ -1705,5 +1705,5 @@ List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{"Photos": photoData},
   <String, List<Map<String, dynamic>>>{"Review": reviewData},
   <String, List<Map<String, dynamic>>>{"Verification": verificationData},
-  // <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
+  <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];
