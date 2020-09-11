@@ -54,7 +54,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
       return scoreStyle;
     }
 
-    followupReqVal = 0;
+    followupReqVal = -1;
     if (widget.activeAudit.siteVisitRequired != null) {
       if (widget.activeAudit.siteVisitRequired == true) {
         followupReqVal = 1;
@@ -99,6 +99,16 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
         }
       }
       return actionItemValid;
+    }
+
+    bool checkVisitAndHoldItems() {
+      bool actionItemValid = true;
+      affectedIssues = "";
+
+      if (widget.activeAudit.siteVisitRequired == null || widget.activeAudit.putProgramOnImmediateHold == null) {
+        actionItemValid = false;
+      }
+      return !actionItemValid;
     }
 
     bool flaggedCitationsExist(List<Question> citations) {
@@ -176,14 +186,6 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0),
                           side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-
-                      // color: Colors.blue,
-                      // textColor: Colors.black,
-                      // child: Padding(
-                      //   padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-                      //   child: Text("Close and Save", style: ColorDefs.textBodyBlack20),
-                      // ),
-
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
                         child: Text(
@@ -253,13 +255,19 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         setState(() {
                           print(newValue);
                           if (newValue != scoringReqVal) {
-                            if (newValue == 0 && widget.activeAudit.auditScore != null) {
+                            if (newValue == 0 &&
+                                // widget.activeAudit.auditScore != null &&
+                                widget.activeAudit.visitRequiredPointsAdded == false) {
                               widget.activeAudit.currentPoints += 10;
+                              widget.activeAudit.visitRequiredPointsAdded = true;
                               widget.activeAudit.auditScore =
                                   100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                             }
-                            if (newValue == 1 && widget.activeAudit.auditScore != null) {
+                            if (newValue == 1 &&
+                                // widget.activeAudit.auditScore != null &&
+                                widget.activeAudit.visitRequiredPointsAdded == true) {
                               widget.activeAudit.currentPoints -= 10;
+                              widget.activeAudit.visitRequiredPointsAdded = false;
                               widget.activeAudit.auditScore =
                                   100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                             }
@@ -274,6 +282,10 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                         });
                       },
                       items: [
+                        DropdownMenuItem<int>(
+                          value: -1,
+                          child: Text("Select"),
+                        ),
                         DropdownMenuItem<int>(
                           value: 0,
                           child: Text("No follow up site visit required"),
@@ -314,10 +326,13 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                           setState(() {
                             if (widget.activeAudit.putProgramOnImmediateHold == null) {
                               widget.activeAudit.putProgramOnImmediateHold = true;
+                              widget.activeAudit.programHoldPointsAdded = false;
                             } else {
                               widget.activeAudit.putProgramOnImmediateHold = null;
+                              widget.activeAudit.programHoldPointsAdded = false;
                             }
                           });
+                          Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -345,16 +360,23 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                             if (widget.activeAudit.putProgramOnImmediateHold == null) {
                               widget.activeAudit.putProgramOnImmediateHold = false;
 
-                              if (widget.activeAudit.auditScore != null) {
+                              if (widget.activeAudit.auditScore != null &&
+                                  widget.activeAudit.programHoldPointsAdded == false) {
+                                Provider.of<AuditData>(context, listen: false).activeAudit.putProgramOnImmediateHold =
+                                    false;
                                 widget.activeAudit.currentPoints += 20;
+                                widget.activeAudit.programHoldPointsAdded = true;
                                 widget.activeAudit.auditScore =
                                     100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                                 Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                               }
                             } else {
-                              widget.activeAudit.putProgramOnImmediateHold = null;
-                              if (widget.activeAudit.auditScore != null) {
+                              if (widget.activeAudit.auditScore != null &&
+                                  widget.activeAudit.programHoldPointsAdded == true) {
+                                Provider.of<AuditData>(context, listen: false).activeAudit.putProgramOnImmediateHold =
+                                    null;
                                 widget.activeAudit.currentPoints -= 20;
+                                widget.activeAudit.programHoldPointsAdded = false;
                                 widget.activeAudit.auditScore =
                                     100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                                 Provider.of<AuditData>(context, listen: false).notifyTheListeners();
@@ -452,7 +474,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                     key: _sign,
                     onSign: () {
                       final sign = _sign.currentState;
-                      debugPrint('${sign.points.length} points in the signature');
+                      // debugPrint('${sign.points.length} points in the signature');
                     },
                     backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                     strokeWidth: strokeWidth,
@@ -521,6 +543,13 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                           Dialogs.showMessage(
                               context: context,
                               message: "These action items must be updated prior to signing: \n $affectedIssues",
+                              dismissable: true);
+                        }
+                        if (checkVisitAndHoldItems()) {
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "Please select if a follow up site visit is needed, \nor if the program should be put on hold.",
                               dismissable: true);
                         }
                       },
@@ -610,7 +639,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                     key: _sign2,
                     onSign: () {
                       final sign = _sign2.currentState;
-                      debugPrint('${sign.points.length} points in the signature');
+                      // debugPrint('${sign.points.length} points in the signature');
                     },
                     backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                     strokeWidth: strokeWidth,
@@ -680,6 +709,13 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                           Dialogs.showMessage(
                               context: context,
                               message: "These action items must be updated: + $affectedIssues",
+                              dismissable: true);
+                        }
+                        if (checkVisitAndHoldItems()) {
+                          Dialogs.showMessage(
+                              context: context,
+                              message:
+                                  "Please select if a follow up site visit is needed, \nor if the program should be put on hold.",
                               dismissable: true);
                         }
                       },

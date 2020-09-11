@@ -248,7 +248,7 @@ class AuditData with ChangeNotifier {
   }
 
   void makeCitations() {
-    if (activeAudit.calendarResult.status == "Scheduled") {
+    if (activeAudit.calendarResult.status == "Scheduled" || activeAudit.calendarResult.status == "Site Visit Req.") {
       for (Section section in activeAudit.sections) {
         List<String> avoid = []; //["Photos", "Intro", "Review", "Verification"];
         if (!avoid.contains(section.name)) {
@@ -477,51 +477,6 @@ class AuditData with ChangeNotifier {
     updateMaxPoints(activeAudit);
   }
 
-  // void calculatePoints(CalendarResult calendarResult) {
-  //   if (calendarResult.programType != "Older Adults Program" &&
-  //       calendarResult.programType != "Healthy Student Market" &&
-  //       calendarResult.auditType != "Follow Up") {
-  //     activeAudit.maxPoints = 0;
-  //     activeAudit.currentPoints = 0;
-  //     activeAudit.auditScore = 0.0;
-  //     for (Section section in activeAudit.sections) {
-  //       section.maxPoints = 0;
-  //       section.currentPoints = 0;
-  //       section.sectionScore = 0.0;
-  //       for (Question question in section.questions) {
-  //         if (question.scoring != null) {
-  //           section.maxPoints += question.scoring;
-  //         }
-  //       }
-  //       activeAudit.maxPoints += section.maxPoints;
-  //     }
-  //     activeAudit.maxPoints += 30;
-  //   }
-  //   if (calendarResult.programType != "Older Adults Program" &&
-  //       calendarResult.programType != "Healthy Student Market" &&
-  //       calendarResult.auditType == "Follow Up") {
-  //     activeAudit.maxPoints = 0;
-  //     activeAudit.currentPoints = 0;
-  //     activeAudit.auditScore = 0.0;
-  //     for (Section section in activeAudit.sections) {
-  //       section.maxPoints = 0;
-  //       section.currentPoints = 0;
-  //       section.sectionScore = 0.0;
-  //       for (Question question in section.questions) {
-  //         if (question.scoring != null) section.maxPoints += question.scoring;
-  //         for (Question citation in activeAudit.previousCitations) {
-  //           if (question.text == citation.text) {
-  //             print(question.text);
-  //           }
-  //           ;
-  //         }
-  //       }
-  //       activeAudit.maxPoints += section.maxPoints;
-  //     }
-  //     activeAudit.maxPoints += 30;
-  //   }
-  // }
-
   void updateMaxPoints(Audit audit) {
     if (audit.calendarResult.programType != "Older Adults Program" &&
         audit.calendarResult.programType != "Healthy Student Market" &&
@@ -553,13 +508,9 @@ class AuditData with ChangeNotifier {
         }
       }
     }
+    setFinal30Points();
+    print(audit.currentPoints);
 
-    if (!(audit.siteVisitRequired ?? false)) {
-      audit.currentPoints += 10;
-    }
-    if (!(audit.putProgramOnImmediateHold ?? false)) {
-      audit.currentPoints += 20;
-    }
     if (audit.maxPoints != 0) audit.auditScore = 100 * audit.currentPoints / audit.maxPoints;
   }
 
@@ -584,55 +535,56 @@ class AuditData with ChangeNotifier {
         section.questions[index].scoreAdded = false;
       }
     }
-    // if (audit.maxPoints == null) {
-    //   calculatePoints(audit.calendarResult);
-    //   if (activeAudit.maxPoints == null) {
-    //     activeAudit.maxPoints = -1;
-    //     activeAudit.currentPoints = 0;
-    //   }
-    // }
 
     if (audit.maxPoints != 0) audit.auditScore = 100 * audit.currentPoints / audit.maxPoints;
     print('currentPoints: ${audit.currentPoints}');
     print('score: ${audit.maxPoints}');
     print('score: ${audit.auditScore}');
+    setFinal30Points();
+    if (audit.maxPoints != 0) audit.auditScore = 100 * audit.currentPoints / audit.maxPoints;
   }
 
-  void tallyScoreSectionNew(Section section) {
-    for (int index = 0; index < section.questions.length; index++) {
-      dynamic userResponse = section.questions[index].userResponse;
-      List<String> happyPath = section.questions[index].happyPathResponse;
-      int hasScore = activeSection.questions[index].scoring;
-      if (hasScore != null) {
-        if (happyPath.contains(userResponse)) {
-          if (!activeSection.questions[index].scoreAdded) {
-            activeSection.currentPoints += hasScore;
-            activeAudit.currentPoints += hasScore;
-          }
-          activeSection.questions[index].scoreAdded = true;
-        } else {
-          if (activeSection.questions[index].scoreAdded) {
-            activeSection.currentPoints -= hasScore;
-            activeAudit.currentPoints -= hasScore;
-          }
-          activeSection.questions[index].scoreAdded = false;
+  void setFinal30Points() {
+    makeCitations();
+    if (checkAllSectionsDone()) {
+      print(citations.length);
+      if (citations.length == 0) {
+        if (!activeAudit.visitRequiredPointsAdded && !activeAudit.programHoldPointsAdded) {
+          activeAudit.putProgramOnImmediateHold = false;
+          activeAudit.programHoldPointsAdded = true;
+          activeAudit.siteVisitRequired = false;
+          activeAudit.visitRequiredPointsAdded = true;
+          activeAudit.currentPoints += 30;
+        }
+      } else {
+        // takeOffFinalPoints();
+        if (activeAudit.visitRequiredPointsAdded == false && activeAudit.siteVisitRequired == false) {
+          activeAudit.currentPoints += 10;
+          activeAudit.visitRequiredPointsAdded = true;
+        }
+        if (activeAudit.programHoldPointsAdded == false && activeAudit.putProgramOnImmediateHold == false) {
+          activeAudit.currentPoints += 20;
+          activeAudit.programHoldPointsAdded = true;
         }
       }
+    } else {
+      takeOffFinalPoints();
     }
   }
 
-  // void auditScoreNew(Audit audit) {
-  //   if (audit.maxPoints == null) {
-  //     calculatePointsNew(audit);
-  //     if (audit.maxPoints == null) {
-  //       audit.maxPoints = -1;
-  //       audit.currentPoints = 0;
-  //     }
-  //   }
+  void takeOffFinalPoints() {
+    if (activeAudit.visitRequiredPointsAdded == true && activeAudit.siteVisitRequired == false) {
+      activeAudit.currentPoints -= 10;
+      activeAudit.siteVisitRequired = null;
+      activeAudit.visitRequiredPointsAdded = false;
+    }
 
-  //   if (activeAudit.maxPoints != 0) activeAudit.auditScore = 100 * activeAudit.currentPoints / activeAudit.maxPoints;
-  //   print(activeAudit.currentPoints);
-  // }
+    if (activeAudit.programHoldPointsAdded == true && activeAudit.putProgramOnImmediateHold == false) {
+      activeAudit.currentPoints -= 20;
+      activeAudit.putProgramOnImmediateHold = null;
+      activeAudit.programHoldPointsAdded = false;
+    }
+  }
 
   Section cycleSections(int offset) {
     int index = getSectionIndex(activeSection);

@@ -44,8 +44,7 @@ class _WatermarkPaint extends CustomPainter {
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10.8,
-        Paint()..color = Colors.blue);
+    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10.8, Paint()..color = Colors.blue);
   }
 
   @override
@@ -85,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   key: _sign,
                   onSign: () {
                     final sign = _sign.currentState;
-                    debugPrint('${sign.points.length} points in the signature');
+                    // debugPrint('${sign.points.length} points in the signature');
                   },
                   backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                   strokeWidth: strokeWidth,
@@ -96,9 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           finalImage == null
               ? Container()
-              : LimitedBox(
-                  maxHeight: 200.0,
-                  child: Image.memory(finalImage.buffer.asUint8List())),
+              : LimitedBox(maxHeight: 200.0, child: Image.memory(finalImage.buffer.asUint8List())),
           Column(
             children: <Widget>[
               Row(
@@ -108,52 +105,38 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.green,
                       onPressed: () async {
                         SignatureState sign = _sign.currentState;
-                        int lineColor =
-                            img.getColor(color.red, color.green, color.blue);
+                        int lineColor = img.getColor(color.red, color.green, color.blue);
                         int backColor = img.getColor(255, 255, 255);
                         int imageWidth;
                         int imageHeight;
                         BuildContext currentContext = _sign.currentContext;
                         if (currentContext != null) {
-                          var box =
-                              currentContext.findRenderObject() as RenderBox;
+                          var box = currentContext.findRenderObject() as RenderBox;
                           imageWidth = box.size.width.toInt();
                           imageHeight = box.size.height.toInt();
                         }
 
                         // create the image with the given size
-                        img.Image signatureImage =
-                            img.Image(imageWidth, imageHeight);
+                        img.Image signatureImage = img.Image(imageWidth, imageHeight);
 
                         // set the image background color
                         // remove this for a transparent background
                         img.fill(signatureImage, backColor);
 
                         for (int i = 0; i < sign.points.length - 1; i++) {
-                          if (sign.points[i] != null &&
-                              sign.points[i + 1] != null) {
-                            img.drawLine(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                sign.points[i + 1].dx.toInt(),
-                                sign.points[i + 1].dy.toInt(),
-                                lineColor,
+                          if (sign.points[i] != null && sign.points[i + 1] != null) {
+                            img.drawLine(signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(),
+                                sign.points[i + 1].dx.toInt(), sign.points[i + 1].dy.toInt(), lineColor,
                                 thickness: 3);
-                          } else if (sign.points[i] != null &&
-                              sign.points[i + 1] == null) {
+                          } else if (sign.points[i] != null && sign.points[i + 1] == null) {
                             // draw the point to the image
                             img.drawPixel(
-                                signatureImage,
-                                sign.points[i].dx.toInt(),
-                                sign.points[i].dy.toInt(),
-                                lineColor);
+                                signatureImage, sign.points[i].dx.toInt(), sign.points[i].dy.toInt(), lineColor);
                           }
                         }
                         sign.clear();
                         setState(() {
-                          finalImage =
-                              img.encodePng(signatureImage) as Uint8List;
+                          finalImage = img.encodePng(signatureImage) as Uint8List;
                         });
                         debugPrint("onPressed ");
                       },
@@ -177,8 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialButton(
                       onPressed: () {
                         setState(() {
-                          color =
-                              color == Colors.green ? Colors.red : Colors.green;
+                          color = color == Colors.green ? Colors.red : Colors.green;
                         });
                         debugPrint("change color");
                       },

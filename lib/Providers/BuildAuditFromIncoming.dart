@@ -41,7 +41,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
         siteInfo: siteList.getSiteFromProgramNumber(programNumber: event['ProgramNumber'] as String),
         agencyNumber: event['AgencyNumber'] as String,
         programNum: event['ProgramNumber'] as String,
-        agencyName: siteList.agencyNameFromAgencyNumber(event['AgencyNumber'] as String),
+        agencyName: siteList.agencyNameFromProgramNumber(event['ProgramNumber'] as String),
         auditType: convertNumberToAuditType(event['AuditType'] as int),
         startTime: DateTime.parse(receivedAudit['StartTime'] as String).toString(),
         status: convertNumberToStatus(receivedAudit['Status'] as int),
@@ -304,27 +304,31 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
         section.status = Status.completed;
       }
     }
-    List<Uint8List> photoListx = [];
-    try {
-      List<dynamic> picUrls = event['PictureUrls'] as List<dynamic>;
-
-      for (dynamic url in picUrls) {
-        Response response = await get(url);
-        photoListx.add(response.bodyBytes);
-      }
-      newAudit.photoList = photoListx;
-    } catch (err) {
-      print(err);
-      print("no pics");
-    }
-
-    newAudit.detailsConfirmed = true;
-    for (int i = 0; i < newAudit.sections.length; i++) {
-      newAudit.sections[i].status = Status.completed;
-    }
-
     if (newAudit != null) {
-      newAudits.add(newAudit);
+      List<Uint8List> photoListx = [];
+      try {
+        List<dynamic> picUrls = event['PictureUrls'] as List<dynamic>;
+
+        for (dynamic url in picUrls) {
+          Response response = await get(url);
+          photoListx.add(response.bodyBytes);
+        }
+        newAudit.photoList = photoListx;
+      } catch (err) {
+        print(err);
+        print("no pics");
+      }
+
+      newAudit.detailsConfirmed = true;
+      for (int i = 0; i < newAudit.sections.length; i++) {
+        newAudit.sections[i].status = Status.completed;
+      }
+
+      if (newAudit != null) {
+        newAudits.add(newAudit);
+      }
+    } else {
+      print("NO AUDIT DETECTED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
   }
 

@@ -42,15 +42,20 @@ class _VerificationGoodPageState extends State<VerificationGoodPage> {
                 image: AssetImage('assets/images/CMRI_top.png'),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text('''The Undersigned Agent of: 
-
-
-Hereby warrants that as a representative of said agency he/she will receive assorted foods from the
-
-Greater Chicago Food Depository
-
-It is further agreed between the GREATER CHICAGO FOOD DEPOSITORTY and said CHARITABLE AGENCY that:
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    Text('''The Undersigned Agent of:'''),
+                    Text('${widget.activeAudit.calendarResult.agencyName}', style: ColorDefs.textBodyBlack20Poppins),
+                    Text(
+                        'Hereby warrants that as a representative of said agency he/she will receive assorted foods from the'),
+                    Text(
+                      'Greater Chicago Food Depository',
+                      style: ColorDefs.textBodyBlack20Poppins,
+                    ),
+                    Container(height: 40),
+                    Text(
+                        '''It is further agreed between the GREATER CHICAGO FOOD DEPOSITORTY and said CHARITABLE AGENCY that:
 
 The food is accepted “as is.”
 Greater Chicago Food Depository, Feeding America and the original donor expressly disclaim and implied warranties of merchantability of fitness for a particular use. There have been no expressed warrantees in relation to this gift of food.
@@ -59,6 +64,8 @@ Said CHARITABLE AGENCY releases both the original donor, Feeding America and Gre
 It is the responsibility of the CHARITABLE AGENCY to keep and maintain necessary records which show that goods received through the FOOD DEPOSITORY have been given to the needy in the Cook County Area without regard to race, religion, gender, age, sexual orientation or political affiliation.
 Said CHARITABLE AGENCY will not sell or offer for sale. Said CHARITABLE AGENCY will not request donations, services, contributions, membership or membership fees from recipients, directly or indirectly for said food. Said CHARITABLE AGENCY agrees to serve and/or distribute all goods received without monetary charge or by any medium exchange.
 If violations of the agreement above occur or non-compliance of Membership Eligibility Requirements, said CHARITABLE AGENCY may be suspended and/or terminated from membership of the Greater Chicago Food Depository.'''),
+                  ],
+                ),
               ),
 //             Text('''Address ____
 // City ____
@@ -96,7 +103,7 @@ If violations of the agreement above occur or non-compliance of Membership Eligi
                     key: _sign,
                     onSign: () {
                       final sign = _sign.currentState;
-                      debugPrint('${sign.points.length} points in the signature');
+                      // debugPrint('${sign.points.length} points in the signature');
                     },
                     backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                     strokeWidth: strokeWidth,

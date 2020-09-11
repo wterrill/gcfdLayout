@@ -12,7 +12,7 @@ List<CalendarResult> buildScheduledFromIncoming(
   List<CalendarResult> finalList = [];
   if (listEvents != null) {
     for (dynamic event in listEvents) {
-      String agencyName = siteList.agencyNameFromAgencyNumber(event['AgencyNumber'] as String);
+      String agencyName = siteList.agencyNameFromProgramNumber(event['ProgramNumber'] as String);
       String agencyNumber = event['AgencyNumber'] as String;
       String programNum = event['ProgramNumber'] as String;
       String programType = convertNumberToProgramType(event['ProgramType'] as int);

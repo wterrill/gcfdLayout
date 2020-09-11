@@ -20,15 +20,6 @@ class SiteList extends HiveObject {
     return "SITE NOT FOUND: agencyNumberFromAgencyName";
   }
 
-  String agencyNameFromAgencyNumber(String agencyNumber) {
-    for (Site site in siteList) {
-      if (site.agencyNumber == agencyNumber) {
-        return site.agencyName;
-      }
-    }
-    return "SITE NOT FOUND: agencyNameFromAgencyNumber";
-  }
-
   String agencyNameFromProgramNumber(String programNumber) {
     for (Site site in siteList) {
       if (site.programNumber == programNumber) {
@@ -37,34 +28,6 @@ class SiteList extends HiveObject {
     }
     return "SITE NOT FOUND agencyNameFromProgramNumber";
   }
-
-  // Site getSiteFromProgramNumber(String programNumber) {
-  //   Site site;
-  //   for (Site site in siteList) {
-  //     if (site.programNumber == programNumber) {
-  //       site = site;
-  //       return site;
-  //     }
-  //   }
-  //   if (site == null) {
-  //     print("ERROR IN SITE: getSiteFromProgramNumber");
-  //   }
-  //   return site;
-  // }
-
-  // Site getSiteFromAgencyNumber({String agencyNumber}) {
-  //   Site site;
-  //   for (Site site in siteList) {
-  //     if (site.agencyNumber == agencyNumber) {
-  //       site = site;
-  //       return site;
-  //     }
-  //   }
-  //   if (site == null) {
-  //     print("ERROR IN AGENCY NUMBER LOOKUP FOR SITE getSiteFromAgencyNumber");
-  //   }
-  //   return site;
-  // }
 
   Site getSiteFromProgramNumber({String programNumber}) {
     Site site;

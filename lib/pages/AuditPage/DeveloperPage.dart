@@ -14,16 +14,23 @@ class DeveloperPage extends StatelessWidget {
     void fillOutAngryAudit() {
       print("filled");
       Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+      activeAudit.siteVisitRequired = null;
+      activeAudit.visitRequiredPointsAdded = false;
+      activeAudit.programHoldPointsAdded = false;
+      activeAudit.putProgramOnImmediateHold = null;
       Provider.of<AuditData>(context, listen: false).updateMaxPoints(activeAudit);
       Provider.of<AuditData>(context, listen: false).citations = [];
+      activeAudit.citations = [];
       for (Section section in activeAudit.sections) {
         section.status = Status.completed;
         section.lastStatus = Status.completed;
         if (!(section.name == "Photos" ||
             section.name == "Review" ||
             section.name == "Verification" ||
-            section.name == "*Developer*")) {
+            section.name == "*Developer*" ||
+            section.name == "Confirm Details")) {
           for (Question question in section.questions) {
+            question.scoreAdded = false;
             switch (question.typeOfQuestion) {
               case ("display"):
                 print("display");
@@ -112,20 +119,49 @@ class DeveloperPage extends StatelessWidget {
       Provider.of<AuditData>(context, listen: false).notifyTheListeners();
     }
 
-    void fillOutHappyAudit() {
+    void fillOutHappyAudit({bool almost}) {
       print("filled");
+
       Audit activeAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+      activeAudit.siteVisitRequired = null;
+      activeAudit.visitRequiredPointsAdded = false;
+      activeAudit.programHoldPointsAdded = false;
+      activeAudit.putProgramOnImmediateHold = null;
       Provider.of<AuditData>(context, listen: false).updateMaxPoints(activeAudit);
       Provider.of<AuditData>(context, listen: false).citations = [];
+      activeAudit.citations = [];
+
       for (Section section in activeAudit.sections) {
-        section.status = Status.completed;
-        section.lastStatus = Status.completed;
+        if (almost) {
+          if (section.name == "Photos" ||
+              section.name == "Review" ||
+              section.name == "*Developer*" ||
+              section.name == "Confirm Details") {
+            section.status = Status.completed;
+            section.lastStatus = Status.completed;
+          } else {
+            section.status = Status.inProgress;
+            section.lastStatus = Status.inProgress;
+          }
+        } else {
+          section.status = Status.completed;
+          section.lastStatus = Status.completed;
+        }
         if (!(section.name == "Photos" ||
             section.name == "Review" ||
             section.name == "Verification" ||
-            section.name == "*Developer*")) {
-          for (Question question in section.questions) {
-            switch (question.typeOfQuestion) {
+            section.name == "*Developer*" ||
+            section.name == "Confirm Details")) {
+          for (int i = 0; i < section.questions.length; i++) {
+            if (almost) {
+              if (i == 0) {
+                //&& section.name == "Complaints & Problems") {
+                section.questions[i].userResponse = null;
+                continue;
+              }
+            }
+            section.questions[i].scoreAdded = false;
+            switch (section.questions[i].typeOfQuestion) {
               case ("display"):
                 print("display");
                 break;
@@ -133,70 +169,79 @@ class DeveloperPage extends StatelessWidget {
               case ("yesNo"):
                 print("yesNo");
                 try {
-                  question.userResponse = question.happyPathResponse[0];
+                  section.questions[i].userResponse = section.questions[i].happyPathResponse[0];
                 } catch (err) {
-                  question.userResponse = "No";
+                  section.questions[i].userResponse = "No";
                 }
-                question.optionalComment = question.text + " This, right here, is an optional comment";
+                section.questions[i].optionalComment =
+                    section.questions[i].text + " This, right here, is an optional comment";
                 break;
 
               case ("issuesNoIssues"):
                 print("issuesNoIssues");
                 try {
-                  question.userResponse = question.happyPathResponse[0];
+                  section.questions[i].userResponse = section.questions[i].happyPathResponse[0];
                 } catch (err) {
-                  question.userResponse = "No Issues";
+                  section.questions[i].userResponse = "No Issues";
                 }
-                question.optionalComment = question.text + " This, right here, is an optional comment";
+                section.questions[i].optionalComment =
+                    section.questions[i].text + " This, right here, is an optional comment";
+
                 break;
 
               case ("fillIn"):
                 print("fillIn");
-                if (!question.text.contains("If yes, how many and from where")) {
-                  question.userResponse = question.text + " This, right here, is a mandatory comment";
+                if (!section.questions[i].text.contains("If yes, how many and from where")) {
+                  section.questions[i].userResponse =
+                      section.questions[i].text + " This, right here, is a mandatory comment";
                 } else {
-                  question.userResponse = "Illinois and Wisconsin";
+                  section.questions[i].userResponse = "Illinois and Wisconsin";
                 }
 
                 break;
 
               case ("fillInNum"):
                 print("fillInNum");
-                question.userResponse = 1;
+                section.questions[i].userResponse = 1;
                 break;
 
               case ("dropDown"):
                 print("dropDown");
-                String first = question.dropDownMenu[1];
+                String first = section.questions[i].dropDownMenu[1];
                 try {
-                  if (question.happyPathResponse.contains(first)) {
-                    question.userResponse = question.dropDownMenu[1];
+                  if (section.questions[i].happyPathResponse.contains(first)) {
+                    section.questions[i].userResponse = section.questions[i].dropDownMenu[1];
                   } else {
                     print("problem");
                   }
                 } catch (err) {
-                  question.userResponse = question.dropDownMenu[1];
+                  section.questions[i].userResponse = section.questions[i].dropDownMenu[1];
                 }
-                question.optionalComment = question.text + " This, right here, is an optional comment";
+                section.questions[i].optionalComment =
+                    section.questions[i].text + " This, right here, is an optional comment";
+                // Provider.of<AuditData>(context, listen: false)
+                // .tallySingleQuestion(index: i, section: section, audit: activeAudit);
                 break;
 
               case ("yesNoNa"):
                 print("yesNoNa");
                 try {
-                  question.userResponse = question?.happyPathResponse[0];
+                  section.questions[i].userResponse = section.questions[i]?.happyPathResponse[0];
                 } catch (err) {
-                  question.userResponse = 'N/A';
+                  section.questions[i].userResponse = 'N/A';
                 }
 
-                question.optionalComment = question.text + " This, right here, is an optional comment";
+                section.questions[i].optionalComment =
+                    section.questions[i].text + " This, right here, is an optional comment";
                 break;
 
               case ("date"):
                 print("date");
-                print(question.userResponse);
+                print(section.questions[i].userResponse);
                 print(DateTime.now().toString());
-                question.userResponse = DateTime.now().toString();
-                question.optionalComment = question.text + " This, right here, is an optional comment";
+                section.questions[i].userResponse = DateTime.now().toString();
+                section.questions[i].optionalComment =
+                    section.questions[i].text + " This, right here, is an optional comment";
                 break;
             }
           }
@@ -213,10 +258,16 @@ class DeveloperPage extends StatelessWidget {
         ),
         RaisedButton(
             onPressed: () {
-              fillOutHappyAudit();
+              fillOutHappyAudit(almost: false);
               Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
             },
             child: Text("Fill out Audit -> Happy Path")),
+        RaisedButton(
+            onPressed: () {
+              fillOutHappyAudit(almost: true);
+              Provider.of<AuditData>(context, listen: false).saveAuditLocally(activeAudit);
+            },
+            child: Text("Fill out Audit -> ALMOST Happy Path (1st question blank in Complaints)")),
         RaisedButton(
             onPressed: () {
               fillOutAngryAudit();

@@ -23,6 +23,18 @@ class SectionButton extends StatefulWidget {
 class _SectionButtonState extends State<SectionButton> {
   @override
   Widget build(BuildContext context) {
+    String getVericationPoints() {
+      int verificationPoints = 0;
+
+      if (widget.activeAudit.siteVisitRequired == false) {
+        verificationPoints += 10;
+      }
+      if (widget.activeAudit.putProgramOnImmediateHold == false) {
+        verificationPoints += 20;
+      }
+      return verificationPoints.toString();
+    }
+
     ScrollController _scrollController = Provider.of<GeneralData>(context).questionScrollController;
     Status status = widget.section.status;
     if (widget.section.lastStatus == null) {
@@ -127,11 +139,16 @@ class _SectionButtonState extends State<SectionButton> {
 
               //Clay
               //Clay
-              (widget.section.maxPoints != 0 &&
-                      widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
-                      widget.activeAudit.calendarResult.programType != "Healthy Student Market")
-                  ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
-                  : Text(""),
+              if (widget.section.name != "Verification")
+                (widget.section.maxPoints != 0 &&
+                        widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
+                        widget.activeAudit.calendarResult.programType != "Healthy Student Market")
+                    ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
+                    : Text(""),
+              if (widget.section.name == "Verification" &&
+                  widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
+                  widget.activeAudit.calendarResult.programType != "Healthy Student Market")
+                Text(getVericationPoints() + "/" + "30"),
 
               Container(
                 width: 122,
@@ -145,7 +162,7 @@ class _SectionButtonState extends State<SectionButton> {
                   // color: buttonColor,
                   onPressed: () {
                     try {
-                      _scrollController.jumpTo(-10);
+                      _scrollController.jumpTo(-20);
                     } catch (err) {
                       // this is not an error
                     }
@@ -157,7 +174,6 @@ class _SectionButtonState extends State<SectionButton> {
                             Provider.of<AuditData>(context, listen: false).makeCitations(),
                           };
                   },
-                  // child: Text("boob")
                   child: AutoSizeText(
                     widget.section.name,
                     group: widget.buttonAutoGroup,

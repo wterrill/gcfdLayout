@@ -1,6 +1,5 @@
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 
-import 'MetaData.dart';
 import 'Question.dart';
 import 'Section.dart';
 
@@ -67,6 +66,12 @@ class Audit extends HiveObject {
 
   @HiveField(18)
   double auditScore;
+
+  @HiveField(19)
+  bool programHoldPointsAdded = false;
+
+  @HiveField(20)
+  bool visitRequiredPointsAdded = false;
 
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {

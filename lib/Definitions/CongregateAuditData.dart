@@ -1071,7 +1071,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempOne',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempOneComments'
+    'databaseOptCom': 'TempOneComments',
+    'actionItem': 'Maintain #1 Cooler/Freezer without acceptable limits'
   },
   <String, dynamic>{
     'text': 'Walk in #2:',
@@ -1095,7 +1096,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempTwo',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempTwoComments'
+    'databaseOptCom': 'TempTwoComments',
+    'actionItem': 'Maintain #2 Cooler/Freezer without acceptable limits'
   },
   <String, dynamic>{
     'text': 'Walk in #3:',
@@ -1119,7 +1121,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempThree',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempThreeComments'
+    'databaseOptCom': 'TempThreeComments',
+    'actionItem': 'Maintain #3 Cooler/Freezer without acceptable limits'
   },
   <String, dynamic>{
     'text': 'Walk in #4:',
@@ -1143,7 +1146,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempFour',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempFourComments'
+    'databaseOptCom': 'TempFourComments',
+    'actionItem': 'Maintain #4 Cooler/Freezer without acceptable limits'
   },
   <String, dynamic>{
     'text': 'Walk in #5:',
@@ -1167,7 +1171,8 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempFive',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempFiveComments'
+    'databaseOptCom': 'TempFiveComments',
+    'actionItem': 'Maintain #5 Cooler/Freezer without acceptable limits'
   },
 
   <String, dynamic>{
@@ -1327,7 +1332,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'DialStemThermometersOnHandComments',
     'actionItem':
-        ' Acquire / Utilize a dial-stem thermometer for testing food temperature while preparing & serving and submit receipt for thermometers.'
+        'Acquire / Utilize a dial-stem thermometer for testing food temperature while preparing & serving and submit receipt for thermometers.'
   },
   <String, dynamic>{
     'text': 'Is a temperature chart posted?',
@@ -1441,7 +1446,7 @@ List<Map<String, dynamic>> audit2Section6Questions = [
     'databaseVar': 'EatingAreaClean',
     'databaseVarType': 'bool',
     'databaseOptCom': 'EatingAreaCleanComments ',
-    'actionItem': ' Ensure eating area is kept clean and well maintained'
+    'actionItem': 'Ensure eating area is kept clean and well maintained'
   },
   <String, dynamic>{
     'text': 'Does the program use non-porous countertops? ',
