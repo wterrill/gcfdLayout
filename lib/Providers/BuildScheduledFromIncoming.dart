@@ -9,6 +9,7 @@ List<CalendarResult> buildScheduledFromIncoming(
   SiteList siteList,
 ) {
   // List<dynamic> listEvents = resultMap["Result"] as List<dynamic>;
+
   List<CalendarResult> finalList = [];
   if (listEvents != null) {
     for (dynamic event in listEvents) {
@@ -18,7 +19,8 @@ List<CalendarResult> buildScheduledFromIncoming(
       String programType = convertNumberToProgramType(event['ProgramType'] as int);
       String auditor = event['Auditor'] as String;
       String auditType = convertNumberToAuditType(event['AuditType'] as int);
-      String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000').format(DateTime.parse(event['StartTime'] as String));
+      // String startTime = DateFormat('yyyy-MM-dd kk:mm:ss.000').format(DateTime.parse(event['StartTime'] as String));
+      String startTime = DateTime.parse(event['StartTime'] as String).toString();
       String status = convertNumberToStatus(event['Status'] as int);
       Site siteInfo = siteList.getSiteFromProgramNumber(programNumber: event['ProgramNumber'] as String);
       siteInfo.agencyNumber ??= event['AgencyNumber'] as String;

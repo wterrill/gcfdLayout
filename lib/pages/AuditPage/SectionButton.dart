@@ -145,10 +145,11 @@ class _SectionButtonState extends State<SectionButton> {
                         widget.activeAudit.calendarResult.programType != "Healthy Student Market")
                     ? Text(widget.section.currentPoints.toString() + "/" + widget.section.maxPoints.toString())
                     : Text(""),
-              if (widget.section.name == "Verification" &&
-                  widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
-                  widget.activeAudit.calendarResult.programType != "Healthy Student Market")
-                Text(getVericationPoints() + "/" + "30"),
+              if (widget.section.name == "Verification")
+                (widget.activeAudit.calendarResult.programType != "Older Adults Program" &&
+                        widget.activeAudit.calendarResult.programType != "Healthy Student Market")
+                    ? Text(getVericationPoints() + "/" + "30")
+                    : Text(""),
 
               Container(
                 width: 122,

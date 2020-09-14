@@ -212,12 +212,12 @@ class _FillInEmailInterviewState extends State<FillInEmailInterview> {
                       }
                     }
                     for (Section section in activeAudit.sections) {
-                      if (section.name == "*Developer*") {
-                        section.status = Status.available;
-                        section.lastStatus = Status.available;
-                        widget.activeSection.status = Status.completed;
-                        widget.activeSection.lastStatus = Status.completed;
-                      }
+                      // if (section.name == "*Developer*") {
+                      //   section.status = Status.available;
+                      //   section.lastStatus = Status.available;
+                      //   widget.activeSection.status = Status.completed;
+                      //   widget.activeSection.lastStatus = Status.completed;
+                      // }
                     }
                     setState(() {});
                     if (activeAudit.calendarResult.auditType == "Follow Up") {

@@ -52,7 +52,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
             offset: Offset((animation.value * (210 / 180)), 0.0),
             child: Container(
               // top drawer container
-              height: 525,
+              height: 625,
               width: 210,
               color: ColorDefs.colorTopDrawerBackground,
               child: Column(
@@ -391,6 +391,55 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       ),
                     ),
                   ),
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                  RaisedButton(
+                    color: Colors.red,
+                    child: Text("delete Audit Data and Audit 'to send' data"),
+                    onPressed: () {
+                      List<dynamic> result = Provider.of<AuditData>(context, listen: false).auditBox.keys.toList();
+
+                      for (dynamic key in result) {
+                        String keyString = key as String;
+                        Provider.of<AuditData>(context, listen: false).auditBox.delete(keyString);
+                      }
+                      result = Provider.of<AuditData>(context, listen: false).auditOutBox.keys.toList();
+
+                      for (dynamic key in result) {
+                        String keyString = key as String;
+                        Provider.of<AuditData>(context, listen: false).auditOutBox.delete(keyString);
+                      }
+                      result = <String>["All Audit data deleted"];
+                      setState(() {});
+                    },
+                  ),
+                  RaisedButton(
+                    color: Colors.red,
+                    child: Text("delete calendar Data and calendar 'to send' data"),
+                    onPressed: () {
+                      List<dynamic> result =
+                          Provider.of<ListCalendarData>(context, listen: false).calendarBox.keys.toList();
+
+                      for (dynamic key in result) {
+                        String keyString = key as String;
+                        Provider.of<ListCalendarData>(context, listen: false).calendarBox.delete(keyString);
+                      }
+
+                      result =
+                          Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.keys.toList();
+
+                      for (dynamic key in result) {
+                        String keyString = key as String;
+                        Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.delete(keyString);
+                      }
+
+                      result = <String>["All calendar data deleted"];
+                      setState(() {});
+                    },
+                  ),
+
+////////////////////////////////////////////////////
                 ],
               ),
             ),

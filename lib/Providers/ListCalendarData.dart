@@ -80,7 +80,7 @@ class ListCalendarData with ChangeNotifier {
     List<String> edited = [];
     List<String> deleted = [];
     for (var i = 0; i < toBeSentKeys.length; i++) {
-      Map<String, dynamic> packaged = calendarOrderedOutBox.get(toBeSentKeys[i]) as Map<String, dynamic>;
+      Map<dynamic, dynamic> packaged = calendarOrderedOutBox.get(toBeSentKeys[i]) as Map<dynamic, dynamic>;
       String type = packaged['type'] as String;
       switch (type) {
         case ("Add"):

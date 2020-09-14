@@ -11,6 +11,8 @@ import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Canvas/Canvas.dart';
+import 'WidgetSizeAndPosition/WidgetSizeAndPosition.dart';
 import 'authenticationEndpoint.dart/testAuthentication.dart';
 import 'clayContainer/ClayContainerEx.dart';
 import 'fingerSign/fingerSign.dart';
@@ -234,6 +236,22 @@ class DeveloperMenu extends StatelessWidget {
                 );
               },
               child: Text("Clay Container testing")),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => BiggerOne()),
+                );
+              },
+              child: Text("Widget size and position")),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => MyPainter()),
+                );
+              },
+              child: Text("Canvas")),
         ],
       ),
     );

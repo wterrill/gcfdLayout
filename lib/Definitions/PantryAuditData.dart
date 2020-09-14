@@ -738,7 +738,7 @@ List<Map<String, dynamic>> audit1Section4Questions = [
     'databaseVar': 'PantryHasOtherFoodToDistribute',
     'databaseVarType': 'bool',
     'databaseOptCom': 'PantryHasOtherFoodToDistributeComments',
-    'actionItems': 'Site should be distributing other types of foods along with government commodities'
+    'actionItem': 'Site should be distributing other types of foods along with government commodities'
   },
   <String, dynamic>{
     'text': 'Area 1: ',
@@ -1270,7 +1270,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempOne',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempOneComments'
+    'databaseOptCom': 'TempOneComments',
+    'actionItem': 'Maintain #1 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #2:',
@@ -1294,7 +1295,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempTwo',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempTwoComments'
+    'databaseOptCom': 'TempTwoComments',
+    'actionItem': 'Maintain #2 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #3:',
@@ -1318,7 +1320,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempThree',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempThreeComments'
+    'databaseOptCom': 'TempThreeComments',
+    'actionItem': 'Maintain #3 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #4:',
@@ -1342,7 +1345,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempFour',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempFourComments'
+    'databaseOptCom': 'TempFourComments',
+    'actionItem': 'Maintain #4 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #5:',
@@ -1366,7 +1370,8 @@ List<Map<String, dynamic>> audit1Section5Questions = [
     'happyPathResponse': ['Under 0 (acceptable for freezer)', '0 – 41 (acceptable for cooler)', 'N/A'],
     'databaseVar': 'TempFive',
     'databaseVarType': 'string',
-    'databaseOptCom': 'TempFiveComments'
+    'databaseOptCom': 'TempFiveComments',
+    'actionItem': 'Maintain #5 Cooler/Freezer within acceptable temperature limits'
   },
 
   <String, dynamic>{
@@ -1705,5 +1710,5 @@ List<Map<String, List<Map<String, dynamic>>>> pantryAuditSectionsQuestions = [
   <String, List<Map<String, dynamic>>>{"Photos": photoData},
   <String, List<Map<String, dynamic>>>{"Review": reviewData},
   <String, List<Map<String, dynamic>>>{"Verification": verificationData},
-  <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
+  // <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];

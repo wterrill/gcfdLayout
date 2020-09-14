@@ -1072,7 +1072,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempOne',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempOneComments',
-    'actionItem': 'Maintain #1 Cooler/Freezer without acceptable limits'
+    'actionItem': 'Maintain #1 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #2:',
@@ -1097,7 +1097,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempTwo',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempTwoComments',
-    'actionItem': 'Maintain #2 Cooler/Freezer without acceptable limits'
+    'actionItem': 'Maintain #2 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #3:',
@@ -1122,7 +1122,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempThree',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempThreeComments',
-    'actionItem': 'Maintain #3 Cooler/Freezer without acceptable limits'
+    'actionItem': 'Maintain #3 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #4:',
@@ -1147,7 +1147,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempFour',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempFourComments',
-    'actionItem': 'Maintain #4 Cooler/Freezer without acceptable limits'
+    'actionItem': 'Maintain #4 Cooler/Freezer within acceptable temperature limits'
   },
   <String, dynamic>{
     'text': 'Walk in #5:',
@@ -1172,7 +1172,7 @@ List<Map<String, dynamic>> audit2Section5Questions = [
     'databaseVar': 'TempFive',
     'databaseVarType': 'string',
     'databaseOptCom': 'TempFiveComments',
-    'actionItem': 'Maintain #5 Cooler/Freezer without acceptable limits'
+    'actionItem': 'Maintain #5 Cooler/Freezer within acceptable temperature limits'
   },
 
   <String, dynamic>{
@@ -1817,5 +1817,5 @@ List<Map<String, List<Map<String, dynamic>>>> congregateAuditSectionsQuestions =
   <String, List<Map<String, dynamic>>>{"Photos": photoData},
   <String, List<Map<String, dynamic>>>{"Review": reviewData},
   <String, List<Map<String, dynamic>>>{"Verification": verificationData},
-  <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
+  // <String, List<Map<String, dynamic>>>{"*Developer*": developerData},
 ];

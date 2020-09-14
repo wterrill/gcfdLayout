@@ -256,7 +256,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                           print(newValue);
                           if (newValue != scoringReqVal) {
                             if (newValue == 0 &&
-                                // widget.activeAudit.auditScore != null &&
+                                widget.activeAudit.currentPoints != null &&
                                 widget.activeAudit.visitRequiredPointsAdded == false) {
                               widget.activeAudit.currentPoints += 10;
                               widget.activeAudit.visitRequiredPointsAdded = true;
@@ -264,7 +264,7 @@ class _VerificationBadPageState extends State<VerificationBadPage> {
                                   100 * widget.activeAudit.currentPoints / widget.activeAudit.maxPoints;
                             }
                             if (newValue == 1 &&
-                                // widget.activeAudit.auditScore != null &&
+                                widget.activeAudit.currentPoints != null &&
                                 widget.activeAudit.visitRequiredPointsAdded == true) {
                               widget.activeAudit.currentPoints -= 10;
                               widget.activeAudit.visitRequiredPointsAdded = false;
@@ -371,6 +371,7 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                                 Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                               }
                             } else {
+                              widget.activeAudit.putProgramOnImmediateHold = null;
                               if (widget.activeAudit.auditScore != null &&
                                   widget.activeAudit.programHoldPointsAdded == true) {
                                 Provider.of<AuditData>(context, listen: false).activeAudit.putProgramOnImmediateHold =
@@ -408,40 +409,6 @@ In order to be fully certified and in good standing with the Greater Chicago Foo
                     '''Submit a dated and SIGNED Letter of Compliance regarding above issues on your agency letterhead.  Please do not submit pictures of documents as the quality is not legible when printed  
  '''),
               ),
-
-              // Column(
-              //   children: [
-              //     Container(
-              //       height: 30,
-              //     ),
-              //     Text("This Audit's Final Score is: ", style: getScoreColor(widget.activeAudit.auditScore)),
-              //     Container(
-              //       height: 15,
-              //     ),
-              //     Text(widget.activeAudit.auditScore.toStringAsFixed(2),
-              //         style: getScoreColor(widget.activeAudit.auditScore)),
-              //     Container(
-              //       height: 15,
-              //     ),
-              //     FlatButton(
-              //       disabledColor: ColorDefs.colorButtonNeutral,
-              //       color: ColorDefs.colorTopHeader,
-              //       shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(50.0),
-              //           side: BorderSide(color: ColorDefs.colorAnotherDarkGreen, width: 3.0)),
-              //       child: Padding(
-              //         padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
-              //         child: Text("Show Scoring Details"),
-              //       ),
-              //       onPressed: () async {
-              //         Dialogs.showScoring(context: context, audit: widget.activeAudit);
-              //       },
-              //     ),
-              //     Container(
-              //       height: 30,
-              //     ),
-              //   ],
-              // ),
 
               if (foodDepositoryMonitorSignature == null)
                 Text("Food Depository Monitor: " +

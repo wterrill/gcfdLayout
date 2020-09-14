@@ -60,6 +60,7 @@ void totalDataSync(BuildContext context) async {
     _showToast(context, "Synced Successfully", Icon(Icons.check));
   } catch (err) {
     print("failed");
+    print(err);
     // Dialogs.showMessage(
     //     context: navigatorKey.currentContext,
     //     message: "An error occurred while contacting the site data endpoint. Check internet connection",

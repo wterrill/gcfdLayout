@@ -99,176 +99,177 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
       // Sections
       for (Section section in newAudit.sections) {
         print("-------------------" + section.name + "-------------------");
+        if (section.name != "*Developer*") {
+          //Questions
+          for (Question question in section.questions) {
+            // get database variable
+            String databaseVar = question.questionMap['databaseVar'] as String;
+            // see if we can snag the question into the citations
+            if (citationDatabaseVarsList.contains(databaseVar)) {
+              // found one
+              if (citationsMap[databaseVar + 'Flag'] as int == 0) {
+                question.unflagged = true;
+              } else if (citationsMap[databaseVar + 'Flag'] as int == 1) {
+                question.unflagged = false;
+              }
+              question.fromSectionName = section.name;
 
-        //Questions
-        for (Question question in section.questions) {
-          // get database variable
-          String databaseVar = question.questionMap['databaseVar'] as String;
-          // see if we can snag the question into the citations
-          if (citationDatabaseVarsList.contains(databaseVar)) {
-            // found one
-            if (citationsMap[databaseVar + 'Flag'] as int == 0) {
-              question.unflagged = true;
-            } else if (citationsMap[databaseVar + 'Flag'] as int == 1) {
-              question.unflagged = false;
+              // question.unflagged = !question.unflagged;
+              question.actionItem = citationsMap[databaseVar + "ActionItem"] as String;
+              citations.add(question);
             }
-            question.fromSectionName = section.name;
 
-            // question.unflagged = !question.unflagged;
-            question.actionItem = citationsMap[databaseVar + "ActionItem"] as String;
-            citations.add(question);
-          }
+            if (databaseVar != null) {
+              dynamic value = incomingAudit[databaseVar];
+              if (value == null) {
+                print("Missing: $databaseVar");
+                missingDBVar.add(databaseVar);
+              } else {
+                switch (question.typeOfQuestion) {
+                  case ("display"):
+                    print(question.text);
+                    print('display');
+                    print(incomingAudit[databaseVar]);
+                    break;
 
-          if (databaseVar != null) {
-            dynamic value = incomingAudit[databaseVar];
-            if (value == null) {
-              print("Missing: $databaseVar");
-              missingDBVar.add(databaseVar);
-            } else {
-              switch (question.typeOfQuestion) {
-                case ("display"):
-                  print(question.text);
-                  print('display');
-                  print(incomingAudit[databaseVar]);
-                  break;
-
-                case ("yesNo"):
-                  print(question.text);
-                  print('yesNo');
-                  print(incomingAudit[databaseVar]);
-                  try {
-                    question.userResponse = incomingAudit[databaseVar] as bool ? "Yes" : "No";
-                  } catch (err) {
-                    question.userResponse = incomingAudit[databaseVar] as String;
-                  }
-
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-
-                  break;
-                case ("issuesNoIssues"):
-                  print(question.text);
-                  print('issuesNoIssues');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as bool ? "No Issues" : "Issues";
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-
-                  break;
-
-                case ("fillIn"):
-                  print(question.text);
-                  print('fillIn');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as String;
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-
-                  break;
-
-                case ("fillInInterview"):
-                  print(question.text);
-                  print('fillInInterview');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as String;
-                  Provider.of<AuditData>(navigatorKey.currentContext, listen: false).personInterviewed =
-                      question.userResponse as String;
-
-                  break;
-                case ("fillInEmail"):
-                  print(question.text);
-                  print('fillInInterview');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as String;
-                  Provider.of<AuditData>(navigatorKey.currentContext, listen: false).contactEmail =
-                      question.userResponse as String;
-
-                  break;
-
-                case ("fillInEmailInterview"):
-                  print(question.text);
-                  print('fillInEmailInterview');
-
-                  break;
-
-                // fillInInterview
-                // fillInEmail
-
-                case ("fillInNum"):
-                  print(question.text);
-                  print('fillInNum');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as int;
-                  if (question.userResponse == 0) {
-                    question.userResponse = "0";
-                  }
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-                  break;
-
-                case ("dropDown"):
-                  print(question.text);
-                  print('dropDown');
-                  print(incomingAudit[databaseVar]);
-                  if (incomingAudit[databaseVar] != null) {
+                  case ("yesNo"):
+                    print(question.text);
+                    print('yesNo');
+                    print(incomingAudit[databaseVar]);
                     try {
+                      question.userResponse = incomingAudit[databaseVar] as bool ? "Yes" : "No";
+                    } catch (err) {
                       question.userResponse = incomingAudit[databaseVar] as String;
-                    } catch (err) {
-                      question.userResponse = question.dropDownMenu[incomingAudit[databaseVar] as int];
                     }
-                  } else {
-                    question.userResponse = 'Select';
-                  }
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-                  break;
 
-                case ("yesNoNa"):
-                  print(question.text);
-                  print('yesNoNa');
-                  print(incomingAudit[databaseVar]);
-                  if (incomingAudit[databaseVar] != null) {
-                    // if (incomingAudit[databaseVar] as int == 1) {
-                    //   question.userResponse = "Yes";
-                    // }
-                    // if (incomingAudit[databaseVar] as int == 0) {
-                    //   question.userResponse = "No";
-                    // }
-                    // if (incomingAudit[databaseVar] as int == -1) {
-                    //   question.userResponse = 'N/A';
-                    //   // question.dd
-                    // }
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
 
-                    try {
-                      if (incomingAudit[databaseVar] as int == 1) {
-                        question.userResponse = "Yes";
-                      } else if (incomingAudit[databaseVar] as int == 0) {
-                        question.userResponse = "No";
-                      } else if (incomingAudit[databaseVar] as int == -1) {
-                        question.userResponse = "N/A";
-                      }
-                    } catch (err) {
+                    break;
+                  case ("issuesNoIssues"):
+                    print(question.text);
+                    print('issuesNoIssues');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as bool ? "No Issues" : "Issues";
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+
+                    break;
+
+                  case ("fillIn"):
+                    print(question.text);
+                    print('fillIn');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as String;
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+
+                    break;
+
+                  case ("fillInInterview"):
+                    print(question.text);
+                    print('fillInInterview');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as String;
+                    Provider.of<AuditData>(navigatorKey.currentContext, listen: false).personInterviewed =
+                        question.userResponse as String;
+
+                    break;
+                  case ("fillInEmail"):
+                    print(question.text);
+                    print('fillInInterview');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as String;
+                    Provider.of<AuditData>(navigatorKey.currentContext, listen: false).contactEmail =
+                        question.userResponse as String;
+
+                    break;
+
+                  case ("fillInEmailInterview"):
+                    print(question.text);
+                    print('fillInEmailInterview');
+
+                    break;
+
+                  // fillInInterview
+                  // fillInEmail
+
+                  case ("fillInNum"):
+                    print(question.text);
+                    print('fillInNum');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as int;
+                    if (question.userResponse == 0) {
+                      question.userResponse = "0";
+                    }
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+                    break;
+
+                  case ("dropDown"):
+                    print(question.text);
+                    print('dropDown');
+                    print(incomingAudit[databaseVar]);
+                    if (incomingAudit[databaseVar] != null) {
                       try {
-                        if (incomingAudit[databaseVar] as int == -1) {
-                          question.userResponse = 'N/A';
-                        } else {
-                          print(incomingAudit[databaseVar]);
+                        question.userResponse = incomingAudit[databaseVar] as String;
+                      } catch (err) {
+                        question.userResponse = question.dropDownMenu[incomingAudit[databaseVar] as int];
+                      }
+                    } else {
+                      question.userResponse = 'Select';
+                    }
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+                    break;
+
+                  case ("yesNoNa"):
+                    print(question.text);
+                    print('yesNoNa');
+                    print(incomingAudit[databaseVar]);
+                    if (incomingAudit[databaseVar] != null) {
+                      // if (incomingAudit[databaseVar] as int == 1) {
+                      //   question.userResponse = "Yes";
+                      // }
+                      // if (incomingAudit[databaseVar] as int == 0) {
+                      //   question.userResponse = "No";
+                      // }
+                      // if (incomingAudit[databaseVar] as int == -1) {
+                      //   question.userResponse = 'N/A';
+                      //   // question.dd
+                      // }
+
+                      try {
+                        if (incomingAudit[databaseVar] as int == 1) {
+                          question.userResponse = "Yes";
+                        } else if (incomingAudit[databaseVar] as int == 0) {
+                          question.userResponse = "No";
+                        } else if (incomingAudit[databaseVar] as int == -1) {
+                          question.userResponse = "N/A";
                         }
                       } catch (err) {
-                        print(err);
+                        try {
+                          if (incomingAudit[databaseVar] as int == -1) {
+                            question.userResponse = 'N/A';
+                          } else {
+                            print(incomingAudit[databaseVar]);
+                          }
+                        } catch (err) {
+                          print(err);
+                        }
+                        // question.userResponse = incomingAudit[databaseVar] as String;
                       }
-                      // question.userResponse = incomingAudit[databaseVar] as String;
+
+                      // (question.userResponse = incomingAudit[databaseVar] as int == 1) ? "Yes" : "No";
+                    } else {
+                      question.userResponse = "N/A";
                     }
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+                    break;
 
-                    // (question.userResponse = incomingAudit[databaseVar] as int == 1) ? "Yes" : "No";
-                  } else {
-                    question.userResponse = "N/A";
-                  }
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-                  break;
-
-                case ("date"):
-                  print(question.text);
-                  print('date');
-                  print(incomingAudit[databaseVar]);
-                  question.userResponse = incomingAudit[databaseVar] as String;
-                  question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
-                  break;
+                  case ("date"):
+                    print(question.text);
+                    print('date');
+                    print(incomingAudit[databaseVar]);
+                    question.userResponse = incomingAudit[databaseVar] as String;
+                    question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
+                    break;
+                }
               }
             }
           }

@@ -214,6 +214,9 @@ class AuditData with ChangeNotifier {
   }
 
   bool auditExists(CalendarResult calendarResult) {
+    // if (calendarResult.startTime.contains("24:00:00.000")) {
+    //   calendarResult.startTime = DateTime.parse(calendarResult.startTime).toString();
+    // }
     retrievedAudit = auditBox.get(
             '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}')
         as Audit;

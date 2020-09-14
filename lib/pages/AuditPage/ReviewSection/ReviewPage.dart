@@ -21,7 +21,7 @@ class ReviewPage extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               itemCount:
-                  activeAudit.sections.length - 5, //TODO this should be 4 after "*Developer*" is taken away (5 with)
+                  activeAudit.sections.length - 4, //TODO this should be 4 after "*Developer*" is taken away (5 with)
               itemBuilder: (context, i) {
                 return Container(
                   decoration: BoxDecoration(

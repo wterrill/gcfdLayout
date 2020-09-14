@@ -38,6 +38,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
         }
 
         text = widget.questions[widget.index].actionItem + (text ?? "");
+        print(text);
       } else {
         text = widget.questions[widget.index].optionalComment;
       }
