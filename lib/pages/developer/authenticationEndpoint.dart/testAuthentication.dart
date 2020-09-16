@@ -73,10 +73,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
       print(body);
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:90/api/Audit/FileUpload',
+        sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
             body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       } else {
-        sender = http.post('http://12.216.81.220:90/api/Audit/FileUpload',
+        sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
             body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       }
       sender.then((http.Response res) {
@@ -102,10 +102,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       };
       if (isNtlm) {
         sender = client.get(
-            "http://12.216.81.220:90/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       } else {
         sender = http.get(
-            "http://12.216.81.220:90/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       }
       sender.then(
         (http.Response res) {
@@ -138,9 +138,9 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
       // http
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:90/api/SiteInfo");
+        sender = client.get("http://12.216.81.220:88/api/SiteInfo");
       } else {
-        sender = http.get("http://12.216.81.220:90/api/SiteInfo");
+        sender = http.get("http://12.216.81.220:88/api/SiteInfo");
       }
       print(sender);
 
@@ -178,7 +178,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       // print(body);
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:90/api/Audit/Schedule',
+        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -194,7 +194,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
               'DeviceId': '****************************'
             }));
       } else {
-        sender = http.post('http://12.216.81.220:90/api/Audit/Schedule',
+        sender = http.post('http://12.216.81.220:88/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -240,14 +240,14 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:90/api/Audit/Schedule',
+        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: body as String);
       } else {
-        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:90/api/Audit/Schedule',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -274,14 +274,14 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       String body = jsonEncode(auditToSend);
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:90/api/Audit/',
+        sender = client.post('http://12.216.81.220:88/api/Audit/',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: body);
       } else {
-        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:90/api/Audit/',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -312,10 +312,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
       if (isNtlm) {
         sender = client.get(
-            "http://12.216.81.220:90/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       } else {
         sender = http.get(
-            "http://12.216.81.220:90/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       }
 
       sender.then(
@@ -349,9 +349,9 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
 
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:90/api/GetAuditors");
+        sender = client.get("http://12.216.81.220:88/api/GetAuditors");
       } else {
-        sender = http.get("http://12.216.81.220:90/api/GetAuditors");
+        sender = http.get("http://12.216.81.220:88/api/GetAuditors");
       }
       sender.then(
         (http.Response res) {
@@ -383,9 +383,9 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       result = "";
 
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:90/api/Audit/DeleteAll");
+        sender = client.get("http://12.216.81.220:88/api/Audit/DeleteAll");
       } else {
-        sender = http.get("http://12.216.81.220:90/api/Audit/DeleteAlls");
+        sender = http.get("http://12.216.81.220:88/api/Audit/DeleteAlls");
       }
       sender.then(
         (http.Response res) {
@@ -429,7 +429,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         client
                             // http
                             .get(
-                          "http://12.216.81.220:90/api/AuthenticateUser",
+                          "http://12.216.81.220:88/api/AuthenticateUser",
                         )
                             .then((res) {
                           print(res.body);
