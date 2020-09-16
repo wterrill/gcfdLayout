@@ -1,12 +1,14 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/AuditorClasses/Auditor.dart';
 import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
+import 'package:provider/provider.dart';
 // import 'dart:typed_data';
 
 bool isNtlm = true;
@@ -23,7 +25,8 @@ class Authentication {
     return Future.delayed(Duration(milliseconds: 1000), () => true);
   }
 
-  static Future<bool> authenticate({String username, String password}) async {
+  static Future<bool> authenticate({String username, String password, @required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     NTLMClient client = NTLMClient(
       domain: "",
       workstation: "LAPTOP",
@@ -34,7 +37,7 @@ class Authentication {
     try {
       return client
           .get(
-        "http://12.216.81.220:88/api/AuthenticateUser",
+        "http://12.216.81.220:$portNumber/api/AuthenticateUser",
       )
           .then((result) {
         bool isAuthenticated = false;
@@ -57,21 +60,22 @@ class Authentication {
 
 class FullAuditComms {
   //todo this needs to be future<dynamic>
-  static Future<dynamic> sendFullAudit(Map<String, dynamic> auditToSend) async {
+  static Future<dynamic> sendFullAudit({Map<String, dynamic> auditToSend, BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     print("========== sendFullAudit =========");
     String body = jsonEncode(auditToSend);
     print(body);
     print('sendFullAudit send ${DateTime.now()}');
 
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:88/api/Audit/',
+      sender = client.post('http://12.216.81.220:$portNumber/api/Audit/',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
           },
           body: body);
     } else {
-      sender = http.post('http://12.216.81.220:88/api/Audit/',
+      sender = http.post('http://12.216.81.220:$portNumber/api/Audit/',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
@@ -92,7 +96,8 @@ class FullAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> getFullAudit(int allNotMe, String deviceid) async {
+  static Future<dynamic> getFullAudit({int allNotMe, String deviceid, @required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     var queryParameters = {"MyDeviceId": kIsWeb ? "website" : deviceid, "QueryType": allNotMe.toString()};
     print("========== getFullAudit =========");
     print(queryParameters);
@@ -100,10 +105,10 @@ class FullAuditComms {
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:$portNumber/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:$portNumber/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
@@ -125,13 +130,14 @@ class FullAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> uploadPicList(String json) {
+  static Future<dynamic> uploadPicList({String json, BuildContext context}) {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     print(json);
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
+      sender = client.post('http://12.216.81.220:$portNumber/api/Audit/FileUpload',
           body: json, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
     } else {
-      sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
+      sender = http.post('http://12.216.81.220:$portNumber/api/Audit/FileUpload',
           body: json, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
     }
     return sender.then((http.Response res) {
@@ -145,19 +151,20 @@ class FullAuditComms {
 }
 
 class ScheduleAuditComms {
-  static Future<dynamic> scheduleAudit(String body) async {
+  static Future<dynamic> scheduleAudit({String body, @required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     print("========== scheduleAudit =========");
     print(body);
     print('scheduleAudit send ${DateTime.now()}');
     if (isNtlm) {
-      sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
+      sender = client.post('http://12.216.81.220:$portNumber/api/Audit/Schedule',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
           },
           body: body);
     } else {
-      sender = http.post('http://12.216.81.220:88/api/Audit/Schedule',
+      sender = http.post('http://12.216.81.220:$portNumber/api/Audit/Schedule',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
@@ -176,7 +183,8 @@ class ScheduleAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> getScheduled(int allNotMe, String deviceid) async {
+  static Future<dynamic> getScheduled({int allNotMe, String deviceid, @required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     // allNotMe = 1;
     var queryParameters = {
       "MyDeviceId": kIsWeb ? "website" : deviceid,
@@ -188,10 +196,10 @@ class ScheduleAuditComms {
 
     if (isNtlm) {
       sender = client.get(
-          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:$portNumber/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     } else {
       sender = http.get(
-          "http://12.216.81.220:88/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+          "http://12.216.81.220:$portNumber/api/Schedule/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
     }
 
     return sender.then(
@@ -213,11 +221,12 @@ class ScheduleAuditComms {
     }) as Future<dynamic>;
   }
 
-  static Future<dynamic> getAuditors() async {
+  static Future<dynamic> getAuditors({@required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     if (isNtlm) {
-      sender = client.get("http://12.216.81.220:88/api/GetAuditors");
+      sender = client.get("http://12.216.81.220:$portNumber/api/GetAuditors");
     } else {
-      sender = http.get("http://12.216.81.220:88/api/GetAuditors");
+      sender = http.get("http://12.216.81.220:$portNumber/api/GetAuditors");
     }
     print('getAuditors send ${DateTime.now()}');
 
@@ -247,12 +256,13 @@ class ScheduleAuditComms {
 }
 
 class SiteComms {
-  static Future<dynamic> getSites() async {
+  static Future<dynamic> getSites({@required BuildContext context}) async {
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
     dynamic sender;
     if (isNtlm) {
-      sender = client.get("http://12.216.81.220:88/api/SiteInfo");
+      sender = client.get("http://12.216.81.220:$portNumber/api/SiteInfo");
     } else {
-      sender = http.get("http://12.216.81.220:88/api/SiteInfo");
+      sender = http.get("http://12.216.81.220:$portNumber/api/SiteInfo");
     }
     print('getSites send ${DateTime.now()}');
     return sender.then(

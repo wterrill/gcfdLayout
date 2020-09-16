@@ -64,7 +64,7 @@ class SiteData with ChangeNotifier {
       } else {
         throw ("No internet connection found");
       }
-      result = await SiteComms.getSites().timeout(
+      result = await SiteComms.getSites(context: navigatorKey.currentContext).timeout(
         const Duration(seconds: 10),
         onTimeout: () {
           // Navigator.of(navigatorKey.currentContext).pop();

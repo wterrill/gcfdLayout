@@ -26,6 +26,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String portNumber = Provider.of<GeneralData>(context).portNumber;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
@@ -110,10 +111,11 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
                     ),
                     hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: portNumber == "88" ? Colors.white : Colors.red,
                     hintText: 'Agency / Program Number Filter'),
               ),
             ),
+            if (portNumber == "90") Text("TEST TEST", style: ColorDefs.textRedTest),
 
             // if (Provider.of<GeneralData>(context, listen: true).syncInProgress) CircularProgressIndicator(),
             // if (Provider.of<GeneralData>(context, listen: true).syncInProgress)

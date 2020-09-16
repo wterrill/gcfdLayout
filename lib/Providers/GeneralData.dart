@@ -24,6 +24,7 @@ class GeneralData with ChangeNotifier {
 
   //SchedulingPage
   bool backgroundDisable;
+  String portNumber = "88";
 
   GeneralData() {
     initializeApp();
@@ -41,6 +42,11 @@ class GeneralData with ChangeNotifier {
     } else {
       deviceid = "website";
     }
+    notifyListeners();
+  }
+
+  void updateDatabasePort(String newPortNumber) {
+    portNumber = newPortNumber;
     notifyListeners();
   }
 

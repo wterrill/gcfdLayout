@@ -8,6 +8,7 @@ import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
 import 'package:auditor/communications/Comms.dart';
+import 'package:auditor/main.dart';
 import 'package:auditor/providers/BuildAuditToSend.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -731,7 +732,8 @@ class AuditData with ChangeNotifier {
           throw ("No internet connection found");
         }
 
-        successful = await FullAuditComms.sendFullAudit(mainBody).timeout(
+        successful =
+            await FullAuditComms.sendFullAudit(auditToSend: mainBody, context: navigatorKey.currentContext).timeout(
           const Duration(seconds: 10),
           onTimeout: () {
             // Navigator.of(navigatorKey.currentContext).pop();
@@ -758,7 +760,8 @@ class AuditData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        bool successfulpic = await FullAuditComms.uploadPicList(picJson) as bool;
+        bool successfulpic =
+            await FullAuditComms.uploadPicList(json: picJson, context: navigatorKey.currentContext) as bool;
       } catch (err) {
         successful = false;
       }
@@ -787,7 +790,8 @@ class AuditData with ChangeNotifier {
         throw ("No internet connection found");
       }
 
-      fromServer = await FullAuditComms.getFullAudit(allNotMe, deviceid);
+      fromServer = await FullAuditComms.getFullAudit(
+          allNotMe: allNotMe, deviceid: deviceid, context: navigatorKey.currentContext);
     } catch (err) {
       print(err);
       fromServer = null;

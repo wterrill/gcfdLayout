@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:auditor/Definitions/colorDefs.dart';
 import 'package:auditor/pages/ListSchedulingPage/ListSchedulingPage.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
@@ -8,6 +9,8 @@ import 'dart:io';
 // import 'package:image_picker_web/image_picker_web.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
+
+import 'package:provider/provider.dart';
 
 class TestAuthentication extends StatefulWidget {
   const TestAuthentication({Key key}) : super(key: key);
@@ -55,6 +58,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
     }
 
     void uploadPic() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       String base64Image = base64Encode(pickedImage);
 
@@ -73,10 +77,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
       print(body);
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:88/api/Audit/FileUpload',
+        sender = client.post('http://12.216.81.220:$portNumber/api/Audit/FileUpload',
             body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       } else {
-        sender = http.post('http://12.216.81.220:88/api/Audit/FileUpload',
+        sender = http.post('http://12.216.81.220:$portNumber/api/Audit/FileUpload',
             body: body, headers: {'Content-type': 'application/json', 'Accept': 'application/json'});
       }
       sender.then((http.Response res) {
@@ -95,6 +99,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void downloadSched() async {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       var queryParameters = {
         "MyDeviceId": "aaabbbccc",
@@ -102,10 +107,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       };
       if (isNtlm) {
         sender = client.get(
-            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:$portNumber/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       } else {
         sender = http.get(
-            "http://12.216.81.220:88/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:$portNumber/api/Audit/Get?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       }
       sender.then(
         (http.Response res) {
@@ -135,12 +140,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void getSiteInfo() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       // http
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:88/api/SiteInfo");
+        sender = client.get("http://12.216.81.220:$portNumber/api/SiteInfo");
       } else {
-        sender = http.get("http://12.216.81.220:88/api/SiteInfo");
+        sender = http.get("http://12.216.81.220:$portNumber/api/SiteInfo");
       }
       print(sender);
 
@@ -164,6 +170,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void scheduleAudit() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       // String body = jsonEncode(<String, dynamic>{
       //   'AED': 'A',
@@ -178,7 +185,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       // print(body);
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
+        sender = client.post('http://12.216.81.220:$portNumber/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -194,7 +201,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
               'DeviceId': '****************************'
             }));
       } else {
-        sender = http.post('http://12.216.81.220:88/api/Audit/Schedule',
+        sender = http.post('http://12.216.81.220:$portNumber/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -227,6 +234,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void deleteScheduledAudit() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       dynamic body = jsonEncode(<String, dynamic>{
         'AED': 'D',
@@ -240,14 +248,14 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:88/api/Audit/Schedule',
+        sender = client.post('http://12.216.81.220:$portNumber/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: body as String);
       } else {
-        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/Schedule',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:$portNumber/api/Audit/Schedule',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -270,18 +278,19 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void sendFullAudit() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       String body = jsonEncode(auditToSend);
 
       if (isNtlm) {
-        sender = client.post('http://12.216.81.220:88/api/Audit/',
+        sender = client.post('http://12.216.81.220:$portNumber/api/Audit/',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: body);
       } else {
-        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:88/api/Audit/',
+        sender = http.post('https://cors-anywhere.herokuapp.com/http://12.216.81.220:$portNumber/api/Audit/',
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'X-Requested-With': 'XMLHttpRequest',
@@ -304,6 +313,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void getFullAudit() async {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
       var queryParameters = {
         "MyDeviceId": "aaabbbccc",
@@ -312,10 +322,10 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
       if (isNtlm) {
         sender = client.get(
-            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:$portNumber/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       } else {
         sender = http.get(
-            "http://12.216.81.220:88/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
+            "http://12.216.81.220:$portNumber/api/Audit/Query?MyDeviceId=${queryParameters['MyDeviceId']}&QueryType=${queryParameters['QueryType']}");
       }
 
       sender.then(
@@ -346,12 +356,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
 
 ////////////////////////////////////////////////////////////////
     void getAuditors() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
 
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:88/api/GetAuditors");
+        sender = client.get("http://12.216.81.220:$portNumber/api/GetAuditors");
       } else {
-        sender = http.get("http://12.216.81.220:88/api/GetAuditors");
+        sender = http.get("http://12.216.81.220:$portNumber/api/GetAuditors");
       }
       sender.then(
         (http.Response res) {
@@ -380,12 +391,13 @@ class _TestAuthenticationState extends State<TestAuthentication> {
     }
 
     void deleteEverything() {
+      String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
       result = "";
 
       if (isNtlm) {
-        sender = client.get("http://12.216.81.220:88/api/Audit/DeleteAll");
+        sender = client.get("http://12.216.81.220:$portNumber/api/Audit/DeleteAll");
       } else {
-        sender = http.get("http://12.216.81.220:88/api/Audit/DeleteAlls");
+        sender = http.get("http://12.216.81.220:$portNumber/api/Audit/DeleteAlls");
       }
       sender.then(
         (http.Response res) {
@@ -413,6 +425,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
       });
     }
 
+    String portNumber = Provider.of<GeneralData>(context, listen: false).portNumber;
 ////////////////////////////////////////////////////////////////
     return Scaffold(
       body: Container(
@@ -429,7 +442,7 @@ class _TestAuthenticationState extends State<TestAuthentication> {
                         client
                             // http
                             .get(
-                          "http://12.216.81.220:88/api/AuthenticateUser",
+                          "http://12.216.81.220:$portNumber/api/AuthenticateUser",
                         )
                             .then((res) {
                           print(res.body);

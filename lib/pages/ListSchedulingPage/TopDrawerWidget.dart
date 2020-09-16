@@ -43,17 +43,18 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
+    String portNumber = Provider.of<GeneralData>(context).portNumber;
     return Stack(
       children: [
         Positioned(
           top: 50,
-          left: -210,
+          left: -300,
           child: Transform.translate(
-            offset: Offset((animation.value * (210 / 180)), 0.0),
+            offset: Offset((animation.value * (300 / 180)), 0.0),
             child: Container(
               // top drawer container
-              height: 625,
-              width: 210,
+              height: 725,
+              width: 300,
               color: ColorDefs.colorTopDrawerBackground,
               child: Column(
                 children: [
@@ -392,12 +393,12 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                     ),
                   ),
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                  RaisedButton(
-                    color: Colors.red,
-                    child: Text("delete Audit Data and Audit 'to send' data"),
-                    onPressed: () {
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
+                  GestureDetector(
+                    onTap: () async {
                       List<dynamic> result = Provider.of<AuditData>(context, listen: false).auditBox.keys.toList();
 
                       for (dynamic key in result) {
@@ -413,11 +414,32 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       result = <String>["All Audit data deleted"];
                       setState(() {});
                     },
+                    child: Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.error, color: ColorDefs.colorAudit2),
+                          Center(child: Text("Delete Audit DB", style: ColorDefs.textBodyBlue20)),
+                          Container(
+                            height: 20,
+                            width: 20,
+                            child: startSync
+                                ? CircularProgressIndicator()
+                                : Icon(Icons.sync, color: ColorDefs.colorTopDrawerBackground),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  RaisedButton(
-                    color: Colors.red,
-                    child: Text("delete calendar Data and calendar 'to send' data"),
-                    onPressed: () {
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
+                  GestureDetector(
+                    onTap: () async {
                       List<dynamic> result =
                           Provider.of<ListCalendarData>(context, listen: false).calendarBox.keys.toList();
 
@@ -437,8 +459,62 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       result = <String>["All calendar data deleted"];
                       setState(() {});
                     },
+                    child: Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.error, color: ColorDefs.colorAudit2),
+                          Center(child: Text("Delete Calendar DB ", style: ColorDefs.textBodyBlue20)),
+                          Container(
+                            height: 20,
+                            width: 20,
+                            child: startSync
+                                ? CircularProgressIndicator()
+                                : Icon(Icons.sync, color: ColorDefs.colorTopDrawerBackground),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                  Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
+                  GestureDetector(
+                    onTap: () async {
+                      String newPortNumber = "";
+                      if (portNumber == "88") {
+                        newPortNumber = "90";
+                      } else {
+                        newPortNumber = "88";
+                      }
+                      Provider.of<GeneralData>(context, listen: false).updateDatabasePort(newPortNumber);
+                    },
+                    child: Container(
+                      height: 35.4,
+                      width: double.infinity,
+                      color: ColorDefs.colorTopDrawerAlternating,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.error, color: ColorDefs.colorAudit2),
+                          Center(child: Text("toggle ext. DB from $portNumber", style: ColorDefs.textBodyBlue20)),
+                          // Container(
+                          //   height: 20,
+                          //   width: 20,
+                          //   child: startSync
+                          //       ? CircularProgressIndicator()
+                          //       : Icon(Icons.sync, color: ColorDefs.colorTopDrawerBackground),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
 ////////////////////////////////////////////////////
                 ],
               ),

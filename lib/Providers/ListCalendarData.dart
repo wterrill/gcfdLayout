@@ -109,7 +109,7 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
+        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
       } catch (err) {
         print(err);
         successful = false;
@@ -131,7 +131,7 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
+        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
       } catch (err) {
         print(err);
         successful = false;
@@ -179,7 +179,7 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(jsonResult);
+        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
       } catch (err) {
         print(err);
         successful = false;
@@ -219,7 +219,8 @@ class ListCalendarData with ChangeNotifier {
       } else {
         throw ("No internet connection found");
       }
-      dynResult = await ScheduleAuditComms.getScheduled(allNotMe, deviceidProvider);
+      dynResult = await ScheduleAuditComms.getScheduled(
+          allNotMe: allNotMe, deviceid: deviceidProvider, context: navigatorKey.currentContext);
     } catch (err) {
       print(err);
       dynResult = false;
@@ -305,7 +306,7 @@ class ListCalendarData with ChangeNotifier {
       } else {
         throw ("No internet connection found");
       }
-      temp = await ScheduleAuditComms.getAuditors();
+      temp = await ScheduleAuditComms.getAuditors(context: navigatorKey.currentContext);
     } catch (err) {
       print(err);
       temp = null;
