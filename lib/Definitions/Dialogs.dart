@@ -345,6 +345,7 @@ class Dialogs {
           Text('Built and uploaded on: $buildDate'),
           Text("Flutter framework: ${version['frameworkVersion']}"),
           Text("Dart version: ${version['dartSdkVersion']}"),
+          Text("App version: $appVersion"),
         ],
       ),
     );

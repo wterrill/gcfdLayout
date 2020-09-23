@@ -5,12 +5,12 @@ echo "Building flutterVersion.dart"
 echo "const Map<String,String> version = " >> lib/buildTime/flutterVersion.dart
 flutter --version --machine >> lib/buildTime/flutterVersion.dart
 echo ";" >> lib/buildTime/flutterVersion.dart
+echo 'const String appVersion = "1.1.0 build 2";' >> lib/buildTime/flutterVersion.dart
 
 rm lib/buildTime/flutterDate.dart
 echo "Building flutterdate.dart"
 printf "const String buildDate  = \"" >> lib/buildTime/flutterDate.dart
 printf '%s' "$(date)" >> lib/buildTime/flutterDate.dart
-printf 'Version 1.1.0 build 1'
 printf  "\";" >> lib/buildTime/flutterDate.dart
 echo "Continuing flutter build"
 
@@ -19,22 +19,20 @@ echo "Continuing flutter build"
 #############
 ### UAT #####
 #############
-# echo "DEPLOYING ON :88 THE UAT SERVER"
-# echo "replacing :90 with :88"
-# # # sed -i '' "s/:90/:88/g" lib/pages/developer/authenticationEndpoint.dart/testAuthentication.dart
-# # # sed -i '' "s/:90/:88/g" lib/communications/Comms.dart
-# echo "building web version"
-# flutter build web --release
-# echo "moving built web version to wterrill.github.io"
-# cp -fr ./build/web/* ./wterrill.github.io/ 
-# cd wterrill.github.io
-# echo "pushing new version to github"
-# git add .
-# now=$(printf '%s' "$(date)")
-# git commit -m "AutoCommit wterrill.github.io $now"
-# git push
-# cd ..
-# echo "new version pushed to github. Building ios version with :88"
+# # sed -i '' "s/:90/:88/g" lib/pages/developer/authenticationEndpoint.dart/testAuthentication.dart
+# # sed -i '' "s/:90/:88/g" lib/communications/Comms.dart
+echo "building web version"
+flutter build web --release
+echo "moving built web version to wterrill.github.io"
+cp -fr ./build/web/* ./wterrill.github.io/ 
+cd wterrill.github.io
+echo "pushing new version to github"
+git add .
+now=$(printf '%s' "$(date)")
+git commit -m "AutoCommit wterrill.github.io $now"
+git push
+cd ..
+echo "new version pushed to github. Building ios version with :88"
 # flutter build ios --release
 
 
@@ -43,7 +41,7 @@ echo "Continuing flutter build"
 #############
 
 echo "DEPLOYING ON :90 THE TEST SERVER"
-echo "replacing :88 with :90"
+# # echo "replacing :88 with :90"
 # # sed -i '' "s/:88/:90/g" lib/pages/developer/authenticationEndpoint.dart/testAuthentication.dart
 # # sed -i '' "s/:88/:90/g" lib/communications/Comms.dart
 echo "building web version"

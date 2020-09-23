@@ -6,6 +6,8 @@ PODS:
     - Reachability
   - device_id (0.0.1):
     - Flutter
+  - device_info (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_appavailability (0.0.1):
     - Flutter
@@ -15,33 +17,45 @@ PODS:
     - Flutter
   - flutter_pdf_viewer (0.0.1):
     - Flutter
+  - flutter_sentry (0.0.1):
+    - Flutter
+    - Sentry (~> 5.0)
   - fluttertoast (0.0.2):
     - Flutter
   - image_picker (0.0.1):
+    - Flutter
+  - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
   - plugin_scaffold (0.0.1):
     - Flutter
   - Reachability (3.2)
+  - Sentry (5.2.2):
+    - Sentry/Core (= 5.2.2)
+  - Sentry/Core (5.2.2)
 
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_id (from `.symlinks/plugins/device_id/ios`)
+  - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - flutter_appavailability (from `.symlinks/plugins/flutter_appavailability/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_pdf_viewer (from `.symlinks/plugins/flutter_pdf_viewer/ios`)
+  - flutter_sentry (from `.symlinks/plugins/flutter_sentry/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - plugin_scaffold (from `.symlinks/plugins/plugin_scaffold/ios`)
 
 SPEC REPOS:
   trunk:
     - Reachability
+    - Sentry
 
 EXTERNAL SOURCES:
   camera:
@@ -50,6 +64,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity/ios"
   device_id:
     :path: ".symlinks/plugins/device_id/ios"
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
   Flutter:
     :path: Flutter
   flutter_appavailability:
@@ -60,10 +76,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_pdf_viewer:
     :path: ".symlinks/plugins/flutter_pdf_viewer/ios"
+  flutter_sentry:
+    :path: ".symlinks/plugins/flutter_sentry/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   plugin_scaffold:
@@ -73,16 +93,20 @@ SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_appavailability: ebf8f85abea44436d1262fcde8a4e64b2534b01a
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545
   flutter_pdf_viewer: c9a114aa98a9466325a3a27b3b360b3fd7bf581c
+  flutter_sentry: e7e66f0717b5fba24f96891e879562bdd8985d36
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   image_picker: 66aa71bc96850a90590a35d4c4a2907b0d823109
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   plugin_scaffold: e7c52bc1cfb6e672959f798dfc9dea8dff55daeb
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
