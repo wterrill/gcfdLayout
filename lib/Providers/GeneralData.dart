@@ -4,7 +4,7 @@ import 'package:device_info/device_info.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hive/hive.dart';
-import 'dart:io';
+import 'dart:io' show Platform;
 
 class GeneralData with ChangeNotifier {
   String username;

@@ -1,5 +1,4 @@
 
-echo "BE SURE TO SET TO :88 for UAT, and :90 for testing"
 rm lib/buildTime/flutterVersion.dart
 echo "Building flutterVersion.dart"
 echo "const Map<String,String> version = " >> lib/buildTime/flutterVersion.dart
