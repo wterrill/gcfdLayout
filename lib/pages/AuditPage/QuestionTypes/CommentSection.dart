@@ -65,6 +65,7 @@ class _CommentSectionState extends State<CommentSection> {
           }
         },
         child: TextField(
+          enableInteractiveSelection: true,
           keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
           controller: controller,
           onChanged: (value) {

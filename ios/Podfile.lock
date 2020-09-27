@@ -4,8 +4,6 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
-  - device_id (0.0.1):
-    - Flutter
   - device_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -38,7 +36,6 @@ PODS:
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
-  - device_id (from `.symlinks/plugins/device_id/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - flutter_appavailability (from `.symlinks/plugins/flutter_appavailability/ios`)
@@ -62,8 +59,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera/ios"
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
-  device_id:
-    :path: ".symlinks/plugins/device_id/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
@@ -92,7 +87,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
-  device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_appavailability: ebf8f85abea44436d1262fcde8a4e64b2534b01a

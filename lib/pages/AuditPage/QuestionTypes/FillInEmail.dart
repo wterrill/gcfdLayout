@@ -68,6 +68,7 @@ class _FillInEmailState extends State<FillInEmail> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: TextField(
+                  enableInteractiveSelection: true,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),

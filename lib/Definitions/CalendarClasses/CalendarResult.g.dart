@@ -31,13 +31,15 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
         deviceid: fields[12] as String,
         citationsToFollowUp: (fields[13] as Map)?.cast<String, dynamic>())
       ..startDateTime = fields[10] as DateTime
-      ..endDateTime = fields[14] as DateTime;
+      ..endDateTime = fields[14] as DateTime
+      ..idNum = fields[15] as String
+      ..uploaded = fields[16] as bool;
   }
 
   @override
   void write(BinaryWriter writer, CalendarResult obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.startTime)
       ..writeByte(1)
@@ -67,6 +69,10 @@ class CalendarResultAdapter extends TypeAdapter<CalendarResult> {
       ..writeByte(13)
       ..write(obj.citationsToFollowUp)
       ..writeByte(14)
-      ..write(obj.endDateTime);
+      ..write(obj.endDateTime)
+      ..writeByte(15)
+      ..write(obj.idNum)
+      ..writeByte(16)
+      ..write(obj.uploaded);
   }
 }

@@ -17,7 +17,7 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Type of Visit:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency Name:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency/Program Number:', 'type': 'display'},
-  <String, dynamic>{'text': 'Site address:', 'type': 'display'},
+  <String, dynamic>{'text': 'Site Address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
   // The following three fields MUST be in this order
@@ -99,7 +99,7 @@ List<Map<String, dynamic>> audit2Section1Questions = [
   },
   <String, dynamic>{
     'text': 'Does the shelter receive funding from the DHS Emergency Food and Shelter Program?',
-    'type': 'yesNo',
+    'type': 'yesNoNa',
     'databaseVar': 'ShelterReceivesDHSFunding',
     'databaseVarType': 'bool',
   },
@@ -122,20 +122,21 @@ List<Map<String, dynamic>> audit2Section1Questions = [
         'Submit copy of Food Service Sanitation Manager Certificates (City of Chicago)/ServSafe Certificates (State of Illinois)'
   },
   <String, dynamic>{
-    'text': 'Food Service Sanitation Manager Certificates (at least two are required)',
+    'text': 'Names and expiration dates of Food Service Sanitation Manager certificates  (at least two are required)',
     'type': 'fillIn',
     'databaseVar': 'FoodServiceSanitationManagerCertificate',
     'databaseVarType': 'string',
   },
-  <String, dynamic>{
-    'text': 'Names and expiration dtes of FSSM certificates',
-    'type': 'fillIn',
-    'databaseVar': 'RemoveField',
-    'databaseVarType': 'string',
-  },
+  // <String, dynamic>{
+  //   'text': 'Names and expiration dates of FSSM certificates',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'RemoveField',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
     'text': 'Last Order Date:',
     'type': 'date',
+    'hideNa': 'true',
     'databaseVar': 'LastOrderDate',
     'databaseVarType': 'date',
     'databaseOptCom': 'LastOrderDateComments'
@@ -1759,6 +1760,14 @@ List<Map<String, dynamic>> audit2Section8Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'TaxExemptionVerifiedComments',
     'actionItem': 'Provide documentation showing good standing with IRS or provide an updated active 501c3'
+  },
+
+  <String, dynamic>{
+    'text': 'Tax Exemption Verified Date:',
+    'type': 'date',
+    'databaseVar': 'TaxExemptionVerifiedDate',
+    'databaseVarType': 'date',
+    'databaseOptCom': 'TaxExemptionVerifiedDateComments',
   },
 
   <String, dynamic>{

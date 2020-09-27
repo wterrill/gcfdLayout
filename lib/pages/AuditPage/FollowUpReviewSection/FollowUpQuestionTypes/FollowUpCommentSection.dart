@@ -15,11 +15,7 @@ class FollowUpCommentSection extends StatefulWidget {
   final bool mandatory;
   final bool numKeyboard;
   FollowUpCommentSection(
-      {Key key,
-      @required this.index,
-      @required this.citations,
-      @required this.mandatory,
-      @required this.numKeyboard})
+      {Key key, @required this.index, @required this.citations, @required this.mandatory, @required this.numKeyboard})
       : super(key: key);
 
   @override
@@ -54,19 +50,14 @@ class _FollowUpCommentSectionState extends State<FollowUpCommentSection> {
       color: Colors.white,
       duration: Duration(milliseconds: 150),
       child: TextField(
-        keyboardType:
-            widget.numKeyboard ? TextInputType.number : TextInputType.text,
+        enableInteractiveSelection: true,
+        keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
-          if (Provider.of<AuditData>(context, listen: false)
-                  .activeAudit
-                  .calendarResult
-                  .status !=
-              "Scheduled") {
+          if (Provider.of<AuditData>(context, listen: false).activeAudit.calendarResult.status != "Scheduled") {
             Dialogs.showMessage(
                 context: context,
-                message:
-                    "This audit has already been submitted, and cannot be edited",
+                message: "This audit has already been submitted, and cannot be edited",
                 dismissable: true);
           } else {
             if (widget.mandatory) {
@@ -92,16 +83,12 @@ class _FollowUpCommentSectionState extends State<FollowUpCommentSection> {
               widget.citations[index].optionalComment = value;
             }
 
-            Audit thisAudit =
-                Provider.of<AuditData>(context, listen: false).activeAudit;
-            Provider.of<AuditData>(context, listen: false)
-                .saveAuditLocally(thisAudit);
+            Audit thisAudit = Provider.of<AuditData>(context, listen: false).activeAudit;
+            Provider.of<AuditData>(context, listen: false).saveAuditLocally(thisAudit);
           }
         },
         maxLines: null,
-        style: widget.citations[index].textBoxRollOut
-            ? ColorDefs.textBodyBlack20
-            : ColorDefs.textTransparent,
+        style: widget.citations[index].textBoxRollOut ? ColorDefs.textBodyBlack20 : ColorDefs.textTransparent,
         decoration: InputDecoration(
             suffixIcon: (widget.citations[index].textBoxRollOut)
                 ? IconButton(
@@ -121,8 +108,7 @@ class _FollowUpCommentSectionState extends State<FollowUpCommentSection> {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
             hintText: "Enter comments "),
       ),
     );

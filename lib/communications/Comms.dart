@@ -86,13 +86,23 @@ class FullAuditComms {
       print("*********** sendFullAudit response *************");
       print(res.body);
       print('sendFullAudit receive ${DateTime.now()}');
-      bool result = false;
-      if (res.body != null) {
-        result = true;
+      dynamic response = json.decode(res.body);
+      if (response["IsSucc"] as bool == true) {
+        String idNum = response['Id'].toString();
+        return idNum;
+      } else {
+        String errMessage = response['ErrMsg'] as String;
+        return errMessage;
       }
-      return result;
+      // bool result = false;
+      // if (res.body != null) {
+      //   result = true;
+      // }
+      // return result;
     }).catchError((Object e) {
       print(e.toString());
+      String errMessage = e.toString();
+      return errMessage;
     }) as Future<dynamic>;
   }
 
@@ -176,10 +186,17 @@ class ScheduleAuditComms {
       print("*********** scheduleAudit response *************");
       print(res.body);
       print('scheduleAudit receive ${DateTime.now()}');
-      return true;
+      dynamic response = json.decode(res.body);
+      if (response["IsSucc"] as bool == true) {
+        String idNum = response['Id'].toString();
+        return idNum;
+      } else {
+        String errMessage = response['ErrMsg'] as String;
+        return errMessage;
+      }
     }).catchError((Object e) {
       print(e);
-      return false;
+      return "-1";
     }) as Future<dynamic>;
   }
 

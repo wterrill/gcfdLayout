@@ -70,6 +70,9 @@ Map<String, dynamic> buildAuditToSend(Audit outgoingAudit, String deviceidProvid
 
         if (qtype == "date") {
           resultMap[name] = question.userResponse;
+          if (question.userResponse == "1972-06-05 00:00:00.000") {
+            resultMap[name] = null;
+          }
 
           try {
             resultMap[comment] = question.optionalComment;

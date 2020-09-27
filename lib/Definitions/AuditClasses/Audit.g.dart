@@ -41,13 +41,15 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..currentPoints = fields[17] as int
       ..auditScore = fields[18] as double
       ..programHoldPointsAdded = fields[19] as bool
-      ..visitRequiredPointsAdded = fields[20] as bool;
+      ..visitRequiredPointsAdded = fields[20] as bool
+      ..idNum = fields[21] as String
+      ..uploaded = fields[22] as bool;
   }
 
   @override
   void write(BinaryWriter writer, Audit obj) {
     writer
-      ..writeByte(21)
+      ..writeByte(23)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -89,6 +91,10 @@ class AuditAdapter extends TypeAdapter<Audit> {
       ..writeByte(19)
       ..write(obj.programHoldPointsAdded)
       ..writeByte(20)
-      ..write(obj.visitRequiredPointsAdded);
+      ..write(obj.visitRequiredPointsAdded)
+      ..writeByte(21)
+      ..write(obj.idNum)
+      ..writeByte(22)
+      ..write(obj.uploaded);
   }
 }

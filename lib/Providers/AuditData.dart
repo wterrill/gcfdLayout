@@ -7,6 +7,7 @@ import 'package:auditor/Definitions/CongregateAuditData.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
+import 'package:auditor/Utilities/handleSentryError.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/providers/BuildAuditToSend.dart';
@@ -15,8 +16,10 @@ import 'package:hive/hive.dart';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
+import 'package:provider/provider.dart';
 
 import 'BuildAuditFromIncoming.dart';
+import 'GeneralData.dart';
 // import 'dart:typed_data';
 
 class AuditData with ChangeNotifier {
@@ -721,7 +724,7 @@ class AuditData with ChangeNotifier {
       print("before build");
       Map<String, dynamic> mainBody = buildAuditToSend(result, deviceidProvider);
       print("after build");
-      bool successful = false;
+      String idNumOrErr = "-1";
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -732,7 +735,7 @@ class AuditData with ChangeNotifier {
           throw ("No internet connection found");
         }
 
-        successful =
+        idNumOrErr =
             await FullAuditComms.sendFullAudit(auditToSend: mainBody, context: navigatorKey.currentContext).timeout(
           const Duration(seconds: 10),
           onTimeout: () {
@@ -744,13 +747,32 @@ class AuditData with ChangeNotifier {
             //     dismissable: true);
             return null;
           },
-        ) as bool;
+        ) as String;
       } catch (err) {
-        successful = false;
+        idNumOrErr = "-1";
+      }
+      bool successful = false;
+      String errorMessage = "";
+      try {
+        int.parse(idNumOrErr);
+        successful = true;
+        updateAuditID(toBeSentKeys[i], idNumOrErr);
+      } catch (err) {
+        errorMessage = idNumOrErr;
+        handleSentryError(
+            errorMessage: errorMessage,
+            auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
+      }
+
+      void handleTSentryError(String errorMessage) async {
+        await sentry.captureException(
+          exception: errorMessage,
+          stackTrace: "",
+        );
       }
 
       String picJson = getPicListBody(result, deviceid);
-
+      bool successfulpic = false;
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -760,13 +782,39 @@ class AuditData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        bool successfulpic =
-            await FullAuditComms.uploadPicList(json: picJson, context: navigatorKey.currentContext) as bool;
+        successfulpic = await FullAuditComms.uploadPicList(json: picJson, context: navigatorKey.currentContext) as bool;
       } catch (err) {
-        successful = false;
+        successfulpic = false;
+      }
+      if (!successfulpic) {
+        handleSentryError(
+            errorMessage: "pic upload not successful",
+            auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
       }
       if (successful) auditOutBox.delete(toBeSentKeys[i]);
     }
+  }
+
+  void updateAuditID(String indexString, String idNum) {
+    String truncated = indexString.split(":::")[0];
+    Audit result = auditBox.get(truncated) as Audit;
+    result.idNum = idNum;
+    result.uploaded = true;
+    print(auditBox.keys.toList());
+    print("beer");
+  }
+
+  bool checkAllActiveSent() {
+    List<dynamic> dynKeys = auditBox.keys.toList();
+    List<String> auditBoxKeys = List<String>.from(dynKeys);
+    bool allSent = true;
+    for (var i = 0; i < auditBoxKeys.length; i++) {
+      Audit result = auditBox.get(auditBoxKeys[i]) as Audit;
+      if (result.uploaded != true) {
+        allSent = false;
+      }
+    }
+    return allSent;
   }
 
   void removePicAtIndex(int index) {

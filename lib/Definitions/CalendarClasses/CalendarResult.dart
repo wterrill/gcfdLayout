@@ -38,6 +38,10 @@ class CalendarResult extends HiveObject {
   Map<String, dynamic> citationsToFollowUp;
   @HiveField(14)
   DateTime endDateTime;
+  @HiveField(15)
+  String idNum = "";
+  @HiveField(16)
+  bool uploaded = false;
 
   // String date;
 

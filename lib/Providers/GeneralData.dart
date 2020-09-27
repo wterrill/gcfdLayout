@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:device_id/device_id.dart';
+// import 'package:device_id/device_id.dart';
+import 'package:device_info/device_info.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hive/hive.dart';
+import 'dart:io';
 
 class GeneralData with ChangeNotifier {
   String username;
@@ -36,13 +38,29 @@ class GeneralData with ChangeNotifier {
     numberOfDaysShown = 8;
 
     if (!kIsWeb) {
-      deviceid = await DeviceId.getID;
+      // deviceid = await DeviceId.getID;
+      deviceid = await _getId();
       // deviceid = await DeviceId.getIMEI;
       // deviceid = await DeviceId.getMEID;
     } else {
       deviceid = "website";
     }
+    if (kIsWeb) {
+      portNumber = "90";
+    }
     notifyListeners();
+  }
+
+  Future<String> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
   }
 
   void updateDatabasePort(String newPortNumber) {

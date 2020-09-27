@@ -60,6 +60,7 @@ class _TopWhiteHeaderWidgetState extends State<TopWhiteHeaderWidget> {
               height: 40,
               width: 350,
               child: TextField(
+                enableInteractiveSelection: true,
                 // autofocus: true,
                 onChanged: (text) {
                   if (text.toLowerCase() == "version") {

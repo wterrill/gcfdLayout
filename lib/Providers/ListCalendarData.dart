@@ -5,6 +5,7 @@ import 'package:auditor/Definitions/AuditorClasses/AuditorList.dart';
 import 'package:auditor/Definitions/SiteClasses/Site.dart';
 import 'package:auditor/Definitions/SiteClasses/SiteList.dart';
 import 'package:auditor/Utilities/Conversion.dart';
+import 'package:auditor/Utilities/handleSentryError.dart';
 import 'package:auditor/communications/Comms.dart';
 import 'package:auditor/main.dart';
 import 'package:auditor/Definitions/CalendarClasses/CalendarResult.dart';
@@ -17,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import 'BuildScheduledFromIncoming.dart';
 import 'BuildScheduledToSend.dart';
+import 'GeneralData.dart';
 import 'SiteData.dart';
 import 'package:connectivity/connectivity.dart';
 
@@ -99,7 +101,7 @@ class ListCalendarData with ChangeNotifier {
     for (String indexString in added) {
       CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
       String jsonResult = buildScheduledToSend(preResult, "A", deviceid);
-      dynamic successful = false;
+      String idNumOrErr = "-1";
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -109,12 +111,25 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
+        idNumOrErr =
+            await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext) as String;
       } catch (err) {
         print(err);
-        successful = false;
+        idNumOrErr = "-1";
       }
-      if (successful as bool) calendarOrderedOutBox.delete(indexString);
+      bool successful = false;
+      String errorMessage = "";
+      try {
+        int.parse(idNumOrErr);
+        successful = true;
+        updateCalendarID(indexString, idNumOrErr);
+      } catch (err) {
+        errorMessage = idNumOrErr;
+        handleSentryError(
+            errorMessage: errorMessage,
+            auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
+      }
+      if (successful) calendarOrderedOutBox.delete(indexString);
     }
 
 //Delete
@@ -138,6 +153,28 @@ class ListCalendarData with ChangeNotifier {
       }
       if (successful as bool) calendarOrderedOutBox.delete(indexString);
     }
+  }
+
+  void updateCalendarID(String indexString, String idNum) {
+    String truncated = indexString.split(":::")[0];
+    CalendarResult result = calendarBox.get(truncated) as CalendarResult;
+    result.idNum = idNum;
+    result.uploaded = true;
+    print(calendarBox.keys.toList());
+    print("beer");
+  }
+
+  bool checkAllActiveSent() {
+    List<dynamic> dynKeys = calendarBox.keys.toList();
+    List<String> calendarBoxKeys = List<String>.from(dynKeys);
+    bool allSent = true;
+    for (var i = 0; i < calendarBoxKeys.length; i++) {
+      CalendarResult result = calendarBox.get(calendarBoxKeys[i]) as CalendarResult;
+      if (result.uploaded != true) {
+        allSent = false;
+      }
+    }
+    return allSent;
   }
 
   void sendOrderedEditsToCloud(String deviceid) async {
@@ -169,7 +206,7 @@ class ListCalendarData with ChangeNotifier {
     for (String indexString in edited) {
       CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
       String jsonResult = buildScheduledToSend(preResult, "E", deviceid);
-      dynamic successful = false;
+      String idNumOrErr = "-1";
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -179,12 +216,25 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
+        idNumOrErr =
+            await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext) as String;
       } catch (err) {
         print(err);
-        successful = false;
+        idNumOrErr = "-1";
       }
-      if (successful as bool) calendarOrderedOutBox.delete(indexString);
+      bool successful = false;
+      String errorMessage = "";
+      try {
+        int.parse(idNumOrErr);
+        successful = true;
+        updateCalendarID(indexString, idNumOrErr);
+      } catch (err) {
+        errorMessage = idNumOrErr;
+        handleSentryError(
+            errorMessage: errorMessage,
+            auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
+      }
+      if (successful) calendarOrderedOutBox.delete(indexString);
     }
   }
 
@@ -430,13 +480,13 @@ class ListCalendarData with ChangeNotifier {
         as CalendarResult;
     // CalendarResult retrievedScheduleToSend = retrievedSchedule.clone();
     if (retrievedSchedule != null) {
-      Map<String, dynamic> retrievedScheduleToSend = calendarOrderedOutBox.get(
+      Map<dynamic, dynamic> retrievedScheduleToSend = calendarOrderedOutBox.get(
               '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Add')
-          as Map<String, dynamic>;
+          as Map<dynamic, dynamic>;
       if (retrievedScheduleToSend == null) {
         retrievedScheduleToSend = calendarOrderedOutBox.get(
                 '${calendarResult.startTime}-${calendarResult.agencyNumber}-${calendarResult.programNum}-${calendarResult.auditor}-${calendarResult.auditType}:::Edit')
-            as Map<String, dynamic>;
+            as Map<dynamic, dynamic>;
       }
       if (retrievedSchedule.status != "Completed") {
         retrievedSchedule.status = "Completed";

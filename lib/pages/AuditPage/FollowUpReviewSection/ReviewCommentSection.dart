@@ -53,16 +53,14 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
       color: Colors.white,
       duration: Duration(milliseconds: 300),
       child: TextField(
-        keyboardType:
-            widget.numKeyboard ? TextInputType.number : TextInputType.text,
+        enableInteractiveSelection: true,
+        keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
         controller: controller,
         onChanged: (value) {
           widget.questions[index].optionalComment = value;
         },
         maxLines: null,
-        style: widget.questions[index].textBoxRollOut
-            ? ColorDefs.textBodyBlack20
-            : ColorDefs.textTransparent,
+        style: widget.questions[index].textBoxRollOut ? ColorDefs.textBodyBlack20 : ColorDefs.textTransparent,
         decoration: new InputDecoration(
             suffixIcon: widget.questions[index].textBoxRollOut
                 ? IconButton(
@@ -86,8 +84,7 @@ class _ReviewCommentSectionState extends State<ReviewCommentSection> {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
             hintText: "Enter citation comments "),
       ),
     );

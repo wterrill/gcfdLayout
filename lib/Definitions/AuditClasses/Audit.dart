@@ -73,6 +73,11 @@ class Audit extends HiveObject {
   @HiveField(20)
   bool visitRequiredPointsAdded = false;
 
+  @HiveField(21)
+  String idNum = "";
+  @HiveField(22)
+  bool uploaded = false;
+
   Audit({this.questionnaire, this.calendarResult}) {
     for (Map<String, List<Map<String, dynamic>>> section in questionnaire) {
       sections.add(Section(section: section));

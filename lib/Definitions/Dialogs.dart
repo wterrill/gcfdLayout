@@ -7,6 +7,7 @@ import 'package:auditor/pages/ListSchedulingPage/RescheduleFollowUpAuditDialog.d
 import 'package:auditor/pages/ListSchedulingPage/SitePopUp.dart';
 import 'package:auditor/pages/developer/DeveloperMenu.dart';
 import 'package:auditor/providers/AuditData.dart';
+import 'package:auditor/providers/GeneralData.dart';
 import 'package:flutter/material.dart';
 import 'package:auditor/buildTime/flutterVersion.dart';
 import 'package:auditor/buildTime/flutterDate.dart';
@@ -346,6 +347,7 @@ class Dialogs {
           Text("Flutter framework: ${version['frameworkVersion']}"),
           Text("Dart version: ${version['dartSdkVersion']}"),
           Text("App version: $appVersion"),
+          Text("Device id: ${Provider.of<GeneralData>(context, listen: false).deviceid}")
         ],
       ),
     );

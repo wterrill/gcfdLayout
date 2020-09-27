@@ -14,10 +14,10 @@
 List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Date of Visit:', 'type': 'display'},
   <String, dynamic>{'text': 'Start Time:', 'type': 'display'},
-  <String, dynamic>{'text': 'Type:of Visit:', 'type': 'display'},
+  <String, dynamic>{'text': 'Type of Visit:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency Name:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency/Program Number:', 'type': 'display'},
-  <String, dynamic>{'text': 'Site address:', 'type': 'display'},
+  <String, dynamic>{'text': 'Site Address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
   // The following three fields MUST be in this order
@@ -74,8 +74,8 @@ List<Map<String, dynamic>> audit1Section1Questions = [
   <String, dynamic>{
     'text': 'How often can a guest receive food from the pantry?',
     'type': 'dropDown',
-    'menuItems': ['Select', '1x per week', '2x per Month', '1x per Month', 'Other', 'N/A'],
-    'happyPathResponse': ['1x per week', '2x per Month', '1x per Month', 'Other', 'N/A'],
+    'menuItems': ['Select', '1x per Week', '2x per Month', '1x per Month', 'Other', 'N/A'],
+    'happyPathResponse': ['1x per Week', '2x per Month', '1x per Month', 'Other', 'N/A'],
     'databaseVar': 'HowOftenGuestsReceiveFood',
     'databaseVarType': 'string',
     'databaseOptCom': 'HowOftenGuestsReceiveFoodComments'
@@ -167,20 +167,21 @@ List<Map<String, dynamic>> audit1Section1Questions = [
         'Submit copy of Food Service Sanitation Manager Certificates (City of Chicago)/ServSafe Certificates (State of Illinois)'
   },
   <String, dynamic>{
-    'text': 'Food Service Sanitation Manager Certificates:',
+    'text': 'Names and expiration dates of Food Service Sanitation Manager certificates:',
     'type': 'fillIn',
     'databaseVar': 'FoodServiceSanitationManagerCerts',
     'databaseVarType': 'string',
   },
-  <String, dynamic>{
-    'text': 'Names and expiration dtes of FSSM certificates:',
-    'type': 'fillIn',
-    'databaseVar': 'RemoveField',
-    'databaseVarType': 'string',
-  },
+  // <String, dynamic>{
+  //   'text': 'Names and expiration dates of FSSM certificates:',
+  //   'type': 'fillIn',
+  //   'databaseVar': 'RemoveField',
+  //   'databaseVarType': 'string',
+  // },
   <String, dynamic>{
     'text': 'Last Order Date:',
     'type': 'date',
+    'hideNa': 'true',
     'databaseVar': 'LastOrderDate',
     'databaseVarType': 'date',
     'databaseOptCom': 'LastOrderDateComments'
@@ -1646,7 +1647,7 @@ List<Map<String, dynamic>> audit1Section7Questions = [
   //   'databaseVar': 'DateTaxExemptionVerified',
   // },
   <String, dynamic>{
-    'text': 'Tax Exemption Verified::',
+    'text': 'Tax Exemption Verified:',
     'type': 'yesNo',
     'happyPathResponse': ['Yes'],
     'scoring': 5,
@@ -1654,6 +1655,13 @@ List<Map<String, dynamic>> audit1Section7Questions = [
     'databaseVarType': 'bool',
     'databaseOptCom': 'TaxExemptionVerifiedComments',
     'actionItem': 'Provide documentation showing good standing with IRS or provide an updated active 501c3'
+  },
+  <String, dynamic>{
+    'text': 'Tax Exemption Verified Date:',
+    'type': 'date',
+    'databaseVar': 'TaxExemptionVerifiedDate',
+    'databaseVarType': 'date',
+    'databaseOptCom': 'TaxExemptionVerifiedDateComments',
   },
   <String, dynamic>{
     'text': 'Re-verified by:',

@@ -40,6 +40,7 @@ class _LookAheadState extends State<LookAhead> {
       children: <Widget>[
         TypeAheadField<String>(
           textFieldConfiguration: TextFieldConfiguration<String>(
+              enableInteractiveSelection: true,
               autofocus: false,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(

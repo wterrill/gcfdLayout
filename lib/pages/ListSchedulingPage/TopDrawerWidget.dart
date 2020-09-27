@@ -43,7 +43,49 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
+    void deleteListCalendarDB() {
+      List<dynamic> result = Provider.of<ListCalendarData>(context, listen: false).calendarBox.keys.toList();
+
+      for (dynamic key in result) {
+        String keyString = key as String;
+        Provider.of<ListCalendarData>(context, listen: false).calendarBox.delete(keyString);
+      }
+
+      result = Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.keys.toList();
+
+      for (dynamic key in result) {
+        String keyString = key as String;
+        Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.delete(keyString);
+      }
+
+      result = <String>["All calendar data deleted"];
+      setState(() {});
+    }
+
+    void deleteAuditDB() {
+      List<dynamic> result = Provider.of<AuditData>(context, listen: false).auditBox.keys.toList();
+
+      for (dynamic key in result) {
+        String keyString = key as String;
+        Provider.of<AuditData>(context, listen: false).auditBox.delete(keyString);
+      }
+      result = Provider.of<AuditData>(context, listen: false).auditOutBox.keys.toList();
+
+      for (dynamic key in result) {
+        String keyString = key as String;
+        Provider.of<AuditData>(context, listen: false).auditOutBox.delete(keyString);
+      }
+      result = <String>["All Audit data deleted"];
+      setState(() {});
+    }
+
     String portNumber = Provider.of<GeneralData>(context).portNumber;
+    String newPortNumber = "";
+    if (portNumber == "88") {
+      newPortNumber = "90";
+    } else {
+      newPortNumber = "88";
+    }
     return Stack(
       children: [
         Positioned(
@@ -399,20 +441,21 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
                   GestureDetector(
                     onTap: () async {
-                      List<dynamic> result = Provider.of<AuditData>(context, listen: false).auditBox.keys.toList();
+                      deleteAuditDB();
+                      // List<dynamic> result = Provider.of<AuditData>(context, listen: false).auditBox.keys.toList();
 
-                      for (dynamic key in result) {
-                        String keyString = key as String;
-                        Provider.of<AuditData>(context, listen: false).auditBox.delete(keyString);
-                      }
-                      result = Provider.of<AuditData>(context, listen: false).auditOutBox.keys.toList();
+                      // for (dynamic key in result) {
+                      //   String keyString = key as String;
+                      //   Provider.of<AuditData>(context, listen: false).auditBox.delete(keyString);
+                      // }
+                      // result = Provider.of<AuditData>(context, listen: false).auditOutBox.keys.toList();
 
-                      for (dynamic key in result) {
-                        String keyString = key as String;
-                        Provider.of<AuditData>(context, listen: false).auditOutBox.delete(keyString);
-                      }
-                      result = <String>["All Audit data deleted"];
-                      setState(() {});
+                      // for (dynamic key in result) {
+                      //   String keyString = key as String;
+                      //   Provider.of<AuditData>(context, listen: false).auditOutBox.delete(keyString);
+                      // }
+                      // result = <String>["All Audit data deleted"];
+                      // setState(() {});
                     },
                     child: Container(
                       height: 35.4,
@@ -440,24 +483,7 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
                   GestureDetector(
                     onTap: () async {
-                      List<dynamic> result =
-                          Provider.of<ListCalendarData>(context, listen: false).calendarBox.keys.toList();
-
-                      for (dynamic key in result) {
-                        String keyString = key as String;
-                        Provider.of<ListCalendarData>(context, listen: false).calendarBox.delete(keyString);
-                      }
-
-                      result =
-                          Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.keys.toList();
-
-                      for (dynamic key in result) {
-                        String keyString = key as String;
-                        Provider.of<ListCalendarData>(context, listen: false).calendarOrderedOutBox.delete(keyString);
-                      }
-
-                      result = <String>["All calendar data deleted"];
-                      setState(() {});
+                      deleteListCalendarDB();
                     },
                     child: Container(
                       height: 35.4,
@@ -487,6 +513,9 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                       child: Center(child: Text("", style: ColorDefs.textBodyBlue20))),
                   GestureDetector(
                     onTap: () async {
+                      deleteAuditDB();
+                      deleteListCalendarDB();
+
                       String newPortNumber = "";
                       if (portNumber == "88") {
                         newPortNumber = "90";
@@ -494,6 +523,8 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                         newPortNumber = "88";
                       }
                       Provider.of<GeneralData>(context, listen: false).updateDatabasePort(newPortNumber);
+                      Provider.of<ListCalendarData>(context, listen: false).newEventAdded = true;
+                      Provider.of<AuditData>(context, listen: false).notifyTheListeners();
                     },
                     child: Container(
                       height: 35.4,
@@ -503,7 +534,9 @@ class _TopDrawerWidgetState extends State<TopDrawerWidget> with SingleTickerProv
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Icon(Icons.error, color: ColorDefs.colorAudit2),
-                          Center(child: Text("toggle ext. DB from $portNumber", style: ColorDefs.textBodyBlue20)),
+                          Center(
+                              child: Text("Toggle DB from $portNumber to $newPortNumber",
+                                  style: ColorDefs.textBodyBlue20)),
                           // Container(
                           //   height: 20,
                           //   width: 20,
