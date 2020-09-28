@@ -87,10 +87,10 @@ void totalDataSync(BuildContext context) async {
     if (!auditSent || !calendarSent) {
       _showToast(context, "Sync Unsuccessful: not all data sent. Contact Support", Icon(Icons.close),
           ColorDefs.colorChatRequired);
-      await sentry.captureException(
-        exception: "Not all data sent... contact support",
-        stackTrace: "",
-      );
+
+      handleSentryError(
+          errorMessage: "Not all data sent... contact support",
+          auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
     } else {
       /// Done with sync
       _showToast(
@@ -104,10 +104,10 @@ void totalDataSync(BuildContext context) async {
     print("failed");
     print(err);
     _showToast(context, "Sync Unsuccessful: $err", Icon(Icons.close), ColorDefs.colorChatRequired);
-    await sentry.captureException(
-      exception: err,
-      stackTrace: stackTrace,
-    );
+
+    handleSentryError(
+        errorMessage: "sync unsuccessful: $err",
+        auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
   }
 }
 

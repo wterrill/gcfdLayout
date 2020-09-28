@@ -764,12 +764,12 @@ class AuditData with ChangeNotifier {
             auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
       }
 
-      void handleTSentryError(String errorMessage) async {
-        await sentry.captureException(
-          exception: errorMessage,
-          stackTrace: "",
-        );
-      }
+      // void handleTSentryError(String errorMessage) async {
+      //   await sentry.captureException(
+      //     exception: errorMessage,
+      //     stackTrace: "",
+      //   );
+      // }
 
       String picJson = getPicListBody(result, deviceid);
       bool successfulpic = false;
