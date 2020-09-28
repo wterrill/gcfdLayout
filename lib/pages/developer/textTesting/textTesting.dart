@@ -65,6 +65,7 @@ class _TextTestState extends State<TextTest> {
               child: Container(height: 100, width: 300, color: setColor ? Colors.blue : Colors.red)),
           Container(
               child: TextField(
+                  enableInteractiveSelection: true,
                   controller: controller,
                   onChanged: (value) {
                     if (value.length > 2) {

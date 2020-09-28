@@ -62,6 +62,7 @@ class _ActionItemsCommentSectionState extends State<ActionItemsCommentSection> {
               color: ColorDefs.colorAudit2, // ACTION ITEM
               duration: Duration(milliseconds: 300),
               child: TextField(
+                enableInteractiveSelection: true,
                 keyboardType: widget.numKeyboard ? TextInputType.number : TextInputType.text,
                 controller: controller,
                 onChanged: (value) {

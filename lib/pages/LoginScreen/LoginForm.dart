@@ -266,7 +266,7 @@ class _LoginFormState extends State<LoginForm> {
           throw ("No internet connection found");
         }
 
-        isAuthenticated = await Authentication.authenticate(username: _username, password: _password);
+        isAuthenticated = await Authentication.authenticate(username: _username, password: _password, context: context);
         Provider.of<GeneralData>(context, listen: false).saveUsername(_username);
       } catch (error) {
         print(error);

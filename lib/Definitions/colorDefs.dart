@@ -84,6 +84,8 @@ class ColorDefs {
 
   static TextStyle textRedScore =
       TextStyle(color: colorChatRequired, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
+  static TextStyle textRedTest =
+      TextStyle(color: colorChatRequired, fontSize: 15.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
   static TextStyle textOrangeScore =
       TextStyle(color: colorAudit4, fontSize: 30.0, fontFamily: 'RobotoSlab', fontWeight: FontWeight.w800);
   static TextStyle textGreenScore =

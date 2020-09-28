@@ -4,7 +4,7 @@ List<Map<String, dynamic>> confirmDetails = [
   <String, dynamic>{'text': 'Type of Visit:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency Name:', 'type': 'display'},
   <String, dynamic>{'text': 'Agency/Program Number:', 'type': 'display'},
-  <String, dynamic>{'text': 'Site address:', 'type': 'display'},
+  <String, dynamic>{'text': 'Site Address:', 'type': 'display'},
   <String, dynamic>{'text': 'GCFD Monitor:', 'type': 'display'},
   <String, dynamic>{'text': 'Program Contact:', 'type': 'display'},
 // The following three fields MUST be in this order

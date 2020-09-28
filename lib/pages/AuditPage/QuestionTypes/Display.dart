@@ -39,8 +39,11 @@ class _DisplayState extends State<Display> {
         case ("Date of Visit:"):
           widget = Text(activeCalendarResult?.startDateTime.toString(), style: ColorDefs.textBodyBlack20);
           break;
+        // case ("Type of Visit:"):
+        //   widget = Text(activeCalendarResult?.programType, style: ColorDefs.textBodyBlack20);
+        //   break;
         case ("Type of Visit:"):
-          widget = Text(activeCalendarResult?.programType, style: ColorDefs.textBodyBlack20);
+          widget = Text(activeCalendarResult?.auditType, style: ColorDefs.textBodyBlack20);
           break;
         case ("Agency Name:"):
           widget = Text(activeCalendarResult?.agencyName?.titleCase, style: ColorDefs.textBodyBlack20);
@@ -59,11 +62,16 @@ class _DisplayState extends State<Display> {
           widget = Text(string ?? "", style: ColorDefs.textBodyBlack20);
           break;
         case ("GCFD Monitor:"):
-          widget = Text(
-              Provider.of<ListCalendarData>(context, listen: false)
-                  .auditorList
-                  .getFirstAndLastFromUser(activeCalendarResult.auditor),
-              style: ColorDefs.textBodyBlack20);
+          String monitor = Provider.of<ListCalendarData>(context, listen: false)
+              .auditorList
+              .getFirstAndLastFromUser(activeCalendarResult.auditor);
+          if (monitor == null) {
+            monitor = activeCalendarResult.auditor;
+          }
+          if (monitor == null) {
+            monitor = "";
+          }
+          widget = Text(monitor, style: ColorDefs.textBodyBlack20);
           break;
         case ("Program Contact:"):
           widget = Text(activeCalendarResult.siteInfo?.contact ?? "None Defined", style: ColorDefs.textBodyBlack20);

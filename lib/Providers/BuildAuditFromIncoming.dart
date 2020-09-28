@@ -121,7 +121,7 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
 
             if (databaseVar != null) {
               dynamic value = incomingAudit[databaseVar];
-              if (value == null) {
+              if (value == null && question.typeOfQuestion != "date") {
                 print("Missing: $databaseVar");
                 missingDBVar.add(databaseVar);
               } else {
@@ -266,7 +266,12 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
                     print(question.text);
                     print('date');
                     print(incomingAudit[databaseVar]);
-                    question.userResponse = incomingAudit[databaseVar] as String;
+                    if (incomingAudit[databaseVar] == null) {
+                      question.userResponse = '1972-06-05 00:00:00.000';
+                    } else {
+                      question.userResponse = incomingAudit[databaseVar] as String;
+                    }
+
                     question.optionalComment = incomingAudit[databaseVar + "Comments"] as String;
                     break;
                 }
@@ -275,6 +280,9 @@ Future<dynamic> buildAuditFromIncoming(dynamic fromServer, SiteList siteList) as
           }
         }
       } // end of questions
+      newAudit.idNum = event['Id'].toString();
+      newAudit.uploaded = true;
+      print(newAudit.idNum);
 
       dynamic temp = incomingAudit['SiteVisitRequired'];
       newAudit.siteVisitRequired = temp as bool;

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 Color buttonColorPicker(Question questionData, String buttonText) {
   Color finalButtonColor;
   if (((questionData.userResponse == null || questionData.userResponse != buttonText) &&
-          questionData.questionMap['type'] != "fillInNum") ||
+          (questionData.questionMap['type'] != "fillInNum" && questionData.questionMap['type'] != "date")) ||
       (questionData.questionMap['type'] == "fillInNum" && questionData.userResponse == null)) {
     finalButtonColor = ColorDefs.colorButtonNeutral;
   } else if (questionData.userResponse == buttonText && buttonText == "Yes" ||
@@ -19,6 +19,12 @@ Color buttonColorPicker(Question questionData, String buttonText) {
   } else if (questionData.userResponse == buttonText && buttonText == 'N/A') {
     finalButtonColor = ColorDefs.colorChatNeutral;
   } else if (questionData.userResponse == "0" && buttonText == 'N/A') {
+    finalButtonColor = ColorDefs.colorChatNeutral;
+  } else if (questionData.questionMap['type'] == "date" &&
+      buttonText == "N/A" &&
+      questionData.userResponse != "1972-06-05 00:00:00.000") {
+    finalButtonColor = ColorDefs.colorButtonNeutral;
+  } else if (questionData.userResponse == "1972-06-05 00:00:00.000" && buttonText == 'N/A') {
     finalButtonColor = ColorDefs.colorChatNeutral;
   }
   return finalButtonColor;

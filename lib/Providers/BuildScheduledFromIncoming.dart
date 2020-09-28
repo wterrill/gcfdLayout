@@ -60,6 +60,9 @@ List<CalendarResult> buildScheduledFromIncoming(
             siteInfo: siteInfo,
             deviceid: siteidreceived,
             citationsToFollowUp: citationsToFollowUp);
+        newResult.idNum = event['Id'].toString();
+        newResult.uploaded = true;
+        print(newResult.idNum);
         finalList.add(newResult);
       } else {
         print('$agencyName did not have a startTime associated with it');

@@ -43,6 +43,12 @@
 	<string>This app needs access to your pictures in order to upload them</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to your pictures in order to upload them</string>
+	<key>SentryDSN</key>
+	<string>https://cd836d0fb8ca4376b30917eef5b32517@o436899.ingest.sentry.io/5398676</string>
+	<key>SentryEnableAutoSessionTracking</key>
+	<true/>
+	<key>SentrySessionTrackingIntervalMillis</key>
+	<integer>60000</integer>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
