@@ -810,7 +810,7 @@ class AuditData with ChangeNotifier {
     bool allSent = true;
     for (var i = 0; i < auditBoxKeys.length; i++) {
       Audit result = auditBox.get(auditBoxKeys[i]) as Audit;
-      if (result.uploaded != true) {
+      if (result.uploaded != true && result.completed == true) {
         allSent = false;
       }
     }
