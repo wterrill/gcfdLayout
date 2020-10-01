@@ -128,6 +128,22 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       return buttonText;
     }
 
+    bool identicalEntry() {
+      bool identical = false;
+      if (alreadyExistedCalendarResult != null) {
+        if (selectedAuditType == alreadyExistedCalendarResult.auditType &&
+            selectedAuditor == alreadyExistedCalendarResult.auditor &&
+            selectedProgType == alreadyExistedCalendarResult.programType &&
+            selectedProgramNumber == alreadyExistedCalendarResult.programNum &&
+            selectedSiteName == alreadyExistedCalendarResult.agencyName &&
+            selectedTime.hour == alreadyExistedCalendarResult.startDateTime.hour &&
+            selectedTime.minute == alreadyExistedCalendarResult.startDateTime.minute) {
+          identical = true;
+        }
+      }
+      return identical;
+    }
+
     bool validateEntry() {
       bool validated = true;
       if (selectedAuditType == "Select") {
@@ -141,6 +157,8 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
       } else if (selectedSiteName == null) {
         validated = false;
       } else if (selectedTime == null) {
+        validated = false;
+      } else if (identicalEntry()) {
         validated = false;
       }
 
@@ -467,7 +485,11 @@ class _NewAuditDialogState extends State<NewAuditDialog> {
                               Navigator.of(context).pop();
                             }
                           } else {
-                            Dialogs.showBadSchedule(context);
+                            if (!identicalEntry()) {
+                              Dialogs.showBadSchedule(context);
+                            } else {
+                              Navigator.of(context).pop();
+                            }
                           }
                         }
                       },
