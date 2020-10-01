@@ -18,6 +18,13 @@ class LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState();
 }
 
+// keys for testing:
+// password
+// username
+// login
+// eyeball
+// keepMeLoggedIn
+
 class _LoginFormState extends State<LoginForm> {
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
@@ -80,6 +87,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Container(
                 height: 70,
                 child: TextFormField(
+                  key: Key('username'),
                   controller: _userController,
                   onChanged: (input) => _onChangeField(input: input, from: "username"),
                   // validator: (input) => !input.contains('@')
@@ -115,6 +123,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Container(
                 height: 70,
                 child: TextFormField(
+                  key: Key('password'),
                   controller: _passwordController,
                   onChanged: (input) => _onChangeField(input: input, from: "password"),
                   validator: (input) => input.length < 1 ? "your password requires at least 6 characters" : null,
@@ -139,6 +148,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     suffixIcon: GestureDetector(
+                      key: Key('eyeball'),
                       onTap: () {
                         setState(() {
                           _obscureText = !_obscureText;
@@ -172,34 +182,6 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
-            // Container(height: 3),
-            // RaisedButton(
-            //     onPressed: () {
-            //       setState(() {
-            //         _userController.text = "MXOTestAud1";
-            //         _passwordController.text = "Password1";
-            //         _enabledLoginButton = true;
-            //       });
-            //     },
-            //     child: Text("fast login")),
-            // ListTile(
-            //   title: ConstrainedBox(
-            //     constraints: BoxConstraints(maxWidth: 10.0),
-            // child: DecoratedBox(
-            //   decoration: BoxDecoration(
-            //       color: _enabledLoginButton
-            //           ? ColorDefs.colorUserAccent
-            //           : Colors.transparent,
-            //       borderRadius: BorderRadius.circular(50.0),
-            //       border: Border.all(
-            //           width: 2.0,
-            //           color: _enabledLoginButton
-            //               ? Colors.transparent
-            //               : Colors.grey)),
-            //   child: ConstrainedBox(
-            //     constraints:
-            //         BoxConstraints(minHeight: 25.0, maxWidth: 25.0),
-            //     child:
             Container(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -207,6 +189,7 @@ class _LoginFormState extends State<LoginForm> {
                 width: double.infinity,
                 height: 50,
                 child: FlatButton(
+                  key: Key('login'),
                   color: Colors.green,
                   disabledColor: Colors.grey,
                   disabledTextColor: Colors.white,
@@ -228,6 +211,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: CheckboxListTile(
+                  key: Key('keepMeLoggedIn'),
                   title: Text("Keep me logged in", style: TextStyle(color: ColorDefs.colorLogoDarkGreen)),
                   value: Provider.of<GeneralData>(context, listen: false).rememberMe,
                   onChanged: (newValue) {

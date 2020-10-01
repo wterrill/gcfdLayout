@@ -136,7 +136,7 @@ class ListCalendarData with ChangeNotifier {
     for (String indexString in deleted) {
       CalendarResult preResult = calendarOrderedOutBox.get(indexString)['calendarResult'] as CalendarResult;
       String jsonResult = buildScheduledToSend(preResult, "D", deviceid);
-      dynamic successful = false;
+      String idNumOrErr = "-1";
       try {
         // import 'package:connectivity/connectivity.dart';
         var connectivityResult = await (Connectivity().checkConnectivity());
@@ -146,12 +146,25 @@ class ListCalendarData with ChangeNotifier {
         } else {
           throw ("No internet connection found");
         }
-        successful = await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext);
+        idNumOrErr =
+            await ScheduleAuditComms.scheduleAudit(body: jsonResult, context: navigatorKey.currentContext) as String;
       } catch (err) {
         print(err);
-        successful = false;
+        idNumOrErr = "-1";
       }
-      if (successful as bool) calendarOrderedOutBox.delete(indexString);
+      bool successful = false;
+      String errorMessage = "";
+      try {
+        if (idNumOrErr != "null") {
+          throw ("delete on server gave a $idNumOrErr");
+        }
+      } catch (err) {
+        errorMessage = idNumOrErr;
+        handleSentryError(
+            errorMessage: errorMessage,
+            auditor: Provider.of<GeneralData>(navigatorKey.currentContext, listen: false).username);
+      }
+      if (successful) calendarOrderedOutBox.delete(indexString);
     }
   }
 
