@@ -28,7 +28,7 @@ import 'package:flutter/services.dart';
 import 'package:connectivity/connectivity.dart';
 // import 'package:background_fetch/background_fetch.dart';
 import 'package:sentry/sentry.dart';
-import 'package:flutter_sentry/flutter_sentry.dart';
+// import 'package:flutter_sentry/flutter_sentry.dart';
 import 'dart:async';
 
 final navigatorKey = GlobalKey<NavigatorState>();

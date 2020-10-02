@@ -123,7 +123,7 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> with WidgetsBin
                                         children: [
                                           Container(width: 30),
                                           InkWell(
-                                              child: FaIcon(FontAwesomeIcons.sync, size: 35),
+                                              child: FaIcon(FontAwesomeIcons.sync, size: 35, key: Key('syncButton')),
                                               onTap: () async {
                                                 var connectivityResult = await (Connectivity().checkConnectivity());
                                                 FocusScopeNode currentFocus = FocusScope.of(context);
@@ -163,63 +163,6 @@ class _ListSchedulingPageState extends State<ListSchedulingPage> with WidgetsBin
                                                     toastDuration: Duration(seconds: 2),
                                                   );
                                                 }
-                                                // setState(() {
-                                                //   startSync = true;
-                                                // });
-                                                // //// Site Data /////
-                                                // Dialogs.showMessage(
-                                                //     context: context, message: "Syncing Site Data", dismissable: false);
-                                                // String deviceid =
-                                                //     Provider.of<GeneralData>(context, listen: false).deviceid;
-                                                // print("before siteSync");
-                                                // try {
-                                                //   await Provider.of<SiteData>(context, listen: false).siteSync();
-                                                // } catch (err) {
-                                                //   print(err);
-                                                //   Navigator.of(context).pop();
-                                                //   Dialogs.showMessage(
-                                                //       context: context,
-                                                //       message:
-                                                //           "Could not connect to site data endpoint. Check internet connection",
-                                                //       dismissable: true);
-                                                //   return null;
-                                                // }
-                                                // print("After siteSync");
-                                                // SiteList siteList =
-                                                //     Provider.of<SiteData>(context, listen: false).siteList;
-                                                // print("after siteList load");
-                                                // Navigator.of(context).pop();
-
-                                                // /// Schedule data ///
-                                                // Dialogs.showMessage(
-                                                //     context: context,
-                                                //     message: "Syncing Scheduling data: upload and download",
-                                                //     dismissable: false);
-                                                // await Provider.of<ListCalendarData>(context, listen: false).dataSync(
-                                                //     context: context,
-                                                //     siteList: siteList,
-                                                //     deviceid: deviceid,
-                                                //     fullSync: false);
-                                                // Navigator.of(context).pop();
-
-                                                // /// Audit Data ///
-                                                // // Navigator.of(context).pop();
-                                                // Dialogs.showMessage(
-                                                //     context: context,
-                                                //     message: "Syncing Audit calendar data: upload and download",
-                                                //     dismissable: false);
-
-                                                // await Provider.of<AuditData>(context, listen: false).dataSync(
-                                                //     context: context,
-                                                //     siteList: siteList,
-                                                //     deviceid: deviceid,
-                                                //     fullSync: false);
-                                                // Navigator.of(context).pop();
-
-                                                // /// Done with sync
-                                                // setState(() {
-                                                //   startSync = false;
-                                                // });
                                               }),
                                           Container(width: 30),
                                           InkWell(
